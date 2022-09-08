@@ -1,0 +1,31 @@
+
+
+1. What keyword is used to declare methods?
+a. fn
+b. method
+c. trait
+d. struct
+
+2. What is the first parameter of a method always called?
+a. self
+b. &self
+c. &mut self
+d. trait
+
+3. What does the & in &self represent?
+a. Borrows the Self instance
+b. Borrows the self instance
+c. Borrows the first parameter
+d. Borrows the method
+
+4. When is it appropriate to use &mut self as the first parameter of a method?
+a. When the method transforms self into something else
+b. When the method borrows self mutably
+c. When the method borrows self immutably
+d. When the method takes ownership of self
+
+5. What is the difference between the . operator and the -> operator when calling methods?
+a. . is used when calling a method on an object directly, and -> is used when calling a method on a pointer to the object
+b. . is used when calling a method on an object directly, and -> is used when calling a method on an object that doesn't have a pointer
+c. . is used when calling a method on an object indirectly, and -> is used when calling a method on a pointer to the object
+d. -> is used when calling a method on an object directly, and . is used when calling a method on a pointer to the object

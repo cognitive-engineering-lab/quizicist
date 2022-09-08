@@ -1,0 +1,36 @@
+
+
+1. Which of the following is not a primary scalar type in Rust?
+
+A. Characters
+B. Booleans
+C. Integers
+D. Floating-point numbers
+
+2. Which of the following best describes the purpose of type annotations in Rust?
+
+A. To tell the compiler what kind of data is being specified
+B. To provide more information to the compiler when it is inferring the type of a value
+C. To allow a variable to hold values of multiple data types
+D. To determine the size of a value
+
+3. What does the term "panicking" mean in Rust?
+
+A. When a program exits with an error
+B. When a variable has a value that is not what was expected
+C. When a program compiles with the --release flag
+D. When a program does not include checks for integer overflow
+
+4. What is the result of integer division in Rust?
+
+A. The division rounds up to the nearest integer
+B. The division rounds down to the nearest integer
+C. The division rounds to the nearest integer
+D. The division rounds to the nearest floating-point number
+
+5. Which of the following is not a way to handle the possibility of integer overflow in Rust?
+
+A. Return the None value if there is overflow with the checked_* methods
+B. Saturate at the value’s minimum or maximum values with saturating_* methods
+C. Use the Wrap family of methods
+D. Use the Overflow family of methods

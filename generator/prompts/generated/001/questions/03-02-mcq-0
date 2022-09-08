@@ -1,0 +1,28 @@
+The default type for floating-point numbers is:
+Correct: f64
+Incorrect: f32
+Incorrect: f128
+
+Which of the following is not a primitive type in Rust?
+Incorrect: Integer
+Incorrect: Floating-point number
+Incorrect: Boolean
+Correct: String
+
+Which of the following is not a scalar type?
+Incorrect: Integer
+Incorrect: Floating-point number
+Incorrect: Boolean
+Incorrect: Character
+Correct: Array
+
+Which of the following is not a compound type?
+Correct: Scalar type
+Incorrect: Tuple
+Incorrect: Array
+Incorrect: Slice
+
+If x : u8 = 0, what will happen when computing x - 1 in release mode?
+Incorrect: It will always panic.
+Correct: It will wrap around and become 255.
+Incorrect: It will return an error.

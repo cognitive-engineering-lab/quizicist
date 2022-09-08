@@ -1,0 +1,51 @@
+
+
+1) What does the "impl Rectangle" block do?
+
+a) It holds all associated functions for the Rectangle struct
+b) It holds all methods for the Rectangle struct
+c) It allows for multiple impl blocks for the Rectangle struct
+d) It is a private function for the Rectangle struct
+
+2) What does the "Self" keyword represent in the following code?
+
+impl Rectangle {
+    fn square(size: u32) -> Self {
+        Self {
+            width: size,
+            height: size,
+        }
+    }
+}
+
+a) The return type of the square function 
+b) The size parameter of the square function
+c) The width and height parameters of the square function
+d) The type that follows the impl keyword, which in this case is Rectangle
+
+3) What is the "::" syntax used for?
+
+a) Associated functions that aren't methods 
+b) Namespaces created by modules
+c) Traits
+d) Generic types
+
+4) What does the "Self" keyword represent in the following code?
+
+impl Rectangle {
+    fn area(&self) -> u32 {
+        self.width * self.height
+    }
+}
+
+a) The width and height parameters of the area function
+b) The return type of the area function
+c) The type that follows the impl keyword, which in this case is Rectangle
+d) The &self parameter of the area function
+
+5) What is the main purpose of structs?
+
+a) To let you create custom types that are meaningful for your domain
+b) To keep associated pieces of data connected to each other
+c) To name each piece of data to make your code clear
+d) All of the above

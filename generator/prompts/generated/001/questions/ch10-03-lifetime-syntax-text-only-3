@@ -1,0 +1,51 @@
+
+
+1. According to the text, why was it historically necessary to add explicit lifetime annotations to every reference in Rust?
+
+A. To prevent errors
+
+B. To ensure code compatibility
+
+C. To provide full inference
+
+D. To deter future programmers from guesswork
+
+2. What is the significance of the lifetime elision rules?
+
+A. They form a set of cases where the compiler can safely figure out lifetimes without programmer input
+
+B. They help to predict patterns of code usage
+
+C. They provide a way to resolve ambiguity in code
+
+D. They are a set of guidelines for Rust programmers to follow
+
+3. What is the relationship between input and output lifetimes?
+
+A. Input lifetimes must always be longer than output lifetimes
+
+B. Output lifetimes are a subset of input lifetimes
+
+C. Output lifetimes can be independent of input lifetimes
+
+D. All of the above
+
+4. Which rule applies when there are multiple input lifetimes, one of which is &self or &mut self?
+
+A. The first rule
+
+B. The second rule
+
+C. The third rule
+
+D. None of the above
+
+5. What does the text say about the future of Rust programming?
+
+A. It will become increasingly necessary to add explicit lifetime annotations
+
+B. It will become increasingly difficult to add explicit lifetime annotations
+
+C. The number of explicit lifetime annotations required will stay the same
+
+D. The number of explicit lifetime annotations required will decrease

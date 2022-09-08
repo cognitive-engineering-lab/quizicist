@@ -1,0 +1,55 @@
+
+
+1. What does the error in Listing 10-23 show?
+
+a) That the reference returned by the longest function is not valid for the println! statement.
+
+b) That the borrow checker disallows the code in Listing 10-23 as possibly having an invalid reference.
+
+c) That the longest function will always return the first parameter rather than the longest string slice.
+
+d) That the lifetime of the reference returned by the longest function is not related to the lifetime of the parameters at all.
+
+
+2. Why is it a problem if the return value lifetime is not related to the lifetime of the parameters at all?
+
+a) It will cause a dangling reference.
+
+b) It will violate memory safety.
+
+c) Rust won't let us create a dangling reference.
+
+d) It will cause an error when compiling the code.
+
+
+3. Which statement about lifetime parameters is true?
+
+a) Once they're connected, Rust has enough information to allow memory-safe operations and disallow operations that would create dangling pointers.
+
+b) They need to be specified for every reference in a struct's definition.
+
+c) They're only necessary when returning a reference from a function.
+
+d) Every reference has a lifetime.
+
+
+4. What does it mean if an instance of a struct can't outlive the reference it holds in its part field?
+
+a) The instance can't be created before the reference.
+
+b) The instance can't outlive the data it's referencing.
+
+c) The reference can't outlive the instance.
+
+d) The instance can't outlive the struct it's a part of.
+
+
+5. What's the purpose of lifetime annotations?
+
+a) To specify the lifetime of the references in a struct's definition
+
+b) To connect the lifetimes of various parameters and return values of functions
+
+c) To ensure that every reference has a lifetime
+
+d) To allow memory-safe operations and disallow operations that would create dangling pointers

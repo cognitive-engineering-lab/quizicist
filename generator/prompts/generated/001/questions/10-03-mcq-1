@@ -1,0 +1,29 @@
+Which of the following is NOT a valid lifetime annotation?
+Incorrect: &'a i32
+Correct: &a i32
+Incorrect: &'i32
+Correct: &i32
+
+In order for a function to take two references with different lifetimes as arguments, 
+Correct: both references must have the same lifetime annotation
+Incorrect: both references must have different lifetime annotations
+Correct: the function must have a generic lifetime parameter specifying how the lifetimes of the two references relate to each other
+Incorrect: the function signature must explicitly state the lifetime of the returned reference
+
+What does this function signature tell Rust?
+for some lifetime 'a, the function takes two parameters, both of which are string slices that live at least as long as lifetime 'a
+Incorrect: for some lifetime 'a, the function takes two parameters, both of which are string slices that live at most as long as lifetime 'a
+Correct: for some lifetime 'a, the function takes two parameters, both of which are string slices that live at least as long as lifetime 'a, and the function returns a string slice that lives at least as long as lifetime 'a
+Incorrect: for some lifetime 'a, the function takes two parameters, both of which are string slices that live at least as long as lifetime 'a, and the function returns a string slice that lives at most as long as lifetime 'a
+
+Lifetime annotations 
+Incorrect: are meant to tell Rust how generic lifetime parameters of multiple references relate to each other and nothing else
+Incorrect: only have meaning in the context of the longest function
+Correct: are meant to tell Rust how generic lifetime parameters of multiple references relate to each other
+Incorrect: do not change how long any of the references live
+
+Listing 10-23 will not compile because 
+Incorrect: the lifetime of result is not the same as the lifetime of string1
+Incorrect: the lifetime of result is not the same as the lifetime of string2
+Correct: the lifetime of result is not the same as the smaller lifetime of string1 and string2
+Incorrect: the lifetime of result is not the smaller lifetime of string1 and string2

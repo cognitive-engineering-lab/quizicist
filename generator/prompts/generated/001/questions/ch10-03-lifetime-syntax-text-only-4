@@ -1,0 +1,81 @@
+
+
+1. What does the third lifetime elision rule state?
+
+A. That references in method signatures can be tied to the lifetime of references in the struct's fields.
+B. That lifetime annotations are not necessary in method signatures.
+C. That the return type gets the lifetime of &self.
+
+2. What is the lifetime of all string literals?
+
+A. 'static
+B. 'a
+C. 'b
+
+3. What is the syntax of specifying generic type parameters, trait bounds, and lifetimes all in one function?
+
+A. use std::fmt::Display;
+
+fn longest_with_an_announcement<'a, T>(
+    x: &'a str,
+    y: &'a str,
+    ann: T,
+) -> &'a str
+where
+    T: Display,
+{
+    println!("Announcement! {}", ann);
+    if x.len() > y.len() {
+        x
+    } else {
+        y
+    }
+}
+
+B. use std::fmt::Display;
+
+fn longest_with_an_announcement<'a, T>(
+    x: &'a str,
+    y: &'a str,
+    ann: T,
+) -> &'a str
+where
+    T: Display,
+{
+    println!("Announcement! {}", ann);
+    if x.len() > y.len() {
+        x
+    } else {
+        y
+    }
+}
+
+C. use std::fmt::Display;
+
+fn longest_with_an_announcement<'a, T>(
+    x: &'a str,
+    y: &'a str,
+    ann: T,
+) -> &'a str
+where
+    T: Display,
+{
+    println!("Announcement! {}", ann);
+    if x.len() > y.len() {
+        x
+    } else {
+        y
+    }
+}
+
+4. What is the difference between a method and a function?
+
+A. A method is a function that is associated with a struct, and a function is not.
+B. A function can only be called from within a method, and a method can be called from anywhere.
+C. There is no difference.
+
+5. What is the significance of the 'a in <'a, T>?
+
+A. The 'a is a generic lifetime parameter.
+B. The 'a is a generic type parameter.
+C. There is no significance.

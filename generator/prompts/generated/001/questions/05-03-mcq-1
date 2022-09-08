@@ -1,0 +1,34 @@
+What is the difference between an associated function and a method?
+
+Correct: Associated functions don't take an instance of the type as a parameter
+Incorrect: Associated functions don't have a self parameter
+Incorrect: Associated functions can't access the fields of an instance
+Incorrect: Associated functions can't be called on an instance
+
+Which of the following is not a valid way to create a new struct?
+
+Correct: Self {width: 10}
+Incorrect: Self(10)
+Incorrect: Self {width: 10, height: 10}
+Incorrect: Self::new(10, 10)
+
+What is the return type of the area method?
+
+Correct: u32
+Incorrect: f32
+Incorrect: i32
+Incorrect: &self
+
+What is the return type of the can_hold method?
+
+Correct: bool
+Incorrect: u32
+Incorrect: f32
+Incorrect: &self
+
+What does the :: syntax do?
+
+Correct: Call an associated function
+Incorrect: Access a namespace
+Incorrect: Call a method
+Incorrect: Access a field

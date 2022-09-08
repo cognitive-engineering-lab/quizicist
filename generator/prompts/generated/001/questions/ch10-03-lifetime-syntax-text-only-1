@@ -1,0 +1,26 @@
+
+
+1. What does the longest function return? 
+A. The longest string 
+B. A reference to the longest string 
+C. A reference to the longest string, with a lifetime parameter 'a
+
+2. What is the relationship between the lifetimes of the parameters and the return value? 
+A. The returned reference will be valid as long as both the parameters are valid. 
+B. The returned reference will be valid as long as the parameter x is valid. 
+C. The returned reference will be valid as long as the parameter y is valid.
+
+3. What does it mean when we specify the lifetime parameters in this function signature? 
+A. We're changing the lifetimes of any values passed in or returned. 
+B. We're specifying that the borrow checker should reject any values that don't adhere to these constraints. 
+C. We're specifying that the borrow checker should accept any values that don't adhere to these constraints.
+
+4. When annotating lifetimes in functions, where do the annotations go? 
+A. In the function signature 
+B. In the function body 
+C. In the function signature and the function body
+
+5. What is the lifetime of the reference in result if string1 and string2 have different concrete lifetimes? 
+A. The lifetime of result will be the smaller lifetime of the two arguments. 
+B. The lifetime of result will be the larger lifetime of the two arguments. 
+C. The lifetime of result will be the same lifetime as string1.

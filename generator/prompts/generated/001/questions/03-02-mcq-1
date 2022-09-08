@@ -1,0 +1,43 @@
+What is the output of the following code?
+fn main() {
+    let x = 5;
+    let y = if x == 5 { 10 } else { 15 };
+    let z = if x < 10 { 10 } else { 15 };
+    println!("x is {} and y is {} and z is {}", x, y, z);
+}
+
+Correct: x is 5 and y is 10 and z is 10
+Incorrect: x is 5 and y is 10 and z is 15
+Incorrect: x is 5 and y is 15 and z is 10
+Incorrect: x is 5 and y is 15 and z is 15
+
+A char type in Rust:
+Correct: Can represent more than just ASCII.
+Incorrect: Is 4 bytes in size.
+Incorrect: Represents a Unicode Scalar Value.
+Incorrect: Is a string literal.
+
+Which of the following is not a compound type in Rust?
+Correct: i32
+Incorrect: Array
+Incorrect: Tuple
+Incorrect: Vector
+
+The ownership of the variable s will be moved to ____ after the following code executes.
+let s1 = String::from("hello");
+let s2 = s1;
+
+Correct: s2
+Incorrect: s1
+Incorrect: s1 and s2
+Incorrect: None of the above.
+
+The ownership of the variable s will be moved to ____ after the following code executes.
+let s1 = gives_ownership();
+let s2 = String::from("hello");
+let s3 = takes_and_gives_back(s2);
+
+Correct: s3
+Incorrect: s2
+Incorrect: s1
+Incorrect: s1 and s3

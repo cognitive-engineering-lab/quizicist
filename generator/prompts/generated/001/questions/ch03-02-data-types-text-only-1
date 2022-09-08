@@ -1,0 +1,31 @@
+
+
+1. What is Rust's char type four bytes in size?
+a. So that it can represent a lot more than just ASCII
+b. So that it can represent a Unicode Scalar Value
+c. To match the size of other programming language's char types
+d. So that it can easily be stored on the stack
+
+2. What is the lenght of a Rust tuple?
+a. 2
+b. 3
+c. 4
+d. Fixed
+
+3. What is the difference between an array and a vector in Rust?
+a. An array is more flexible than a vector
+b. An array cannot grow or shrink in size, whereas a vector can
+c. An array is stored on the heap, whereas a vector is stored on the stack
+d. An array can store values of different types, whereas a vector cannot
+
+4. What does the expression let a = [3; 5] do?
+a. It initializes an array named a with 5 elements that are all set to the value 3
+b. It set the value of a to 3
+c. It initializes an array named a with 3 elements
+d. It initializes an array named a with 5 elements
+
+5. What happens if you try to access an element of an array that is past the end of the array?
+a. It will print out an error message
+b. It will print out the corresponding value at that index in the array
+c. It will initializes an array with that index
+d. Rust will panic

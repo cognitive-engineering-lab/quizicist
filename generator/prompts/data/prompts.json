@@ -1,0 +1,12 @@
+{
+    "text-only": {
+        "before-text": "Based on the text between the =====, generate 5 multiple-choice questions to test a reader's comprehension of the content\n\n=====\n",
+        "after-text": "\n=====\n5 multiple-choice questions:"
+    },
+    "text-with-mcqs": {
+        "before-text": "Based on the text between the =====, generate 5 multiple-choice questions to test a reader's comprehension of the content\n\n=====\n",
+        "after-text": "\n=====",
+        "before-quiz": "\nHere are some example questions:\n",
+        "after-quiz": "\n5 new multiple-choice questions:\n"
+    }
+}

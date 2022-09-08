@@ -1,0 +1,31 @@
+
+
+1. What is the main aim of lifetimes?
+A. To prevent dangling references
+B. To ensure references are valid
+C. To annotate lifetimes
+D. To compare scopes
+
+2. What is the borrow checker?
+A. A Rust compiler tool that compares scopes to determine whether all borrows are valid
+B. A Rust compiler tool that checks for lifetimes
+C. A Rust compiler tool that checks for dangling references
+D. A Rust compiler tool that checks for valid references
+
+3. What does it mean when a lifetime is "larger" than another?
+A. It will end first
+B. It will end later
+C. It will contain more data
+D. It will contain less data
+
+4. Why is it preferable to use string slices rather than strings as parameters?
+A. So the function can take ownership of its parameters
+B. So the function can't take ownership of its parameters
+C. So the function can't borrow its parameters
+D. So the function can borrow its parameters
+
+5. What does it mean when a reference has a lifetime of 'a?
+A. It will end first
+B. It will end later
+C. It will contain more data
+D. It will contain less data

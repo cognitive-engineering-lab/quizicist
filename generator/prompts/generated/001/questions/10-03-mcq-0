@@ -1,0 +1,56 @@
+What does the Rust borrow checker do?
+Incorrect: It ensures that all pointers are valid
+Incorrect: It ensures that all references are valid
+Correct: It compares the scopes of variables to ensure that all borrows are valid
+Incorrect: It determines which type of reference to use
+
+
+
+If a reference has a lifetime of 'a, and it refers to an object with a lifetime of 'b, 
+Incorrect: The lifetime of 'a must be greater than the lifetime of 'b
+Correct: The lifetime of 'b must be greater than the lifetime of 'a
+Incorrect: The lifetimes of 'a and 'b must be the same
+Incorrect: There is no relationship between the lifetimes of 'a and 'b
+
+
+
+What will the following code print?
+
+fn main() {
+    let string1 = String::from("abcd");
+    let string2 = "xyz";
+
+    let result = longest(string1.as_str(), string2);
+    println!("The longest string is {}", result);
+}
+
+Incorrect: The longest string is xyz
+Correct: The longest string is abcd
+Incorrect: The longest string is abcdxyz
+Incorrect: The longest string is 5
+
+
+
+Why does Rust need us to annotate lifetimes?
+Incorrect: So that the borrow checker can determine which references are valid
+Incorrect: So that the compiler can infer the type of each reference
+Correct: So that the compiler can infer the lifetime of each reference
+Incorrect: So that the compiler can figure out which functions to call
+
+
+
+What is the lifetime of the variable x in the following code?
+
+fn main() {
+    let x = 5;            // ----------+-- 'b
+                          //           |
+    let r = &x;           // --+-- 'a  |
+                          //   |       |
+    println!("r: {}", r); //   |       |
+                          // --+       |
+}                         // ----------+
+
+Incorrect: 'a
+Incorrect: 'b
+Incorrect: 'x
+Correct: 'static

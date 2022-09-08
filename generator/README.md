@@ -59,3 +59,18 @@ Whether the distractors are relevant to the context and question.
 
 ### Distracting ability
 Whether the distractors can mislead the test-taker.
+
+# Research questions/notes
+## Completion size/count
+As described in OpenAI's [documentation](https://beta.openai.com/docs/api-reference/completions/create#completions/create-max_tokens), the token length of the prompt + completion cannot exceed the model's maximum context length (either 2048 or 4096, depending on which model).
+
+Some chapters contain content which already is well above the token limit for even the largest models. There are a couple options for working around this:
+    - Split the content into n sections, generate 10/n questions per chunk of content (total of 10 questions)
+    - Remove certain content types (code, headings, console output)
+    - Use recursive task decomposition as explained in this [OpenAI blog post](https://openai.com/blog/summarizing-books/)
+
+## Answer context
+Feed context into fine-tuned model?
+
+## Further prompt engineering
+Instead of providing an example question, provide a template for questions?

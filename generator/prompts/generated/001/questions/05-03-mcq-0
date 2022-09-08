@@ -1,0 +1,48 @@
+What is the first parameter of a method always called?
+Correct: self
+Incorrect: first
+Incorrect: &self
+Incorrect: &mut self
+
+What does the '&' symbol represent in a method signature?
+Correct: Borrows the instance immutably
+Incorrect: Borrows the instance mutably
+Incorrect: Takes ownership of the instance
+Incorrect: Takes ownership of the instance and mutates it
+
+What does the method call rect1.width() return?
+Correct: True if the width field is greater than 0, false if it is 0
+Incorrect: The width of the Rectangle
+Incorrect: True
+Incorrect: False
+
+What is the output of the following code?
+
+#[derive(Debug)]
+struct Rectangle {
+    width: u32,
+    height: u32,
+}
+
+impl Rectangle {
+    fn area(&self) -> u32 {
+        self.width * self.height
+    }
+}
+
+fn main() {
+    let rect1 = Rectangle {
+        width: 30,
+        height: 50,
+    };
+
+    println!(
+        "The area of the rectangle is {} square pixels.",
+        rect1.area()
+    );
+}
+
+Correct: The area of the rectangle is 1500 square pixels.
+Incorrect: The area of the rectangle is 30 square pixels.
+Incorrect: The area of the rectangle is 50 square pixels.
+Incorrect: The area of the rectangle is Rectangle { width: 30, height: 50 }
