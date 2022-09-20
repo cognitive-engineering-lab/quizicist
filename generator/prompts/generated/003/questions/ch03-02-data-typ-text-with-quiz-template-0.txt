@@ -1,0 +1,34 @@
+
+
+Question: What is the type of an integer value that can store numbers from -(2n - 1) to 2n - 1 - 1 inclusive, where n is the number of bits that variant uses?
+Correct answer: i8
+Incorrect answer: i32
+Incorrect answer: u8
+Incorrect answer: f32
+
+Question: What is the size of a Boolean value in Rust?
+Correct answer: 1 byte
+Incorrect answer: 2 bytes
+Incorrect answer: 4 bytes
+Incorrect answer: 8 bytes
+
+Question: What is the size of a char value in Rust?
+Correct answer: 4 bytes
+Incorrect answer: 1 byte
+Incorrect answer: 2 bytes
+Incorrect answer: 8 bytes
+
+Question: What is the default type for an integer value in Rust?
+Correct answer: i32
+Incorrect answer: u32
+Incorrect answer: f32
+Incorrect answer: char
+
+Question: What does the type annotation in the following example tell Rust?
+
+let guess: u32 = "42".parse().expect("Not a number!");
+
+Correct answer: that the value associated with "guess" should be an unsigned integer that takes up 32 bits of space
+Incorrect answer: that the value associated with "guess" should be an integer that takes up 32 bits of space
+Incorrect answer: that the value associated with "guess" should be an unsigned integer that takes up 64 bits of space
+Incorrect answer: that the value associated with "guess" should be an integer that takes up 64 bits of space

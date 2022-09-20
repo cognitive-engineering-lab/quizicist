@@ -1,0 +1,40 @@
+Question: What is the size of Rust's char type?
+Correct answer: 4 bytes
+Incorrect answer: 2 bytes
+Incorrect answer: 1 byte
+Incorrect answer: 8 bytes
+
+Question: What is the range of Unicode Scalar Values that a char in Rust can represent?
+Correct answer: U+0000 to U+D7FF and U+E000 to U+10FFFF inclusive
+Incorrect answer: U+0000 to U+FFFF inclusive
+Incorrect answer: U+0000 to U+D7FF inclusive
+Incorrect answer: U+E000 to U+10FFFF inclusive
+
+Question: What is the difference between a tuple and an array in Rust?
+Correct answer: A tuple is a general way of grouping together a number of values with a variety of types into one compound type. Tuples have a fixed length: once declared, they cannot grow or shrink in size. Arrays are useful when you want your data allocated on the stack rather than the heap or when you want to ensure you always have a fixed number of elements.
+Incorrect answer: Arrays are a general way of grouping together a number of values with a variety of types into one compound type. Arrays have a fixed length: once declared, they cannot grow or shrink in size. Tuples are useful when you want your data allocated on the stack rather than the heap or when you want to ensure you always have a fixed number of elements.
+Incorrect answer: A tuple is a general way of grouping together a number of values with a variety of types into one compound type. Arrays have a fixed length: once declared, they cannot grow or shrink in size.
+Incorrect answer: A tuple is a general way of grouping together a number of values with a variety of types into one compound type. Tuples have a fixed length: once declared, they cannot grow or shrink in size. Arrays are useful when you want your data allocated on the stack rather than the heap or when you want to ensure you always have a fixed number of elements. Arrays are also useful when you want to be able to grow or shrink the size as needed.
+
+Question: How do you initialize an array to contain the same value for each element?
+Correct answer: By specifying the initial value, followed by a semicolon, and then the length of the array in square brackets.
+Incorrect answer: By specifying the initial value, followed by the length of the array in square brackets, and then a semicolon.
+Incorrect answer: By specifying the length of the array in square brackets, followed by a semicolon, and then the initial value.
+Incorrect answer: By specifying the length of the array in square brackets, followed by the initial value, and then a semicolon.
+
+Question: What is the output of the following code?
+
+let a = [1, 2, 3, 4, 5];
+
+let index = 10;
+
+let element = a[index];
+
+println!("The value of the element at index {index} is: {element}");
+
+Correct answer:
+
+The program resulted in a runtime error at the point of using an invalid value in the indexing operation. The program exited with an error message and didn’t execute the final println! statement.
+Incorrect answer: The value of the element at index 10 is: 1
+Incorrect answer: The value of the element at index 10 is: 5
+Incorrect answer: The value of the element at index 10 is: 3

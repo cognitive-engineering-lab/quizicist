@@ -1,0 +1,29 @@
+Question: Which of the following is a lifetime annotation?
+Correct answer: 'a
+Incorrect answer: a
+Incorrect answer: '
+Incorrect answer: "a"
+
+Question: Which of the following is not a lifetime annotation?
+Correct answer: a
+Incorrect answer: 'a
+Incorrect answer: '
+Incorrect answer: "a"
+
+Question: What do lifetime annotations do?
+Correct answer: Describe the relationships of the lifetimes of multiple references to each other
+Incorrect answer: Declare the generic lifetime parameters inside angle brackets between the function name and the parameter list
+Incorrect answer: Change how long any of the references live
+Incorrect answer: Affect the lifetimes
+
+Question: What is the main aim of lifetimes?
+Correct answer: To prevent dangling references
+Incorrect answer: To prevent the use of references
+Incorrect answer: To stop references from being valid
+Incorrect answer: To change the scope of references
+
+Question: What is the difference between a reference's lifetime and a generic lifetime parameter?
+Correct answer: A reference's lifetime is how long the reference is valid, while a generic lifetime parameter is a placeholder for the reference's lifetime
+Incorrect answer: There is no difference
+Incorrect answer: A reference's lifetime is a placeholder for the lifetime of other references, while a generic lifetime parameter is how long the reference is valid
+Incorrect answer: A generic lifetime parameter is how long the reference is valid, while a reference's lifetime is a placeholder for the lifetime of other references

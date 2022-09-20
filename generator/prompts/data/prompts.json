@@ -8,5 +8,9 @@
         "after-text": "\n=====",
         "before-quiz": "\nHere are some example questions:\n",
         "after-quiz": "\n5 new multiple-choice questions:\n"
+    },
+    "text-with-quiz-template": {
+        "before-text": "Based on the text between the =====, generate 5 multiple-choice questions to test a reader's comprehension of the content\n\n=====\n",
+        "after-text": "=====\n\nUse the following format for each question:\nQuestion:\nCorrect answer:\nIncorrect answer:\nIncorrect answer:\nIncorrect answer:\n\n"
     }
 }

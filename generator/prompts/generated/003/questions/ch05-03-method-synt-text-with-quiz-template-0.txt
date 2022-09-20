@@ -1,0 +1,35 @@
+
+
+Question: What keyword is used to declare methods?
+Correct answer: fn
+Incorrect answer: method
+Incorrect answer: struct
+Incorrect answer: impl
+
+
+Question: What is the first parameter of every method?
+Correct answer: self
+Incorrect answer: &self
+Incorrect answer: &mut self
+Incorrect answer: other
+
+
+Question: What does the Self keyword mean in a method's return type?
+Correct answer: Self is an alias for the type that appears after the impl keyword.
+Incorrect answer: The method will return the struct that it was called on.
+Incorrect answer: The method will return the first parameter.
+Incorrect answer: The method will return the result of the code within the method.
+
+
+Question: When is it useful to create an associated function?
+Correct answer: When you want to namespaces the function by the struct.
+Incorrect answer: When you want the function to take ownership of the struct.
+Incorrect answer: When you want the function to be a method.
+Incorrect answer: When you want the function to have the same name as a field.
+
+
+Question: How do you call an associated function?
+Correct answer: By using the :: syntax with the struct name.
+Incorrect answer: By using the . syntax with the struct name.
+Incorrect answer: By using the : syntax with the struct name.
+In

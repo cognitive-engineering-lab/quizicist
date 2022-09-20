@@ -1,0 +1,27 @@
+
+Question: What is the signature of the longest function after the first rule of lifetime elision is applied?
+Correct answer: fn longest<'a, 'b>(x: &'a str, y: &'b str) -> &str
+Incorrect answer: fn longest<'a, 'b>(x: &str, y: &'a str) -> &'a str
+Incorrect answer: fn longest<'a, 'b>(x: &'a str, y: &'b str) -> &'b str
+Incorrect answer: fn longest<'a, 'b>(x: &'a str, y: &'a str) -> &'b str
+
+
+Question: What is the signature of the longest function after the second rule of lifetime elision is applied?
+Correct answer: fn longest<'a, 'b>(x: &'a str, y: &'b str) -> &str
+Incorrect answer: fn longest<'a, 'b>(x: &str, y: &'a str) -> &'a str
+Incorrect answer: fn longest<'a, 'b>(x: &'a str, y: &'b str) -> &'b str
+Incorrect answer: fn longest<'a, 'b>(x: &'a str, y: &'a str) -> &'b str
+
+
+Question: Which rule of lifetime elision does not apply to the longest function?
+Correct answer: The second rule
+Incorrect answer: The first rule
+Incorrect answer: The third rule
+Incorrect answer: The lifetime elision rules do not apply to the longest function
+
+
+Question: Which statement best describes the lifetime of a string literal?
+Correct answer: The lifetime of a string literal is 'static.
+Incorrect answer: The lifetime of a string literal is the same as the lifetime of the variable it is assigned to.
+Incorrect answer: The lifetime of a string literal is shorter than the lifetime of the variable it is assigned to.
+Incorrect answer: The lifetime of a string literal is the same as

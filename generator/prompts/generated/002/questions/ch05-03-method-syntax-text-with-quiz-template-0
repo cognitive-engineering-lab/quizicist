@@ -1,0 +1,29 @@
+Question: What does the first parameter in a method signature always represent?
+Correct answer: The instance of the struct the method is being called on
+Incorrect answer: The type of the struct the method is being called on
+Incorrect answer: The name of the method
+Incorrect answer: The code within the method
+
+Question: What is the difference between a method and a function?
+Correct answer: Methods are defined within the context of a struct, and their first parameter is always self
+Incorrect answer: Methods can only be called from within the same struct
+Incorrect answer: Functions can only be declared with the 'fn' keyword
+Incorrect answer: Methods can take ownership of self, borrow self immutably, or borrow self mutably
+
+Question: Which symbol is used to call methods in Rust?
+Correct answer: The '.' operator
+Incorrect answer: The '&' operator
+Incorrect answer: The '->' operator
+Incorrect answer: The '*' operator
+
+Question: What does Rust do when you call a method with object.something()?
+Correct answer: Rust automatically adds in &, &mut, or * so object matches the signature of the method
+Incorrect answer: Rust automatically dereferences the object
+Incorrect answer: Rust automatically references the object
+Incorrect answer: Rust automatically adds in the object's type
+
+Question: What is a getter?
+Correct answer: A method that returns the value in a field
+Incorrect answer: A method that takes ownership of a field
+Incorrect answer: A method that borrows a field mutably
+Incorrect answer: A method that borrows a field immutably

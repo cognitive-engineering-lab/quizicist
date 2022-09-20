@@ -1,0 +1,37 @@
+Question: What is the return type of the can_hold method?
+Correct answer: bool
+Incorrect answer: u32
+Incorrect answer: &Rectangle
+Incorrect answer: Self
+
+
+
+Question: What is the type of the parameter for the can_hold method?
+Correct answer: &Rectangle
+Incorrect answer: u32
+Incorrect answer: Rectangle
+Incorrect answer: Self
+
+
+
+Question: What is the type of the Self keyword in the return type of the square method?
+Correct answer: Rectangle
+Incorrect answer: u32
+Incorrect answer: &Rectangle
+Incorrect answer: Self
+
+
+
+Question: What does the :: syntax with the struct name do?
+Correct answer: calls an associated function
+Incorrect answer: calls a method
+Incorrect answer: creates a namespace
+Incorrect answer: creates a new instance of the struct
+
+
+
+Question: What are the benefits of using structs over just using tuples?
+Correct answer: Structs let you name each piece of data, which can make your code more clear.
+Incorrect answer: Structs can only hold data, tuples can also hold functions.
+Incorrect answer: There is no benefit, tuples are just as good as structs.
+Incorrect answer: Structs can hold multiple types of data, tuples can only hold one type.

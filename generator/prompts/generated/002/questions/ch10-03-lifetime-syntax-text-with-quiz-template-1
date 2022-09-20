@@ -1,0 +1,54 @@
+Question: What does the following code produce?
+fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
+    if x.len() > y.len() {
+        x
+    } else {
+        y
+    }
+}
+
+Correct answer: The longest string is long string is long.
+Incorrect answer: The longest string is xyz.
+Incorrect answer: Compiler error.
+Incorrect answer: The function longest does not take two parameters.
+Incorrect answer: The function longest does not return a string slice.
+
+Question: What does the lifetime annotation in the following function signature tell Rust?
+fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
+    if x.len() > y.len() {
+        x
+    } else {
+        y
+    }
+}
+
+Correct answer: The returned reference will be valid as long as both the parameters are valid.
+Incorrect answer: The references passed into the function must have the same lifetime.
+Incorrect answer: The lifetime of the reference returned by the longest function is the same as the smaller of the lifetimes of the values referred to by the function arguments.
+Incorrect answer: The function signature tells Rust that the string slice returned from the function will live at least as long as lifetime 'a.
+Incorrect answer: The function signature requires the lifetime parameter 'a to be declared in the function body.
+
+Question: Which of the following is true about generic lifetime parameters in function signatures?
+
+Correct answer: Lifetime annotations in functions go in the function signature, not in the function body.
+Incorrect answer: Generic lifetime parameters must start with an apostrophe (').
+Incorrect answer: The Rust compiler makes more inferences about what we intended the relationships of the lifetimes to be when generic lifetime parameters are used in function signatures.
+Incorrect answer: There can only be one generic lifetime parameter in a function signature.
+Incorrect answer: Generic lifetime parameters are meant to tell Rust how generic lifetime parameters of multiple references relate to each other.
+
+Question: What does this code produce?
+fn main() {
+    let string1 = String::from("long string is long");
+    let result;
+    {
+        let string2 = String::from("xyz");
+        result = longest(string1.as_str(), string2.as_str());
+    }
+    println!("The longest string is {}", result);
+}
+
+Correct answer: Compiler error.
+Incorrect answer: The longest string is long string is long.
+Incorrect answer: The longest string is xyz.
+Incorrect answer: The result variable is not declared in the main function.
+Incorrect answer: The function longest does not take two parameters.

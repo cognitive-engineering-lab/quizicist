@@ -1,27 +1,27 @@
 import os
 import json
-import sys
 import openai
 import os
 from dotenv import load_dotenv
-import numpy
+import sys
+from transformers import GPT2Tokenizer
+import mistletoe
+from mistletoe.ast_renderer import ASTRenderer
+from bs4 import BeautifulSoup
+
+from consts import CHAPTERS, ESTIMATED_QUESTION_SIZE, TOP_LEVEL_COMPONENTS, MAX_CONTEXT_SIZE
 
 load_dotenv()
 openai.api_key = os.getenv("OPENAI_SECRET_KEY")
+BOOK_DIR = os.path.join(os.getenv("RUST_BOOK_PATH"), "src")
+
+tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
 
 PROMPTS_DIR = os.path.join(os.path.dirname(__file__), "prompts")
 DATA_DIR = os.path.join(PROMPTS_DIR, "data")
 
-CHAPTER_DIR = os.path.join(DATA_DIR, "chapters")
 PROMPT_FILE = os.path.join(DATA_DIR, "prompts.json")
 GENERATED_DIR = os.path.join(PROMPTS_DIR, "generated")
-
-# split `key` chapter into `value` prompts
-SPLIT_PROMPTS = {
-    "ch03-02-data-types.json": 2,
-    "ch05-03-method-syntax.json": 2,
-    "ch10-03-lifetime-syntax.json": 5,
-}
 
 
 def get_prompts():
@@ -29,73 +29,150 @@ def get_prompts():
         return json.load(f)
 
 
-def get_chapter_files():
-    return os.listdir(CHAPTER_DIR)
+# clean tags from html within markdown, returning only text
+def clean_html(text):
+    return BeautifulSoup(text, "lxml").text
 
 
-def get_chapter_elements(chapter_file):
-    with open(os.path.join(CHAPTER_DIR, chapter_file)) as f:
-        return json.load(f)
+# load file content from included listings
+def resolve_include(text):
+    # get filename after "{{#<include type>" and remove trailing "}}"
+    filename = text.split(" ")
+
+    if "include" not in filename[0]:
+        return ""
+
+    # remove anchor on path
+    split_filename = filename[1].split(":")
+    if len(split_filename) > 1:
+        listing_path = split_filename[0]
+    else:
+        listing_path = filename[1][:-3]
+
+    listing_path = os.path.join(BOOK_DIR, listing_path)
+
+    with open(listing_path) as f:
+        return f.read()
 
 
-def combine_els(prompt_type, prompt_data, elements, quiz_content):
-    # join elements in each chunk to form prompt
-    content = "\n\n".join([el["content"] for el in elements])
+# recurse over MD AST, extracting raw text from inline elements
+def find_component_text(component):
+    text = []
 
-    prompt_list = [prompt_data["before-text"],
-                   content, prompt_data["after-text"]]
+    for child in component["children"]:
+        if child["type"] == "RawText":
+            # check if content includes file reference
+            if child["content"].startswith("{{#"):
+                text.append(resolve_include(child["content"]))
+            else:
+                text.append(child["content"])
 
-    if prompt_type == "text-with-mcqs":
-        prompt_list.extend([prompt_data["before-quiz"],
-                           quiz_content, prompt_data["after-quiz"]])
+        elif child["type"] == "LineBreak":
+            text.append(" ")
 
-    return "\n".join(prompt_list)
+        elif "children" in child:
+            text.append(find_component_text(child))
 
+    if component["type"] in TOP_LEVEL_COMPONENTS:
+        text.append("\n")
 
-def generate_prompts_split(prompt_type, prompt_data, chapter_file, split=1, filter_els=["quiz", "heading"]):
-    # get chapter content and split into chunks
-    chapter_elements = get_chapter_elements(chapter_file)
-
-    # remove filtered elements, filter quizzes into separate list
-    chapter_elements = list(filter(
-        lambda el: el["type"] not in filter_els, chapter_elements))
-    chapter_quizzes = filter(lambda el: el["type"] == "quiz", chapter_elements)
-
-    # split remaining elements into chunks
-    chapter_elements = numpy.array_split(numpy.array(chapter_elements), split)
-
-    # TODO: add quiz content
-    quiz_content = ""
-
-    return list(map(lambda chunk: combine_els(prompt_type, prompt_data, chunk, quiz_content), chapter_elements))
+    return clean_html("".join(text))
 
 
-def generate_prompts(files=[]):
-    # create directory for question generation pass
-    pass_dir = os.path.join(GENERATED_DIR, "002")
+# whether a top-level markdown child is valid for parsing
+def component_is_valid(component):
+    return component["type"] in TOP_LEVEL_COMPONENTS
+
+
+def extract_component_info(component):
+    text = find_component_text(component)
+    tokens = tokenizer(text)["input_ids"]
+
+    return {
+        "text": text,
+        "tokens": len(tokens),
+    }
+
+
+def parse_chapter(chapter):
+    chapter_file = os.path.join(BOOK_DIR, chapter)
+
+    if not os.path.exists(chapter_file):
+        raise ValueError(f"Chapter MD file {chapter} does not exist")
+
+    with open(chapter_file) as cf:
+        md = cf.read()
+
+    # extract text and token count from parsed markdown
+    parsed = json.loads(mistletoe.markdown(md, ASTRenderer))
+    valid_children = filter(component_is_valid, parsed["children"])
+    children_info = list(map(extract_component_info, valid_children))
+
+    return children_info
+
+
+def shard_chapter(chapter_components):
+    shards = []
+    num_tokens = 0
+    curr_prompt = ""
+
+    for component in chapter_components:
+        component_tokens = component["tokens"]
+        component_text = component["text"]
+
+        if num_tokens + component_tokens > MAX_CONTEXT_SIZE:
+            shards.append(curr_prompt)
+
+            curr_prompt = component_text
+            num_tokens = component_tokens
+        else:
+            curr_prompt += component_text
+            num_tokens += component_tokens
+
+    shards.append(curr_prompt)
+    return shards
+
+
+# create directory for question generation iteration
+def create_output_dir():
+    generation_dirs = os.listdir(GENERATED_DIR)
+    last_generation = max(map(int, generation_dirs))
+    next_generation = str(last_generation + 1).zfill(3)
+
+    pass_dir = os.path.join(GENERATED_DIR, next_generation)
     prompt_dir = os.path.join(pass_dir, "prompts")
     question_dir = os.path.join(pass_dir, "questions")
+
     os.makedirs(prompt_dir, exist_ok=True)
     os.makedirs(question_dir, exist_ok=True)
 
+    return prompt_dir, question_dir
+
+
+def generate_prompts(files=[]):
+    prompt_dir, question_dir = create_output_dir()
     prompts = get_prompts()
-    chapters = files if len(files) > 0 else get_chapter_files()
 
     for prompt_type, prompt_data in prompts.items():
-        for chapter in chapters:
-            prompts = generate_prompts_split(
-                prompt_type, prompt_data, chapter, split=SPLIT_PROMPTS[chapter])
+        for chapter in CHAPTERS:
+            chapter_components = parse_chapter(chapter)
+            chapter_shards = shard_chapter(chapter_components)
 
-            for index, prompt in enumerate(prompts):
-                file_name = f"{chapter[:-5]}-{prompt_type}-{index}"
+            for index, shard in enumerate(chapter_shards):
+                file_name = f"{chapter[:-5]}-{prompt_type}-{index}.txt"
                 print(f"Running completion for prompt {index} of {file_name}")
+
+                prompt_list = [prompt_data["before-text"],
+                               shard, prompt_data["after-text"]]
+
+                prompt = "\n".join(prompt_list)
 
                 with open(os.path.join(prompt_dir, file_name), "w+") as f:
                     f.write(prompt)
 
                 try:
                     completion = openai.Completion.create(
-                        engine="text-davinci-002", prompt=prompt, max_tokens=2000)
+                        engine="text-davinci-002", prompt=prompt, max_tokens=5 * ESTIMATED_QUESTION_SIZE)
                 except openai.error.InvalidRequestError:
                     print(
                         f"ERROR: too many tokens in prompt for {chapter}, consider splitting it into more prompts")

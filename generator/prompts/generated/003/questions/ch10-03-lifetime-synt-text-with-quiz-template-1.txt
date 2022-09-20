@@ -1,0 +1,5 @@
+Question: What is the first rule that the compiler uses to figure out the lifetimes of the references?
+Answer: The compiler assigns a lifetime parameter to each parameter that’s a reference.
+Incorrect answer: The compiler uses three rules to figure out the lifetimes of the references.
+Incorrect answer: The compiler assigns a lifetime parameter to each parameter.
+Incorrect answer: If there is exactly one input lifetime parameter, that lifetime is assigned to all output lifetime parameters.

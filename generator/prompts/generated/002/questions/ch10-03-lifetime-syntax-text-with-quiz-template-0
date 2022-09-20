@@ -1,0 +1,29 @@
+Question: What is the main aim of lifetimes?
+Correct answer: To prevent dangling references
+Incorrect answer: To ensure references are valid
+Incorrect answer: To annotate relationships
+Incorrect answer: To compare scopes
+
+Question: What does the Rust compiler do with lifetimes?
+Correct answer: Uses a borrow checker
+Incorrect answer: Determines if the lifetimes are valid
+Incorrect answer: Checks if the program will compile
+Incorrect answer: Compares the size of the lifetimes
+
+Question: What is the difference between 'a and 'b in Listing 10-18?
+Correct answer: 'a is the lifetime of x and 'b is the lifetime of r
+Incorrect answer: 'a is the lifetime of r and 'b is the lifetime of x
+Incorrect answer: There is no difference
+Incorrect answer: 'a is the outer scope and 'b is the inner scope
+
+Question: How do you annotate lifetimes?
+Correct answer: By using generic lifetime parameters
+Incorrect answer: By using references
+Incorrect answer: By using scopes
+Incorrect answer: By using variables
+
+Question: What is the outcome of the code in Listing 10-20?
+Correct answer: It doesn't compile
+Incorrect answer: It compiles without any errors
+Incorrect answer: It prints "The longest string is abcd"
+Incorrect answer: It prints "The longest string is xyz"

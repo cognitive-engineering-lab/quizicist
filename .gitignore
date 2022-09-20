@@ -2,3 +2,5 @@
 gpt-quiz
 
 .env
+
+**.pyc

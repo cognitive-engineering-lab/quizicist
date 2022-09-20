@@ -1,0 +1,29 @@
+Question: What does the u in u32 stand for?
+Correct answer: Unsigned
+Incorrect answer: Upper
+Incorrect answer: Unit
+Incorrect answer: 32-bit
+
+Question: What is the size of a Boolean in Rust?
+Correct answer: 1 byte
+Incorrect answer: 2 bytes
+Incorrect answer: 4 bytes
+Incorrect answer: 8 bytes
+
+Question: When integer overflow occurs in Rust, what is the default behavior?
+Correct answer: The program panics
+Incorrect answer: The variable is set to the minimum or maximum value that the type can hold
+Incorrect answer: The program does nothing
+Incorrect answer: The variable is set to 0
+
+Question: What type of number is a floating point number?
+Correct answer: A number with a decimal component
+Incorrect answer: A number without a decimal component
+Incorrect answer: A number that is 32 bits in size
+Incorrect answer: A number that is 64 bits in size
+
+Question: What is the default type for a floating point number in Rust?
+Correct answer: f64
+Incorrect answer: f32
+Incorrect answer: f128
+Incorrect answer: There is no default type
