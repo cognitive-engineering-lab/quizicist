@@ -1,0 +1,31 @@
+ Rust provides a borrow checker to ensure data referenced by a variable will not go out of scope before the variable does.
+Question: Why does Rust provide a borrow checker?
+Correct answer: To ensure data referenced by a variable will not go out of scope before the variable does.
+Incorrect answer: To ensure variables are declared before they are used.
+Incorrect answer: To ensure variables are initialized before they are used.
+Incorrect answer: To ensure all variables are used before the program ends.
+
+Idea: Every reference in Rust has a lifetime, which is the scope for which that reference is valid.
+Question: What is a lifetime?
+Correct answer: The scope for which a reference is valid.
+Incorrect answer: The amount of time a program will take to execute.
+Incorrect answer: The amount of data a program will process.
+Incorrect answer: The amount of memory a program will use.
+
+Idea: Most of the time, lifetimes are implicit and inferred, just like most of the time, types are inferred.
+Question: How are lifetimes handled most of the time?
+Correct answer: Implicitly and inferred, like most types.
+Incorrect answer: Always explicitly specified.
+Incorrect answer: Explicitly specified when multiple types are possible.
+Incorrect answer: Explicitly specified when multiple lifetimes are possible.
+
+Idea: One detail we didn’t discuss in the “References and Borrowing” section in Chapter 4 is that every reference in Rust has a lifetime.
+Question: What detail about references was not discussed in the “References and Borrowing” section of Chapter 4?
+Correct answer: Every reference has a lifetime.
+Incorrect answer: References can only point to data.
+Incorrect answer: Data can only have one reference to it.
+Incorrect answer: Mutable references cannot point to immutable data.
+
+Idea: Annotating lifetimes is not even a concept most other programming languages have.
+Question: What is true about annotations in Rust?
+Correct answer: Annotating lifetimes is not a concept in most other programming languages

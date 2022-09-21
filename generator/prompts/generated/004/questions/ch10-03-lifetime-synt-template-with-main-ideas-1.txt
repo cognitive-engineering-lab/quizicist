@@ -1,0 +1,23 @@
+
+
+In Rust, every reference has a lifetime and you need to specify lifetime parameters for functions with references.
+
+Question:
+
+What is true about references in Rust?
+
+Correct answer:
+
+Every reference has a lifetime.
+
+Incorrect answer:
+
+Lifetime parameters are only required for functions with references.
+
+Incorrect answer:
+
+Lifetime parameters can only be specified for function parameters.
+
+Incorrect answer:
+
+Lifetime parameters are not required for return values.

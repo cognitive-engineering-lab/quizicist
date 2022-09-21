@@ -1,0 +1,27 @@
+ Defining methods within the context of a struct
+Question: Methods are analogous to which of the following?
+Correct answer: Functions
+Incorrect answer: Structs
+Incorrect answer: Variables
+Incorrect answer: Traits
+
+Idea: The first parameter in a method is always self
+Question: Which of the following is true about the first parameter in a method?
+Correct answer: It is always self
+Incorrect answer: It can be any name
+Incorrect answer: It is always a reference
+Incorrect answer: It has to be the same type as the struct
+
+Idea: Associated functions are not methods
+Question: Which of the following is true about associated functions?
+Correct answer: They don't have a self parameter
+Incorrect answer: They can be called with the struct's name
+Incorrect answer: They can only be called on an instance of a struct
+Incorrect answer: They can take multiple parameters
+
+Idea: Multiple impl blocks are valid syntax
+Question: Can a struct have multiple impl blocks?
+Correct answer: Yes
+Incorrect answer: No
+Incorrect answer: Only for generic types
+Incorrect answer: Only for trait objects

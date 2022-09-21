@@ -1,0 +1,25 @@
+ The lifetimes of references in a function signature are determined by applying elision rules.
+Question: Which of the following is an elision rule?
+Correct answer: Each parameter gets its own lifetime.
+Incorrect answer: The lifetime of the one input parameter gets assigned to the output lifetime.
+Incorrect answer: Lifetimes in a method signature are always assigned to self.
+Incorrect answer: If there is exactly one input lifetime, the lifetime of the one input parameter gets assigned to the output lifetime.
+
+Idea: Each parameter gets its own lifetime.
+Question: What is the signature of a function with one parameter after applying the first elision rule?
+Correct answer: fn first_word<'a>(s: &'a str) -> &'a str
+Incorrect answer: fn first_word<'a>(s: &'ns str) -> &'a str
+Incorrect answer: fn first_word<'a>(s: &'a str) -> &'s str
+Incorrect answer: fn first_word<'a>(s: &'ns str) -> &'s str
+
+Idea: The lifetime of the one input parameter gets assigned to the output lifetime.
+Question: What is the signature of a function with one parameter after applying the second elision rule?
+Correct answer: fn first_word<'a>(s: &'a str) -> &'a str
+Incorrect answer: fn first_word<'a>(s: &'a str) -> &'ns str
+Incorrect answer: fn first_word<'a>(s: &'ns str) -> &'a str
+Incorrect answer: fn first_word<'a>(s: &'ns str) -> &'ns str
+
+Idea: The lifetime of &self gets assigned to the output lifetime.
+Question: What is the signature of a function with one parameter after applying the third elision rule?
+Correct answer: fn first_word<'a>(s: &'a str) -> &'a str
+Incorrect answer: fn first_word<'a>(
