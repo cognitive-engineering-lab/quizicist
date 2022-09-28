@@ -1,0 +1,34 @@
+ What is a promise?
+Answer:
+A) An object that is returned by an asynchronous function, which represents the current state of the operation.
+B) A function that is called when an asynchronous operation is successful.
+C) A function that is called when an asynchronous operation is unsuccessful.
+D) A way to avoid having nested levels of code when using callbacks.
+
+Question: What state does a promise enter when the asynchronous function it is associated with is successful?
+Answer:
+A) fulfills
+B) promises
+C) rejected
+D) settled
+
+Question: How do you add a handler to a promise?
+Answer:
+A) By calling the .then() method and passing in a callback function.
+B) By calling the .error() method and passing in a callback function.
+C) By calling the .catch() method and passing in a callback function.
+D) By calling the .finally() method and passing in a callback function.
+
+Question: What is the difference between the .then() and .catch() methods?
+Answer:
+A) The .then() method is called when an asynchronous operation succeeds, while the .catch() method is called when an asynchronous operation fails.
+B) The .then() method is called when an asynchronous operation fails, while the .catch() method is called when an asynchronous operation succeeds.
+C) The .then() method is called when an asynchronous operation is finished, while the .catch() method is called when an asynchronous operation errors.
+D) There is no difference between the .then() and .catch() methods.
+
+Question: What is a benefit of using promises?
+Answer:
+A) You can avoid ever-increasing levels of indentation.
+B) You can chain together multiple asynchronous function calls.
+C) You can use the .all() method to start multiple asynchronous function calls at the same time.
+D) All of the above.

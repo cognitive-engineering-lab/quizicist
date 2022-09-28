@@ -1,0 +1,36 @@
+
+
+1. What keyword do you use to declare a method?
+
+a. fn
+b. method
+c. struct
+d. impl
+
+2. What is the first parameter of a method always named?
+
+a. self
+b. method
+c. struct
+d. impl
+
+3. Which of the following is not a reason to use a method instead of a function?
+
+a. to provide method syntax
+b. to prevent the caller from using the original instance after the transformation
+c. to provide an associated function that doesn't need an instance of the type
+d. to organize related capabilities together
+
+4. What is the difference between an associated function and a method?
+
+a. Associated functions don't take self as a first parameter, while methods do.
+b. Methods are associated with a struct, while associated functions can be associated with any type.
+c. Associated functions are defined within an impl block, while methods are not.
+d. There is no difference between an associated function and a method.
+
+5. Which of the following is not a way to create a custom type in Rust?
+
+a. Structs
+b. Traits
+c. Enums
+d. Functions

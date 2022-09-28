@@ -1,0 +1,27 @@
+
+
+1. What does adding the "async" keyword to a function do?
+a. Makes the function an asynchronous function
+b. Allows the function to use the "await" keyword
+c. Returns a promise from the function
+d. Makes the function return its value immediately
+
+2. What is the difference between "Promise.all" and "Promise.any"?
+a. "Promise.all" is fulfilled as soon as any of the array of promises is fulfilled, while "Promise.any" is fulfilled when all of the array of promises is fulfilled
+b. "Promise.all" is fulfilled when all of the array of promises is fulfilled, while "Promise.any" is fulfilled as soon as any of the array of promises is fulfilled
+c. "Promise.all" is fulfilled when all of the array of promises is rejected, while "Promise.any" is fulfilled when any of the array of promises is fulfilled
+d. "Promise.all" is fulfilled when any of the array of promises is rejected, while "Promise.any" is fulfilled when all of the array of promises is fulfilled
+
+3. What is the output of the following code?
+```
+const fetchPromise1 = fetch('https://mdn.github.io/learning-area/javascript/apis/fetching-data/can-store/products.json');
+const fetchPromise2 = fetch('https://mdn.github.io/learning-area/javascript/apis/fetching-data/can-store/not-found');
+const fetchPromise3 = fetch('https://mdn.github.io/learning-area/javascript/oojs/json/superheroes.json');
+
+Promise.all([fetchPromise1, fetchPromise2, fetchPromise3])
+  .then((responses) => {
+    for (const response of responses) {
+      console.log(`${response.url}: ${response.status}`);
+    }
+  })
+  .catch((error)

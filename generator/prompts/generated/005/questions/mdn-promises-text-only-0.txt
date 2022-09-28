@@ -1,0 +1,26 @@
+
+
+1) What is a Promise in JavaScript?
+A) an object that represents an asynchronous function
+B) an object that represents a synchronous function
+C) an object returned by an asynchronous function
+
+2) What is the modern, promise-based replacement for XMLHttpRequest?
+A) the fetch() API
+B) the XMLHttpRequest API
+C) the then() API
+
+3) How do you handle errors when using promises?
+A) By adding a catch() handler to the end of the promise chain
+B) By adding a then() handler to the end of the promise chain
+C) By adding a success() handler to the end of the promise chain
+
+4) What is the purpose of Promise.all()?
+A) To start all promises at the same time
+B) To handle errors for all promises
+C) To be notified when all promises have been fulfilled
+
+5) What is the status code for a successful HTTP request?
+A) 200
+B) 404
+C) 500

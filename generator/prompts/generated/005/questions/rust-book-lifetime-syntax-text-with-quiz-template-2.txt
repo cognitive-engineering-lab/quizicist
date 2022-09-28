@@ -1,0 +1,31 @@
+ What is the reason the function in Listing 10-25 compiles without lifetime annotations?
+A) Early versions of Rust didn't require explicit lifetimes for references.
+B) The Rust team found that Rust programmers were entering the same lifetime annotations over and over.
+C) The developers programmed patterns into the compiler's code so the borrow checker could infer the lifetimes in these situations.
+D) TheRust team discovered deterministic patterns that could be applied to eliminate the need for explicit lifetime annotations.
+
+Correct answer: C) The developers programmed patterns into the compiler's code so the borrow checker could infer the lifetimes in these situations.
+
+Incorrect answer: A) Early versions of Rust didn't require explicit lifetimes for references.
+Incorrect answer: B) The Rust team found that Rust programmers were entering the same lifetime annotations over and over.
+Incorrect answer: D) TheRust team discovered deterministic patterns that could be applied to eliminate the need for explicit lifetime annotations.
+
+Question: What does the first rule of the lifetime elision rules specify?
+A) That the lifetime of &self is assigned to all output lifetime parameters
+B) That the lifetime of one input parameter gets assigned to the output lifetime 
+C) That each parameter gets its own lifetime
+
+Answer: C) That each parameter gets its own lifetime
+
+Incorrect answer: A) That the lifetime of &self is assigned to all output lifetime parameters
+Incorrect answer: B) That the lifetime of one input parameter gets assigned to the output lifetime
+
+Question: After applying the first lifetime elision rule, what would the signature of the first_word function in Listing 10-25 be?
+
+A) fn first_word<'a>(s: &'a str) -> &'a str
+B) fn first_word<'a>(s: &'a str) -> &str
+C) fn first_word(s: &str) -> &str
+
+Answer: B) fn first_word<'a>(s: &'a str) -> &str
+
+Incorrect answer: A) fn first_word<'a

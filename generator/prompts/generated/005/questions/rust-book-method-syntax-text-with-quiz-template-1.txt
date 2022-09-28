@@ -1,0 +1,29 @@
+ What is the name of the author of the text?
+Correct answer: Julia Cook
+Incorrect answer: John Cook
+Incorrect answer: Julie Cook
+Incorrect answer: Jacob Cook
+
+Question: What is the main idea of the text?
+Correct answer: The importance of being able to understand and manage anger
+Incorrect answer: The importance of being able to understand and manage sadness
+Incorrect answer: The importance of being able to understand and manage fear
+Incorrect answer: The importance of being able to understand and manage anxiety
+
+Question: How can anger be managed?
+Correct answer: Breathing slowly and deeply
+Incorrect answer: Sleeping
+Incorrect answer: Eating
+Incorrect answer: Exercising
+
+Question: What should you do if you can't calm down?
+Correct answer: Get some help
+Incorrect answer: Ignore it
+Incorrect answer: cry
+Incorrect answer: shout
+
+Question: What is the tone of the text?
+Correct answer: Informative
+Incorrect answer: Sarcastic
+Incorrect answer: Angry
+Incorrect answer: Happy

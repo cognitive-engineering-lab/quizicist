@@ -1,0 +1,31 @@
+
+
+1. What is the main aim of lifetimes?
+a. To prevent dangling references
+b. To ensure references are valid
+c. To compare scopes
+d. To annotate relationships
+
+2. How does Rust determine whether references are valid?
+a. By using a borrow checker
+b. By annotating lifetimes
+c. By comparing scopes
+d. By analyzing lifetimes
+
+3. What is the significance of generic lifetime parameters?
+a. They help Rust determine whether the reference being returned refers to x or y.
+b. They describe the relationships of the lifetimes of multiple references to each other without affecting the lifetimes.
+c. They ensure that the actual references used at runtime are definitely valid.
+d. They prevent dangling references.
+
+4. What is the syntax for lifetime annotations?
+a. The names of lifetime parameters must start with an apostrophe (').
+b. Lifetime annotations are placed after the parameter list, using a space to separate the annotation from the reference's type.
+c. Most people use the name 'a for the first lifetime annotation.
+d. All of the above.
+
+5. What is the relationship between the lifetimes of the parameters and the return value in the longest function?
+a. The return value will be valid as long as the parameters are valid.
+b. The return value will be valid as long as one of the parameters is valid.
+c. There is no relationship between the lifetimes of the parameters and the return value.
+d. The return value will be valid as long as the lifetime of the longest string slice is valid.

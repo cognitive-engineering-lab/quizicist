@@ -1,0 +1,31 @@
+
+
+1. What is an object in JavaScript?
+a) A data type
+b) A collection of related data and/or functionality
+c) A function
+d) An HTML element
+
+2. How do you create an object in JavaScript?
+a) By initializing a variable
+b) By using a constructor
+c) By using an object literal
+d) By chaining dot notation
+
+3. What is the difference between a property and a method in an object?
+a) A property is a function while a method is data
+b) A property is data while a method is a function
+c) A property is an array while a method is an object
+d) There is no difference
+
+4. What does the keyword "this" refer to in an object?
+a) The object's methods
+b) The object's properties
+c) The current object the code is being written inside
+d) The object's values
+
+5. What is the purpose of prototypes in JavaScript?
+a) To create an object instance
+b) To allow an object to inherit properties from other objects
+c) To provide structure for an object
+d) To instantiate a new object

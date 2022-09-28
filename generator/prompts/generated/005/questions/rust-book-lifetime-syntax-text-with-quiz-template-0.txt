@@ -1,0 +1,50 @@
+ What is the main aim of lifetimes?
+A) To prevent dangling references
+B) To ensure references are valid
+C) To annotate the relationships between references
+D) To calculate the longest string
+
+Correct answer: To prevent dangling references
+Incorrect answer: To ensure references are valid
+Incorrect answer: To annotate the relationships between references
+Incorrect answer: To calculate the longest string
+
+Question: What does Rust use to determine whether all borrows are valid?
+A) A compiler
+B) An interpreter
+C) A borrow checker
+D) A runtime
+
+Correct answer: A borrow checker
+Incorrect answer: A compiler
+Incorrect answer: An interpreter
+Incorrect answer: A runtime
+
+Question: How do you declare lifetime parameters in a function signature?
+A) Between the function name and the parameter list
+B) After the parameter list
+C) Before the parameter list
+D) In the body of the function
+
+Correct answer: Between the function name and the parameter list
+Incorrect answer: After the parameter list
+Incorrect answer: Before the parameter list
+Incorrect answer: In the body of the function
+
+Question: What is the relationship between the lifetimes of the parameters and the return value in the longest function?
+A) The lifetime of the return value is the same as the lifetime of the parameters.
+B) The lifetime of the return value is shorter than the lifetime of the parameters.
+C) The lifetime of the return value is longer than the lifetime of the parameters.
+
+Correct answer: The lifetime of the return value is the same as the lifetime of the parameters.
+Incorrect answer: The lifetime of the return value is shorter than the lifetime of the parameters.
+Incorrect answer: The lifetime of the return value is longer than the lifetime of the parameters.
+
+Question: When does Rust require you to annotate types?
+A) When multiple types are possible
+B) When the type is unknown
+C) When the type is a reference
+D) When the type is a struct
+
+Correct answer: When multiple types are possible
+Incorrect answer: When the type is

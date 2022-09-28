@@ -1,0 +1,36 @@
+
+
+1. What is the difference between an arrow function and a regular function?
+
+A. Arrow functions do not have a return statement.
+B. Arrow functions have a shorter syntax.
+C. Arrow functions do not have their own scope.
+D. Arrow functions cannot be used as event listeners.
+
+2. What does the map() method do?
+
+A. It takes each item in an array and passes it into a given function.
+B. It creates a new array from the values returned by a given function.
+C. It assigns a new value to a given variable.
+D. It prints out the value of a given variable.
+
+3. What is the global scope?
+
+A. The top level outside all functions.
+B. The lion enclosure at the zoo.
+C. The part of the code that is locked away in functions.
+D. The console in the browser developer tools.
+
+4. What will happen if you try to print a variable that is not in the same scope as the function?
+
+A. It will print out the value of the variable.
+B. It will throw an error.
+C. It will print out the value of a different variable.
+D. It will print out undefined.
+
+5. What is the purpose of keeping parts of your code locked away in functions?
+
+A. To avoid conflicts with other parts of the code.
+B. To make the code more readable.
+C. To make the code shorter.
+D. To make the code more secure.

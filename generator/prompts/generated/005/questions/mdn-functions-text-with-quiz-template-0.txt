@@ -1,0 +1,49 @@
+ What is a function?
+A: A store for a piece of code that does a single task that is defined in a block
+B: A built in browser code that can't be written in JavaScript
+C: A code that is defined in your custom browser
+D: A code that is part of an object
+
+Correct answer: A
+Incorrect answer: B
+Incorrect answer: C
+Incorrect answer: D
+
+Question: What is the purpose of a function?
+A: To allow you to store a piece of code that does a single task inside a defined block
+B: To call that code whenever you need it using a single short command
+C: To clear up any possible confusion of method versus function
+D: All of the above
+
+Correct answer: D
+Incorrect answer: A
+Incorrect answer: B
+Incorrect answer: C
+
+Question: What is the difference between a function and a method?
+A: A function is part of an object while a method is not
+B: A method is part of an object while a function is not
+C: A function is a code that is defined in your custom browser while a method is not
+D: There is no difference between a function and a method
+
+Correct answer: A
+Incorrect answer: B
+Incorrect answer: C
+Incorrect answer: D
+
+Question: What is an anonymous function?
+A: A function that doesn't have a name
+B: A function that has a name
+C: A function that is part of an object
+D: A function that is part of the browser
+
+Correct answer: A
+Incorrect answer: B
+Incorrect answer: C
+Incorrect answer: D
+
+Question: What is the difference between a built in function and a custom function?
+A: A built in function is a code that is part of an object while a custom function is not
+B: A built in function is part of the browser while a custom function is not
+C: A custom function is part of an object while a built in function is not
+D: There is no difference between a built in function and a custom

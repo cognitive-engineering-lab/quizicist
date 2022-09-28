@@ -1,0 +1,33 @@
+
+
+1. What is the main difference between a string slice and a string literal?
+
+a) A string slice is a reference to a string, while a string literal is a string value.
+b) A string slice is a piece of a string, while a string literal is a string value.
+c) A string slice can be mutable, while a string literal cannot.
+d) There is no difference between string slices and string literals.
+
+2. What does the lifetime annotation 'a in fn longest<'a>(x: &'a str, y: &'a str) -> &'a str mean?
+
+a) That the function takes two string slice parameters and returns the longest string slice.
+b) That the function takes two string parameters and returns the longest string.
+c) That the lifetime of the returned string slice is the same as the lifetime of the shorter of the two string slice parameters.
+d) That the lifetime of the returned string slice is the same as the lifetime of the longer of the two string slice parameters.
+
+3. What does the lifetime annotation 'a in struct ImportantExcerpt<'a> mean?
+
+a) That the struct holds a string slice reference which must have the same lifetime as the struct.
+b) That the struct holds a string reference which must have the same lifetime as the struct.
+c) That the struct holds a string slice reference which must have a shorter lifetime than the struct.
+d) That the struct holds a string reference which must have a shorter lifetime than the struct.
+
+4. Which of the following code snippets would not compile?
+
+a) 
+
+fn main() {
+    let string1 = String::from("abcd");
+    let string2 = "efghijklmnopqrstuvwxyz";
+
+    let result = longest(string1.as_str(), string2);
+    println!("The longest string is {}", result);

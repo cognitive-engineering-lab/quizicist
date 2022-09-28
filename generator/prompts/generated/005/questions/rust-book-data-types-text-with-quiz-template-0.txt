@@ -1,0 +1,29 @@
+ What does the text say Rust's floating-point types are based off of?
+Correct answer: The IEEE-754 standard
+Incorrect answer: The APA standard
+Incorrect answer: The AMA standard
+Incorrect answer: The MLA standard
+
+Question: What does the text say is the size of a Boolean value in Rust?
+Correct answer: One byte
+Incorrect answer: Two bytes
+Incorrect answer: Four bytes
+Incorrect answer: Eight bytes
+ 
+Question: What does the text say Rust's char type represents?
+Correct answer: A Unicode Scalar Value
+Incorrect answer: An ASCII code
+Incorrect answer: A number
+Incorrect answer: A character
+
+Question: What are the two possible values for a Boolean type?
+Correct answer: True and false
+Incorrect answer: On and off
+Incorrect answer: 0 and 1
+Incorrect answer: Right and wrong
+
+Question: What are the two primitive compound types in Rust?
+Correct answer: Tuples and arrays
+Incorrect answer: Strings and characters
+Incorrect answer: Floats and integers
+Incorrect answer: Signs and unsigned numbers

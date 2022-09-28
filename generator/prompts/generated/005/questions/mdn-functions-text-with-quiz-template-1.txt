@@ -1,0 +1,36 @@
+ What is a function in JavaScript?
+A: A set of code that runs when it is called
+B: A block of code that cannot be accessed by code outside it
+C: A value that is returned by a function
+D: A block of code that is run only once
+
+Correct answer: A: A set of code that runs when it is called
+Incorrect answer: B: A block of code that cannot be accessed by code outside it
+Incorrect answer: C: A value that is returned by a function
+Incorrect answer: D: A block of code that is run only once
+
+Question: What is the global scope?
+A: The top level outside all your functions
+B: values defined in the global scope are accessible from everywhere in the code
+C: the lions, zebras, tigers, and penguins are kept in their own enclosures
+
+Correct answer: B: values defined in the global scope are accessible from everywhere in the code
+Incorrect answer: A: The top level outside all your functions
+Incorrect answer: C: the lions, zebras, tigers, and penguins are kept in their own enclosures
+
+Question: What is the purpose of keeping parts of your code locked away in functions?
+A: To avoid having to write the same code multiple times
+B: To keep variables and other things defined inside the function from being accessed by code outside the function
+C: To make your code shorter and more readable
+
+Correct answer: B: To keep variables and other things defined inside the function from being accessed by code outside the function
+Incorrect answer: A: To avoid having to write the same code multiple times
+Incorrect answer: C: To make your code shorter and more readable
+
+Question: What is an arrow function?
+A: A function that can be called from anywhere in the code
+B: A function that can take any number of parameters
+C: A function that only has one line in the curly brackets
+
+Correct answer: C: A function that only has one line in the curly brackets
+Incorrect answer: A: A function that can be called from anywhere in the code

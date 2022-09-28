@@ -1,0 +1,27 @@
+ What is a promise?
+Answer: A promise is an object that may produce a single value some time in the future: either a resolved value, or a reason that it's not resolved (e.g., a network error occurred). A promise may be in one of 3 possible states: fulfilled, rejected, or pending. 
+Incorrect answer: A promise is a Boolean. 
+Incorrect answer: A promise is a function.
+Incorrect answer: A promise is an array. 
+
+Question: What is the function of the keyword "async"? 
+Answer: The async keyword enables you to write asynchronous code as if it were synchronous code. 
+Incorrect answer: The async keyword is used to declare a function. 
+Incorrect answer: The async keyword is used to create an asynchronous function.
+Incorrect answer: There is no such thing as the async keyword. 
+
+Question: What is the output of the following code? 
+const fetchPromise1 = fetch('https://mdn.github.io/learning-area/javascript/apis/fetching-data/can-store/products.json');
+const fetchPromise2 = fetch('https://mdn.github.io/learning-area/javascript/apis/fetching-data/can-store/not-found');
+const fetchPromise3 = fetch('https://mdn.github.io/learning-area/javascript/oojs/json/superheroes.json');
+
+Promise.all([fetchPromise1, fetchPromise2, fetchPromise3])
+  .then((responses) => {
+    for (const response of responses) {
+      console.log(`${response.url}: ${response.status}`);
+    }
+  })
+  .catch((error) => {
+    console.error(`Failed to fetch: ${error}`)
+  });
+Answer: https://mdn.github.io/learning-area/javascript/apis/fetching-data/can-store/products.json:

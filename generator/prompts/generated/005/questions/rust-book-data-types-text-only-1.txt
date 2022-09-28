@@ -1,0 +1,45 @@
+
+
+1. What does a tuple allow you to do that an array does not?
+A. Bind to a single value
+B. Change in size
+C. Access elements by index
+D. Have values of different types
+
+2. What is the output of the following program?
+let months = ["January", "February", "March", "April", "May", "June", "July",
+              "August", "September", "October", "November", "December"];
+
+let a = [3; 5];
+
+println!("{}", a[months.len()]);
+
+A. 3
+B. 5
+C. An error
+D. December
+
+3. What is the type of the following array?
+let a = [1, 2, 3, 4, 5];
+
+A. [i32; 5]
+B. [f64; 5]
+C. [u8; 5]
+D. [i32]
+
+4. What is the value of the following array element?
+let a = [3; 5];
+
+println!("{}", a[2]);
+
+A. 2
+B. 3
+C. An error
+D. 5
+
+5. What happens when you attempt to access an element of an array that is past the end of the array?
+
+A. An error
+B. The element is returned
+C. The program panics
+D. The program exits

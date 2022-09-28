@@ -1,0 +1,30 @@
+ What is a tuple in Rust?
+A) A general way of grouping together a number of values with a variety of types into one compound type
+B) A flexible collection type that is allowed to grow or shrink in size
+C) A single chunk of memory of a known, fixed size that is allocated on the stack
+D) An expression that implicitly returns the unit value
+
+Correct answer: A) A general way of grouping together a number of values with a variety of types into one compound type
+Incorrect answer: B) A flexible collection type that is allowed to grow or shrink in size
+Incorrect answer: C) A single chunk of memory of a known, fixed size that is allocated on the stack
+Incorrect answer: D) An expression that implicitly returns the unit value
+
+Question: What is an array in Rust?
+A) A general way of grouping together a number of values with a variety of types into one compound type
+B) A flexible collection type that is allowed to grow or shrink in size
+C) A single chunk of memory of a known, fixed size that is allocated on the stack
+D) An expression that implicitly returns the unit value
+
+Correct answer: C) A single chunk of memory of a known, fixed size that is allocated on the stack
+Incorrect answer: A) A general way of grouping together a number of values with a variety of types into one compound type
+Incorrect answer: B) A flexible collection type that is allowed to grow or shrink in size
+Incorrect answer: D) An expression that implicitly returns the unit value
+
+Question: What is the unit type in Rust?
+A) A general way of grouping together a number of values with a variety of types into one compound type
+B) A flexible collection type that is allowed to grow or shrink in size
+C) A single chunk of memory of a known, fixed size that is allocated on the stack
+D) An empty value that represents an empty return type
+
+Correct answer: D) An empty value that represents an empty return type
+Incorrect answer: A) A general way of grouping together a number of values with a variety of types into one compound type

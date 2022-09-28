@@ -1,0 +1,29 @@
+ What is an object?
+Correct answer: A collection of related data and/or functionality
+Incorrect answer: A programming language
+Incorrect answer: A file type
+Incorrect answer: A software development method
+
+Question: What is an object property?
+Correct answer: A value that is associated with a name
+Incorrect answer: A function that is associated with a name
+Incorrect answer: A name that is associated with a value
+Incorrect answer: A value that is associated with a function
+
+Question: What is an object method?
+Correct answer: A function that is associated with a name
+Incorrect answer: A name that is associated with a function
+Incorrect answer: A value that is associated with a function
+Incorrect answer: A function that is associated with an object
+
+Question: What is an object literal?
+Correct answer: An object that is defined using curly braces {}
+Incorrect answer: An object that is defined using quotation marks ""
+Incorrect answer: An object that is defined using parentheses ()
+Incorrect answer: An object that is defined using square brackets []
+
+Question: What is a constructor?
+Correct answer: A function that is used to create an object
+Incorrect answer: A function that is used to modify an object
+Incorrect answer: A function that is used to destroy an object
+Incorrect answer: A function that is used to access an object

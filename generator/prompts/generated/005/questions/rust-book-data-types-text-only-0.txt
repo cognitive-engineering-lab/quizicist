@@ -1,0 +1,36 @@
+
+
+1. What does the Rust compiler need in order to know the type of all variables?
+
+A. The type annotation of the variable
+B. The value of the variable
+C. The context in which the variable is used
+D. All of the above
+
+2. Which of the following is NOT a primary scalar type in Rust?
+
+A. Integers
+B. Floating-point numbers
+C. Characters
+D. Booleans
+
+3. Which of the following is NOT a property of the f32 type?
+
+A. 32 bits in size
+B. IEEE-754 standard
+C. Double precision
+D. Single precision
+
+4. What is the range of Unicode Scalar Values that a char type in Rust can represent?
+
+A. U+0000 to U+D7FF
+B. U+E000 to U+10FFFF
+C. U+0000 to U+FFFF
+D. U+D800 to U+DFFF
+
+5. What are the two primitive compound types in Rust?
+
+A. Tuples and arrays
+B. Strings and arrays
+C. Functions and arrays
+D. Tuples and structs

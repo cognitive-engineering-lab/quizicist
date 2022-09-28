@@ -1,0 +1,51 @@
+
+
+1. What is the main purpose of a function?
+
+A. To allow you to store a piece of code that does a single task inside a defined block
+
+B. To provide built-in code for common tasks
+
+C. To allow you to call a block of code multiple times without having to type it out each time
+
+D. To support optional parameters
+
+2. What is the difference between a function and a method?
+
+A. A function is a custom block of code while a method is a built-in function
+
+B. A method is a custom block of code while a function is a built-in function
+
+C. A function is a block of code associated with an object while a method is a block of code not associated with an object
+
+D. There is no difference between a function and a method
+
+3. What is an anonymous function?
+
+A. A function that has no name
+
+B. A function that is not part of the core JavaScript language
+
+C. A function that is defined by the browser
+
+D. A function that is defined by the user
+
+4. What does the addEventListener() function do?
+
+A. It generates a random number
+
+B. It calls a function when an event happens
+
+C. It replaces a specified string with a new string
+
+D. It joins all the items in an array together into a single string
+
+5. What is the default value of the parameter for the array join() function?
+
+A. A comma
+
+B. An empty string
+
+C. 0
+
+D. 1

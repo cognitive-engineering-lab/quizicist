@@ -1,0 +1,31 @@
+
+
+1. Why did the Rust team find thatRust programmers were entering the same lifetime annotations over and over in particular situations?
+A. To make the code more consistent
+B. Because the code wouldn't compile without them
+C. To avoid having to write explicit lifetimes
+D. To make theborrow checker's job easier
+
+2. What does the first rule of lifetime elision dictate?
+A. That each parameter gets its own lifetime
+B. That the lifetime of the one input parameter gets assigned to the output lifetime
+C. That the lifetime of self is assigned to all output lifetime parameters
+D. That more deterministic patterns will be programmed into the compiler
+
+3. Which rule applies when there is more than one input lifetime parameter and one of them is &self or &mut self?
+A. The second rule
+B. The third rule
+C. The first rule
+D. There is no rule that applies
+
+4. What does the lifetime 'static denote?
+A. That the affected reference can live for the entire duration of the program
+B. That the code can be applied to different types
+C. That the code won't have any dangling references
+D. That the code is generic
+
+5. What is the primary benefit of using generic type parameters?
+A. That the code can be applied to different types
+B. That the code is more consistent
+C. That the code is generic
+D. That the code is easier to read

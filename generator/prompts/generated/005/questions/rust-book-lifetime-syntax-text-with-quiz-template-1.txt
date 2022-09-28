@@ -1,0 +1,32 @@
+
+What does the longest function signature telling Rust?
+A. That the lifetime of the reference returned from the longest function is the same as the lifetime of the smaller of the values of the function arguments
+B. That the function takes two parameters, both of which are string slices that live at least as long as the lifetime of the function
+C. That the function signature tells Rust to use the relationships when analyzing the code
+D. That the lifetime of the reference returned by the longest function is the same as the lifetime of the values of the function arguments
+
+Correct answer: B. That the function takes two parameters, both of which are string slices that live at least as long as the lifetime of the function.
+Incorrect answer: A. That the lifetime of the reference returned from the longest function is the same as the lifetime of the smaller of the values of the function arguments
+Incorrect answer: C. That the function signature tells Rust to use the relationships when analyzing the code
+Incorrect answer: D. That the lifetime of the reference returned by the longest function is the same as the lifetime of the values of the function arguments
+
+Question:
+What is the lifetime of the reference in result must be the smaller lifetime of the two arguments?
+A. The lifetime of the first argument
+B. The lifetime of the second argument
+C. The lifetime of the reference in result
+D. The lifetime of the smaller of the two arguments
+
+Correct answer: D. The lifetime of the smaller of the two arguments
+Incorrect answer: A. The lifetime of the first argument
+Incorrect answer: B. The lifetime of the second argument
+Incorrect answer: C. The lifetime of the reference in result
+
+Question:
+Why is the return value lifetime is not related to the lifetime of the parameters?
+A. The return value lifetime is not connected to the lifetime of the parameters at all
+B. The return value lifetime must match the lifetime of one of the parameters
+C. The data inside the return value must be related to the lifetime of the parameters
+D. The return value lifetime is connected to the lifetime of the shorter of the two parameters
+
+Correct answer: A.

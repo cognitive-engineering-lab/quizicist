@@ -1,0 +1,145 @@
+Based on the text between the =====, generate 5 multiple-choice questions to test a reader's comprehension of the text's concepts
+
+=====
+
+Here, we're making three fetch() requests to three different URLs. If they all succeed, we will log the response status of each one. If any of them fail, then we're logging the failure.
+With the URLs we've provided, all the requests should be fulfilled, although for the second, the server will return 404 (Not Found) instead of 200 (OK) because the requested file does not exist. So the output should be:
+https://mdn.github.io/learning-area/javascript/apis/fetching-data/can-store/products.json: 200
+https://mdn.github.io/learning-area/javascript/apis/fetching-data/can-store/not-found: 404
+https://mdn.github.io/learning-area/javascript/oojs/json/superheroes.json: 200
+
+If we try the same code with a badly formed URL, like this:
+const fetchPromise1 = fetch('https://mdn.github.io/learning-area/javascript/apis/fetching-data/can-store/products.json');
+const fetchPromise2 = fetch('https://mdn.github.io/learning-area/javascript/apis/fetching-data/can-store/not-found');
+const fetchPromise3 = fetch('bad-scheme://mdn.github.io/learning-area/javascript/oojs/json/superheroes.json');
+
+Promise.all([fetchPromise1, fetchPromise2, fetchPromise3])
+  .then((responses) => {
+    for (const response of responses) {
+      console.log(`${response.url}: ${response.status}`);
+    }
+  })
+  .catch((error) => {
+    console.error(`Failed to fetch: ${error}`)
+  });
+
+Then we can expect the catch() handler to run, and we should see something like:
+Failed to fetch: TypeError: Failed to fetch
+
+Sometimes, you might need any one of a set of promises to be fulfilled, and don't care which one. In that case, you want Promise.any(). This is like Promise.all(), except that it is fulfilled as soon as any of the array of promises is fulfilled, or rejected if all of them are rejected:
+const fetchPromise1 = fetch('https://mdn.github.io/learning-area/javascript/apis/fetching-data/can-store/products.json');
+const fetchPromise2 = fetch('https://mdn.github.io/learning-area/javascript/apis/fetching-data/can-store/not-found');
+const fetchPromise3 = fetch('https://mdn.github.io/learning-area/javascript/oojs/json/superheroes.json');
+
+Promise.any([fetchPromise1, fetchPromise2, fetchPromise3])
+  .then((response) => {
+    console.log(`${response.url}: ${response.status}`);
+  })
+  .catch((error) => {
+    console.error(`Failed to fetch: ${error}`)
+  });
+
+Note that in this case we can't predict which fetch request will complete first.
+These are just two of the extra Promise functions for combining multiple promises. To learn about the rest, see the Promise reference documentation.
+The async keyword gives you a simpler way to work with asynchronous promise-based code. Adding async at the start of a function makes it an async function:
+async function myFunction() {
+  // This is an async function
+}
+
+Inside an async function, you can use the await keyword before a call to a function that returns a promise. This makes the code wait at that point until the promise is settled, at which point the fulfilled value of the promise is treated as a return value, or the rejected value is thrown.
+This enables you to write code that uses asynchronous functions but looks like synchronous code. For example, we could use it to rewrite our fetch example:
+async function fetchProducts() {
+  try {
+    // after this line, our function will wait for the `fetch()` call to be settled
+    // the `fetch()` call will either return a Response or throw an error
+    const response = await fetch('https://mdn.github.io/learning-area/javascript/apis/fetching-data/can-store/products.json');
+    if (!response.ok) {
+      throw new Error(`HTTP error: ${response.status}`);
+    }
+    // after this line, our function will wait for the `response.json()` call to be settled
+    // the `response.json()` call will either return the parsed JSON object or throw an error
+    const data = await response.json();
+    console.log(data[0].name);
+  }
+  catch (error) {
+    console.error(`Could not get products: ${error}`);
+  }
+}
+
+fetchProducts();
+
+Here, we are calling await fetch(), and instead of getting a Promise, our caller gets back a fully complete Response object, just as if fetch() were a synchronous function!
+We can even use a try...catch block for error handling, exactly as we would if the code were synchronous.
+Note though that async functions always return a promise, so you can't do something like:
+async function fetchProducts() {
+  try {
+    const response = await fetch('https://mdn.github.io/learning-area/javascript/apis/fetching-data/can-store/products.json');
+    if (!response.ok) {
+      throw new Error(`HTTP error: ${response.status}`);
+    }
+    const data = await response.json();
+    return data;
+  }
+  catch (error) {
+    console.error(`Could not get products: ${error}`);
+  }
+}
+
+const promise = fetchProducts();
+console.log(promise[0].name);   // "promise" is a Promise object, so this will not work
+
+Instead, you'd need to do something like:
+async function fetchProducts() {
+  try {
+    const response = await fetch('https://mdn.github.io/learning-area/javascript/apis/fetching-data/can-store/products.json');
+    if (!response.ok) {
+      throw new Error(`HTTP error: ${response.status}`);
+    }
+    const data = await response.json();
+    return data;
+  }
+  catch (error) {
+    console.error(`Could not get products: ${error}`);
+  }
+}
+
+const promise = fetchProducts();
+promise.then((data) => console.log(data[0].name));
+
+Also, note that you can only use await inside an async function, unless your code is in a JavaScript module. That means you can't do this in a normal script:
+try {
+  // using await outside an async function is only allowed in a module
+  const response = await fetch('https://mdn.github.io/learning-area/javascript/apis/fetching-data/can-store/products.json');
+  if (!response.ok) {
+    throw new Error(`HTTP error: ${response.status}`);
+  }
+  const data = await response.json();
+  console.log(data[0].name);
+}
+catch(error) {
+  console.error(`Could not get products: ${error}`);
+}
+
+You'll probably use async functions a lot where you might otherwise use promise chains, and they make working with promises much more intuitive.
+Keep in mind that just like a promise chain, await forces asynchronous operations to be completed in series. This is necessary if the result of the next operation depends on the result of the last one, but if that's not the case then something like Promise.all() will be more performant.
+Promises are the foundation of asynchronous programming in modern JavaScript. They make it easier to express and reason about sequences of asynchronous operations without deeply nested callbacks, and they support a style of error handling that is similar to the synchronous try...catch statement.
+The async and await keywords make it easier to build an operation from a series of consecutive asynchronous function calls, avoiding the need to create explicit promise chains, and allowing you to write code that looks just like synchronous code.
+Promises work in the latest versions of all modern browsers; the only place where promise support will be a problem is in Opera Mini and IE11 and earlier versions.
+We didn't touch on all features of promises in this article, just the most interesting and useful ones. As you start to learn more about promises, you'll come across more features and techniques.
+Many modern Web APIs are promise-based, including WebRTC, Web Audio API, Media Capture and Streams, and many more.
+Promise()
+Using promises
+We have a problem with promises by Nolan Lawson
+Let's talk about how to talk about promises
+
+Learn/JavaScript/Asynchronous
+Introducing asynchronous JavaScript
+How to use promises
+Implementing a promise-based API
+Introducing workers
+Assessment: sequencing animations
+
+
+
+=====
+5 multiple-choice questions:

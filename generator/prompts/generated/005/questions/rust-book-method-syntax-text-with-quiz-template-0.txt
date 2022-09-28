@@ -1,0 +1,59 @@
+ What does the 'impl' keyword do?
+
+A) Implementation for a struct
+B) Implementation for a function
+C) Implementation for a trait
+
+Correct answer: A) Implementation for a struct
+
+Incorrect answer: B) Implementation for a function
+Incorrect answer: C) Implementation for a trait
+Incorrect answer: D) Implementation for an enum
+
+Question: Where are methods defined?
+
+A) In an impl block
+B) In a struct
+C) In a function
+
+Correct answer: A) In an impl block
+
+Incorrect answer: B) In a struct
+Incorrect answer: C) In a function
+Incorrect answer: D) In an enum
+
+Question: What is the first parameter in a method signature always called?
+
+A) Self
+B) rect
+C) method
+
+Correct answer: A) Self
+
+Incorrect answer: B) rect
+Incorrect answer: C) method
+Incorrect answer: D) parameter
+
+Question: What is the difference between a method and a function?
+
+A) A method is defined within the context of a struct
+B) A method's first parameter is always self
+C) A function is defined within the context of a struct
+
+Correct answer: B) A method's first parameter is always self
+
+Incorrect answer: A) A method is defined within the context of a struct
+Incorrect answer: C) A function is defined within the context of a struct
+Incorrect answer: D) A method can take multiple parameters
+
+Question: What is an associated function?
+
+A) A function that doesn't have a self parameter
+B) A function that is associated with a type
+C) A method that is associated with a type
+
+Correct answer: B) A function that is associated with a type
+
+Incorrect answer: A) A function that doesn't have a self parameter
+Incorrect answer: C) A method that is associated with a type
+Incorrect answer: D) A function that is defined within the context of a struct
