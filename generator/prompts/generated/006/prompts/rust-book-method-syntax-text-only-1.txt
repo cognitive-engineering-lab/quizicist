@@ -1,0 +1,8 @@
+Based on the text between the =====, generate 5 multiple-choice questions to test a reader's comprehension of the text's concepts
+
+=====
+
+
+
+=====
+5 multiple-choice questions:

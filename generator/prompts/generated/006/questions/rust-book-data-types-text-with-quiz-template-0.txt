@@ -1,0 +1,55 @@
+
+What does the text say about the Rust programming language?
+
+Correct answer:
+Rust is statically typed language.
+Incorrect answer:
+Rust is interpreted.
+Incorrect answer:
+Rust is object-oriented.
+Incorrect answer:
+Rust is functional.
+
+Question:
+What is the size of a Boolean type in Rust?
+
+Correct answer:
+1 byte
+Incorrect answer:
+8 bytes
+Incorrect answer:
+4 bytes
+Incorrect answer:
+0 bytes
+
+Question:
+If a value is of the type u32, what can we infer about it?
+
+Correct answer:
+The value is an unsigned integer that takes up 32 bits of space.
+Incorrect answer:
+The value is an unsigned integer that takes up 8 bits of space.
+Incorrect answer:
+The value is a signed integer that takes up 32 bits of space.
+Incorrect answer:
+The value is a signed integer that takes up 8 bits of space.
+
+Question:
+Is 1_000 the same value as 1000?
+
+Correct answer:
+Yes
+Incorrect answer:
+No
+
+Question:
+Which type represents a single value?
+
+Correct answer:
+Scalar
+Incorrect answer:
+Compound
+Incorrect answer:
+Tuple
+Incorrect answer:
+Array

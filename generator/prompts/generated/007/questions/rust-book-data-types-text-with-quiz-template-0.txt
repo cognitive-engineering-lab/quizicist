@@ -1,0 +1,48 @@
+
+What data type represents a single value in Rust?
+a. Scalar
+b. Compound
+c. Boolean
+Correct answer: Scalar
+Incorrect answer: Compound
+Incorrect answer: Boolean
+Incorrect answer:
+
+Question:
+Which type annotation below declares an unsigned integer that takes up 32 bits of space?
+a. f32
+b. i32
+c. u32
+Correct answer: u32
+Incorrect answer: f32
+Incorrect answer: i32
+Incorrect answer:
+
+Question:
+Which type of integer would you use when indexing some sort of collection?
+a. isize
+b. usize
+c. i32
+Correct answer: usize
+Incorrect answer: isize
+Incorrect answer: i32
+Incorrect answer:
+
+Question:
+In Rust, what does the 't' in 'let t = true;' stand for?
+a. true
+b. type
+c. False
+Correct answer: true
+Incorrect answer: type
+Incorrect answer: False
+Incorrect answer:
+
+Question:
+What is the size of a char type in Rust?
+a. 1 byte
+b. 2 bytes
+c. 4 bytes
+Correct answer: 4 bytes
+Incorrect answer: 1 byte
+Incorrect answer: 2 bytes

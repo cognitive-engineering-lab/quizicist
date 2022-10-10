@@ -1,0 +1,26 @@
+
+
+1. What does the "&" symbol indicate in a method's signature?
+a) that the method mutably borrows self
+b) that the method borrows self immutably
+c) that the method takes ownership of self
+
+2. Which of the following is true about methods defined within an impl block?
+a) they can take multiple parameters
+b) their first parameter must be named self
+c) they can have return values
+
+3. What is the purpose of using an associated function?
+a) to create a method that doesn't need an instance of the type to work with
+b) to namespace the function by the struct
+c) to provide a constructor for a new instance of the struct
+
+4. Which of the following is NOT true about a struct's fields?
+a) they can be private
+b) they can be public
+c) they can have the same name as a method
+
+5. What is the purpose of an impl block?
+a) to implement methods for a struct
+b) to associate functions with a type
+c) to define a new type

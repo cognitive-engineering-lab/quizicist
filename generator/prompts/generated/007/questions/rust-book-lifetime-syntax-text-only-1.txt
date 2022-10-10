@@ -1,0 +1,41 @@
+
+
+1. What does the code in Listing 10-21 do?
+
+a. It tells Rust that for some lifetime 'a, the function takes two parameters, both of which are string slices that live at least as long as lifetime 'a.
+
+b. It tells Rust that the string slice returned from the function will live at least as long as lifetime 'a.
+
+c. It tells Rust to reject any values that don't adhere to the constraints specified in the function signature.
+
+d. It tells Rust to use the relationships specified in the function signature when analyzing the code.
+
+2. What is the difference between a reference's lifetime and a concrete lifetime?
+
+a. A reference's lifetime is the part of the scope of the variable it refers to that overlaps with the scope of another variable.
+A concrete lifetime is a specific lifetime that a reference can have.
+
+b. A reference's lifetime is the specific lifetime that a reference can have.
+A concrete lifetime is the part of the scope of the variable it refers to that overlaps with the scope of another variable.
+
+c. There is no difference between a reference's lifetime and a concrete lifetime.
+
+d. A reference's lifetime is the part of the scope of the variable it refers to that overlaps with the scope of another variable.
+A concrete lifetime is the specific lifetime that a reference can have.
+
+3. What happens if the lifetime of the reference returned by the longest function is not the same as the smaller of the lifetimes of the values referred to by the function arguments?
+
+a. The code will compile and print The longest string is long string is long.
+
+b. The borrow checker will reject the code.
+
+c. The compiler will point to a use of the code many steps away from the cause of the problem.
+
+d. The code will not compile.
+
+4. What is the difference between lifetime annotations in function signatures and function bodies?
+
+a. Function signatures contain the lifetime contract, while function bodies do not.
+
+b. Function bodies contain the lifetime contract, while function signatures do not.
+

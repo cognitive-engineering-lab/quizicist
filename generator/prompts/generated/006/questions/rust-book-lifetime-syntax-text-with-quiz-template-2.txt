@@ -1,0 +1,21 @@
+ What is the first rule of lifetime elision?
+Correct answer: The compiler assigns a lifetime parameter to each parameter that’s a reference.
+Incorrect answer: The compiler assigns a lifetime parameter to each parameter that’s a primitive type.
+Incorrect answer: The compiler assigns a lifetime parameter to each return value that’s a reference.
+Incorrect answer: The compiler assigns a lifetime parameter to each return value that’s a primitive type.
+
+Question: What is the second rule of lifetime elision?
+Correct answer: If there is exactly one input lifetime parameter, that lifetime is assigned to all output lifetime parameters.
+Incorrect answer: If there is more than one input lifetime parameter, that lifetime is assigned to all output lifetime parameters.
+Incorrect answer: If there is exactly one output lifetime parameter, that lifetime is assigned to all input lifetime parameters.
+Incorrect answer: If there is more than one output lifetime parameter, that lifetime is assigned to all input lifetime parameters.
+
+Question: What is the third rule of lifetime elision?
+Correct answer: If there are multiple input lifetime parameters, but one of them is &self or &mut self because this is a method, the lifetime of self is assigned to all output lifetime parameters.
+Incorrect answer: If there are multiple input lifetime parameters, but one of them is &self or &mut self because this is a method, the lifetime of self is assigned to all input lifetime parameters.
+Incorrect answer: If there are multiple output lifetime parameters, but one of them is &self or &mut self because this is a method, the lifetime of self is assigned to all input lifetime parameters.
+Incorrect answer: If there are multiple output lifetime parameters, but one of them is &self or &mut self because this is a method, the lifetime of self is assigned to all output lifetime parameters.
+
+Question: What does the lifetime elision rule mean for programmers?
+Correct answer: It’s a set of particular cases that the compiler will consider, and if your code fits these cases, you don’t need to write the lifetimes explicitly.
+Incorrect answer: It

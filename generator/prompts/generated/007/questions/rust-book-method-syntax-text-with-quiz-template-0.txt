@@ -1,0 +1,29 @@
+ What is the first parameter in a method signature always called?
+Correct answer: self
+Incorrect answer: method
+Incorrect answer: type
+Incorrect answer: struct
+
+Question: Which keyword is used to create a method?
+Correct answer: fn
+Incorrect answer: struct
+Incorrect answer: method
+Incorrect answer: trait
+
+Question: What does the & in &self represent?
+Correct answer: Borrows the Self instance
+Incorrect answer: Takes ownership of the Self instance
+Incorrect answer: Mutably borrows the Self instance
+Incorrect answer: Read-only borrows the Self instance
+
+Question: When is it useful to create an associated function?
+Correct answer: When you want to create a new instance of the struct
+Incorrect answer: When you want to reference a field in the struct
+Incorrect answer: When you want to call a method on the struct
+Incorrect answer: When you want to borrow the struct
+
+Question: How many impl blocks can a struct have?
+Correct answer: Multiple
+Incorrect answer: One
+Incorrect answer: Three
+Incorrect answer: None

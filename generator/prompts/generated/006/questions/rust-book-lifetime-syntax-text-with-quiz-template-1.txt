@@ -1,0 +1,26 @@
+ What is the lifetime of the reference returned by the longest function if the lifetimes of the references passed in are different?
+A) The lifetime of the reference is the same as the lifetime of the first reference passed in
+B) The lifetime of the reference is the same as the lifetime of the second reference passed in
+C) The lifetime of the reference is the same as the smaller of the lifetimes of the references passed in
+D) The lifetime of the reference is the same as the larger of the lifetimes of the references passed in
+
+Question: What is the lifetime of the reference returned by the longest function if the lifetimes of the references passed in are the same?
+A) The lifetime of the reference is the same as the lifetime of the first reference passed in
+B) The lifetime of the reference is the same as the lifetime of the second reference passed in
+C) The lifetime of the reference is the same as the smaller of the lifetimes of the references passed in
+D) The lifetime of the reference is the same as the larger of the lifetimes of the references passed in
+
+Question: Why is it a problem if the lifetime of the reference returned by the longest function is not related to the lifetimes of the references passed in?
+A) Rust can't see that the reference is valid in this case
+B) The borrow checker disallows the code
+C) It would be a dangling reference because the value will go out of scope at the end of the function
+D) All of the above
+
+Question: What is the lifetime of the reference in the part field of the ImportantExcerpt struct?
+A) The lifetime of the reference is the same as the lifetime of the first reference passed in
+B) The lifetime of the reference is the same as the lifetime of the second reference passed in
+C) The lifetime of the reference is the same as the smaller of the lifetimes of the references passed in
+D) The lifetime of the reference is the same as the larger of the lifetimes of the references passed in
+
+Question: What is the lifetime of the reference in the part field of the ImportantExcerpt struct?
+A) The lifetime of

@@ -1,0 +1,55 @@
+
+
+1. What is the primary purpose of a tuple?
+
+A. To group together a number of values with a variety of types into one compound type
+
+B. To provide an empty value or an empty return type
+
+C. To allow for the growth or shrinking of size
+
+D. To allocate memory on the stack
+
+
+2. How are elements of an array accessed?
+
+A. By using pattern matching
+
+B. By using indexing
+
+C. By using a period followed by the index of the value
+
+D. By binding the array to a variable
+
+
+3. What is the difference between an array and a vector?
+
+A. An array is more flexible than a vector
+
+B. Every element of an array must have the same type
+
+C. Arrays can only be allocated on the stack
+
+D. Vectors can grow or shrink in size
+
+
+4. What is the type of an array with five elements, all of which are 3?
+
+A. [i32; 5]
+
+B. [3; 5]
+
+C. [3, 3, 3, 3, 3]
+
+D. (3, 3, 3, 3, 3)
+
+
+5. What happens if you attempt to access an element of an array that is past the end of the array?
+
+A. Rust will check that the index is less than the array length and if not, will panic
+
+B. The program will result in a runtime error
+
+C. The program will exit with an error message
+
+D. None of the above

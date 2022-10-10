@@ -1,0 +1,51 @@
+
+
+1. What does the text say about Rust's data types?
+
+A. Rust has four primary scalar types: integers, floating-point numbers, Booleans, and characters.
+
+B. Rust is a statically typed language, which means that it must know the types of all variables at compile time.
+
+C. Rust supports the basic mathematical operations you’d expect for all of the number types: addition, subtraction, multiplication, division, and remainder.
+
+D. All of the above.
+
+2. What does the text say about Rust's floating-point types?
+
+A. Rust has two primitive types for floating-point numbers, which are numbers with decimal points. Rust’s floating-point types are f32 and f64, which are 32 bits and 64 bits in size, respectively.
+
+B. Float types default to f64 because on modern CPUs it’s roughly the same speed as f32 but is capable of more precision.
+
+C. Floating-point numbers are represented according to the IEEE-754 standard.
+
+D. All of the above.
+
+3. Which of the following is NOT an integer type in Rust?
+
+A. isize
+
+B. u8
+
+C. i32
+
+D. f32
+
+4. What is the size of a Boolean type in Rust?
+
+A. one byte
+
+B. four bytes
+
+C. eight bytes
+
+D. sixteen bytes
+
+5. What is the range of Unicode Scalar Values that a char type in Rust can represent?
+
+A. U+0000 to U+D7FF and U+E000 to U+10FFFF inclusive
+
+B. U+0000 to U+FFFF inclusive
+
+C. U+0000 to U+7FFF inclusive
+
+D. U+0000 to U+FFFFFF inclusive

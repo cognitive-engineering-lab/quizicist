@@ -1,0 +1,41 @@
+ What type of data structure is a tuple?
+A. A linear data structure
+B. A nonlinear data structure
+C. A mutable data structure
+D. An immutable data structure
+
+Correct answer: B. A nonlinear data structure
+Incorrect answer: A. A linear data structure
+Incorrect answer: C. A mutable data structure
+Incorrect answer: D. An immutable data structure
+
+Question: How do you access individual values in a tuple?
+A. Use indexing
+B. Use pattern matching to destructure the tuple
+C. Use the . operator followed by the index of the value
+
+Correct answer: C. Use the . operator followed by the index of the value
+Incorrect answer: A. Use indexing
+Incorrect answer: B. Use pattern matching to destructure the tuple
+
+Question: What is the difference between an array and a vector?
+A. An array is more flexible than a vector
+B. An array is less flexible than a vector
+C. An array can grow or shrink in size
+D. An array's size is fixed
+
+Correct answer: D. An array's size is fixed
+Incorrect answer: A. An array is more flexible than a vector
+Incorrect answer: B. An array is less flexible than a vector
+Incorrect answer: C. An array can grow or shrink in size
+
+Question: What does the expression let a = [3; 5] do?
+A. It declares a variable named a that is set to the value 3
+B. It declares a variable named a that is set to an array of five elements, all with the value 3
+C. It declares a variable named a that is set to an array of five elements, all with the value 0
+
+Correct answer: B. It declares a variable named a that is set to an array of five elements, all with the value 3
+Incorrect answer: A. It declares a variable named a that is set to the value 3
+Incorrect answer: C. It declares a variable named a that is set to an array of five elements, all with the value 0
+
+Question:

@@ -1,0 +1,36 @@
+
+
+1. What does the Rust borrow checker do?
+
+A. It checks to ensure that all references are valid.
+B. It checks to ensure that all borrows are valid.
+C. It compares the lifetimes of references to ensure they are valid.
+D. It compares the scopes of references to ensure they are valid.
+
+2. What does it mean when a lifetime is "implicit"?
+
+A. That it does not need to be annotated.
+B. That it does not need to be declared.
+C. That it does not need to be specified.
+D. That it does not need to be referenced.
+
+3. What does it mean when a lifetime is "inferred"?
+
+A. That it does not need to be annotated.
+B. That it does not need to be declared.
+C. That it does not need to be specified.
+D. That it does not need to be referenced.
+
+4. What is the main aim of lifetimes?
+
+A. To ensure that references are valid.
+B. To ensure that all borrows are valid.
+C. To prevent dangling references.
+D. To compare the scopes of references.
+
+5. Why is it important that the lifetime of a reference is longer than the lifetime of the data it is referring to?
+
+A. So that the reference is always valid.
+B. So that the reference is never invalid.
+C. So that the data is always valid.
+D. So that the data is never invalid.

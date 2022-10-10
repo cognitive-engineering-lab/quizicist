@@ -1,0 +1,55 @@
+
+
+1. What does the 'a in the function signature specify?
+
+A) That the function returns a string slice
+
+B) That the function takes two string slices
+
+C) That the function returns a string
+
+D) That the function takes two parameters, both of which are string slices that live at least as long as lifetime 'a
+
+
+2. What does having function signatures contain the lifetime contract mean?
+
+A) That the analysis the Rust compiler does can be simpler.
+
+B) That the Rust compiler made more inferences about what we intended the relationships of the lifetimes to be.
+
+C) That the lifetime of the reference returned by the longest function is the same as the smaller of the lifetimes of the values referred to by the function arguments.
+
+D) That the annotations go in the function signature, not in the function body.
+
+
+3. Why is it a problem if the return value lifetime is not related to the lifetime of the parameters?
+
+A) It creates a dangling reference.
+
+B) The Rust compiler can't see that the reference is valid.
+
+C) It means the lifetime of the return value does not get substituted for the lifetime parameter 'a.
+
+D) There is no way to specify lifetime parameters that would change the dangling reference.
+
+
+4. What is the best fix if it is not possible to add lifetime annotations to a function?
+
+A) Change the function so that it doesn't return a reference.
+
+B) Change the function so that it only returns a reference to one of the parameters.
+
+C) Change the function so that it doesn't take any references as parameters.
+
+D) There is no fix, the code will not compile.
+
+
+5. What is the purpose of lifetime parameters?
+
+A) To connect the lifetimes of various parameters and return values of functions.
+
+B) To specify how long a reference should be valid.
+
+C) So that the Rust compiler can infer what the relationships of the lifetimes are.
+
+D) To ensure that a function does not return a reference to a value that goes out

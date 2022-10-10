@@ -1,0 +1,29 @@
+ What does the author say about risks?
+Correct answer: The author argues that risks are essential for a good life.
+Incorrect answer: The author argues that risks are unnecessary and should be avoided.
+Incorrect answer: The author argues that risks are sometimes necessary but often lead to negative consequences.
+Incorrect answer: The author argues that risks are beneficial only if they lead to positive outcomes.
+
+Question: What does the author say about experience?
+Correct answer: The author believes that experience is the best teacher.
+Incorrect answer: The author believes that experience is a good way to learn but not the only way.
+Incorrect answer: The author believes that experience should be avoided because it often leads to negative consequences.
+Incorrect answer: The author believes that experience is necessary but often leads to negative consequences.
+
+Question: What does the author say about knowledge?
+Correct answer: The author argues that knowledge is power.
+Incorrect answer: The author argues that knowledge is essential for a good life.
+Incorrect answer: The author argues that knowledge is necessary but not sufficient for a good life.
+Incorrect answer: The author argues that knowledge is neither necessary nor sufficient for a good life.
+
+Question: What does the author say about mistakes?
+Correct answer: The author argues that mistakes are essential for a good life.
+Incorrect answer: The author argues that mistakes are unnecessary and should be avoided.
+Incorrect answer: The author argues that mistakes are sometimes necessary but often lead to negative consequences.
+Incorrect answer: The author argues that mistakes are beneficial only if they lead to positive outcomes.
+
+Question: What does the author say about curiosity?
+Correct answer: The author argues that curiosity is essential for a good life.
+Incorrect answer: The author argues that curiosity is unnecessary and should be avoided.
+Incorrect answer: The author argues that curiosity is sometimes necessary but often leads to negative consequences.
+Incorrect answer: The author argues that curiosity is beneficial only if it leads to positive outcomes.

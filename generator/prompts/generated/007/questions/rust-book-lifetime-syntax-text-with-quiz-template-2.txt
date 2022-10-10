@@ -1,0 +1,39 @@
+ What does the first rule of lifetime elision state?
+A) Each parameter gets its own lifetime.
+B) The lifetime of the one input parameter gets assigned to the output lifetime.
+C) The lifetime of self is assigned to all output lifetime parameters.
+D) If the compiler gets to the end of the three rules and there are still references for which it can't figure out lifetimes, the compiler will stop with an error.
+
+Correct answer: Each parameter gets its own lifetime.
+
+Incorrect answer: The lifetime of the one input parameter gets assigned to the output lifetime.
+Incorrect answer: The lifetime of self is assigned to all output lifetime parameters.
+Incorrect answer: If the compiler gets to the end of the three rules and there are still references for which it can't figure out lifetimes, the compiler will stop with an error.
+
+Question: What is the lifetime of a string literal?
+A) 'a
+B) 'static
+C) The lifetime of the one input parameter
+D) The lifetime of self
+
+Correct answer: 'static
+
+Incorrect answer: 'a
+Incorrect answer: The lifetime of the one input parameter
+Incorrect answer: The lifetime of self
+
+Question: Which of the following is true about the lifetime of a reference?
+A) It must live for the entire duration of the program
+B) It must live for at least as long as the thing it references
+C) It must live for at least as long as the function it's in
+D) It must live for at least as long as the function it's called in
+
+Correct answer: It must live for at least as long as the thing it references
+
+Incorrect answer: It must live for the entire duration of the program
+Incorrect answer: It must live for at least as long as the function it's in
+Incorrect answer: It must live for at least as long as the function it's called in
+
+Question: What is the purpose of the third rule of lifetime elision?
+A) To specify that the lifetime of self is assigned to all output lifetime parameters
+B) Togt her use of

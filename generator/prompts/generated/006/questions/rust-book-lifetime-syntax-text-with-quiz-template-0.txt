@@ -1,0 +1,29 @@
+ What is the main aim of lifetimes?
+Correct answer: To prevent dangling references
+Incorrect answer: To ensure references are valid as long as we need them to be
+Incorrect answer: To annotate relationships between lifetimes
+Incorrect answer: To compare scopes to determine whether borrows are valid
+
+Question: What does it mean when we say that "r has a lifetime of 'a but it refers to memory with a lifetime of 'b"?
+Correct answer: The subject of the reference doesn't live as long as the reference
+Incorrect answer: The reference in r will always be valid while x is valid
+Incorrect answer: R is referencing memory that was deallocated when x went out of scope
+Incorrect answer: Rust knows that the reference in r refers to x
+
+Question: How do lifetime annotations relate to each other?
+Correct answer: They describe the relationships of the lifetimes of multiple references to each other without affecting the lifetimes
+Incorrect answer: They are meant to tell Rust how generic lifetime parameters of multiple references relate to each other
+Incorrect answer: They don't have much meaning by themselves
+Incorrect answer: They are meant to tell Rust how long any of the references live
+
+Question: What is the difference between a reference and a String slice?
+Correct answer: A String slice is a reference
+Incorrect answer: A String slice is a type of generic
+Incorrect answer: A reference is a type of generic
+Incorrect answer: There is no difference
+
+Question: Why is it necessary to add generic lifetime parameters when implementing the longest function?
+Correct answer: So Rust can determine whether the reference being returned refers to x or y
+Incorrect answer: So the function can take ownership of its parameters
+Incorrect answer: So the borrow checker can perform its analysis
+Incorrect answer: So the function can take string slices as parameters

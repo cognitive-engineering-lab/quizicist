@@ -1,0 +1,46 @@
+ What does the 'impl' keyword do?
+A. Implementation blocks associated with a type
+B. Implements a trait for a type
+C. Implicitly returns the last expression 
+D. Imports a module
+
+Correct answer: A. Implementation blocks associated with a type
+
+Incorrect answer: B. Implements a trait for a type
+Incorrect answer: C. Implicitly returns the last expression 
+Incorrect answer: D. Imports a module
+
+Question: Which of the following is true about methods?
+A. Must have a parameter named self of type Self
+B. Their first parameter is always self 
+C. Can only be defined within the context of a struct
+D. Parameter self represents the instance of the struct the method is being called on
+
+Correct answer: D. Parameter self represents the instance of the struct the method is being called on 
+
+Incorrect answer: A. Must have a parameter named self of type Self
+Incorrect answer: B. Their first parameter is always self 
+Incorrect answer: C. Can only be defined within the context of a struct
+
+Question: Which of the following is not a reason to use methods instead of functions?
+A. To provide method syntax
+B. To avoid repeating the type of self in every method’s signature
+C. For organization
+D. To take ownership of self
+
+Correct answer: D. To take ownership of self
+
+Incorrect answer: A. To provide method syntax
+Incorrect answer: B. To avoid repeating the type of self in every method’s signature
+Incorrect answer: C. For organization
+
+Question: Which of the following best describes an associated function?
+A. A function that is associated with an instance of a type
+B. A function that is associated with a type
+C. A function defined within an impl block
+D. A function that takes ownership of an instance of a type
+
+Correct answer: B. A function that is associated with a type
+
+Incorrect answer: A. A function that is associated with an instance of a type
+Incorrect answer

@@ -1,0 +1,55 @@
+
+
+1. What does Rust's 'staticly typed language' mean?
+
+A. That Rust can run on any type of computer
+
+B. That all variables must be declared at compile time
+
+C. That the compiler can usually infer what type we want to use
+
+D. That Rust is a fast language
+
+
+2. Which of the following is NOT a scalar type?
+
+A. Integer
+
+B. Floating-point number
+
+C. Boolean
+
+D. Array
+
+
+3. Which of the following is true about isize and usize types?
+
+A. They depend on the architecture of the computer your program is running on
+
+B. They can store numbers from -(2n - 1) to 2n - 1 - 1 inclusive
+
+C. They are 64 bits if you’re on a 64-bit architecture and 32 bits if you’re on a 32-bit architecture
+
+D. They are the default types for integer values
+
+
+4. What does Rust's 'char type' represent?
+
+A. A single-precision float
+
+B. A Unicode Scalar Value
+
+C. A double-precision float
+
+D. An ASCII character
+
+
+5. What is the main use for Boolean values in Rust?
+
+A. Conditionals
+
+B. Loops
+
+C. Mathematical operations
+
+D. Type annotations

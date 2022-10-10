@@ -1,0 +1,29 @@
+ What is the type of the variable 'five_hundred'?
+Correct answer: i32
+Incorrect answer: f64
+Incorrect answer: u8
+Incorrect answer: tuple
+
+Question: What is the value of the variable 'six_point_four'?
+Correct answer: 6.4
+Incorrect answer: 500
+Incorrect answer: 1
+Incorrect answer: tuple
+
+Question: What is the first index of a tuple?
+Correct answer: 0
+Incorrect answer: 1
+Incorrect answer: 2
+Incorrect answer: 3
+
+Question: What is the type of variable 'a'?
+Correct answer: [i32; 5]
+Incorrect answer: [f64; 3]
+Incorrect answer: i32
+Incorrect answer: tuple
+
+Question: What will happen if you try to access an element of an array that is past the end of the array?
+Correct answer: Rust will check that the index you've specified is less than the array length.
+Incorrect answer: The program will result in a runtime error.
+Incorrect answer: The program will exit with an error message.
+Incorrect answer: The program will print out the corresponding value at that index in the array.
