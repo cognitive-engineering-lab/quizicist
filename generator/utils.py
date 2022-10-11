@@ -120,9 +120,10 @@ def parse_chapter(chapter):
     # extract text and token count from parsed markdown
     parsed = json.loads(mistletoe.markdown(md, ASTRenderer))
     valid_children = filter(component_is_valid, parsed["children"])
-    children_info = list(map(extract_component_info, valid_children))
+    children_info = map(extract_component_info, valid_children)
+    non_empty_components = list(filter(lambda c: c["tokens"] > 0, children_info))
 
-    return children_info
+    return non_empty_components
 
 # total number of tokens within a chapter
 def chapter_tokens(components):
