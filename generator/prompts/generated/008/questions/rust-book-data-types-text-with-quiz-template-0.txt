@@ -1,0 +1,39 @@
+ What does the keyword "let" do in Rust?
+A. It denotes a variable binding
+B. It compiles the program
+C. It runs the program
+Correct answer: A. It denotes a variable binding
+Incorrect answer: B. It compiles the program
+Incorrect answer: C. It runs the program
+
+Question: What is the result of two divided by three in Rust?
+A. 1
+B. 0
+C. 3
+Correct answer: B. 0
+Incorrect answer: A. 1
+Incorrect answer: C. 3
+
+Question: Which of the following is not a scalar type?
+A. Boolean
+B. Character
+C. Array
+Correct answer: C. Array
+Incorrect answer: A. Boolean
+Incorrect answer: B. Character
+
+Question: What is the size of a char in Rust?
+A. 1 byte
+B. 2 bytes
+C. 4 bytes
+Correct answer: C. 4 bytes
+Incorrect answer: A. 1 byte
+Incorrect answer: B. 2 bytes
+
+Question: What does Rust's char type represent?
+A. A Unicode Scalar Value
+B. An ASCII character
+C. A number
+Correct answer: A. A Unicode Scalar Value
+Incorrect answer: B. An ASCII character
+Incorrect answer: C. A number

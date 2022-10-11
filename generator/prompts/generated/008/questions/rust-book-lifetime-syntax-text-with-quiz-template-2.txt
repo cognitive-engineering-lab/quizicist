@@ -1,0 +1,24 @@
+ With respect to the elision rules, if the Rust compiler gets to the end of the three rules and there are still references for which it can't figure out lifetimes, what will the compiler do?
+
+Correct answer: The compiler will stop with an error.
+Incorrect answer: The compiler will assign a lifetime of 'static to all remaining references.
+Incorrect answer: The compiler will make an educated guess as to what the lifetime of the remaining references should be.
+Incorrect answer: The compiler will print a warning message but continue compiling the code.
+
+Question: Which of the following best describes the lifetime elision rules?
+
+Correct answer: The lifetime elision rules are particular cases that the compiler will consider when inferring lifetimes, and if the code fits these cases, the programmer doesn't need to write the lifetimes explicitly.
+Incorrect answer: The lifetime elision rules are particular cases that the programmer needs to follow when writing code with references.
+Incorrect answer: The lifetime elision rules are guidelines for the programmer to follow when writing code with references.
+Incorrect answer: The lifetime elision rules are suggestions for the programmer to follow when writing code with references.
+
+Question: With respect to the lifetime elision rules, what is true about the third rule?
+
+Correct answer: The third rule is that, if there are multiple input lifetime parameters, but one of them is &self or &mut self because this is a method, the lifetime of self is assigned to all output lifetime parameters.
+Incorrect answer: The third rule is that, if there are multiple input lifetime parameters, but one of them is &self or &mut self because this is a method, the lifetime of self MUST be assigned to all output lifetime parameters.
+Incorrect answer: The third rule is that, if there are multiple input lifetime parameters, but one of them is &self or &mut self because this is a method, the lifetime of self MAY be assigned to all output lifetime parameters.
+Incorrect answer: There is no third rule.
+
+Question: Which of the following is NOT a rule for lifetime elision?
+
+Correct answer: If there are multiple

@@ -1,0 +1,30 @@
+ What does a lifetime annotation do?
+A) It tells Rust how generic lifetime parameters of multiple references relate to each other.
+B) It changes how long any of the references live.
+C) It specifies the relationships of the lifetimes of multiple references to each other without affecting the lifetimes.
+D) It declares the generic lifetime parameters inside angle brackets between the function name and the parameter list.
+
+Correct answer: A) It tells Rust how generic lifetime parameters of multiple references relate to each other.
+Incorrect answer: B) It changes how long any of the references live.
+Incorrect answer: C) It specifies the relationships of the lifetimes of multiple references to each other without affecting the lifetimes.
+Incorrect answer: D) It declares the generic lifetime parameters inside angle brackets between the function name and the parameter list.
+
+Question: How do you add a lifetime annotation to a function signature?
+A) By adding the generic lifetime parameters inside angle brackets between the function name and the parameter list.
+B) By adding lifetime parameter annotations after the of a reference, using a space to separate the annotation from the reference’s type.
+C) By adding a lifetime annotation to each reference.
+D) By adding a lifetime annotation to the return value.
+
+Correct answer: A) By adding the generic lifetime parameters inside angle brackets between the function name and the parameter list.
+Incorrect answer: B) By adding lifetime parameter annotations after the of a reference, using a space to separate the annotation from the reference’s type.
+Incorrect answer: C) By adding a lifetime annotation to each reference.
+Incorrect answer: D) By adding a lifetime annotation to the return value.
+
+Question: Why does Rust require us to annotate the relationships using generic lifetime parameters?
+A) So the actual references used at runtime will definitely be valid.
+B) So we can get comfortable with the concept.
+C) So we can add a lifetime annotation to the return value.
+D) So the borrow checker can perform its analysis.
+
+Correct answer: A) So the actual references used at runtime will definitely be valid.
+In

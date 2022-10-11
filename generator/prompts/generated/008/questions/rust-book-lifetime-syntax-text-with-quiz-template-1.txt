@@ -1,0 +1,23 @@
+ What does the longest function signature telling Rust?
+A. That for some lifetime 'a, the function takes in two parameters, both of which are string slices that live at long as lifetime 'a
+B. That the string slice returned from the function will live at least as long as lifetime 'a
+C. That the lifetime of the reference returned by the longest function is the same as the smaller of the lifetimes of the values referred to by the function arguments
+D. That the generic lifetime 'a will get the concrete lifetime that is equal to the smaller of the lifetimes of x and y
+
+Correct answer: C. That the lifetime of the reference returned by the longest function is the same as the smaller of the lifetimes of the values referred to by the function arguments
+
+Incorrect answer: A. That for some lifetime 'a, the function takes in two parameters, both of which are string slices that live at long as lifetime 'a
+Incorrect answer: B. That the string slice returned from the function will live at least as long as lifetime 'a
+Incorrect answer: D. That the generic lifetime 'a will get the concrete lifetime that is equal to the smaller of the lifetimes of x and y
+
+Question: What is the main reason for having function signatures contain the lifetime contract?
+A. So the analysis the Rust compiler does can be simpler
+B. So that the compiler can point to the part of our code and the constraints more precisely
+C. So that the compiler can only point to a use of our code many steps away from the cause of the problem
+D. So that the lifetime of the reference returned by the longest function is the same as the smaller of the lifetimes of the values referred to by the function arguments
+
+Correct answer: A. So the analysis the Rust compiler does can be simpler
+
+Incorrect answer: B. So that the compiler can point to the part of our code and the constraints more precisely
+Incorrect answer: C. So that the compiler can only point to a use of our code many steps away from the cause of the problem
+Incorrect answer: D. So that the lifetime of the reference returned by the

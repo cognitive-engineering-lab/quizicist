@@ -1,0 +1,48 @@
+ What is the first parameter in the signature of a method always called?
+A. self
+B. first
+C. the instance of the struct
+D. the type of the struct
+
+Correct answer: A. self
+Incorrect answer: B. first
+Incorrect answer: C. the instance of the struct
+Incorrect answer: D. the type of the struct
+
+Question: Where are methods defined?
+A. within the context of a struct
+B. within an impl block
+C. within the context of an enum
+D. within the context of a trait object
+
+Correct answer: B. within an impl block
+Incorrect answer: A. within the context of a struct
+Incorrect answer: C. within the context of an enum
+Incorrect answer: D. within the context of a trait object
+
+Question: What does the & in &self represent?
+A. that the method borrows the Self instance
+B. that the method takes ownership of the Self instance
+C. that the method borrows the self instance immutably
+D. that the method borrows the self instance mutably
+
+Correct answer: C. that the method borrows the self instance immutably
+Incorrect answer: A. that the method borrows the Self instance
+Incorrect answer: B. that the method takes ownership of the Self instance
+Incorrect answer: D. that the method borrows the self instance mutably
+
+Question: What is the type of the parameter in an associated function?
+A. the type of the struct
+B. the instance of the struct
+C. the type of the Self
+D. the instance of the Self
+
+Correct answer: A. the type of the struct
+Incorrect answer: B. the instance of the struct
+Incorrect answer: C. the type of the Self
+Incorrect answer: D. the instance of the Self
+
+Question: What is the main reason for using methods instead of functions?
+A. to provide method syntax
+B. to not have to repeat the type of self in every method's signature
+C. to keep all the things that can be done
