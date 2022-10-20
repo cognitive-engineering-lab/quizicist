@@ -1,0 +1,38 @@
+ What is the name of the top level outside all your functions?
+Correct answer: The global scope.
+Incorrect answer: The function scope.
+Incorrect answer: The local scope.
+Incorrect answer: The arrow function.
+
+Question: What is the purpose of function scope?
+Correct answer: To avoid problems with external scripts calling in and using the same variable names.
+Incorrect answer: To allow functions to access variables defined in other functions.
+Incorrect answer: To keep variables and other things defined inside the function locked away.
+Incorrect answer: To provide a better organization for your code.
+
+Question: What does the map() method do?
+Correct answer: Takes each item in the array in turn, passing it into the given function, and then takes the value returned by that function and adds it to a new array.
+Incorrect answer: Takes the value returned by a given function and adds it to a new array.
+Incorrect answer: Takes each item in the array in turn and passes it into a given function.
+Incorrect answer: Takes the value returned by a given function and adds it to the original array.
+
+Question: Which of the following is NOT true about arrow functions?
+Correct answer: They can only be used when the function only has one line in the curly brackets.
+Incorrect answer: They can make your code shorter and more readable.
+Incorrect answer: If the function only takes one parameter, you can omit the brackets around the parameter.
+Incorrect answer: If your function needs to return a value, and contains only one line, you can omit the return statement.
+
+Question: What is the difference between the following two code snippets?
+Const name = 'Chris';
+function greeting() {
+  alert(`Hello ${name}: welcome to our company.`);
+}
+
+and
+
+Const name = 'Zaptec';
+function greeting() {
+  alert(`Our company is called ${name}.`);
+}
+
+Correct answer: The first code snippet will print "Hello Chris: welcome to our company." while the second code snippet will print "Our company is called

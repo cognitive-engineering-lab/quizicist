@@ -1,0 +1,29 @@
+ What is the foundation of asynchronous programming in modern JavaScript?
+Correct answer: Promises
+Incorrect answer: XMLHttpRequest
+Incorrect answer: Event handlers
+Incorrect answer: setTimeout()
+
+Question: What does the fetch() API return?
+Correct answer: A Promise object
+Incorrect answer: A Response object
+Incorrect answer: The JSON data
+Incorrect answer: undefined
+
+Question: When is the handler passed into the then() method of a promise executed?
+Correct answer: When the asynchronous operation has succeeded
+Incorrect answer: When the promise is returned
+Incorrect answer: When the asynchronous operation has failed
+Incorrect answer: Immediately
+
+Question: How do you get the data contained in a Response object?
+Correct answer: By calling the json() method
+Incorrect answer: By calling the fetch() method
+Incorrect answer: By calling the then() method
+Incorrect answer: It is undefined
+
+Question: What is the catch() method used for?
+Correct answer: It is used for error handling
+Incorrect answer: It is used for request handling
+Incorrect answer: It is used for promise chaining
+Incorrect answer: It is used for logging

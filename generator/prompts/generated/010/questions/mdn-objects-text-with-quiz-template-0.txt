@@ -1,0 +1,29 @@
+ What is an object in JavaScript?
+Correct answer: A collection of related data and/or functionality
+Incorrect answer: A programming language
+Incorrect answer: A software structure
+Incorrect answer: A file type
+
+Question: What is the this keyword?
+Correct answer: Refers to the current object the code is being written inside
+Incorrect answer: Refers to the global object
+Incorrect answer: Refers to the previous object
+Incorrect answer: Refers to the next object
+
+Question: What is a constructor?
+Correct answer: A function called using the new keyword
+Incorrect answer: A function that creates a new object
+Incorrect answer: A function that creates a new array
+Incorrect answer: A function that creates a new string
+
+Question: Why is dot notation generally preferred over bracket notation?
+Correct answer: It is more succinct and easier to read
+Incorrect answer: It is less common
+Incorrect answer: It is more common
+Incorrect answer: It is faster
+
+Question: What is the purpose of an object prototype?
+Correct answer: Inherit properties from other objects
+Incorrect answer: Initialize objects
+Incorrect answer: Define the set of methods and properties an object can have
+Incorrect answer: Create as many objects as needed from a single object definition

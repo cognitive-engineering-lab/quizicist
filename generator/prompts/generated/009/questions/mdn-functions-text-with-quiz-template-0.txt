@@ -1,0 +1,55 @@
+ What is the output of the following code?
+
+const myText = 'I am a string';
+const newString = myText.replace('string', 'sausage');
+console.log(newString);
+
+A) "I am a sausage" 
+B) "I am a string"
+C) "I sausage a string"
+D) SyntaxError
+
+Correct answer: A) "I am a sausage"
+
+Incorrect answer: B) "I am a string"
+Incorrect answer: C) "I sausage a string"
+Incorrect answer: D) SyntaxError
+
+Question: What is the output of the following code?
+
+const myArray = ['I', 'love', 'chocolate', 'frogs'];
+const madeAString = myArray.join(' ');
+console.log(madeAString);
+
+A) "love chocolate frogs"
+B) "I love chocolate frogs"
+C) "I,love,chocolate,frogs"
+D) SyntaxError
+
+Correct answer: B) "I love chocolate frogs"
+
+Incorrect answer: A) "love chocolate frogs"
+Incorrect answer: C) "I,love,chocolate,frogs"
+Incorrect answer: D) SyntaxError
+
+Question: What is the output of the following code?
+
+const myNumber = Math.random();
+
+A) A random decimal number between 0 and 1 
+B) A random whole number between 0 and 10
+C) A random whole number between 0 and 1
+D) SyntaxError
+
+Correct answer: A) A random decimal number between 0 and 1
+
+Incorrect answer: B) A random whole number between 0 and 10
+Incorrect answer: C) A random whole number between 0 and 1
+Incorrect answer: D) SyntaxError
+
+Question: What is the output of the following code?
+
+textBox.addEventListener('keydown', logKey);
+
+A) When the user presses a key, the browser will call the logKey() function 
+B

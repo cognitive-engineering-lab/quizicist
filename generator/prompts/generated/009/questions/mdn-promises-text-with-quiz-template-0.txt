@@ -1,0 +1,5 @@
+ What is the difference between a promise and a callback?
+Correct answer: A promise is an object returned by an asynchronous function, which represents the current state of the operation. A callback is a function that is passed into an asynchronous function.
+Incorrect answer: Callbacks are the foundation of asynchronous programming in modern JavaScript.
+Incorrect answer: Promises are used to handle the eventual success or failure of the operation.
+Incorrect answer: A promise is returned by a synchronous function.

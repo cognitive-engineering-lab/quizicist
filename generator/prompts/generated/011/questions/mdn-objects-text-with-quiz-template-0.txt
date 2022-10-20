@@ -1,0 +1,32 @@
+ What is the this keyword in JavaScript?
+A) A keyword that refers to the current object the code is being written inside
+B) A keyword that refers to the current array the code is being written inside
+C) A keyword that refers to the current function the code is being written inside
+D) A keyword that refers to the global window object
+
+Correct answer: A) A keyword that refers to the current object the code is being written inside
+Incorrect answer: B) A keyword that refers to the current array the code is being written inside
+Incorrect answer: C) A keyword that refers to the current function the code is being written inside
+Incorrect answer: D) A keyword that refers to the global window object
+
+Question: Which of the following is NOT a value that can be stored in an object?
+A) A number
+B) A function
+C) An array
+D) A string
+
+Correct answer: D) A string
+Incorrect answer: A) A number
+Incorrect answer: B) A function
+Incorrect answer: C) An array
+
+Question: What is the difference between a method and a property in an object?
+
+A) A property is a value that can be stored in an object, while a method is a function that can be performed on an object
+B) A property is a function that can be performed on an object, while a method is a value that can be stored in an object
+C) There is no difference between a method and a property in an object
+D) A method is a value that can be stored in an object, while a property is a function that can be performed on an
+
+Correct answer: A) A property is a value that can be stored in an object, while a method is a function that can be performed on an object
+Incorrect answer: B) A property is a function that can be performed on an object, while a method is a value that can be stored in an object
+Incorrect

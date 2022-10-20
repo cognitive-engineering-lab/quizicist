@@ -1,0 +1,52 @@
+ What is the result of the following code?
+const myText = 'I am a string';
+const newString = myText.replace('string', 'sausage');
+
+A) "I am a sausage"
+B) "I am a string"
+C) "I sausage a string"
+D) Syntax error
+
+Correct answer: A) "I am a sausage"
+
+Incorrect answer: B) "I am a string"
+Incorrect answer: C) "I sausage a string"
+Incorrect answer: D) Syntax error
+
+Question: What is the result of the following code?
+const myArray = ['I', 'love', 'chocolate', 'frogs'];
+const madeAString = myArray.join(' ');
+
+A) "I,love,chocolate,frogs"
+B) "I love chocolate frogs"
+C) "I+love+chocolate+frogs"
+D) Syntax error
+
+Correct answer: B) "I love chocolate frogs"
+
+Incorrect answer: A) "I,love,chocolate,frogs"
+Incorrect answer: C) "I+love+chocolate+frogs"
+Incorrect answer: D) Syntax error
+
+Question: What is the result of the following code?
+const myNumber = Math.random();
+
+A) A random number between 0 and 1
+B) A random number between 0 and 100
+C) A random number between 1 and 100
+D) Syntax error
+
+Correct answer: A) A random number between 0 and 1
+
+Incorrect answer: B) A random number between 0 and 100
+Incorrect answer: C) A random number between 1 and 100
+Incorrect answer: D) Syntax error
+
+Question: What is the result of the following code?
+function logKey(event) {
+  console.log(`You pressed "${event.key}".`);
+}
+
+textBox.addEventListener('keydown', logKey);
+
+A) You pressed the key that was pressed

@@ -1,0 +1,51 @@
+ What is an object in JavaScript?
+A: A collection of related data and/or functionality
+B: A JavaScript feature
+C: A HTML element
+D: A CSS property
+
+Correct answer: A: A collection of related data and/or functionality
+Incorrect answer: B: A JavaScript feature
+Incorrect answer: C: A HTML element
+Incorrect answer: D: A CSS property
+
+Question: How do you create an object in JavaScript?
+A: By writing out the object contents as you've come to create it
+B: By using a constructor
+C: By initializing a variable
+D: By calling a function
+
+Correct answer: C: By initializing a variable
+Incorrect answer: A: By writing out the object contents as you've come to create it
+Incorrect answer: B: By using a constructor
+Incorrect answer: D: By calling a function
+
+Question: What is dot notation?
+A: A way to access object properties
+B: A way to set object properties
+C: A way to create object methods
+D: A way to create an object constructor
+
+Correct answer: A: A way to access object properties
+Incorrect answer: B: A way to set object properties
+Incorrect answer: C: A way to create object methods
+Incorrect answer: D: A way to create an object constructor
+
+Question: What is a constructor?
+A: A function called using the new keyword
+B: A function that creates a new object
+C: A function that initializes an object
+D: A function that binds an object to this
+
+Correct answer: A: A function called using the new keyword
+Incorrect answer: B: A function that creates a new object
+Incorrect answer: C: A function that initializes an object
+Incorrect answer: D: A function that binds an object to this
+
+Question: What is this?
+A: The current object the code is being written inside
+B: The name of the object
+C: A property of the object
+D: The value of the object
+
+Correct answer: A: The current object the code

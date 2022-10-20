@@ -1,0 +1,29 @@
+ What is the value of fetchPromise when the fetch() operation is still going on?
+Correct answer: Promise { : "pending" }
+Incorrect answer: Promise { : "fulfilled" }
+Incorrect answer: Promise { : "rejected" }
+Incorrect answer: Promise { : "resolved" }
+
+Question: What is the value of fetchPromise when the fetch() operation finished successfully?
+Answer: Promise { : "fulfilled" }
+Incorrect answer: Promise { : "pending" }
+Incorrect answer: Promise { : "rejected" }
+Incorrect answer: Promise { : "resolved" }
+
+Question: What is the value of fetchPromise when the fetch() operation failed?
+Answer: Promise { : "rejected" }
+Incorrect answer: Promise { : "pending" }
+Incorrect answer: Promise { : "fulfilled" }
+Incorrect answer: Promise { : "resolved" }
+
+Question: What is the value of fetchPromise when the fetch() operation is successful and the promise is "locked in" to follow the state of another promise?
+Answer: Promise { : "resolved" }
+Incorrect answer: Promise { : "pending" }
+Incorrect answer: Promise { : "fulfilled" }
+Incorrect answer: Promise { : "rejected" }
+
+Question: Which of the following is not a possible state for a promise?
+Answer: Promise { : "invalid" }
+Incorrect answer: Promise { : "pending" }
+Incorrect answer: Promise { : "fulfilled" }
+Incorrect answer: Promise { : "rejected" }

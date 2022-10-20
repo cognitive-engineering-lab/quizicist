@@ -1,0 +1,6 @@
+ What is a multiple-choice question?
+
+Correct answer: A question with more than one answer
+Incorrect answer: A question with only one answer 
+Incorrect answer: A question with no answer 
+Incorrect answer: A question that can't be answered

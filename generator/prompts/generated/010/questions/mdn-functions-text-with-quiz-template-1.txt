@@ -1,0 +1,29 @@
+ What is the default value of a function parameter in JavaScript?
+Correct answer: undefined
+Incorrect answer: null
+Incorrect answer: 0
+Incorrect answer: false
+
+Question: What is the preferred way to create a function in JavaScript?
+Correct answer: function declaration
+Incorrect answer: function expression
+Incorrect answer: arrow function
+Incorrect answer: IIFE
+
+Question: How do you create an IIFE in JavaScript?
+Correct answer: (function(){ /* code */ })();
+Incorrect answer: function(){ /* code */ };
+Incorrect answer: function()();
+Incorrect answer: function /* code */ ;
+
+Question: How do you call a function in JavaScript?
+Correct answer: functionName();
+Incorrect answer: FunctionName();
+Incorrect answer: function_name();
+Incorrect answer: Function.prototype();
+
+Question: What does "use strict" do in JavaScript?
+Correct answer: Enforces strict mode
+Incorrect answer: Makes variables global
+Incorrect answer: Nothing
+Incorrect answer: Duplicates code

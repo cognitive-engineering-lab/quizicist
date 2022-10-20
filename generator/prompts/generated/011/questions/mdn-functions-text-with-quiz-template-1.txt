@@ -1,0 +1,29 @@
+ What is the value of the x variable when output(x) is called from inside function a?
+Correct answer: 2
+Incorrect answer: 3
+Incorrect answer: 1
+Incorrect answer: 0
+
+Question: What is the value of the y variable when output(y) is called from inside function b?
+Correct answer: 3
+Incorrect answer: 2
+Incorrect answer: 1
+Incorrect answer: 0
+
+Question: What is the value of the z variable when output(z) is called from inside function a?
+Correct answer: undefined
+Incorrect answer: 3
+Incorrect answer: 2
+Incorrect answer: 1
+
+Question: What happens when you try to call output(y) from inside function a?
+Correct answer: ReferenceError: y is not defined
+Incorrect answer: 3
+Incorrect answer: 2
+Incorrect answer: 1
+
+Question: What is the value of the x variable when output(x) is called from inside function b?
+Correct answer: 1
+Incorrect answer: 3
+Incorrect answer: 2
+Incorrect answer: 0

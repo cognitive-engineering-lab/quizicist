@@ -1,0 +1,43 @@
+ What is a function?
+A: A chunk of code that performs a specific task
+B: A programming structure that allows you to repeatedly execute a block of code
+C: A built-in code that is part of the JavaScript language
+D: A custom code that is written by the programmer
+
+Correct answer: A: A chunk of code that performs a specific task
+
+Incorrect answer: B: A programming structure that allows you to repeatedly execute a block of code
+Incorrect answer: C: A built-in code that is part of the JavaScript language
+Incorrect answer: D: A custom code that is written by the programmer
+
+Question: What is the purpose of a function?
+A: To allow you to store a piece of code that does a single task inside a defined block
+B: To generate a random number
+C: To Call another function
+D: To join all the items in an array together into a single string
+
+Correct answer: A: To allow you to store a piece of code that does a single task inside a defined block
+
+Incorrect answer: B: To generate a random number
+Incorrect answer: C: To Call another function
+Incorrect answer: D: To join all the items in an array together into a single string
+
+Question: How do you invoke a function?
+A: By including the name of the function in the code somewhere, followed by parentheses
+B: By writing the function's name followed by its parameters
+C: By writing the function's name
+D: By adding an event listener
+
+Correct answer: A: By including the name of the function in the code somewhere, followed by parentheses
+
+Incorrect answer: B: By writing the function's name followed by its parameters
+Incorrect answer: C: By writing the function's name
+Incorrect answer: D: By adding an event listener
+
+Question: What is a method?
+A: A function that is part of an object
+B: A function that is written in JavaScript
+C: A function that is built into the browser
+D: A function that is invoked by an event
+
+Correct answer: A: A function

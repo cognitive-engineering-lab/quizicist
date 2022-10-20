@@ -1,0 +1,22 @@
+ What is the correct output of the following code?
+const fetchPromise1 = fetch('https://mdn.github.io/learning-area/javascript/apis/fetching-data/can-store/products.json');
+const fetchPromise2 = fetch('https://mdn.github.io/learning-area/javascript/apis/fetching-data/can-store/not-found');
+const fetchPromise3 = fetch('https://mdn.github.io/learning-area/javascript/oojs/json/superheroes.json');
+
+Promise.all([fetchPromise1, fetchPromise2, fetchPromise3])
+  .then((responses) => {
+    for (const response of responses) {
+      console.log(`${response.url}: ${response.status}`);
+    }
+  })
+  .catch((error) => {
+    console.error(`Failed to fetch: ${error}`)
+  });
+
+Correct answer: https://mdn.github.io/learning-area/javascript/apis/fetching-data/can-store/products.json: 200
+https://mdn.github.io/learning-area/javascript/apis/fetching-data/can-store/not-found: 404
+https://mdn.github.io/learning-area/javascript/oojs/json/superheroes.json: 200
+Incorrect answer: https://mdn.github.io/learning-area/javascript/apis/fetching-data/can-store/products.json: 404
+https://mdn.github.io/learning-area/javascript/apis/fetching-data/can-store/not-found: 200
+https://mdn.github.io/learning-area/javascript/oojs/json/superheroes.json: 404
+Incorrect answer: https://mdn.github.io/learning-area/javascript/apis/fetching
