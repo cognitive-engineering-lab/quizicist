@@ -55,11 +55,11 @@
                 <tr>
                     <td>{{ loop.index }}</td>
                     <td>{{ question["question"] }}</td>
-                    <td>{{ question["correct"] }}</td>
+                    <td>{{ question["correct_answer"] }}</td>
+                    <td>{{ question["option1"] }}</td>
+                    <td>{{ question["option2"] }}</td>
+                    <td>{{ question["option3"] }}</td>
 
-                    {% for option in question["options"] %}
-                        <td>{{ option }}</td>
-                    {% endfor %}
                     <td>
                         <input type="number" />
                     </td>
