@@ -4,3 +4,5 @@ gpt-quiz
 .env
 
 **.pyc
+
+app/uploads
