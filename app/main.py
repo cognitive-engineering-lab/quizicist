@@ -1,7 +1,9 @@
 import os
-from flask import Flask, render_template, request, redirect, url_for
+from pathlib import Path
+from flask import Flask, Response, render_template, request, redirect, url_for
 from lib.completion import complete
 from lib.parsers.md import md_parser
+from lib.mdbook import questions_to_toml
 from werkzeug.utils import secure_filename
 from models import Generation, Question
 from db import db
@@ -75,4 +77,21 @@ def upload():
 def score(generation_id):
     generation = db.get_or_404(Generation, generation_id)
 
-    return render_template("score.html", uploaded_file=generation.filename, questions=generation.questions)
+    return render_template(
+        "score.html",
+        uploaded_file=generation.filename,
+        questions=generation.questions,
+        toml_download=f"/generated/{generation_id}/toml"
+    )
+
+@app.route("/generated/<generation_id>/toml")
+def download_toml(generation_id):
+    generation = db.get_or_404(Generation, generation_id)
+    toml = questions_to_toml(generation.questions)
+    filename = Path(generation.filename).stem
+
+    return Response(
+        toml,
+        mimetype="text/plain",
+        headers={ "Content-disposition": f"attachment; filename={filename}-{generation_id}.toml" }
+    )
