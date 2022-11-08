@@ -4,7 +4,7 @@ import os
 import openai
 import os
 from dotenv import load_dotenv
-from .consts import APPEND_PROMPT, PREPEND_PROMPT, MAX_CONTEXT_SIZE, ESTIMATED_QUESTION_SIZE
+from .consts import APPEND_PROMPT, PREPEND_PROMPT, MAX_CONTEXT_SIZE, ESTIMATED_QUESTION_SIZE, NUM_QUESTIONS
 from .postprocess import postprocess_question
 
 # set up openai
@@ -46,16 +46,17 @@ def run_gpt3(shard):
     questions = []
 
     # process question until 5 well-formatted questions have been generated
-    while len(questions) < 5:
+    while len(questions) < NUM_QUESTIONS:
         print(f"{len(questions)} questions -- running completion")
         completion = "\nQuestion: " + openai.Completion.create(
             engine="text-davinci-002",
             prompt=prompt,
-            max_tokens=5 * ESTIMATED_QUESTION_SIZE
+            max_tokens=NUM_QUESTIONS * ESTIMATED_QUESTION_SIZE,
+            temperature=1
         )["choices"][0]["text"]
 
         for question in completion.split("\nQuestion: ")[1:]:
-            if len(questions) == 5:
+            if len(questions) == NUM_QUESTIONS:
                 break
 
             processed = postprocess_question(question)
