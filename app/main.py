@@ -22,6 +22,11 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///questions.db"
 # initialize sqlite db
 db.init_app(app)
 
+@app.before_first_request
+def setup():
+    # create directory for file uploads
+    Path(os.path.join(APP_FOLDER, "uploads")).mkdir(exist_ok=True)
+
 @app.route("/", methods=["GET"])
 def home():
     return render_template("upload.html")
