@@ -4,7 +4,7 @@ import os
 import openai
 import os
 from dotenv import load_dotenv
-from .consts import APPEND_PROMPT, PREPEND_PROMPT, MAX_CONTEXT_SIZE, ESTIMATED_QUESTION_SIZE, NUM_QUESTIONS
+from .consts import APPEND_PROMPT, PREPEND_PROMPT, MAX_CONTEXT_SIZE, ESTIMATED_QUESTION_SIZE, NUM_QUESTIONS, QUESTION_TEMPLATE
 from .postprocess import postprocess_question
 
 # set up openai
@@ -53,7 +53,7 @@ def run_gpt3(shard_num: int, shard):
             engine="text-davinci-002",
             prompt=prompt,
             max_tokens=NUM_QUESTIONS * ESTIMATED_QUESTION_SIZE,
-            temperature=1
+            temperature=0.9,
         )["choices"][0]["text"]
 
         for question in completion.split("\nQuestion: ")[1:]:
