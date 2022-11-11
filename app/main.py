@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 import uuid
 from flask import Flask, Response, render_template, request, redirect, url_for
-from lib.completion import complete
+from lib.completion import complete, reroll_distractors
 from lib.parsers.md import md_parser
 from lib.mdbook import questions_to_toml
 from werkzeug.utils import secure_filename
@@ -89,8 +89,27 @@ def score(generation_id):
         "score.html",
         uploaded_file=generation.filename,
         questions=generation.questions,
-        toml_download=f"/generated/{generation_id}/toml"
+        generation_id=generation_id
     )
+
+# TODO: route doesn't need generation_id
+@app.route("/generated/<generation_id>/reroll/<question_id>", methods=["POST"])
+def reroll(generation_id, question_id):
+    generation = db.get_or_404(Generation, generation_id)
+    question = db.get_or_404(Question, question_id)
+
+    upload_path = os.path.join(app.config['UPLOAD_FOLDER'], generation.unique_filename)
+    with open(upload_path) as upload:
+        # TODO: support dynamic parser like upload path
+        # or store components instead of file
+        rerolled = reroll_distractors(upload, md_parser, question)
+
+    question.option1 = rerolled["options"][0]
+    question.option2 = rerolled["options"][1]
+    question.option3 = rerolled["options"][2]
+    db.session.commit()
+
+    return redirect(url_for("score", generation_id=generation.id))
 
 @app.route("/generated/<generation_id>/toml")
 def download_toml(generation_id):

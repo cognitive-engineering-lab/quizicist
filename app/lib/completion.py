@@ -72,3 +72,37 @@ def complete(file_content, parser):
     components = parser(file_content)
     shards = shard_chapter(components)
     return list(itertools.chain(*map(lambda t: run_gpt3(*t), enumerate(shards))))
+
+
+def reroll_distractors(file_content, parser, question):
+    components = parser(file_content)
+    shard = shard_chapter(components)[question.shard]
+
+    # TODO: these strings are really difficult to read
+    partial_question = f"""Question: {question.question}
+Correct answer: {question.correct_answer}
+Incorrect answer:"""
+
+    prompt = f"""{shard}
+    Complete the multiple-choice question based on the passage above.
+    
+    The question uses the following format:
+    {QUESTION_TEMPLATE}
+    Add three incorrect answers.
+    {partial_question}"""
+
+    # TODO: clean up this loop or consolidate parsing into a single function
+    while True:
+        print("Running reroll completion...")
+        completion = partial_question + openai.Completion.create(
+            engine="text-davinci-002",
+            prompt=prompt,
+            max_tokens=NUM_QUESTIONS * ESTIMATED_QUESTION_SIZE,
+            temperature=0.7,
+        )["choices"][0]["text"]
+
+        processed = postprocess_question(completion, question.shard)
+        if processed:
+            return processed
+
+        print(f"Failed to parse the following:\n{completion}")
