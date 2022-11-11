@@ -36,7 +36,7 @@
                 padding: 10px;
             }
 
-            input {
+            input[type=number] {
                 width: 2em;
                 font-size: 1.5em;
             }
@@ -64,9 +64,15 @@
                     <td>
                         <input type="number" />
                     </td>
+
+                    <td>
+                        <form method="POST" action="/generated/{{ generation_id }}/reroll/{{ question.id }}">
+                            <input type="submit" />
+                        </form>
+                    </td>
                 </tr>
             {% endfor %}
         </table>
-        <a href="{{ toml_download }}" download>Download mdbook-quiz TOML</a>
+        <a href="/generated/{{ generation_id }}/toml" download>Download mdbook-quiz TOML</a>
     </body>
 </html>
