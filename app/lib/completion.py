@@ -59,7 +59,7 @@ def run_gpt3(shard):
             if len(questions) == NUM_QUESTIONS:
                 break
 
-            processed = postprocess_question(question)
+            processed = postprocess_question(question, shard_num)
             if processed:
                 questions.append(processed)
 
@@ -71,4 +71,4 @@ def run_gpt3(shard):
 def complete(file_content, parser):
     components = parser(file_content)
     shards = shard_chapter(components)
-    return list(itertools.chain(*map(run_gpt3, shards)))
+    return list(itertools.chain(*map(lambda t: run_gpt3(*t), enumerate(shards))))

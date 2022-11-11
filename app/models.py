@@ -3,6 +3,7 @@ from db import db
 class Generation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     filename = db.Column(db.String)
+    unique_filename = db.Column(db.String)
     questions = db.relationship("Question", backref="generation")
 
 
@@ -15,4 +16,5 @@ class Question(db.Model):
     option1 = db.Column(db.String)
     option2 = db.Column(db.String)
     option3 = db.Column(db.String)
+    shard = db.Column(db.Integer, default=0)
     score = db.Column(db.Integer, nullable=True)

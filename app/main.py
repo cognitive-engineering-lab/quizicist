@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+import uuid
 from flask import Flask, Response, render_template, request, redirect, url_for
 from lib.completion import complete
 from lib.parsers.md import md_parser
@@ -47,8 +48,10 @@ def upload():
         return "No file selected"
 
     # save file to disk
-    filename = secure_filename(file.filename)
-    upload_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    filename = file.filename
+    unique_filename = secure_filename(f"{uuid.uuid4().hex}-{filename}")
+
+    upload_path = os.path.join(app.config['UPLOAD_FOLDER'], unique_filename)
     file.save(upload_path)
 
     parser = PARSERS[request.form["book"]]
@@ -56,7 +59,7 @@ def upload():
         questions = complete(upload, parser)
 
     # add generated questions to db
-    generation = Generation(filename=filename)
+    generation = Generation(filename=filename, unique_filename=unique_filename)
     db.session.add(generation)
     db.session.commit()
 
@@ -68,13 +71,13 @@ def upload():
             option1=question["options"][0],
             option2=question["options"][1],
             option3=question["options"][2],
+            shard=question["shard"],
             score=0,
         )
         db.session.add(q)
 
-    # commit to db and remove uploaded file
+    # add questions to db
     db.session.commit()
-    os.remove(upload_path)
 
     return redirect(url_for("score", generation_id=generation.id))
 

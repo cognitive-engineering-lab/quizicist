@@ -1,4 +1,4 @@
-def postprocess_question(answers: str):
+def postprocess_question(answers: str, shard: int):
     # grab question, if no correct answer return False
     question, _, remaining = answers.partition("\nCorrect answer: ")
     if question == "":
@@ -28,4 +28,5 @@ def postprocess_question(answers: str):
         "question": question,
         "correct": correct,
         "options": options,
+        "shard": shard,
     }
