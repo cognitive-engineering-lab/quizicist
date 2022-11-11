@@ -41,7 +41,8 @@ def shard_chapter(components):
     return shards
 
 
-def run_gpt3(shard):
+
+def run_gpt3(shard_num: int, shard):
     prompt = "\n".join([PREPEND_PROMPT, shard, APPEND_PROMPT])
     questions = []
 
