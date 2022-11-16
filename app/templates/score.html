@@ -66,13 +66,33 @@
                     </td>
 
                     <td>
-                        <form method="POST" action="/generated/{{ generation_id }}/reroll/{{ question.id }}">
-                            <input type="submit" />
+                        <form method="POST" action="./{{ generation_id }}/reroll/{{ question.id }}">
+                            <input type="submit" value="Reroll">
+                        </form>
+                    </td>
+
+                    <td>
+                        <form method="POST" action="./{{ generation_id }}/delete/{{ question.id }}">
+                            <input type="submit" value="Delete">
                         </form>
                     </td>
                 </tr>
             {% endfor %}
         </table>
-        <a href="/generated/{{ generation_id }}/toml" download>Download mdbook-quiz TOML</a>
+        <br />
+        <h4>
+            <u>Add Custom Question:</u>
+        </h4>
+        <form action="./new" method="POST">
+            <label for="new-item-question">New Question</label>
+            <input type="text" name="question" id="new-item-question" />
+
+            <label for="new-item-answer">New Answer</label>
+            <input type="text" name="answer" id="new-item-answer" />
+
+            <input type="submit" value="submit">
+        </form>
+        <br />
+        <a href="./{{ generation_id }}/toml" download>Download mdbook-quiz TOML</a>
     </body>
 </html>

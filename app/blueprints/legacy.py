@@ -67,7 +67,7 @@ def upload():
     # add questions to db
     db.session.commit()
 
-    return redirect(url_for("score", generation_id=generation.id))
+    return redirect(url_for("legacy.score", generation_id=generation.id))
 
 
 # render generated items
@@ -100,7 +100,50 @@ def reroll(generation_id, question_id):
     question.option3 = rerolled["options"][2]
     db.session.commit()
 
-    return redirect(url_for("score", generation_id=generation.id))
+    return redirect(url_for("legacy.score", generation_id=generation.id))
+
+
+# generate new item from question and answer
+@legacy.route("/generated/<generation_id>/new", methods=["POST"])
+def new_item(generation_id):
+    generation = db.get_or_404(Generation, generation_id)
+
+    # TODO: avoid having to instantiate with empty options
+    question = Question(
+        generation_id=generation.id,
+        question=request.form["question"],
+        correct_answer=request.form["answer"],
+        option1="",
+        option2="",
+        option3="",
+        shard=0, # TODO: this should not default to the first shard
+        score=0,
+    )
+    db.session.add(question)
+
+    upload_path = os.path.join(current_app.config['UPLOAD_FOLDER'], generation.unique_filename)
+    with open(upload_path) as upload:
+        # TODO: don't only reroll with first shard
+        rerolled = reroll_distractors(upload, PARSERS["rust"], question)
+
+    question.option1 = rerolled["options"][0]
+    question.option2 = rerolled["options"][1]
+    question.option3 = rerolled["options"][2]
+    db.session.commit()
+
+    return redirect(url_for("legacy.score", generation_id=generation.id))
+
+
+# delete a generated item
+@legacy.route("/generated/<generation_id>/delete/<question_id>", methods=["POST"])
+def delete(generation_id, question_id):
+    generation = db.get_or_404(Generation, generation_id)
+    question = db.get_or_404(Question, question_id)
+
+    db.session.delete(question)
+    db.session.commit()
+
+    return redirect(url_for("legacy.score", generation_id=generation.id))
 
 
 # download mdbook-quiz TOML file
