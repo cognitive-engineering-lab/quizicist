@@ -70,6 +70,12 @@
                             <input type="submit" value="Reroll">
                         </form>
                     </td>
+
+                    <td>
+                        <form method="POST" action="/generated/{{ generation_id }}/delete/{{ question.id }}">
+                            <input type="submit" value="Delete">
+                        </form>
+                    </td>
                 </tr>
             {% endfor %}
         </table>

@@ -142,6 +142,17 @@ def new_item(generation_id):
 
     return redirect(url_for("score", generation_id=generation.id))
 
+# TODO: route doesn't need generation_id
+@app.route("/generated/<generation_id>/delete/<question_id>", methods=["POST"])
+def delete(generation_id, question_id):
+    generation = db.get_or_404(Generation, generation_id)
+    question = db.get_or_404(Question, question_id)
+
+    db.session.delete(question)
+    db.session.commit()
+
+    return redirect(url_for("score", generation_id=generation.id))
+
 @app.route("/generated/<generation_id>/toml")
 def download_toml(generation_id):
     generation = db.get_or_404(Generation, generation_id)
