@@ -111,6 +111,37 @@ def reroll(generation_id, question_id):
 
     return redirect(url_for("score", generation_id=generation.id))
 
+# TODO: route doesn't need generation_id
+# TODO: run on every shard? user selects document range? randomly select a shard?
+@app.route("/generated/<generation_id>/new", methods=["POST"])
+def new_item(generation_id):
+    generation = db.get_or_404(Generation, generation_id)
+
+    # TODO: avoid having to instantiate with empty options
+    question = Question(
+        generation_id=generation.id,
+        question=request.form["question"],
+        correct_answer=request.form["answer"],
+        option1="",
+        option2="",
+        option3="",
+        shard=0, # TODO: this should not default to the first shard
+        score=0,
+    )
+    db.session.add(question)
+
+    upload_path = os.path.join(app.config['UPLOAD_FOLDER'], generation.unique_filename)
+    with open(upload_path) as upload:
+        # TODO: don't only reroll with first shard
+        rerolled = reroll_distractors(upload, md_parser, question)
+
+    question.option1 = rerolled["options"][0]
+    question.option2 = rerolled["options"][1]
+    question.option3 = rerolled["options"][2]
+    db.session.commit()
+
+    return redirect(url_for("score", generation_id=generation.id))
+
 @app.route("/generated/<generation_id>/toml")
 def download_toml(generation_id):
     generation = db.get_or_404(Generation, generation_id)

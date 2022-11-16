@@ -73,6 +73,20 @@
                 </tr>
             {% endfor %}
         </table>
+        <br />
+        <h4>
+            <u>Add Custom Question:</u>
+        </h4>
+        <form action="/generated/{{ generation_id }}/new" method="POST">
+            <label for="new-item-question">New Question</label>
+            <input type="text" name="question" id="new-item-question" />
+
+            <label for="new-item-answer">New Answer</label>
+            <input type="text" name="answer" id="new-item-answer" />
+
+            <input type="submit" value="submit">
+        </form>
+        <br />
         <a href="/generated/{{ generation_id }}/toml" download>Download mdbook-quiz TOML</a>
     </body>
 </html>
