@@ -5,6 +5,7 @@ top_p = 1.0
 ```
 
 # Input
+```
 Question: Is it necessary to annotate every reference in a struct's definition with a lifetime annotation?
 A) No, only references that will be used after the struct goes out of scope need to be annotated
 B) Yes, all references in a struct's definition need to be annotated
@@ -43,6 +44,7 @@ A) Declaring a struct with a reference field that is not annotated with a lifeti
 B) Declaring a struct with a reference field that is annotated with a lifetime parameter
 C) Calling a function with references that have different concrete lifetimes
 D) Returning a reference from a function with a lifetime parameter that does not match the lifetime
+```
 
 # Instructions
 Convert the list of questions into an array of JSON objects. Each object should contain keys for "question", "correct", and "incorrect".

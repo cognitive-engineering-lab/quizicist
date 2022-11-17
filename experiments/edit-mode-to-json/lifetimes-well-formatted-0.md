@@ -5,6 +5,7 @@ top_p = 1.0
 ```
 
 # Input
+```
 Question: Which of the following is not a reason to use generic lifetime parameters?
 Correct answer: So references are valid as long as we need them to be
 Incorrect answer: To prevent dangling references
@@ -34,6 +35,7 @@ Correct answer: The Rust compiler has a borrow checker
 Incorrect answer: We annotate the relationships using generic lifetime parameters
 Incorrect answer: Lifetime annotations
 Incorrect answer: Most of the time, lifetimes are implicit and inferred
+```
 
 # Instructions
 Convert the list of questions into an array of JSON objects.
