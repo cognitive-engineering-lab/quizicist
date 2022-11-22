@@ -13,7 +13,7 @@ RUST_BOOK_PATH=/path/to/copy/of/rust-book
 ```shell
 $ pip install -r requirements.txt
 $ python app/create_db.py # set up local sqlite database
-$ flask --app app/main run
+$ flask --app app/main --debug run # run server in debug mode
 ```
 
 ## Using the app
