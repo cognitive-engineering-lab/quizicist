@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
 from flask import Flask
+from blueprints.api import api
 from blueprints.legacy import legacy
 from db import db
 
@@ -14,7 +15,8 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///questions.db"
 # initialize sqlite db
 db.init_app(app)
 
-# add blueprints for legacy and JSON API routes
+# add blueprints for JSON API and legacy routes
+app.register_blueprint(api, url_prefix="/api")
 app.register_blueprint(legacy, url_prefix="/legacy")
 
 @app.before_first_request
