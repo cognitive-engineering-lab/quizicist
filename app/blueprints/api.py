@@ -33,9 +33,19 @@ def upload():
 # return all generations as JSON
 @api.route("/generated/all")
 def all_generated():
+    # TODO: select id from the query level
     generations = Generation.query.all()
 
-    return jsonify(generations)
+    return jsonify([g.id for g in generations])
+
+
+# return single generation as JSON
+@api.route("/generated/<generation_id>")
+def single_generated(generation_id):
+    generation = db.get_or_404(Generation, generation_id)
+
+    return jsonify(generation)
+
 
 # return generated items as JSON
 @api.route("/generated/<generation_id>")

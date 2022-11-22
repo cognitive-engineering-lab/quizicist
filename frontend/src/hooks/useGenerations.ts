@@ -1,10 +1,9 @@
 import useSWR from "swr";
-import { SERVER_URL } from "../shared/consts";
-import Generation from "../shared/generation.type";
+import { ALL_GENERATIONS_URL } from "../shared/consts";
 import { fetcher } from "./shared";
 
 function useGenerations() {
-  const { data, error } = useSWR<Generation[]>(`${SERVER_URL}/api/generated/all`, fetcher)
+  const { data, error } = useSWR<number[]>(ALL_GENERATIONS_URL, fetcher)
 
   return {
     generations: data,

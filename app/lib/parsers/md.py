@@ -1,6 +1,6 @@
+from dotenv import load_dotenv
 import os
 import json
-import os
 import re
 import mistletoe
 from mistletoe.ast_renderer import ASTRenderer
@@ -9,6 +9,7 @@ from transformers import GPT2Tokenizer
 from ..consts import TOP_LEVEL_COMPONENTS
 
 # required to resolve code listings
+load_dotenv()
 BOOK_DIR = os.path.join(os.getenv("RUST_BOOK_PATH"), "src")
 
 tokenizer = GPT2Tokenizer.from_pretrained("gpt2")

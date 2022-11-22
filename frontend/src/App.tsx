@@ -12,7 +12,9 @@ function Home() {
 
   return (
     <div>
-      {generations?.map((g) => <GenerationView generation={g} />)}
+      {generations?.map((g) =>
+        <GenerationView key={g} generation_id={g} />
+      )}
     </div>
   )
 }

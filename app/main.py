@@ -12,6 +12,7 @@ UPLOAD_FOLDER = os.path.join(APP_FOLDER, "uploads")
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///questions.db"
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 # initialize sqlite db
 db.init_app(app)

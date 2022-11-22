@@ -1,8 +1,5 @@
-import Generation from "./generation.type";
-
 type Question = {
     id: number;
-    generation: Generation;
 
     question: string;
     correct_answer: string;
