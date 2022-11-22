@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
 from flask import Flask
+from flask_cors import CORS
 from blueprints.api import api
 from blueprints.legacy import legacy
 from db import db
@@ -14,6 +15,9 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///questions.db"
 
 # initialize sqlite db
 db.init_app(app)
+
+# enable CORS
+CORS(app)
 
 # add blueprints for JSON API and legacy routes
 app.register_blueprint(api, url_prefix="/api")
