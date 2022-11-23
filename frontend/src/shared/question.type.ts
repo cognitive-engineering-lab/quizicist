@@ -1,11 +1,11 @@
+import Distractor from "./distractor.type";
+
 type Question = {
     id: number;
 
     question: string;
     correct_answer: string;
-    option1: string;
-    option2: string;
-    option3: string;
+    distractors: Distractor[];
     
     shard: number;
     score: number;
