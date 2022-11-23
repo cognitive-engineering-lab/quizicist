@@ -8,8 +8,18 @@ import os
 from sqlalchemy.ext.hybrid import hybrid_property, hybrid_method
 
 
+class UpdateMixin:
+    @hybrid_method
+    def update(self, **kwargs):
+        for key, value in kwargs.items():
+            if hasattr(self, key):
+                setattr(self, key, value)
+
+        db.session.commit()
+
+
 @dataclass
-class Distractor(db.Model):
+class Distractor(UpdateMixin, db.Model):
     id: int = db.Column(db.Integer, primary_key=True)
     question_id: int = db.Column(db.Integer, db.ForeignKey('question.id'))
 
@@ -18,7 +28,7 @@ class Distractor(db.Model):
 
 
 @dataclass
-class Question(db.Model):
+class Question(UpdateMixin, db.Model):
     id: int = db.Column(db.Integer, primary_key=True)
     generation_id: int = db.Column(db.Integer, db.ForeignKey('generation.id'))
 
@@ -35,11 +45,12 @@ class Question(db.Model):
 
     @hybrid_method
     def update(self, **kwargs):
-        for key, value in kwargs.items():
-            if hasattr(self, key):
-                setattr(self, key, value)
+        if "distractors" in kwargs:
+            for current, new in zip(self.distractors, kwargs["distractors"]):
+                current.update(**new)
 
-        db.session.commit()
+        kwargs.pop("distractors", None)
+        super(Question, self).update(**kwargs)
 
     @hybrid_method
     def reroll(self):

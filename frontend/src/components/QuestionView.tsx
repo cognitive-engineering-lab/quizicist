@@ -38,14 +38,15 @@ const QuestionView: React.FC<QuestionProps> = ({ question, generation_id }) => {
                     <label>Correct answer:</label>
                     <Field name="correct_answer" type="text" />
 
-                    <label>Distractor 1:</label>
-                    <Field name="option1" type="text" />
-
-                    <label>Distractor 2:</label>
-                    <Field name="option2" type="text" />
-
-                    <label>Distractor 3:</label>
-                    <Field name="option3" type="text" />
+                    {props.values.distractors?.map((_, index) => (
+                         <>
+                            <label>Distractor {index + 1}:</label>
+                            <Field
+                                name={`distractors.${index}.text`}
+                                type="text"
+                            />
+                        </>
+                    ))}
 
                     <button disabled={!props.dirty} type="submit">Update</button>
                     <button disabled={props.dirty} onClick={reroll}>Reroll Distractors</button>
