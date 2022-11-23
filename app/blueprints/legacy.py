@@ -1,10 +1,9 @@
 from pathlib import Path
 from flask import Blueprint, Response, current_app, request, redirect, render_template, url_for
-from werkzeug.utils import secure_filename
-import uuid
 import os
 from blueprints.shared import PARSERS
-from lib.completion import complete, reroll_distractors
+from lib.completion import reroll_distractors
+from lib.files import handle_file_upload
 from lib.mdbook import questions_to_toml
 from models import Generation, Question
 from db import db
@@ -22,50 +21,17 @@ def home():
 # handle file upload
 @legacy.route("/", methods=["POST"])
 def upload():
-    if "file" not in request.files:
-        return "No file selected"
+    # save uploaded file
+    filename, unique_filename = handle_file_upload()
 
-    if "book" not in request.form:
-        return "No resource type selected"
-
-    file = request.files['file']
-
-    # If the user does not select a file, the browser submits an
-    # empty file without a filename.
-    if file.filename == '':
-        return "No file selected"
-
-    # save file to disk
-    filename = file.filename
-    unique_filename = secure_filename(f"{uuid.uuid4().hex}-{filename}")
-
-    upload_path = os.path.join(current_app.config['UPLOAD_FOLDER'], unique_filename)
-    file.save(upload_path)
-
-    parser = PARSERS[request.form["book"]]
-    with open(upload_path) as upload:
-        questions = complete(upload, parser)
-
-    # add generated questions to db
+    # create generation instance in database
     generation = Generation(filename=filename, unique_filename=unique_filename)
     db.session.add(generation)
     db.session.commit()
 
-    for question in questions:
-        q = Question(
-            generation_id=generation.id,
-            question=question["question"],
-            correct_answer=question["correct"],
-            option1=question["options"][0],
-            option2=question["options"][1],
-            option3=question["options"][2],
-            shard=question["shard"],
-            score=0,
-        )
-        db.session.add(q)
-
-    # add questions to db
-    db.session.commit()
+    # run completion, add generated questions to database
+    parser = PARSERS[request.form["book"]]
+    generation.add_questions(parser)
 
     return redirect(url_for("legacy.score", generation_id=generation.id))
 

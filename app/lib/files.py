@@ -4,11 +4,11 @@ import os
 import uuid
 from werkzeug.utils import secure_filename
 
-def handle_file_upload() -> Tuple[str, str, str]:
+def handle_file_upload() -> Tuple[str, str]:
     """
     Saves an uploaded file to disk with a unique filename.
     
-    Returns a tuple with the original filename, unique filename, and path to file on disk.
+    Returns a tuple with the original filename and unique filename.
     """
 
     if "file" not in request.files:
@@ -28,4 +28,4 @@ def handle_file_upload() -> Tuple[str, str, str]:
     upload_path = os.path.join(current_app.config['UPLOAD_FOLDER'], unique_filename)
     file.save(upload_path)
 
-    return (filename, unique_filename, upload_path)
+    return (filename, unique_filename)
