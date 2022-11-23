@@ -26,6 +26,14 @@ class Question(db.Model):
         return db.session.query("Generation").get(self.generation_id)
 
     @hybrid_method
+    def update(self, **kwargs):
+        for key, value in kwargs.items():
+            if hasattr(self, key):
+                setattr(self, key, value)
+
+        db.session.commit()
+
+    @hybrid_method
     def reroll(self):
         with open(self.generation.upload_path) as upload:
             # TODO: remove parser requirement

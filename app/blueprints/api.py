@@ -32,7 +32,7 @@ def upload():
 
 # return all generations as JSON
 @api.route("/generated/all")
-def all_generated():
+def all_generations():
     # TODO: select id from the query level
     generations = Generation.query.all()
 
@@ -41,28 +41,25 @@ def all_generated():
 
 # return single generation as JSON
 @api.route("/generated/<generation_id>")
-def single_generated(generation_id):
+def get_generation(generation_id):
     generation = db.get_or_404(Generation, generation_id)
 
     return jsonify(generation)
 
 
-# return generated items as JSON
-@api.route("/generated/<generation_id>")
-def score(generation_id):
-    generation = db.get_or_404(Generation, generation_id)
+# update an item's data
+@api.route("/question/<question_id>/update", methods=["POST"])
+def update_question(question_id):
+    data = request.get_json()
 
-    return jsonify(generation)
+    if not data:
+        return "Missing JSON in request", 400
 
-
-# reroll an item's distractors
-@api.route("/question/<question_id>/reroll", methods=["POST"])
-def reroll(question_id):
     question: Question = db.get_or_404(Question, question_id)
-    question.reroll()
+    question.update(**data)
 
     return {
-        "message": "Rerolled question's distractors"
+        "message": "Updated question"
     }
 
 
@@ -103,6 +100,17 @@ def delete(question_id):
 
     return {
         "message": "Deleted question"
+    }
+
+
+# reroll an item's distractors
+@api.route("/question/<question_id>/reroll", methods=["POST"])
+def reroll(question_id):
+    question: Question = db.get_or_404(Question, question_id)
+    question.reroll()
+
+    return {
+        "message": "Rerolled question's distractors"
     }
 
 

@@ -11,9 +11,16 @@ type QuestionProps = {
 };
 
 const QuestionView: React.FC<QuestionProps> = ({ question, generation_id }) => {
+    const generation_url = `${SERVER_URL}/generated/${generation_id}`;
+
     const reroll = async () => {
         await axios.post(`${SERVER_URL}/question/${question.id}/reroll`);
-        mutate(`${SERVER_URL}/generated/${generation_id}`);
+        mutate(generation_url);
+    }
+
+    const update = async (data: any) => {
+        await axios.post(`${SERVER_URL}/question/${question.id}/update`, data);
+        mutate(generation_url);
     }
 
     return (
@@ -21,9 +28,7 @@ const QuestionView: React.FC<QuestionProps> = ({ question, generation_id }) => {
             enableReinitialize
             initialValues={questionSchema.cast(question)}
             validationSchema={questionSchema}
-            onSubmit={async (values) => {
-                console.log(values);
-            }}
+            onSubmit={update}
         >
             {props => (
                 <Form>
@@ -43,7 +48,7 @@ const QuestionView: React.FC<QuestionProps> = ({ question, generation_id }) => {
                     <Field name="option3" type="text" />
 
                     <button disabled={!props.dirty} type="submit">Update</button>
-                    <button onClick={reroll}>Reroll Distractors</button>
+                    <button disabled={props.dirty} onClick={reroll}>Reroll Distractors</button>
                 </Form>
             )}
         </Formik>
