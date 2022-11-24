@@ -90,22 +90,23 @@ class Generation(db.Model):
     def add_questions(self, parser):
         # run gpt-3 completion
         with open(self.upload_path) as upload:
-            questions = complete(upload, parser)
+            shards = complete(upload, parser)
 
-        for question in questions:
-            q = Question(
-                generation_id=self.id,
-                question=question["question"],
-                correct_answer=question["correct"],
-                shard=question["shard"],
-                score=0,
-            )
-            db.session.add(q)
-            db.session.commit()
+        for shard, questions in enumerate(shards):
+            for question in questions:
+                q = Question(
+                    generation_id=self.id,
+                    question=question["question"],
+                    correct_answer=question["correct"],
+                    shard=shard,
+                    score=0,
+                )
+                db.session.add(q)
+                db.session.commit()
 
-            for distractor in question["options"]:
-                d = Distractor(question_id=q.id, text=distractor, locked=False)
-                db.session.add(d)
+                for distractor in question["incorrect"]:
+                    d = Distractor(question_id=q.id, text=distractor, locked=False)
+                    db.session.add(d)
 
         # add distractors to db
         db.session.commit()

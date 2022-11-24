@@ -1,12 +1,10 @@
-import itertools
 from math import ceil
-import os
 import openai
 import os
 from dotenv import load_dotenv
 from .prompt import Prompt
 from .consts import APPEND_PROMPT, MAX_CONTEXT_SIZE, ESTIMATED_QUESTION_SIZE, NUM_QUESTIONS
-from .postprocess import postprocess_question
+from .postprocess import postprocess_edit_mode, postprocess_manual
 
 # set up openai
 load_dotenv()
@@ -43,13 +41,13 @@ def shard_chapter(components):
 
 
 
-def run_gpt3(shard_num: int, shard):
+def run_gpt3(shard):
     prompt = "\n".join([shard, APPEND_PROMPT])
-    questions = []
 
     # process question until 5 well-formatted questions have been generated
-    while len(questions) < NUM_QUESTIONS:
-        print(f"{len(questions)} questions -- running completion")
+    # TODO: add tally for failed generations and quit after n
+    while True:
+        print(f"Running running completion on shard...")
         completion = "\nQuestion: " + openai.Completion.create(
             engine="text-davinci-002",
             prompt=prompt,
@@ -57,23 +55,17 @@ def run_gpt3(shard_num: int, shard):
             temperature=0.9,
         )["choices"][0]["text"]
 
-        for question in completion.split("\nQuestion: ")[1:]:
-            if len(questions) == NUM_QUESTIONS:
-                break
+        processed = postprocess_edit_mode(completion)
 
-            processed = postprocess_question(question, shard_num)
-            if processed:
-                questions.append(processed)
-
-        print(f"Generated {len(questions)} questions")
-    
-    return questions
+        if processed:
+            return processed
 
 
 def complete(file_content, parser):
     components = parser(file_content)
     shards = shard_chapter(components)
-    return list(itertools.chain(*map(lambda t: run_gpt3(*t), enumerate(shards))))
+
+    return list(map(run_gpt3, shards))
 
 
 def reroll_distractors(file_content, parser, question):
@@ -109,7 +101,7 @@ def reroll_distractors(file_content, parser, question):
             temperature=0.9,
         )["choices"][0]["text"]
 
-        processed = postprocess_question(completion, question.shard)
+        processed = postprocess_manual(completion, question.shard)
         if processed:
             return processed
 
