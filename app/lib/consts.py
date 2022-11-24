@@ -25,9 +25,6 @@ Incorrect answer:
 Incorrect answer:
 """
 
-# text prepended to chapter content
-PREPEND_PROMPT = """"""
-
 # text to append to chapter content
 APPEND_PROMPT = f"""
 Generate {NUM_QUESTIONS} multiple-choice questions to test a reader's comprehension of the programming concepts above.

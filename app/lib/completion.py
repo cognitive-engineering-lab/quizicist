@@ -4,7 +4,8 @@ import os
 import openai
 import os
 from dotenv import load_dotenv
-from .consts import APPEND_PROMPT, PREPEND_PROMPT, MAX_CONTEXT_SIZE, ESTIMATED_QUESTION_SIZE, NUM_QUESTIONS, QUESTION_TEMPLATE
+from .prompt import Prompt
+from .consts import APPEND_PROMPT, MAX_CONTEXT_SIZE, ESTIMATED_QUESTION_SIZE, NUM_QUESTIONS
 from .postprocess import postprocess_question
 
 # set up openai
@@ -43,7 +44,7 @@ def shard_chapter(components):
 
 
 def run_gpt3(shard_num: int, shard):
-    prompt = "\n".join([PREPEND_PROMPT, shard, APPEND_PROMPT])
+    prompt = "\n".join([shard, APPEND_PROMPT])
     questions = []
 
     # process question until 5 well-formatted questions have been generated
@@ -79,27 +80,33 @@ def reroll_distractors(file_content, parser, question):
     components = parser(file_content)
     shard = shard_chapter(components)[question.shard]
 
-    # TODO: these strings are really difficult to read
-    partial_question = f"""Question: {question.question}
-Correct answer: {question.correct_answer}
-Incorrect answer:"""
+    # partial prompt starting at "Question:"
+    question_prompt = Prompt()\
+        .add_question(question.question)\
+        .add_correct(question.correct_answer)
 
-    prompt = f"""{shard}
-    Complete the multiple-choice question based on the passage above.
-    
-    The question uses the following format:
-    {QUESTION_TEMPLATE}
-    Add three incorrect answers.
-    {partial_question}"""
+    # add all locked distractors
+    for distractor in filter(lambda d: d.locked, question.distractors):
+        question_prompt.add_distractor(distractor.text)
+
+    question_prompt.add_distractor("")
+
+    # full prompt, appending partial prompt
+    prompt = Prompt(num_questions=1)\
+        .add_text(shard, newlines=0)\
+        .add_introduction()\
+        .add_template()\
+        .add_instructions()\
+        .join(question_prompt)
 
     # TODO: clean up this loop or consolidate parsing into a single function
     while True:
         print("Running reroll completion...")
-        completion = partial_question + openai.Completion.create(
+        completion = question_prompt.prompt + openai.Completion.create(
             engine="text-davinci-002",
-            prompt=prompt,
+            prompt=prompt.prompt,
             max_tokens=NUM_QUESTIONS * ESTIMATED_QUESTION_SIZE,
-            temperature=0.7,
+            temperature=0.9,
         )["choices"][0]["text"]
 
         processed = postprocess_question(completion, question.shard)

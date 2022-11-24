@@ -45,6 +45,10 @@ const QuestionView: React.FC<QuestionProps> = ({ question, generation_id }) => {
                                 name={`distractors.${index}.text`}
                                 type="text"
                             />
+                            <Field
+                                name={`distractors.${index}.locked`}
+                                type="checkbox"
+                            />
                         </>
                     ))}
 
