@@ -1,5 +1,5 @@
-import GenerationView from "./components/GenerationView";
-import useGenerations from "./hooks/useGenerations"
+import GenerationView from "@components/GenerationView";
+import useGenerations from "@hooks/useGenerations"
 
 function Home() {
   const { isLoading, generations } = useGenerations();

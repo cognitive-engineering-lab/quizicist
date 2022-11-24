@@ -1,9 +1,9 @@
 import axios from "axios";
 import { Formik, Field, Form } from "formik";
 import { mutate } from "swr";
-import questionSchema from "../schemas/question.schema";
-import { SERVER_URL } from "../shared/consts";
-import Question from "../shared/question.type"
+import questionSchema from "@schemas/question.schema";
+import { SERVER_URL } from "@shared/consts";
+import Question from "@shared/question.type"
 
 type QuestionProps = {
     question: Question;

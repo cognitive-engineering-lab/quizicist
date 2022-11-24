@@ -1,10 +1,10 @@
 import axios from "axios";
 import { Formik, Field, Form } from "formik";
 import useSWR, { mutate } from "swr";
-import { fetcher } from "../hooks/shared";
-import customQuestionSchema from "../schemas/customQuestion.schema";
-import { SERVER_URL } from "../shared/consts";
-import Generation from "../shared/generation.type"
+import { fetcher } from "@hooks/fetcher";
+import customQuestionSchema from "@schemas/customQuestion.schema";
+import { SERVER_URL } from "@shared/consts";
+import Generation from "@shared/generation.type"
 import QuestionView from "./QuestionView";
 
 type GenerationProps = {
