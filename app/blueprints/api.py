@@ -71,15 +71,15 @@ def new_item(generation_id):
     # TODO: avoid having to instantiate with empty options
     question = Question(
         generation_id=generation.id,
-        question=request.form["question"],
-        correct_answer=request.form["answer"],
-        option1="",
-        option2="",
-        option3="",
+        question=request.json["question"],
+        correct_answer=request.json["correct_answer"],
         shard=0, # TODO: this should not default to the first shard
         score=0,
     )
     db.session.add(question)
+    db.session.commit()
+
+    question.fill_distractors()
 
     # add distractors to custom question
     question.reroll()

@@ -53,6 +53,16 @@ class Question(UpdateMixin, db.Model):
         super(Question, self).update(**kwargs)
 
     @hybrid_method
+    def fill_distractors(self):
+        # TODO: is there a better way to efficiently create distractor rows?
+        # TODO: create const for NUM_DISTRACTORS
+        for _ in range(3):
+            d = Distractor(question_id=self.id, text="", locked=False)
+            db.session.add(d)
+
+        db.session.commit()
+
+    @hybrid_method
     def reroll(self):
         with open(self.generation.upload_path) as upload:
             # TODO: remove parser requirement
