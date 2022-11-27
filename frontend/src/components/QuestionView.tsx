@@ -23,6 +23,11 @@ const QuestionView: React.FC<QuestionProps> = ({ question, generation_id }) => {
         mutate(generation_url);
     }
 
+    const del = async () => {
+        await axios.post(`${SERVER_URL}/question/${question.id}/delete`);
+        mutate(generation_url);
+    }
+
     return (
         <Formik
             enableReinitialize
@@ -54,6 +59,7 @@ const QuestionView: React.FC<QuestionProps> = ({ question, generation_id }) => {
 
                     <button disabled={!props.dirty} type="submit">Update</button>
                     <button disabled={props.dirty} onClick={reroll}>Reroll Distractors</button>
+                    <button onClick={del}>Delete Item</button>
                 </Form>
             )}
         </Formik>
