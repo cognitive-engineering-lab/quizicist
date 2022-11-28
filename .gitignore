@@ -1,9 +1,0 @@
-# venv
-gpt-quiz
-
-.env
-
-**.pyc
-
-server/uploads
-server/instance
