@@ -21,13 +21,13 @@ $ cd frontend && npm install
 ### Database
 Whe developing/running locally, we use SQLite to store generated items:
 ```shell
-$ python app/create_db.py # set up local sqlite database
+$ python server/create_db.py # set up local sqlite database
 ```
 
 ### Running the server + frontend
 In one shell:
 ```shell
-$ flask --app app/main --debug run --port 5000 # run server in debug mode
+$ flask --app server/main --debug run --port 5000 # run server in debug mode
 ```
 
 In another shell:

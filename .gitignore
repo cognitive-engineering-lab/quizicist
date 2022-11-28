@@ -5,5 +5,5 @@ gpt-quiz
 
 **.pyc
 
-app/uploads
-app/instance
+server/uploads
+server/instance
