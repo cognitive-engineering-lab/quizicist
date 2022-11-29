@@ -4,15 +4,16 @@ from flask import Flask
 from flask_cors import CORS
 from blueprints.api import api
 from blueprints.legacy import legacy
+from dotenv import load_dotenv
 from db import db
-
-APP_FOLDER = os.path.dirname(os.path.realpath(__file__))
-UPLOAD_FOLDER = os.path.join(APP_FOLDER, "uploads")
+from config import APP_FOLDER
 
 app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///questions.db"
-app.config['CORS_HEADERS'] = 'Content-Type'
+
+# set config based on ENV variable
+load_dotenv()
+CONFIG_CLASS = "ProductionConfig" if os.getenv("ENV") == "prod" else "DebugConfig"
+app.config.from_object(f"config.{CONFIG_CLASS}")
 
 # initialize sqlite db
 db.init_app(app)
