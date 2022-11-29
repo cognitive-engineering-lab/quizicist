@@ -14,6 +14,7 @@ $ sudo setcap CAP_NET_BIND_SERVICE=+eip $(which caddy)
 $ sudo apt-get install libmysqlclient-dev
 $ python -m venv quiz-env # create quiz-env virtual environment
 $ source quiz-env/bin/activate
+$ pip install wheel
 $ pip install --no-cache-dir -r requirements.txt # install dependencies without cache (helps low-RAM VMs)
 ```
 
