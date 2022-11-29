@@ -7,6 +7,9 @@ from lib.completion import complete, reroll_distractors
 import os
 from sqlalchemy.ext.hybrid import hybrid_property, hybrid_method
 
+# length of VARCHAR field for questions, answers, and filenames
+ITEM_LENGTH=1000
+FILENAME_LENGTH=400
 
 class UpdateMixin:
     @hybrid_method
@@ -23,7 +26,7 @@ class Distractor(UpdateMixin, db.Model):
     id: int = db.Column(db.Integer, primary_key=True)
     question_id: int = db.Column(db.Integer, db.ForeignKey('question.id'))
 
-    text: str = db.Column(db.String)
+    text: str = db.Column(db.String(ITEM_LENGTH))
     locked: bool = db.Column(db.Boolean)
 
 
@@ -32,8 +35,8 @@ class Question(UpdateMixin, db.Model):
     id: int = db.Column(db.Integer, primary_key=True)
     generation_id: int = db.Column(db.Integer, db.ForeignKey('generation.id'))
 
-    question: str = db.Column(db.String)
-    correct_answer: str = db.Column(db.String)
+    question: str = db.Column(db.String(ITEM_LENGTH))
+    correct_answer: str = db.Column(db.String(ITEM_LENGTH))
     distractors: List[Distractor] = db.relationship("Distractor", backref="question")
 
     shard: int = db.Column(db.Integer, default=0)
@@ -77,8 +80,8 @@ class Question(UpdateMixin, db.Model):
 @dataclass
 class Generation(db.Model):
     id: int = db.Column(db.Integer, primary_key=True)
-    filename: str = db.Column(db.String)
-    unique_filename: str = db.Column(db.String)
+    filename: str = db.Column(db.String(FILENAME_LENGTH))
+    unique_filename: str = db.Column(db.String(FILENAME_LENGTH))
     questions: List[Question] = db.relationship("Question", backref="generation")
 
     @hybrid_property
