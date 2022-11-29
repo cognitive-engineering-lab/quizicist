@@ -37,7 +37,7 @@ MYSQL_DB=<MySQL database>
 ```shell
 $ cd server
 $ gunicorn -w 4 'main:app' --daemon # start app with production WSGI container
-$ caddy reverse-proxy --from api.quizici.st --to localhost:8000 # bind caddy to local app
+$ caddy start # bind caddy to local app
 ```
 
 ### Stopping the server

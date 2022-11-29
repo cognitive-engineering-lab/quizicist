@@ -1,0 +1,3 @@
+api.quizici.st
+
+reverse_proxy :8000
