@@ -43,3 +43,6 @@ class ProductionConfig(Config):
 
     # store flask limiter data in memcached
     RATELIMIT_STORAGE_URI = "memcached://localhost:11211"
+
+    # allow requests only from quizici.st
+    CORS_ORIGINS = ["https://quizici.st"]
