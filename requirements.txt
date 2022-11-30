@@ -31,6 +31,7 @@ pandas==1.4.4
 pandas-stubs==1.4.3.220829
 pycodestyle==2.9.1
 Pygments==2.13.0
+pymemcache==4.0.0
 pyparsing==3.0.9
 python-dateutil==2.8.2
 python-dotenv==0.21.0
