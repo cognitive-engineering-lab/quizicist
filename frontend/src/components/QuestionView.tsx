@@ -4,6 +4,9 @@ import { mutate } from "swr";
 import questionSchema from "@schemas/question.schema";
 import { SERVER_URL } from "@shared/consts";
 import Question from "@shared/question.type"
+import { FormControl, FormLabel, Input, IconButton, Button, Divider } from "@chakra-ui/react";
+import { LockIcon, UnlockIcon } from "@chakra-ui/icons";
+import styles from "./QuestionView.module.css";
 
 type QuestionProps = {
     question: Question;
@@ -37,29 +40,62 @@ const QuestionView: React.FC<QuestionProps> = ({ question, generation_id }) => {
         >
             {props => (
                 <Form>
-                    <label>Question:</label>
-                    <Field name="question" type="text" />
+                    <Field name="question">
+                        {/* @ts-ignore TODO: hacky fix before creating custom component */}
+                        {({ field }) => (
+                            <FormControl>
+                                <FormLabel>Question</FormLabel>
+                                <Input {...field} placeholder="question" />
+                            </FormControl>
+                        )}
+                    </Field>
 
-                    <label>Correct answer:</label>
-                    <Field name="correct_answer" type="text" />
+                    <Field name="correct_answer">
+                        {/* @ts-ignore TODO: hacky fix before creating custom component */}
+                        {({ field }) => (
+                            <FormControl>
+                                <FormLabel>Correct answer</FormLabel>
+                                <Input {...field} placeholder="correct_answer" />
+                            </FormControl>
+                        )}
+                    </Field>
 
                     {props.values.distractors?.map((_, index) => (
-                         <>
-                            <label>Distractor {index + 1}:</label>
-                            <Field
-                                name={`distractors.${index}.text`}
-                                type="text"
-                            />
-                            <Field
-                                name={`distractors.${index}.locked`}
-                                type="checkbox"
-                            />
+                        <>
+                            <Field name={`distractors.[${index}].text`}>
+                                {/* @ts-ignore TODO: hacky fix before creating custom component */}
+                                {({ field }) => (
+                                    <FormControl>
+                                        <FormLabel>
+                                            Distractor {index + 1}
+                                            <Field
+                                                name={`distractors.[${index}].locked`}
+                                                type="checkbox"
+                                            >
+                                                {/* @ts-ignore TODO: hacky fix before creating custom component */}
+                                                {({ field, form }) => (
+                                                    <IconButton
+                                                        size="sm"
+                                                        className={styles.lock}
+                                                        aria-label="Lock/unlock distractor"
+                                                        icon={field.value ? <LockIcon /> : <UnlockIcon />}
+                                                        onClick={() => form.setFieldValue(`distractors.[${index}].locked`, !field.value)}
+                                                    />
+                                                )}
+                                            </Field>
+                                        </FormLabel>
+                                        <Input {...field} placeholder='name' />
+                                    </FormControl>
+                                )}
+                            </Field>
                         </>
                     ))}
 
-                    <button disabled={!props.dirty} type="submit">Update</button>
-                    <button disabled={props.dirty} onClick={reroll}>Reroll Distractors</button>
-                    <button onClick={del}>Delete Item</button>
+                    <Divider className={styles.divider} />
+
+                    <Button disabled={!props.dirty} onClick={props.submitForm} className={styles.button}>Update</Button>
+                    <Button disabled={props.dirty} onClick={reroll} className={styles.button}>Reroll Distractors</Button>
+                    <Button onClick={del} className={styles.button}>Delete Item</Button>
                 </Form>
             )}
         </Formik>

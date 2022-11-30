@@ -37,7 +37,7 @@ class Question(UpdateMixin, db.Model):
 
     question: str = db.Column(db.String(ITEM_LENGTH))
     correct_answer: str = db.Column(db.String(ITEM_LENGTH))
-    distractors: List[Distractor] = db.relationship("Distractor", backref="question")
+    distractors: List[Distractor] = db.relationship("Distractor", backref="question", order_by=Distractor.locked.desc())
 
     shard: int = db.Column(db.Integer, default=0)
     score: int = db.Column(db.Integer, nullable=True)
