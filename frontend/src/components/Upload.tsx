@@ -26,7 +26,7 @@ const Upload: React.FC = () => {
                         {({ field }) => (
                             <FormControl>
                                 <FormLabel>Quiz title</FormLabel>
-                                <Input {...field} placeholder="My CS50 quiz..." />
+                                <Input {...field} placeholder="CS50 Functions Quiz" />
                             </FormControl>
                         )}
                     </Field>
