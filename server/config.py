@@ -29,6 +29,9 @@ class DebugConfig(Config):
 
     # path to local sqlite database
     SQLALCHEMY_DATABASE_URI = "sqlite:///questions.db"
+
+    # store flask limiter data in memory
+    RATELIMIT_STORAGE_URI = "memory://"
     
 
 # for use in production environment (Google VM)
@@ -37,3 +40,6 @@ class ProductionConfig(Config):
     DEBUG = False
 
     SQLALCHEMY_DATABASE_URI = f"mysql://{MYSQL_USERNAME}:{MYSQL_PASSWORD}@{MYSQL_HOST}/{MYSQL_DB}"
+
+    # store flask limiter data in memcached
+    RATELIMIT_STORAGE_URI = "memcached://localhost:11211"
