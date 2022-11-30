@@ -48,7 +48,7 @@ def run_gpt3(shard):
     # TODO: add tally for failed generations and quit after n
     while True:
         print(f"Running completion on shard...")
-        completion = "\nQuestion: " + openai.Completion.create(
+        completion = "Question: " + openai.Completion.create(
             engine=GPT_MODEL,
             prompt=prompt,
             max_tokens=NUM_QUESTIONS * ESTIMATED_QUESTION_SIZE,
