@@ -49,6 +49,19 @@ def get_generation(generation_id):
     return jsonify(generation)
 
 
+# delete a generation
+@api.route("/generated/<generation_id>/delete", methods=["POST"])
+def delete_generation(generation_id):
+    generation = db.get_or_404(Generation, generation_id)
+
+    db.session.delete(generation)
+    db.session.commit()
+
+    return {
+        "message": "Deleted generation"
+    }
+
+
 # update an item's data
 @api.route("/question/<question_id>/update", methods=["POST"])
 def update_question(question_id):
