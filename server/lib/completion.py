@@ -3,7 +3,7 @@ import openai
 import os
 from dotenv import load_dotenv
 from .prompt import Prompt
-from .consts import APPEND_PROMPT, MAX_CONTEXT_SIZE, ESTIMATED_QUESTION_SIZE, NUM_QUESTIONS
+from .consts import APPEND_PROMPT, GPT_MODEL, MAX_CONTEXT_SIZE, ESTIMATED_QUESTION_SIZE, NUM_QUESTIONS
 from .postprocess import postprocess_edit_mode, postprocess_manual
 
 # set up openai
@@ -49,10 +49,10 @@ def run_gpt3(shard):
     while True:
         print(f"Running completion on shard...")
         completion = "\nQuestion: " + openai.Completion.create(
-            engine="text-davinci-002",
+            engine=GPT_MODEL,
             prompt=prompt,
             max_tokens=NUM_QUESTIONS * ESTIMATED_QUESTION_SIZE,
-            temperature=0.9,
+            temperature=0.8,
         )["choices"][0]["text"]
 
         processed = postprocess_edit_mode(completion)
@@ -95,10 +95,10 @@ def reroll_distractors(file_content, parser, question):
     while True:
         print("Running reroll completion...")
         completion = question_prompt.prompt + openai.Completion.create(
-            engine="text-davinci-002",
+            engine=GPT_MODEL,
             prompt=prompt.prompt,
             max_tokens=NUM_QUESTIONS * ESTIMATED_QUESTION_SIZE,
-            temperature=0.9,
+            temperature=0.8,
         )["choices"][0]["text"]
 
         processed = postprocess_manual(completion, question.shard)

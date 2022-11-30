@@ -1,3 +1,6 @@
+# gpt model to use
+GPT_MODEL = "text-davinci-003"
+
 # markdown element types valid at the top level
 TOP_LEVEL_COMPONENTS = [
     "Paragraph",
