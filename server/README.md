@@ -12,6 +12,7 @@ $ sudo setcap CAP_NET_BIND_SERVICE=+eip $(which caddy)
 3. Install server dependencies:
 ```shell
 $ sudo apt-get install libmysqlclient-dev
+$ sudo apt-get install memcached
 $ python -m venv quiz-env # create quiz-env virtual environment
 $ source quiz-env/bin/activate
 $ pip install wheel
@@ -37,6 +38,7 @@ MYSQL_DB=<MySQL database>
 
 ```shell
 $ cd server
+$ sudo systemctl start memcached # start memcached to store rate-limiting data
 $ gunicorn -w 4 'main:app' --daemon # start app with production WSGI container
 $ caddy start # bind caddy to local app
 ```
@@ -44,6 +46,7 @@ $ caddy start # bind caddy to local app
 ### Stopping the server
 
 ```shell
+$ sudo systemctl stop memcached
 $ pkill gunicorn
 $ caddy stop
 ```
