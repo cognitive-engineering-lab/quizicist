@@ -24,6 +24,7 @@ $ pip install --no-cache-dir -r requirements.txt # install dependencies without 
 The production server `.env` file contains different variables from the dev file:
 ```
 ENV=prod
+FLASK_SECRET=<secure generated key>
 
 RUST_BOOK_PATH=<path/to/rust/book>
 OPENAI_SECRET_KEY=<production OpenAI secret>
