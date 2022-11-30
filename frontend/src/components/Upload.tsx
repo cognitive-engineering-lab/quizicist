@@ -1,4 +1,4 @@
-import { Button, Checkbox, FormControl, FormLabel, Input, Textarea } from "@chakra-ui/react";
+import { Button, Checkbox, FormControl, FormLabel, Input, Text, Textarea } from "@chakra-ui/react";
 import uploadSchema from "@schemas/upload.schema";
 import { ALL_GENERATIONS_URL, SERVER_URL } from "@shared/consts";
 import axios from "axios";
@@ -20,7 +20,7 @@ const Upload: React.FC = () => {
         >
             {props => (
                 <Form>
-                    
+                    <Text fontSize='2xl' style={{ marginBottom: "0.5em" }}>Create a quiz</Text>
                     <Field name="title">
                         {/* @ts-ignore TODO: hacky fix before creating custom component */}
                         {({ field }) => (
