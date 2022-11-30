@@ -1,8 +1,8 @@
 from pathlib import Path
 from flask import Blueprint, Response, jsonify, request
-from blueprints.shared import PARSERS
-from lib.files import handle_file_upload
+from lib.files import create_file_from_json
 from lib.mdbook import questions_to_toml
+from lib.parsers.md import md_parser
 from models import Generation, Question
 from db import db
 
@@ -11,10 +11,10 @@ api = Blueprint("api", __name__, template_folder="templates")
 
 
 # handle file upload
-@api.route("/", methods=["POST"])
+@api.route("/upload", methods=["POST"])
 def upload():
     # save uploaded file
-    filename, unique_filename = handle_file_upload()
+    filename, unique_filename = create_file_from_json()
 
     # create generation instance in database
     generation = Generation(filename=filename, unique_filename=unique_filename)
@@ -22,7 +22,7 @@ def upload():
     db.session.commit()
 
     # run completion, add generated questions to database
-    parser = PARSERS[request.form["book"]]
+    parser = md_parser
     generation.add_questions(parser)
 
     return {

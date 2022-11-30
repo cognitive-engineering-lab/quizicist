@@ -1,4 +1,5 @@
 import GenerationView from "@components/GenerationView";
+import Upload from "@components/Upload";
 import useGenerations from "@hooks/useGenerations"
 
 function Home() {
@@ -12,6 +13,7 @@ function Home() {
 
   return (
     <div>
+      <Upload />
       {generations?.map((g) =>
         <GenerationView key={g} generation_id={g} />
       )}

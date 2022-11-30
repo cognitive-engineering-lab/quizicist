@@ -1,6 +1,7 @@
 from typing import Tuple
 from flask import request, current_app
 import os
+import re
 import uuid
 from werkzeug.utils import secure_filename
 
@@ -29,3 +30,32 @@ def handle_file_upload() -> Tuple[str, str]:
     file.save(upload_path)
 
     return (filename, unique_filename)
+
+
+def create_file_from_json() -> Tuple[str, str]:
+    """
+    Saves plain-text content uploaded as JSON to disk as markdown.
+    """
+    
+    title = request.json["title"]
+    content = request.json["content"]
+    is_markdown = request.json["is_markdown"]
+
+    if not title:
+        raise ValueError("Title is a required field")
+
+    if not content:
+        raise ValueError("Content is a required field")
+    
+    # if user submitted plain text, escape before saving as markdown
+    if not is_markdown:
+        # TODO: more robust escaping for plain text
+        escape_chars = r'_*[]()~`>#+-=|{}.!'
+        content = re.sub(f'([{re.escape(escape_chars)}])', r'\\\1', content)
+
+    unique_filename = secure_filename(f"{uuid.uuid4().hex}-{title}.md")
+    upload_path = os.path.join(current_app.config['UPLOAD_FOLDER'], unique_filename)
+    with open(upload_path, "w+") as f:
+        f.write(content)
+
+    return (title, unique_filename)

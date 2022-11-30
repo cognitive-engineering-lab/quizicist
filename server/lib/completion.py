@@ -47,7 +47,7 @@ def run_gpt3(shard):
     # process question until 5 well-formatted questions have been generated
     # TODO: add tally for failed generations and quit after n
     while True:
-        print(f"Running running completion on shard...")
+        print(f"Running completion on shard...")
         completion = "\nQuestion: " + openai.Completion.create(
             engine="text-davinci-002",
             prompt=prompt,
