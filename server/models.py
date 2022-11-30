@@ -37,7 +37,12 @@ class Question(UpdateMixin, db.Model):
 
     question: str = db.Column(db.String(ITEM_LENGTH))
     correct_answer: str = db.Column(db.String(ITEM_LENGTH))
-    distractors: List[Distractor] = db.relationship("Distractor", backref="question", order_by=Distractor.locked.desc())
+    distractors: List[Distractor] = db.relationship(
+        "Distractor",
+        backref="question",
+        order_by=Distractor.locked.desc(),
+        cascade="all, delete-orphan"
+    )
 
     shard: int = db.Column(db.Integer, default=0)
     score: int = db.Column(db.Integer, nullable=True)
@@ -82,7 +87,7 @@ class Generation(db.Model):
     id: int = db.Column(db.Integer, primary_key=True)
     filename: str = db.Column(db.String(FILENAME_LENGTH))
     unique_filename: str = db.Column(db.String(FILENAME_LENGTH))
-    questions: List[Question] = db.relationship("Question", backref="generation")
+    questions: List[Question] = db.relationship("Question", backref="generation", cascade="all, delete-orphan")
 
     @hybrid_property
     def upload_path(cls):

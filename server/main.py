@@ -7,6 +7,7 @@ from blueprints.legacy import legacy
 from dotenv import load_dotenv
 from db import db
 from config import APP_FOLDER
+from limiter import limiter
 
 app = Flask(__name__)
 
@@ -17,6 +18,9 @@ app.config.from_object(f"config.{CONFIG_CLASS}")
 
 # initialize sqlite db
 db.init_app(app)
+
+# limit requests by IP
+limiter.init_app(app)
 
 # enable CORS
 CORS(app)

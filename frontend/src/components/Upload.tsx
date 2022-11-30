@@ -1,9 +1,10 @@
-import { Button, Checkbox, FormControl, FormLabel, Input, Textarea } from "@chakra-ui/react";
+import { Button, Checkbox, FormControl, FormLabel, Input, Text, Textarea } from "@chakra-ui/react";
 import uploadSchema from "@schemas/upload.schema";
 import { ALL_GENERATIONS_URL, SERVER_URL } from "@shared/consts";
 import axios from "axios";
 import { Formik, Field, Form, FormikHelpers } from "formik";
 import { mutate } from "swr";
+import styles from "./Upload.module.css";
 
 const Upload: React.FC = () => {
     const upload = async (data: any, { resetForm }: FormikHelpers<any>) => {
@@ -20,13 +21,13 @@ const Upload: React.FC = () => {
         >
             {props => (
                 <Form>
-                    
+                    <Text fontSize='2xl' style={{ marginBottom: "0.5em" }}>Create a quiz</Text>
                     <Field name="title">
                         {/* @ts-ignore TODO: hacky fix before creating custom component */}
                         {({ field }) => (
-                            <FormControl>
+                            <FormControl className={styles.field}>
                                 <FormLabel>Quiz title</FormLabel>
-                                <Input {...field} placeholder="My CS50 quiz..." />
+                                <Input {...field} placeholder="CS50 Functions Quiz" />
                             </FormControl>
                         )}
                     </Field>
@@ -34,7 +35,7 @@ const Upload: React.FC = () => {
                     <Field name="content">
                         {/* @ts-ignore TODO: hacky fix before creating custom component */}
                         {({ field }) => (
-                            <FormControl>
+                            <FormControl className={styles.field}>
                                 <FormLabel>Content to quiz over</FormLabel>
                                 <Textarea {...field} placeholder="Functions reduce duplicate code." />
                             </FormControl>
@@ -44,9 +45,8 @@ const Upload: React.FC = () => {
                     <Field name="is_markdown">
                         {/* @ts-ignore TODO: hacky fix before creating custom component */}
                         {({ field }) => (
-                            <FormControl>
-                                <FormLabel>Content is markdown</FormLabel>
-                                <Checkbox {...field} />
+                            <FormControl className={styles.field}>
+                                <Checkbox {...field}>Content is markdown</Checkbox>
                             </FormControl>
                         )}
                     </Field>

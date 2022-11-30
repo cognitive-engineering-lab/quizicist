@@ -5,6 +5,7 @@ from lib.mdbook import questions_to_toml
 from lib.parsers.md import md_parser
 from models import Generation, Question
 from db import db
+from limiter import limiter
 
 # routes for JSON API-based Flask app
 api = Blueprint("api", __name__, template_folder="templates")
@@ -12,6 +13,7 @@ api = Blueprint("api", __name__, template_folder="templates")
 
 # handle file upload
 @api.route("/upload", methods=["POST"])
+@limiter.limit("10/hour")
 def upload():
     # save uploaded file
     filename, unique_filename = create_file_from_json()
@@ -47,6 +49,19 @@ def get_generation(generation_id):
     return jsonify(generation)
 
 
+# delete a generation
+@api.route("/generated/<generation_id>/delete", methods=["POST"])
+def delete_generation(generation_id):
+    generation = db.get_or_404(Generation, generation_id)
+
+    db.session.delete(generation)
+    db.session.commit()
+
+    return {
+        "message": "Deleted generation"
+    }
+
+
 # update an item's data
 @api.route("/question/<question_id>/update", methods=["POST"])
 def update_question(question_id):
@@ -65,6 +80,7 @@ def update_question(question_id):
 
 # generate new item from custom question and answer
 @api.route("/generated/<generation_id>/new", methods=["POST"])
+@limiter.limit("30/hour")
 def new_item(generation_id):
     generation = db.get_or_404(Generation, generation_id)
 
@@ -105,6 +121,7 @@ def delete(question_id):
 
 # reroll an item's distractors
 @api.route("/question/<question_id>/reroll", methods=["POST"])
+@limiter.limit("30/hour")
 def reroll(question_id):
     question: Question = db.get_or_404(Question, question_id)
     question.reroll()
