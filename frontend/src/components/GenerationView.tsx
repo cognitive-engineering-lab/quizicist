@@ -81,9 +81,9 @@ const GenerationView: React.FC<GenerationProps> = ({ generation_id }) => {
                                 <Field name="question">
                                     {/* @ts-ignore TODO: hacky fix before creating custom component */}
                                     {({ field }) => (
-                                        <FormControl>
+                                        <FormControl className={styles.field}>
                                             <FormLabel>Question</FormLabel>
-                                            <Input {...field} placeholder="question" />
+                                            <Input {...field} placeholder="Which JavaScript keyword is used to declare a constant?" />
                                         </FormControl>
                                     )}
                                 </Field>
@@ -91,9 +91,9 @@ const GenerationView: React.FC<GenerationProps> = ({ generation_id }) => {
                                 <Field name="correct_answer">
                                     {/* @ts-ignore TODO: hacky fix before creating custom component */}
                                     {({ field }) => (
-                                        <FormControl>
+                                        <FormControl className={styles.field}>
                                             <FormLabel>Correct answer</FormLabel>
-                                            <Input {...field} placeholder="correct_answer" />
+                                            <Input {...field} placeholder="const" />
                                         </FormControl>
                                     )}
                                 </Field>

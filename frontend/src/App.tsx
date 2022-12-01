@@ -12,7 +12,7 @@ function Home() {
   }
 
   return (
-    <Container>
+    <Container maxW="container.lg">
       <Upload />
 
       <Divider className={styles.divider} />

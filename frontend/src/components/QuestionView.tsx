@@ -53,7 +53,7 @@ const QuestionView: React.FC<QuestionProps> = ({ question, generation_id }) => {
                     <Field name="correct_answer">
                         {/* @ts-ignore TODO: hacky fix before creating custom component */}
                         {({ field }) => (
-                            <FormControl>
+                            <FormControl className={styles.field}>
                                 <FormLabel>Correct answer</FormLabel>
                                 <Input {...field} placeholder="correct_answer" />
                             </FormControl>
@@ -65,7 +65,7 @@ const QuestionView: React.FC<QuestionProps> = ({ question, generation_id }) => {
                             <Field name={`distractors.[${index}].text`}>
                                 {/* @ts-ignore TODO: hacky fix before creating custom component */}
                                 {({ field }) => (
-                                    <FormControl>
+                                    <FormControl className={styles.field}>
                                         <FormLabel>
                                             Distractor {index + 1}
                                             <Field
