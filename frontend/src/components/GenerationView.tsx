@@ -1,30 +1,30 @@
-import axios from "axios";
 import { Formik, Field, Form } from "formik";
 import useSWR, { mutate } from "swr";
 import { fetcher } from "@hooks/fetcher";
 import customQuestionSchema from "@schemas/customQuestion.schema";
-import { ALL_GENERATIONS_URL, SERVER_URL } from "@shared/consts";
+import { ALL_GENERATIONS_URL, API_URL } from "@shared/consts";
 import Generation from "@shared/generation.type"
 import QuestionView from "./QuestionView";
 import { DeleteIcon } from "@chakra-ui/icons";
 import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Button, FormControl, FormLabel, IconButton, Input, Text } from "@chakra-ui/react";
 import styles from "./GenerationView.module.css";
+import api from "@shared/api";
 
 type GenerationProps = {
     generation_id: number;
 };
 
 const GenerationView: React.FC<GenerationProps> = ({ generation_id }) => {
-    const generation_url = `${SERVER_URL}/generated/${generation_id}`;
+    const generation_url = `${API_URL}/generated/${generation_id}`;
     const { data: generation } = useSWR<Generation>(generation_url, fetcher);
 
     const create = async (data: any) => {
-        await axios.post(`${SERVER_URL}/generated/${generation_id}/new`, data);
+        await api.post(`${API_URL}/generated/${generation_id}/new`, data);
         mutate(generation_url);
     }
 
     const del = async () => {
-        await axios.post(`${SERVER_URL}/generated/${generation_id}/delete`);
+        await api.post(`${API_URL}/generated/${generation_id}/delete`);
         mutate(ALL_GENERATIONS_URL);
     }
 

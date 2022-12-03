@@ -1,3 +1,3 @@
-import axios from "axios";
+import api from "@shared/api";
 
-export const fetcher = (url: string) => axios.get(url).then(res => res.data);
+export const fetcher = (url: string) => api.get(url).then(res => res.data);

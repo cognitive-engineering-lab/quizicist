@@ -3,9 +3,11 @@ from typing import List
 from blueprints.shared import PARSERS
 from db import db
 from flask import current_app
+from flask_login import UserMixin
 from lib.completion import complete, reroll_distractors
 import os
 from sqlalchemy.ext.hybrid import hybrid_property, hybrid_method
+from werkzeug.exceptions import Unauthorized
 
 # length of VARCHAR field for questions, answers, and filenames
 ITEM_LENGTH=1000
@@ -81,10 +83,17 @@ class Question(UpdateMixin, db.Model):
 
         db.session.commit()
 
+    @hybrid_method
+    def check_ownership(self, user_id):
+        if self.generation.user_id != user_id:
+            raise Unauthorized("User doesn't have access to this quiz")
+
 
 @dataclass
 class Generation(db.Model):
     id: int = db.Column(db.Integer, primary_key=True)
+    user_id: int = db.Column(db.Integer, db.ForeignKey("user.id"))
+
     filename: str = db.Column(db.String(FILENAME_LENGTH))
     unique_filename: str = db.Column(db.String(FILENAME_LENGTH))
     questions: List[Question] = db.relationship("Question", backref="generation", cascade="all, delete-orphan")
@@ -118,3 +127,14 @@ class Generation(db.Model):
 
         # add distractors to db
         db.session.commit()
+
+    @hybrid_method
+    def check_ownership(self, user_id):
+        if self.user_id != user_id:
+            raise Unauthorized("User doesn't have access to this quiz")
+
+
+class User(UserMixin, db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+
+    generations: List[Generation] = db.relationship("Generation", backref="user", cascade="all, delete-orphan")

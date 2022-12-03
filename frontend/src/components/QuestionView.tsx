@@ -1,12 +1,12 @@
-import axios from "axios";
 import { Formik, Field, Form } from "formik";
 import { mutate } from "swr";
 import questionSchema from "@schemas/question.schema";
-import { SERVER_URL } from "@shared/consts";
+import { API_URL } from "@shared/consts";
 import Question from "@shared/question.type"
 import { FormControl, FormLabel, Input, IconButton, Button, Divider } from "@chakra-ui/react";
 import { LockIcon, UnlockIcon } from "@chakra-ui/icons";
 import styles from "./QuestionView.module.css";
+import api from "@shared/api";
 
 type QuestionProps = {
     question: Question;
@@ -14,20 +14,20 @@ type QuestionProps = {
 };
 
 const QuestionView: React.FC<QuestionProps> = ({ question, generation_id }) => {
-    const generation_url = `${SERVER_URL}/generated/${generation_id}`;
+    const generation_url = `${API_URL}/generated/${generation_id}`;
 
     const reroll = async () => {
-        await axios.post(`${SERVER_URL}/question/${question.id}/reroll`);
+        await api.post(`${API_URL}/question/${question.id}/reroll`);
         mutate(generation_url);
     }
 
     const update = async (data: any) => {
-        await axios.post(`${SERVER_URL}/question/${question.id}/update`, data);
+        await api.post(`${API_URL}/question/${question.id}/update`, data);
         mutate(generation_url);
     }
 
     const del = async () => {
-        await axios.post(`${SERVER_URL}/question/${question.id}/delete`);
+        await api.post(`${API_URL}/question/${question.id}/delete`);
         mutate(generation_url);
     }
 

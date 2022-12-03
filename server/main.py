@@ -3,6 +3,7 @@ from pathlib import Path
 from flask import Flask
 from flask_cors import CORS
 from blueprints.api import api
+from blueprints.auth import auth, login_manager
 from blueprints.legacy import legacy
 from dotenv import load_dotenv
 from db import db
@@ -22,12 +23,16 @@ db.init_app(app)
 # limit requests by IP
 limiter.init_app(app)
 
-# enable CORS
-CORS(app)
+# initialize flask-login authentication
+login_manager.init_app(app)
 
-# add blueprints for JSON API and legacy routes
+# enable CORS
+CORS(app, supports_credentials=True)
+
+# add blueprints for JSON API, legacy routes, and authentication
 app.register_blueprint(api, url_prefix="/api")
 app.register_blueprint(legacy, url_prefix="/legacy")
+app.register_blueprint(auth, url_prefix="/auth")
 
 @app.before_first_request
 def setup():

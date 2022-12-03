@@ -1,14 +1,14 @@
 import { Button, Checkbox, FormControl, FormLabel, Input, Text, Textarea } from "@chakra-ui/react";
 import uploadSchema from "@schemas/upload.schema";
-import { ALL_GENERATIONS_URL, SERVER_URL } from "@shared/consts";
-import axios from "axios";
+import api from "@shared/api";
+import { ALL_GENERATIONS_URL, API_URL } from "@shared/consts";
 import { Formik, Field, Form, FormikHelpers } from "formik";
 import { mutate } from "swr";
 import styles from "./Upload.module.css";
 
 const Upload: React.FC = () => {
     const upload = async (data: any, { resetForm }: FormikHelpers<any>) => {
-        await axios.post(`${SERVER_URL}/upload`, data);
+        await api.post(`${API_URL}/upload`, data);
         mutate(ALL_GENERATIONS_URL);
         resetForm();
     }
