@@ -1,28 +1,36 @@
-import { Container, Divider, Text } from "@chakra-ui/react";
-import GenerationView from "@components/GenerationView";
-import Upload from "@components/Upload";
-import useGenerations from "@hooks/useGenerations";
-import styles from "./App.module.css";
+import { useDisclosure } from '@chakra-ui/hooks';
+import ConsentModal from '@components/ConsentModal';
+import Dashboard from '@components/Dashboard';
+import api from '@shared/api'
+import { AUTH_URL } from '@shared/consts'
+import { SWRConfig } from 'swr'
 
-function Home() {
-  const { isLoading, generations } = useGenerations();
+const App: React.FC = () => {
+    const { isOpen, onOpen, onClose } = useDisclosure();
 
-  if (isLoading) {
-    return <div>Loading generations...</div>;
-  }
+    const handleConsentAccept = async () => {
+        await api.post(`${AUTH_URL}/authenticate`);
+        onClose();
+    }
 
-  return (
-    <Container maxW="container.lg">
-      <Upload />
-
-      <Divider className={styles.divider} />
-
-      {generations?.map((g) => (
-        <GenerationView key={g} generation_id={g} />
-      ))}
-      {generations?.length === 0 && <Text fontSize="large">You don't have any quizzes</Text>}
-    </Container>
-  );
+    return (
+        <SWRConfig value={{
+                revalidateOnFocus: false,
+                onError: async (error) => {
+                    if (error.response.status === 401) {
+                        // open consent modal if unauthenticated
+                        onOpen();
+                    }
+                }
+            }}
+        >
+            {isOpen ?
+                <ConsentModal handleAccept={handleConsentAccept} />
+                :
+                <Dashboard />
+            }
+        </SWRConfig>
+    )
 }
 
-export default Home;
+export default App;

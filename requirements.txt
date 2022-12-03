@@ -10,6 +10,7 @@ filelock==3.8.0
 Flask==2.2.2
 Flask-Cors==3.0.10
 Flask-Limiter==2.8.1
+Flask-Login==0.6.2
 Flask-SQLAlchemy==3.0.2
 greenlet==2.0.0
 gunicorn==20.1.0
