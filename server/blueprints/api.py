@@ -1,6 +1,7 @@
 from pathlib import Path
 from flask import Blueprint, Response, jsonify, request
 from flask_login import current_user
+from lib.export import GoogleFormExport
 from lib.files import create_file_from_json
 from lib.mdbook import questions_to_toml
 from lib.parsers.md import md_parser
@@ -150,6 +151,27 @@ def reroll(question_id):
 
     return {
         "message": "Rerolled question's distractors"
+    }
+
+
+# create and share a Google Form for a generation
+@api.route("/generated/<generation_id>/google_form", methods=["POST"])
+def create_google_form(generation_id):
+    generation: Generation = db.get_or_404(Generation, generation_id)
+    email = request.json["email"]
+
+    if not email:
+        return "Missing email in request", 400
+
+    # create Google Form
+    export = GoogleFormExport()
+    form_id = export.create_form(generation)
+
+    # share form with provided email
+    export.share_form(form_id, email)
+
+    return {
+        "message": f"Shared form {form_id} with {email}"
     }
 
 

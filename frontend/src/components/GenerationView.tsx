@@ -9,6 +9,7 @@ import { DeleteIcon } from "@chakra-ui/icons";
 import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Button, FormControl, FormLabel, IconButton, Input, Text } from "@chakra-ui/react";
 import styles from "./GenerationView.module.css";
 import api from "@shared/api";
+import exportToFormsSchema from "@schemas/exportToForms.schema";
 
 type GenerationProps = {
     generation_id: number;
@@ -26,6 +27,10 @@ const GenerationView: React.FC<GenerationProps> = ({ generation_id }) => {
     const del = async () => {
         await api.post(`${API_URL}/generated/${generation_id}/delete`);
         mutate(ALL_GENERATIONS_URL);
+    }
+
+    const exportToForms = async (data: any) => {
+        await api.post(`${API_URL}/generated/${generation_id}/google_form`, data);
     }
 
     if (!generation) {
@@ -100,6 +105,41 @@ const GenerationView: React.FC<GenerationProps> = ({ generation_id }) => {
                                 
                                 <Button type="submit">Create</Button>
                             </Form>
+                        </Formik>
+                    </AccordionPanel>
+                </AccordionItem>
+
+                <AccordionItem>
+                    <h2>
+                        <AccordionButton>
+                            <Box flex='1' textAlign='left'>
+                                <b>Export to Google Forms</b>
+                            </Box>
+                            <AccordionIcon />
+                        </AccordionButton>
+                    </h2>
+                    <AccordionPanel pb={4}>
+                        <Formik
+                            enableReinitialize
+                            initialValues={exportToFormsSchema.cast({})}
+                            validationSchema={exportToFormsSchema}
+                            onSubmit={exportToForms}
+                        >
+                            {(form) => (
+                                <Form>
+                                    <Field name="email">
+                                        {/* @ts-ignore TODO: hacky fix before creating custom component */}
+                                        {({ field }) => (
+                                            <FormControl className={styles.field}>
+                                                <FormLabel>Email</FormLabel>
+                                                <Input {...field} placeholder="email@example.com" />
+                                            </FormControl>
+                                        )}
+                                    </Field>
+                                    
+                                    <Button type="submit" isLoading={form.isSubmitting}>Export</Button>
+                                </Form>
+                            )}
                         </Formik>
                     </AccordionPanel>
                 </AccordionItem>

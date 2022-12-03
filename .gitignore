@@ -5,5 +5,9 @@ quiz-env
 
 **.pyc
 
+# SQLite database and uploaded files
 server/uploads
 server/instance
+
+# Google Cloud service account credentials
+google-service-account.json
