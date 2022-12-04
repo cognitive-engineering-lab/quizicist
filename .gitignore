@@ -10,4 +10,4 @@ server/uploads
 server/instance
 
 # Google Cloud service account credentials
-google-service-account.json
+server/google-service-account.json

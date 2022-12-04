@@ -156,6 +156,7 @@ def reroll(question_id):
 
 # create and share a Google Form for a generation
 @api.route("/generated/<generation_id>/google_form", methods=["POST"])
+@limiter.limit("10/hour")
 def create_google_form(generation_id):
     generation: Generation = db.get_or_404(Generation, generation_id)
     email = request.json["email"]
