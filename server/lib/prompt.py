@@ -33,7 +33,10 @@ class Prompt:
 
 
     def add_introduction(self) -> Prompt:
-        intro = f"Generate {self.num_questions} multiple-choice questions to test a reader's comprehension of the programming concepts above."
+        intro = "You are a professor creating a challenging multiple-choice quiz for your class. "\
+                "The questions you write will test your students' knowledge of abstract concepts from the passage above. "\
+                "The questions will be very difficult, cover distinct topics, and not restate simple facts from the passage. "\
+                f"The quiz contains {self.num_questions} multiple-choice questions."
 
         return self.add_text(intro, newlines=2)
 

@@ -5,7 +5,7 @@ import customQuestionSchema from "@schemas/customQuestion.schema";
 import { ALL_GENERATIONS_URL, API_URL } from "@shared/consts";
 import Generation from "@shared/generation.type"
 import QuestionView from "./QuestionView";
-import { DeleteIcon } from "@chakra-ui/icons";
+import { AddIcon, DeleteIcon } from "@chakra-ui/icons";
 import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Button, FormControl, FormLabel, IconButton, Input, Text } from "@chakra-ui/react";
 import styles from "./GenerationView.module.css";
 import api from "@shared/api";
@@ -29,6 +29,11 @@ const GenerationView: React.FC<GenerationProps> = ({ generation_id }) => {
         mutate(ALL_GENERATIONS_URL);
     }
 
+    const moreQuestions = async () => {
+        await api.post(`${API_URL}/generated/${generation_id}/more`);
+        mutate(generation_url);
+    }
+
     const exportToForms = async (data: any) => {
         await api.post(`${API_URL}/generated/${generation_id}/google_form`, data);
     }
@@ -47,6 +52,14 @@ const GenerationView: React.FC<GenerationProps> = ({ generation_id }) => {
                     aria-label="Delete quiz"
                     icon={<DeleteIcon color="red.500" />}
                     onClick={del}
+                />
+                <IconButton
+                    size="sm"
+                    className={styles.remove}
+                    aria-label="Generate more questions for quiz"
+                    icon={<AddIcon />}
+                    // TODO: add loading indicator
+                    onClick={moreQuestions}
                 />
             </Text>
             <Accordion allowToggle>

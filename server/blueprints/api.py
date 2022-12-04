@@ -38,11 +38,12 @@ def upload():
         unique_filename=unique_filename
     )
     db.session.add(generation)
-    db.session.commit()
 
     # run completion, add generated questions to database
     parser = md_parser
     generation.add_questions(parser)
+
+    db.session.commit()
 
     return {
         "message": f"Completed generation for {filename}"
@@ -53,7 +54,9 @@ def upload():
 @api.route("/generated/all")
 def all_generations():
     # TODO: select id from the query level
-    generations = Generation.query.filter_by(user_id=current_user.id).all()
+    generations = Generation.query \
+        .filter_by(user_id=current_user.id) \
+        .order_by(Generation.id.desc()).all()
 
     return jsonify([g.id for g in generations])
 
@@ -65,6 +68,22 @@ def get_generation(generation_id):
     generation.check_ownership(current_user.id)
 
     return jsonify(generation)
+
+
+# create more questions for existing generation
+@api.route("/generated/<generation_id>/more", methods=["POST"])
+@limiter.limit("10/hour")
+def generate_more(generation_id):
+    generation: Generation = db.get_or_404(Generation, generation_id)
+    generation.check_ownership(current_user.id)
+
+    # run completion, add generated questions to database
+    parser = md_parser
+    generation.add_questions(parser)
+
+    return {
+        "message": f"Added questions for {generation.filename}"
+    }
 
 
 # delete a generation
