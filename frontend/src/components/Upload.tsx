@@ -11,8 +11,9 @@ import TextField from "@components/fields/TextField";
 const Upload: React.FC = () => {
     const upload = async (data: any, { resetForm }: FormikHelpers<any>) => {
         await api.post(`${API_URL}/upload`, data);
-        mutate(ALL_GENERATIONS_URL);
+
         resetForm();
+        mutate(ALL_GENERATIONS_URL);
     }
 
     return (

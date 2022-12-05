@@ -5,24 +5,16 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
-  Button,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import LoadingButton from "./buttons/LoadingButton";
 
 type ConsentModalProps = {
-    handleAccept: () => Promise<void>;
+  handleAccept: () => Promise<void>;
 };
 
 const ConsentModal: React.FC<ConsentModalProps> = ({ handleAccept }) => {
-  const [isLoading, setIsLoading] = useState(false);
-
-  const handleClose = async () => {
-    setIsLoading(true);
-    await handleAccept();
-  }
-
   return (
-    <Modal isOpen size="full" onClose={handleClose}>
+    <Modal isOpen size="full" onClose={handleAccept}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>Welcome to Quizicist</ModalHeader>
@@ -30,7 +22,7 @@ const ConsentModal: React.FC<ConsentModalProps> = ({ handleAccept }) => {
           By using Quizicist, you consent to anonymous storage and analysis of your quiz data.
         </ModalBody>
         <ModalFooter>
-          <Button onClick={handleClose} isLoading={isLoading}>Accept</Button>
+          <LoadingButton loadingFunction={handleAccept}>Accept</LoadingButton>
         </ModalFooter>
       </ModalContent>
     </Modal>

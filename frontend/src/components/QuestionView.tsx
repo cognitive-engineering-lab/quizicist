@@ -40,12 +40,12 @@ const QuestionView: React.FC<QuestionProps> = ({ question, generation_id }) => {
             validationSchema={questionSchema}
             onSubmit={update}
         >
-            {props => (
+            {form => (
                 <Form>
                     <TextField name="question" title="Question" placeholder="Your question" />
                     <TextField name="correct_answer" title="Correct answer" placeholder="Correct answer to your question" />
 
-                    {props.values.distractors?.map((_, index) => (
+                    {form.values.distractors?.map((_, index) => (
                         <TextField
                             name={`distractors.[${index}].text`}
                             title={`Distractor ${index + 1}`}
@@ -62,8 +62,16 @@ const QuestionView: React.FC<QuestionProps> = ({ question, generation_id }) => {
 
                     <Divider className={styles.divider} />
 
-                    <Button disabled={!props.dirty} onClick={props.submitForm} className={styles.button}>Update</Button>
-                    <Button disabled={props.dirty} onClick={reroll} className={styles.button}>Reroll Distractors</Button>
+                    <Button
+                        disabled={!form.dirty}
+                        onClick={form.submitForm}
+                        className={styles.button}
+                        isLoading={form.isSubmitting}
+                    >
+                        Update
+                    </Button>
+
+                    <Button disabled={form.dirty} onClick={reroll} className={styles.button}>Reroll Distractors</Button>
                     <Button onClick={del} className={styles.button}>Delete Item</Button>
                 </Form>
             )}
