@@ -1,12 +1,14 @@
-import { Formik, Field, Form } from "formik";
+import { Formik, Form } from "formik";
 import { mutate } from "swr";
 import questionSchema from "@schemas/question.schema";
 import { API_URL } from "@shared/consts";
 import Question from "@shared/question.type"
-import { FormControl, FormLabel, Input, IconButton, Button, Divider } from "@chakra-ui/react";
+import { Button, Divider } from "@chakra-ui/react";
 import { LockIcon, UnlockIcon } from "@chakra-ui/icons";
 import styles from "./QuestionView.module.css";
 import api from "@shared/api";
+import TextField from "@components/fields/TextField";
+import IconCheckbox from "@components/fields/IconCheckbox";
 
 type QuestionProps = {
     question: Question;
@@ -40,55 +42,22 @@ const QuestionView: React.FC<QuestionProps> = ({ question, generation_id }) => {
         >
             {props => (
                 <Form>
-                    <Field name="question">
-                        {/* @ts-ignore TODO: hacky fix before creating custom component */}
-                        {({ field }) => (
-                            <FormControl>
-                                <FormLabel>Question</FormLabel>
-                                <Input {...field} placeholder="question" />
-                            </FormControl>
-                        )}
-                    </Field>
-
-                    <Field name="correct_answer">
-                        {/* @ts-ignore TODO: hacky fix before creating custom component */}
-                        {({ field }) => (
-                            <FormControl className={styles.field}>
-                                <FormLabel>Correct answer</FormLabel>
-                                <Input {...field} placeholder="correct_answer" />
-                            </FormControl>
-                        )}
-                    </Field>
+                    <TextField name="question" title="Question" placeholder="Your question" />
+                    <TextField name="correct_answer" title="Correct answer" placeholder="Correct answer to your question" />
 
                     {props.values.distractors?.map((_, index) => (
-                        <>
-                            <Field name={`distractors.[${index}].text`}>
-                                {/* @ts-ignore TODO: hacky fix before creating custom component */}
-                                {({ field }) => (
-                                    <FormControl className={styles.field}>
-                                        <FormLabel>
-                                            Distractor {index + 1}
-                                            <Field
-                                                name={`distractors.[${index}].locked`}
-                                                type="checkbox"
-                                            >
-                                                {/* @ts-ignore TODO: hacky fix before creating custom component */}
-                                                {({ field, form }) => (
-                                                    <IconButton
-                                                        size="sm"
-                                                        className={styles.lock}
-                                                        aria-label="Lock/unlock distractor"
-                                                        icon={field.value ? <LockIcon /> : <UnlockIcon />}
-                                                        onClick={() => form.setFieldValue(`distractors.[${index}].locked`, !field.value)}
-                                                    />
-                                                )}
-                                            </Field>
-                                        </FormLabel>
-                                        <Input {...field} placeholder='name' />
-                                    </FormControl>
-                                )}
-                            </Field>
-                        </>
+                        <TextField
+                            name={`distractors.[${index}].text`}
+                            title={`Distractor ${index + 1}`}
+                            placeholder="Distractor answer"
+                        >
+                            <IconCheckbox
+                                name={`distractors.[${index}].locked`}
+                                label="Lock/unlock distractor"
+                                iconWhenChecked={<LockIcon />}
+                                iconWhenNot={<UnlockIcon />}
+                            />
+                        </TextField>
                     ))}
 
                     <Divider className={styles.divider} />

@@ -1,10 +1,12 @@
-import { Button, Checkbox, FormControl, FormLabel, Input, Text, Textarea } from "@chakra-ui/react";
+import { Button, Text } from "@chakra-ui/react";
 import uploadSchema from "@schemas/upload.schema";
 import api from "@shared/api";
 import { ALL_GENERATIONS_URL, API_URL } from "@shared/consts";
-import { Formik, Field, Form, FormikHelpers } from "formik";
+import { Formik, Form, FormikHelpers } from "formik";
 import { mutate } from "swr";
-import styles from "./Upload.module.css";
+import CheckboxField from "@components/fields/CheckboxField";
+import TextareaField from "@components/fields/TextareaField";
+import TextField from "@components/fields/TextField";
 
 const Upload: React.FC = () => {
     const upload = async (data: any, { resetForm }: FormikHelpers<any>) => {
@@ -22,34 +24,22 @@ const Upload: React.FC = () => {
             {props => (
                 <Form>
                     <Text fontSize='2xl' style={{ marginBottom: "0.5em" }}>Create a quiz</Text>
-                    <Field name="title">
-                        {/* @ts-ignore TODO: hacky fix before creating custom component */}
-                        {({ field }) => (
-                            <FormControl className={styles.field}>
-                                <FormLabel>Quiz title</FormLabel>
-                                <Input {...field} placeholder="CS50 Functions Quiz" />
-                            </FormControl>
-                        )}
-                    </Field>
-                    
-                    <Field name="content">
-                        {/* @ts-ignore TODO: hacky fix before creating custom component */}
-                        {({ field }) => (
-                            <FormControl className={styles.field}>
-                                <FormLabel>Content to quiz over</FormLabel>
-                                <Textarea {...field} placeholder="Functions reduce duplicate code." />
-                            </FormControl>
-                        )}
-                    </Field>
+                    <TextField
+                        name="title"
+                        title="Quiz title"
+                        placeholder="CS50 Functions Quiz"
+                    />
 
-                    <Field name="is_markdown">
-                        {/* @ts-ignore TODO: hacky fix before creating custom component */}
-                        {({ field }) => (
-                            <FormControl className={styles.field}>
-                                <Checkbox {...field}>Content is markdown</Checkbox>
-                            </FormControl>
-                        )}
-                    </Field>
+                    <TextareaField
+                        name="content"
+                        title="Content to quiz over"
+                        placeholder="Functions reduce duplicate code."
+                    />
+
+                    <CheckboxField
+                        name="is_markdown"
+                        title="Content is markdown"
+                    />
                     
                     <Button type="submit" isLoading={props.isSubmitting}>Create</Button>
                 </Form>

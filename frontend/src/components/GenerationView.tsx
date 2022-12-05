@@ -1,4 +1,4 @@
-import { Formik, Field, Form } from "formik";
+import { Formik, Form } from "formik";
 import useSWR, { mutate } from "swr";
 import { fetcher } from "@hooks/fetcher";
 import customQuestionSchema from "@schemas/customQuestion.schema";
@@ -6,10 +6,11 @@ import { ALL_GENERATIONS_URL, API_URL } from "@shared/consts";
 import Generation from "@shared/generation.type"
 import QuestionView from "./QuestionView";
 import { AddIcon, DeleteIcon } from "@chakra-ui/icons";
-import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Button, FormControl, FormLabel, IconButton, Input, Text } from "@chakra-ui/react";
+import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Button, IconButton, Text } from "@chakra-ui/react";
 import styles from "./GenerationView.module.css";
 import api from "@shared/api";
 import exportToFormsSchema from "@schemas/exportToForms.schema";
+import TextField from "@components/fields/TextField";
 
 type GenerationProps = {
     generation_id: number;
@@ -90,31 +91,22 @@ const GenerationView: React.FC<GenerationProps> = ({ generation_id }) => {
                     </h2>
                     <AccordionPanel pb={4}>
                         <Formik
-                            enableReinitialize
                             initialValues={customQuestionSchema.cast({})}
                             validationSchema={customQuestionSchema}
                             onSubmit={create}
                         >
                             <Form>
-                                <Field name="question">
-                                    {/* @ts-ignore TODO: hacky fix before creating custom component */}
-                                    {({ field }) => (
-                                        <FormControl className={styles.field}>
-                                            <FormLabel>Question</FormLabel>
-                                            <Input {...field} placeholder="Which JavaScript keyword is used to declare a constant?" />
-                                        </FormControl>
-                                    )}
-                                </Field>
+                                <TextField
+                                    name="question"
+                                    title="Question"
+                                    placeholder="Which JavaScript keyword is used to declare a constant?"
+                                />
 
-                                <Field name="correct_answer">
-                                    {/* @ts-ignore TODO: hacky fix before creating custom component */}
-                                    {({ field }) => (
-                                        <FormControl className={styles.field}>
-                                            <FormLabel>Correct answer</FormLabel>
-                                            <Input {...field} placeholder="const" />
-                                        </FormControl>
-                                    )}
-                                </Field>
+                                <TextField
+                                    name="correct_answer"
+                                    title="Correct answer"
+                                    placeholder="const"
+                                />
                                 
                                 <Button type="submit">Create</Button>
                             </Form>
@@ -140,16 +132,7 @@ const GenerationView: React.FC<GenerationProps> = ({ generation_id }) => {
                         >
                             {(form) => (
                                 <Form>
-                                    <Field name="email">
-                                        {/* @ts-ignore TODO: hacky fix before creating custom component */}
-                                        {({ field }) => (
-                                            <FormControl className={styles.field}>
-                                                <FormLabel>Email</FormLabel>
-                                                <Input {...field} placeholder="email@example.com" />
-                                            </FormControl>
-                                        )}
-                                    </Field>
-                                    
+                                    <TextField name="email" title="Email" placeholder="email@example.com" />
                                     <Button type="submit" isLoading={form.isSubmitting}>Export</Button>
                                 </Form>
                             )}
