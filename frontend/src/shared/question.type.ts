@@ -1,4 +1,5 @@
 import Distractor from "./distractor.type";
+import Feedback from "./feedback.type";
 
 type Question = {
     id: number;
@@ -8,7 +9,7 @@ type Question = {
     distractors: Distractor[];
     
     shard: number;
-    score: number;
+    feedback?: Feedback;
 };
 
 export default Question;

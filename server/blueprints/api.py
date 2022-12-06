@@ -173,6 +173,24 @@ def reroll(question_id):
     }
 
 
+@api.route("/question/<question_id>/feedback", methods=["POST"])
+def question_feedback(question_id):
+    data = request.get_json()
+
+    if not data:
+        return "Missing JSON in request", 400
+
+    question: Question = db.get_or_404(Question, question_id)
+    question.check_ownership(current_user.id)
+
+    feedback = question.feedback_get_or_create()
+    feedback.update(**data)
+
+    return {
+        "message": "Added feedback"
+    }
+
+
 # create and share a Google Form for a generation
 @api.route("/generated/<generation_id>/google_form", methods=["POST"])
 @limiter.limit("10/hour")

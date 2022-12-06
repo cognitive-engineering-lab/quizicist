@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+import enum
 from typing import List
 from blueprints.shared import PARSERS
 from db import db
@@ -13,6 +14,13 @@ from werkzeug.exceptions import Unauthorized
 ITEM_LENGTH=1000
 FILENAME_LENGTH=400
 
+
+class FeedbackTypes(enum.IntEnum):
+    neutral = 0
+    positive = 1
+    negative = 2
+
+
 class UpdateMixin:
     @hybrid_method
     def update(self, **kwargs):
@@ -21,6 +29,15 @@ class UpdateMixin:
                 setattr(self, key, value)
 
         db.session.commit()
+
+
+@dataclass
+class QuestionFeedback(UpdateMixin, db.Model):
+    id: int = db.Column(db.Integer, primary_key=True)
+    question_id: int = db.Column(db.Integer, db.ForeignKey('question.id'))
+
+    value: FeedbackTypes = db.Column(db.Enum(FeedbackTypes), server_default=FeedbackTypes.neutral.name)
+    text: str = db.Column(db.String(ITEM_LENGTH))
 
 
 @dataclass
@@ -47,7 +64,7 @@ class Question(UpdateMixin, db.Model):
     )
 
     shard: int = db.Column(db.Integer, default=0)
-    score: int = db.Column(db.Integer, nullable=True)
+    feedback: QuestionFeedback = db.relationship(QuestionFeedback, uselist=False, backref="question")
 
     @hybrid_property
     def generation(self):
@@ -84,6 +101,17 @@ class Question(UpdateMixin, db.Model):
         db.session.commit()
 
     @hybrid_method
+    def feedback_get_or_create(self) -> QuestionFeedback:
+        if not self.feedback:
+            feedback = QuestionFeedback(question_id=self.id)
+            self.feedback = feedback
+
+            db.session.add(feedback)
+            db.session.commit()
+
+        return self.feedback
+
+    @hybrid_method
     def check_ownership(self, user_id):
         if self.generation.user_id != user_id:
             raise Unauthorized("User doesn't have access to this quiz")
@@ -116,7 +144,6 @@ class Generation(db.Model):
                     question=question["question"],
                     correct_answer=question["correct"],
                     shard=shard,
-                    score=0,
                 )
                 db.session.add(q)
                 db.session.commit()

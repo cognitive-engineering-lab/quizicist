@@ -4,11 +4,13 @@ import questionSchema from "@schemas/question.schema";
 import { API_URL } from "@shared/consts";
 import Question from "@shared/question.type"
 import { Button, Divider } from "@chakra-ui/react";
-import { LockIcon, UnlockIcon } from "@chakra-ui/icons";
+import { LockIcon, TriangleDownIcon, TriangleUpIcon, UnlockIcon } from "@chakra-ui/icons";
 import styles from "./QuestionView.module.css";
 import api from "@shared/api";
 import TextField from "@components/fields/TextField";
 import IconCheckbox from "@components/fields/IconCheckbox";
+import LoadingIconButton from "@components/buttons/LoadingIconButton";
+import { FeedbackTypes } from "@shared/feedback.type";
 
 type QuestionProps = {
     question: Question;
@@ -33,6 +35,19 @@ const QuestionView: React.FC<QuestionProps> = ({ question, generation_id }) => {
         mutate(generation_url);
     }
 
+    const feedback = async (value: FeedbackTypes) => {
+        // when clicking on current value, reset to neutral
+        if (value === question.feedback?.value) {
+            value = FeedbackTypes.neutral;
+        }
+
+        await api.post(`${API_URL}/question/${question.id}/feedback`, { value });
+        mutate(generation_url);
+    }
+
+    const positiveColorScheme = question.feedback?.value === FeedbackTypes.positive ? "green" : "gray";
+    const negativeColorScheme = question.feedback?.value === FeedbackTypes.negative ? "red" : "gray"
+
     return (
         <Formik
             enableReinitialize
@@ -42,7 +57,25 @@ const QuestionView: React.FC<QuestionProps> = ({ question, generation_id }) => {
         >
             {form => (
                 <Form>
-                    <TextField name="question" title="Question" placeholder="Your question" />
+                    <TextField name="question" title="Question" placeholder="Your question">
+                        <LoadingIconButton
+                            size="sm"
+                            className={styles.feedback}
+                            colorScheme={positiveColorScheme}
+                            aria-label="This generated question is high quality"
+                            icon={<TriangleUpIcon />}
+                            loadingFunction={() => feedback(FeedbackTypes.positive)}
+                        />
+                        <LoadingIconButton
+                            size="sm"
+                            className={styles.feedback}
+                            colorScheme={negativeColorScheme}
+                            aria-label="This generated question is low quality"
+                            icon={<TriangleDownIcon />}
+                            loadingFunction={() => feedback(FeedbackTypes.negative)}
+                        />
+                    </TextField>
+
                     <TextField name="correct_answer" title="Correct answer" placeholder="Correct answer to your question" />
 
                     {form.values.distractors?.map((_, index) => (

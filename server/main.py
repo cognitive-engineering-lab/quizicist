@@ -31,7 +31,6 @@ CORS(app, supports_credentials=True)
 
 # add blueprints for JSON API, legacy routes, and authentication
 app.register_blueprint(api, url_prefix="/api")
-app.register_blueprint(legacy, url_prefix="/legacy")
 app.register_blueprint(auth, url_prefix="/auth")
 
 @app.before_first_request
