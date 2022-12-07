@@ -11,3 +11,6 @@ server/instance
 
 # Google Cloud service account credentials
 server/google-service-account.json
+
+# gunicorn logs
+server/gunicorn.log
