@@ -71,13 +71,19 @@ const QuestionView: React.FC<QuestionProps> = ({ question, generation_id }) => {
         >
             {form => (
                 <Form>
-                    <TextField name="question" title="Question" placeholder="Your question" />
+                    <TextField
+                        name="question"
+                        title="Question"
+                        placeholder="Your question"
+                        submitOnBlur
+                    />
 
                     {form.values.answers?.map((answer, index) => (
                         <TextField
                             name={`answers.[${index}].text`}
                             title={`Answer ${index + 1}`}
                             placeholder="Answer choice"
+                            submitOnBlur
                         >
                             <LoadingIconButton
                                 size="sm"
@@ -107,15 +113,6 @@ const QuestionView: React.FC<QuestionProps> = ({ question, generation_id }) => {
                     ))}
 
                     <Divider className={styles.divider} />
-
-                    <Button
-                        disabled={!form.dirty}
-                        onClick={form.submitForm}
-                        className={styles.button}
-                        isLoading={form.isSubmitting}
-                    >
-                        Update
-                    </Button>
 
                     <Button onClick={del} className={styles.button}>Delete Item</Button>
                 </Form>
