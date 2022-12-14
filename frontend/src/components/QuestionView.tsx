@@ -9,7 +9,9 @@ import styles from "./QuestionView.module.css";
 import api from "@shared/api";
 import TextField from "@components/fields/TextField";
 import LoadingIconButton from "@components/buttons/LoadingIconButton";
-import { FeedbackTypes } from "@shared/feedback.type";
+import { FeedbackTypes, getNewFeedback } from "@shared/feedback.type";
+import Generation from "@shared/generation.type";
+import _ from "lodash";
 
 type QuestionProps = {
     question: Question;
@@ -27,18 +29,22 @@ const QuestionView: React.FC<QuestionProps> = ({ question, generation_id }) => {
 
     // delete item
     const del = async () => {
+        // prevent loading by adding optimistic data
+        const optimisticData = (current: Generation): Generation => {
+            // remove current question from quiz data
+            _.remove(current.questions, (q) => q.id === question.id);
+
+            return current;
+        }
+
         await api.post(`${API_URL}/question/${question.id}/delete`);
-        mutate(generation_url);
+        mutate(generation_url, null, { optimisticData });
     }
 
     // send answer choice feedback (correct, incorrect) to server
-    const feedback = async (answerIndex: number, value: FeedbackTypes) => {
+    const addFeedback = async (answerIndex: number, feedback: FeedbackTypes) => {
         const answer = question.answers[answerIndex];
-
-        // when clicking on current value, reset to neutral
-        if (value === answer.user_feedback) {
-            value = FeedbackTypes.unselected;
-        }
+        const value = getNewFeedback(answer.user_feedback, feedback);
 
         await api.post(`${API_URL}/question/${question.id}/feedback`, { answer: answer.id, value });
         mutate(generation_url);
@@ -79,7 +85,11 @@ const QuestionView: React.FC<QuestionProps> = ({ question, generation_id }) => {
                                 colorScheme={getFeedbackColor(answer.user_feedback!, "correct")}
                                 aria-label="This answer choice is correct"
                                 icon={<CheckIcon />}
-                                loadingFunction={() => feedback(index, FeedbackTypes.correct)}
+                                loadingFunction={() => addFeedback(index, FeedbackTypes.correct)}
+                                optimisticProps={{
+                                    // TODO: clean up reuse of color scheme calls
+                                    colorScheme: getFeedbackColor(getNewFeedback(answer.user_feedback!, FeedbackTypes.correct), "correct")
+                                }}
                             />
                             <LoadingIconButton
                                 size="sm"
@@ -87,7 +97,11 @@ const QuestionView: React.FC<QuestionProps> = ({ question, generation_id }) => {
                                 colorScheme={getFeedbackColor(answer.user_feedback!, "incorrect")}
                                 aria-label="This answer choice is incorrect"
                                 icon={<CloseIcon />}
-                                loadingFunction={() => feedback(index,FeedbackTypes.incorrect)}
+                                loadingFunction={() => addFeedback(index,FeedbackTypes.incorrect)}
+                                optimisticProps={{
+                                    // TODO: clean up reuse of color scheme calls
+                                    colorScheme: getFeedbackColor(getNewFeedback(answer.user_feedback!, FeedbackTypes.incorrect), "incorrect")
+                                }}
                             />
                         </TextField>
                     ))}
