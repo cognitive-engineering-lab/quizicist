@@ -5,7 +5,7 @@ from lib.export import GoogleFormExport
 from lib.files import create_file_from_json
 from lib.mdbook import questions_to_toml
 from lib.parsers.md import md_parser
-from models import Generation, Question
+from models import AnswerChoice, Generation, Question
 from db import db
 from limiter import limiter
 
@@ -24,7 +24,7 @@ def require_authentication():
         return { "message": "Authentication required" }, 401
 
 
-# handle file upload
+# create quiz from markdown/text content
 @api.route("/upload", methods=["POST"])
 @limiter.limit("10/hour")
 def upload():
@@ -124,22 +124,16 @@ def new_item(generation_id):
     generation: Generation = db.get_or_404(Generation, generation_id)
     generation.check_ownership(current_user.id)
 
-    # TODO: avoid having to instantiate with empty options
     question = Question(
         generation_id=generation.id,
         question=request.json["question"],
-        correct_answer=request.json["correct_answer"],
         shard=0, # TODO: this should not default to the first shard
-        score=0,
     )
     db.session.add(question)
     db.session.commit()
 
-    question.fill_distractors()
-
-    # add distractors to custom question
-    question.reroll()
-    db.session.commit()
+    # add answer choices
+    generation.add_answer_choices(question)
 
     return {
         "message": "Created custom item"
@@ -180,11 +174,9 @@ def question_feedback(question_id):
     if not data:
         return "Missing JSON in request", 400
 
-    question: Question = db.get_or_404(Question, question_id)
-    question.check_ownership(current_user.id)
-
-    feedback = question.feedback_get_or_create()
-    feedback.update(**data)
+    answer: AnswerChoice = db.get_or_404(AnswerChoice, data["answer"])
+    answer.check_ownership(current_user.id)
+    answer.update(user_feedback=int(data["value"]))
 
     return {
         "message": "Added feedback"

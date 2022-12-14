@@ -1,15 +1,13 @@
-import Distractor from "./distractor.type";
-import Feedback from "./feedback.type";
+import AnswerChoice from "./answerchoice.type";
 
 type Question = {
     id: number;
 
     question: string;
-    correct_answer: string;
-    distractors: Distractor[];
+    position: number;
+    answers: AnswerChoice[];
     
     shard: number;
-    feedback?: Feedback;
 };
 
 export default Question;

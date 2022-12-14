@@ -4,7 +4,6 @@ from flask import Flask
 from flask_cors import CORS
 from blueprints.api import api
 from blueprints.auth import auth, login_manager
-from blueprints.legacy import legacy
 from dotenv import load_dotenv
 from db import db
 from config import APP_FOLDER

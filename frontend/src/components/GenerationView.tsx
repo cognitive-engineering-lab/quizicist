@@ -106,12 +106,6 @@ const GenerationView: React.FC<GenerationProps> = ({ generation_id }) => {
                                         title="Question"
                                         placeholder="Which JavaScript keyword is used to declare a constant?"
                                     />
-
-                                    <TextField
-                                        name="correct_answer"
-                                        title="Correct answer"
-                                        placeholder="const"
-                                    />
                                     
                                     <Button type="submit" isLoading={form.isSubmitting}>Create</Button>
                                 </Form>

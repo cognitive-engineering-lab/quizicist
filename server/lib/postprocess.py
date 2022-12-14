@@ -2,7 +2,7 @@ import json
 import openai
 import os
 from dotenv import load_dotenv
-from .consts import NUM_QUESTIONS
+from .consts import NUM_QUESTIONS, FeedbackTypes
 
 # set up openai
 load_dotenv()
@@ -43,25 +43,36 @@ def postprocess_manual(answers: str, shard: int):
     correct, _, remaining = remaining.partition("\nIncorrect answer: ")
     if correct == "":
         return False
+    
+    # add correct answer to list of choices
+    options = [{
+        "text": correct,
+        "predicted_feedback": FeedbackTypes.correct,
+    }]
 
     # recurse over remaining choices until no incorrect answers left
-    options = []
     while remaining != "":
         answer, _, remaining = remaining.partition("\nIncorrect answer: ")
 
         # when no choices left, add remaining text as an option
         if answer == "":
-            options.append(remaining)
+            options.append({
+                "text": remaining,
+                "predicted_feedback": FeedbackTypes.incorrect,
+            })
+
             break
         
-        options.append(answer)
+        options.append({
+            "text": answer,
+            "predicted_feedback": FeedbackTypes.incorrect,
+        })
 
-    if len(options) < 3:
+    if len(options) < 4:
         return False
 
     return {
         "question": question,
-        "correct": correct,
         "options": options,
         "shard": shard,
     }

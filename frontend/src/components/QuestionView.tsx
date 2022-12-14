@@ -4,11 +4,10 @@ import questionSchema from "@schemas/question.schema";
 import { API_URL } from "@shared/consts";
 import Question from "@shared/question.type"
 import { Button, Divider } from "@chakra-ui/react";
-import { LockIcon, TriangleDownIcon, TriangleUpIcon, UnlockIcon } from "@chakra-ui/icons";
+import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
 import styles from "./QuestionView.module.css";
 import api from "@shared/api";
 import TextField from "@components/fields/TextField";
-import IconCheckbox from "@components/fields/IconCheckbox";
 import LoadingIconButton from "@components/buttons/LoadingIconButton";
 import { FeedbackTypes } from "@shared/feedback.type";
 
@@ -20,33 +19,42 @@ type QuestionProps = {
 const QuestionView: React.FC<QuestionProps> = ({ question, generation_id }) => {
     const generation_url = `${API_URL}/generated/${generation_id}`;
 
-    const reroll = async () => {
-        await api.post(`${API_URL}/question/${question.id}/reroll`);
-        mutate(generation_url);
-    }
-
+    // update item content (question, answer choice text)
     const update = async (data: any) => {
         await api.post(`${API_URL}/question/${question.id}/update`, data);
         mutate(generation_url);
     }
 
+    // delete item
     const del = async () => {
         await api.post(`${API_URL}/question/${question.id}/delete`);
         mutate(generation_url);
     }
 
-    const feedback = async (value: FeedbackTypes) => {
+    // send answer choice feedback (correct, incorrect) to server
+    const feedback = async (answerIndex: number, value: FeedbackTypes) => {
+        const answer = question.answers[answerIndex];
+
         // when clicking on current value, reset to neutral
-        if (value === question.feedback?.value) {
-            value = FeedbackTypes.neutral;
+        if (value === answer.user_feedback) {
+            value = FeedbackTypes.unselected;
         }
 
-        await api.post(`${API_URL}/question/${question.id}/feedback`, { value });
+        await api.post(`${API_URL}/question/${question.id}/feedback`, { answer: answer.id, value });
         mutate(generation_url);
     }
 
-    const positiveColorScheme = question.feedback?.value === FeedbackTypes.positive ? "green" : "gray";
-    const negativeColorScheme = question.feedback?.value === FeedbackTypes.negative ? "red" : "gray"
+    const getFeedbackColor = (feedback: FeedbackTypes, button: "correct" | "incorrect") => {
+        if (feedback === FeedbackTypes.incorrect && button === "incorrect") {
+            return "red";
+        }
+
+        if (feedback === FeedbackTypes.correct && button === "correct") {
+            return "green";
+        }
+
+        return "gray";
+    }
 
     return (
         <Formik
@@ -57,38 +65,29 @@ const QuestionView: React.FC<QuestionProps> = ({ question, generation_id }) => {
         >
             {form => (
                 <Form>
-                    <TextField name="question" title="Question" placeholder="Your question">
-                        <LoadingIconButton
-                            size="sm"
-                            className={styles.feedback}
-                            colorScheme={positiveColorScheme}
-                            aria-label="This generated question is high quality"
-                            icon={<TriangleUpIcon />}
-                            loadingFunction={() => feedback(FeedbackTypes.positive)}
-                        />
-                        <LoadingIconButton
-                            size="sm"
-                            className={styles.feedback}
-                            colorScheme={negativeColorScheme}
-                            aria-label="This generated question is low quality"
-                            icon={<TriangleDownIcon />}
-                            loadingFunction={() => feedback(FeedbackTypes.negative)}
-                        />
-                    </TextField>
+                    <TextField name="question" title="Question" placeholder="Your question" />
 
-                    <TextField name="correct_answer" title="Correct answer" placeholder="Correct answer to your question" />
-
-                    {form.values.distractors?.map((_, index) => (
+                    {form.values.answers?.map((answer, index) => (
                         <TextField
-                            name={`distractors.[${index}].text`}
-                            title={`Distractor ${index + 1}`}
-                            placeholder="Distractor answer"
+                            name={`answers.[${index}].text`}
+                            title={`Answer ${index + 1}`}
+                            placeholder="Answer choice"
                         >
-                            <IconCheckbox
-                                name={`distractors.[${index}].locked`}
-                                label="Lock/unlock distractor"
-                                iconWhenChecked={<LockIcon />}
-                                iconWhenNot={<UnlockIcon />}
+                            <LoadingIconButton
+                                size="sm"
+                                className={styles.feedback}
+                                colorScheme={getFeedbackColor(answer.user_feedback!, "correct")}
+                                aria-label="This answer choice is correct"
+                                icon={<CheckIcon />}
+                                loadingFunction={() => feedback(index, FeedbackTypes.correct)}
+                            />
+                            <LoadingIconButton
+                                size="sm"
+                                className={styles.feedback}
+                                colorScheme={getFeedbackColor(answer.user_feedback!, "incorrect")}
+                                aria-label="This answer choice is incorrect"
+                                icon={<CloseIcon />}
+                                loadingFunction={() => feedback(index,FeedbackTypes.incorrect)}
                             />
                         </TextField>
                     ))}
@@ -104,7 +103,6 @@ const QuestionView: React.FC<QuestionProps> = ({ question, generation_id }) => {
                         Update
                     </Button>
 
-                    <Button disabled={form.dirty} onClick={reroll} className={styles.button}>Reroll Distractors</Button>
                     <Button onClick={del} className={styles.button}>Delete Item</Button>
                 </Form>
             )}

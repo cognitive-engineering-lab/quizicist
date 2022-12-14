@@ -68,20 +68,12 @@ def complete(file_content, parser):
     return list(map(run_gpt3, shards))
 
 
-def reroll_distractors(file_content, parser, question):
+def add_answer_choices(file_content, parser, question):
     components = parser(file_content)
     shard = shard_chapter(components)[question.shard]
 
-    # partial prompt starting at "Question:"
-    question_prompt = Prompt()\
-        .add_question(question.question)\
-        .add_correct(question.correct_answer)
-
-    # add all locked distractors
-    for distractor in filter(lambda d: d.locked, question.distractors):
-        question_prompt.add_distractor(distractor.text)
-
-    question_prompt.add_distractor("")
+    # partial prompt starting at "Correct answer:"
+    question_prompt = Prompt().add_question(question.question)
 
     # full prompt, appending partial prompt
     prompt = Prompt(num_questions=1)\
@@ -93,7 +85,7 @@ def reroll_distractors(file_content, parser, question):
 
     # TODO: clean up this loop or consolidate parsing into a single function
     while True:
-        print("Running reroll completion...")
+        print("Running completion for custom question...")
         completion = question_prompt.prompt + openai.Completion.create(
             engine=GPT_MODEL,
             prompt=prompt.prompt,

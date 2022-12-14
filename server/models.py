@@ -1,24 +1,38 @@
-from dataclasses import dataclass
-import enum
-from typing import List
+from __future__ import annotations
 from blueprints.shared import PARSERS
+from dataclasses import dataclass
+from typing import List
 from db import db
 from flask import current_app
 from flask_login import UserMixin
-from lib.completion import complete, reroll_distractors
+from lib.completion import complete, add_answer_choices
+from lib.consts import FeedbackTypes
 import os
 from sqlalchemy.ext.hybrid import hybrid_property, hybrid_method
+from sqlalchemy.ext.orderinglist import OrderingList
 from werkzeug.exceptions import Unauthorized
+import types
 
 # length of VARCHAR field for questions, answers, and filenames
 ITEM_LENGTH=1000
 FILENAME_LENGTH=400
 
 
-class FeedbackTypes(enum.IntEnum):
-    neutral = 0
-    positive = 1
-    negative = 2
+# `dataclasses.todict` tries to initialize lists with a generator
+# which fails because the `OrderingList` constructor takes a `str`
+# we override the `OrderingList` implementation to enable serialization
+class CustomList(OrderingList):
+    def __init__(self, *args):
+        # handle construction from generator
+        if isinstance(args[0], types.GeneratorType):
+            return list.__init__(self, list(args[0]))
+
+        return OrderingList.__init__(self, *args)
+
+
+# replaces SQLAlchemy's `ordering_list`
+def create_ordering_list(attr: str) -> CustomList:
+    return lambda: CustomList(attr)
 
 
 class UpdateMixin:
@@ -32,39 +46,28 @@ class UpdateMixin:
 
 
 @dataclass
-class QuestionFeedback(UpdateMixin, db.Model):
-    id: int = db.Column(db.Integer, primary_key=True)
-    question_id: int = db.Column(db.Integer, db.ForeignKey('question.id'))
-
-    value: FeedbackTypes = db.Column(db.Enum(FeedbackTypes), server_default=FeedbackTypes.neutral.name)
-    text: str = db.Column(db.String(ITEM_LENGTH))
-
-
-@dataclass
-class Distractor(UpdateMixin, db.Model):
-    id: int = db.Column(db.Integer, primary_key=True)
-    question_id: int = db.Column(db.Integer, db.ForeignKey('question.id'))
-
-    text: str = db.Column(db.String(ITEM_LENGTH))
-    locked: bool = db.Column(db.Boolean)
-
-
-@dataclass
 class Question(UpdateMixin, db.Model):
-    id: int = db.Column(db.Integer, primary_key=True)
-    generation_id: int = db.Column(db.Integer, db.ForeignKey('generation.id'))
+    __tablename__ = "question"
 
+    id: int = db.Column(db.Integer, primary_key=True)
+    generation_id: int = db.Column(db.Integer, db.ForeignKey("generation.id"))
+
+    # text of question asked
     question: str = db.Column(db.String(ITEM_LENGTH))
-    correct_answer: str = db.Column(db.String(ITEM_LENGTH))
-    distractors: List[Distractor] = db.relationship(
-        "Distractor",
-        backref="question",
-        order_by=Distractor.locked.desc(),
-        cascade="all, delete-orphan"
+
+    # order in list of quiz questions
+    position: int = db.Column(db.Integer)
+
+    # all answer choices for question
+    # uses `ordering_list` to manage order
+    answers: List[AnswerChoice] = db.relationship(
+        "AnswerChoice",
+        order_by="AnswerChoice.position",
+        collection_class=create_ordering_list("position"),
     )
 
+    # shard of uploaded content used to generate question
     shard: int = db.Column(db.Integer, default=0)
-    feedback: QuestionFeedback = db.relationship(QuestionFeedback, uselist=False, backref="question")
 
     @hybrid_property
     def generation(self):
@@ -72,49 +75,46 @@ class Question(UpdateMixin, db.Model):
 
     @hybrid_method
     def update(self, **kwargs):
-        if "distractors" in kwargs:
-            for current, new in zip(self.distractors, kwargs["distractors"]):
+        if "answers" in kwargs:
+            for current, new in zip(self.answers, kwargs["answers"]):
                 current.update(**new)
 
-        kwargs.pop("distractors", None)
+        kwargs.pop("answers", None)
         super(Question, self).update(**kwargs)
-
-    @hybrid_method
-    def fill_distractors(self):
-        # TODO: is there a better way to efficiently create distractor rows?
-        # TODO: create const for NUM_DISTRACTORS
-        for _ in range(3):
-            d = Distractor(question_id=self.id, text="", locked=False)
-            db.session.add(d)
-
-        db.session.commit()
-
-    @hybrid_method
-    def reroll(self):
-        with open(self.generation.upload_path) as upload:
-            # TODO: remove parser requirement
-            rerolled = reroll_distractors(upload, PARSERS["rust"], self)
-
-        for i, distractor in enumerate(self.distractors):
-            distractor.text = rerolled["options"][i]
-
-        db.session.commit()
-
-    @hybrid_method
-    def feedback_get_or_create(self) -> QuestionFeedback:
-        if not self.feedback:
-            feedback = QuestionFeedback(question_id=self.id)
-            self.feedback = feedback
-
-            db.session.add(feedback)
-            db.session.commit()
-
-        return self.feedback
 
     @hybrid_method
     def check_ownership(self, user_id):
         if self.generation.user_id != user_id:
-            raise Unauthorized("User doesn't have access to this quiz")
+            raise Unauthorized("User doesn't have access to this question")
+
+
+@dataclass
+class AnswerChoice(UpdateMixin, db.Model):
+    __tablename__ = "answerchoice"
+
+    id: int = db.Column(db.Integer, primary_key=True)
+    question_id: int = db.Column(db.Integer, db.ForeignKey("question.id"))
+
+    # position in list of answer choices for question
+    position: int = db.Column(db.Integer)
+
+    # text of answer choice
+    text: str = db.Column(db.String(ITEM_LENGTH))
+
+    # model's prediction on whether answer is correct or incorrect
+    predicted_feedback: FeedbackTypes = db.Column(db.Enum(FeedbackTypes))
+
+    # user's feedback on whether answer is correct or incorrect
+    user_feedback: FeedbackTypes = db.Column(db.Enum(FeedbackTypes), server_default=FeedbackTypes.unselected.name)
+
+    @hybrid_property
+    def question(self):
+        return db.session.query(Question).get(self.question_id)
+
+    @hybrid_method
+    def check_ownership(self, user_id):
+        if self.question.generation.user_id != user_id:
+            raise Unauthorized("User doesn't have access to this answer choice")
 
 
 @dataclass
@@ -128,7 +128,7 @@ class Generation(db.Model):
 
     @hybrid_property
     def upload_path(cls):
-        return os.path.join(current_app.config['UPLOAD_FOLDER'], cls.unique_filename)
+        return os.path.join(current_app.config["UPLOAD_FOLDER"], cls.unique_filename)
 
     # TODO: remove need for parser
     @hybrid_method
@@ -140,19 +140,37 @@ class Generation(db.Model):
         for shard, questions in enumerate(shards):
             for question in questions:
                 q = Question(
-                    generation_id=self.id,
                     question=question["question"],
-                    correct_answer=question["correct"],
                     shard=shard,
                 )
-                db.session.add(q)
+                self.questions.append(q)
                 db.session.commit()
 
-                for distractor in question["incorrect"]:
-                    d = Distractor(question_id=q.id, text=distractor, locked=False)
-                    db.session.add(d)
+                # create correct answer choice
+                correct = AnswerChoice(text=question["correct"], predicted_feedback=FeedbackTypes.correct)
+                q.answers.append(correct)
+
+                # create answer choices for incorrect choices
+                for incorrect in question["incorrect"]:
+                    distractor = AnswerChoice(text=incorrect, predicted_feedback=FeedbackTypes.incorrect)
+                    q.answers.append(distractor)
 
         # add distractors to db
+        db.session.commit()
+
+    @hybrid_method
+    def add_answer_choices(self, question: Question):
+        with open(self.upload_path) as upload:
+            # TODO: remove parser requirement
+            custom_output = add_answer_choices(upload, PARSERS["rust"], question)
+        
+        for option in custom_output["options"]:
+            choice = AnswerChoice(
+                text=option["text"],
+                predicted_feedback=option["predicted_feedback"]
+            )
+            question.answers.append(choice)
+
         db.session.commit()
 
     @hybrid_method

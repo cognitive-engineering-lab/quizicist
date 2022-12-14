@@ -1,3 +1,6 @@
+import enum
+
+
 # gpt model to use
 GPT_MODEL = "text-davinci-003"
 
@@ -38,3 +41,9 @@ Use the following format for each question:
 {NUM_QUESTIONS} multiple-choice questions:
 
 Question:"""
+
+# feedback options for answer choices
+class FeedbackTypes(enum.IntEnum):
+    unselected = 0
+    correct = 1
+    incorrect = 2

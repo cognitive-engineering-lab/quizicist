@@ -2,7 +2,7 @@ from pathlib import Path
 from flask import Blueprint, Response, current_app, request, redirect, render_template, url_for
 import os
 from blueprints.shared import PARSERS
-from lib.completion import reroll_distractors
+from lib.completion import add_answer_choices
 from lib.files import handle_file_upload
 from lib.mdbook import questions_to_toml
 from models import Generation, Question
@@ -59,7 +59,7 @@ def reroll(generation_id, question_id):
     with open(upload_path) as upload:
         # TODO: support dynamic parser like upload path
         # or store components instead of file
-        rerolled = reroll_distractors(upload, PARSERS["rust"], question)
+        rerolled = add_answer_choices(upload, PARSERS["rust"], question)
 
     question.option1 = rerolled["options"][0]
     question.option2 = rerolled["options"][1]
@@ -90,7 +90,7 @@ def new_item(generation_id):
     upload_path = os.path.join(current_app.config['UPLOAD_FOLDER'], generation.unique_filename)
     with open(upload_path) as upload:
         # TODO: don't only reroll with first shard
-        rerolled = reroll_distractors(upload, PARSERS["rust"], question)
+        rerolled = add_answer_choices(upload, PARSERS["rust"], question)
 
     question.option1 = rerolled["options"][0]
     question.option2 = rerolled["options"][1]

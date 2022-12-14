@@ -3,7 +3,7 @@ from lib.consts import NUM_QUESTIONS
 
 
 TEMPLATE = {
-    "instruction": "Use the following format for each question:",
+    "instruction": "Use the following template for each question:",
     "question": "Question: ",
     "correct": "Correct answer: ",
     "distractor": "Incorrect answer: "
