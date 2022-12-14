@@ -11,7 +11,10 @@ const TextField: React.FC<FieldHookConfig<string> & InputProps & TextFieldProps>
     const { submitForm } = useFormikContext();
     
     // when the user stops editing the input, persist changes
-    const onBlur = async () => {
+    const onBlur: React.FocusEventHandler<HTMLInputElement> = async (e) => {
+        // default field behavior
+        field.onBlur(e);
+
         if (submitOnBlur) {
             await submitForm();
         }

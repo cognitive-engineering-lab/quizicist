@@ -5,13 +5,14 @@ import customQuestionSchema from "@schemas/customQuestion.schema";
 import { ALL_GENERATIONS_URL, API_URL } from "@shared/consts";
 import Generation from "@shared/generation.type"
 import QuestionView from "./QuestionView";
-import { AddIcon, DeleteIcon } from "@chakra-ui/icons";
+import { DeleteIcon } from "@chakra-ui/icons";
 import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Button, Text } from "@chakra-ui/react";
 import styles from "./GenerationView.module.css";
 import api from "@shared/api";
 import exportToFormsSchema from "@schemas/exportToForms.schema";
 import TextField from "@components/fields/TextField";
 import LoadingIconButton from "./buttons/LoadingIconButton";
+import addQuestionsSchema from "@schemas/addQuestions.schema";
 
 type GenerationProps = {
     generation_id: number;
@@ -33,8 +34,8 @@ const GenerationView: React.FC<GenerationProps> = ({ generation_id }) => {
         mutate(ALL_GENERATIONS_URL);
     }
 
-    const moreQuestions = async () => {
-        await api.post(`${API_URL}/generated/${generation_id}/more`);
+    const addQuestions = async (data: any) => {
+        await api.post(`${API_URL}/generated/${generation_id}/more`, data);
         mutate(generation_url);
     }
 
@@ -59,13 +60,6 @@ const GenerationView: React.FC<GenerationProps> = ({ generation_id }) => {
                     icon={<DeleteIcon color="red.500" />}
                     loadingFunction={del}
                 />
-                <LoadingIconButton
-                    size="sm"
-                    className={styles.remove}
-                    aria-label="Generate more questions for quiz"
-                    icon={<AddIcon />}
-                    loadingFunction={moreQuestions}
-                />
             </Text>
             <Accordion allowToggle>
                 {generation.questions.map((q, i) => (
@@ -83,6 +77,32 @@ const GenerationView: React.FC<GenerationProps> = ({ generation_id }) => {
                         </AccordionPanel>
                     </AccordionItem>
                 ))}
+
+                <AccordionItem>
+                    <h2>
+                        <AccordionButton>
+                            <Box flex='1' textAlign='left'>
+                                <b>Generate more questions</b>
+                            </Box>
+                            <AccordionIcon />
+                        </AccordionButton>
+                    </h2>
+                    <AccordionPanel pb={4}>
+                        <Formik
+                            enableReinitialize
+                            initialValues={addQuestionsSchema.cast({})}
+                            validationSchema={addQuestionsSchema}
+                            onSubmit={addQuestions}
+                        >
+                            {(form) => (
+                                <Form>
+                                    <TextField name="count" title="Number of Questions" />
+                                    <Button type="submit" isLoading={form.isSubmitting}>Generate questions</Button>
+                                </Form>
+                            )}
+                        </Formik>
+                    </AccordionPanel>
+                </AccordionItem>
 
                 <AccordionItem>
                     <h2>

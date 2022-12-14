@@ -78,6 +78,7 @@ def generate_more(generation_id):
     generation.check_ownership(current_user.id)
 
     # run completion, add generated questions to database
+    # TODO: generate only the number of questions provided
     parser = md_parser
     generation.add_questions(parser)
 
