@@ -8,6 +8,7 @@ import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
 import styles from "./QuestionView.module.css";
 import api from "@shared/api";
 import TextField from "@components/fields/TextField";
+import LoadingButton from "@components/buttons/LoadingButton";
 import LoadingIconButton from "@components/buttons/LoadingIconButton";
 import { FeedbackTypes, getNewFeedback } from "@shared/feedback.type";
 import Generation from "@shared/generation.type";
@@ -62,6 +63,11 @@ const QuestionView: React.FC<QuestionProps> = ({ question, generation_id }) => {
         return "gray";
     }
 
+    const addAnswerChoices = async () => {
+        await api.post(`${API_URL}/question/${question.id}/more`, { answers: 4 });
+        mutate(generation_url);
+    }
+
     return (
         <Formik
             enableReinitialize
@@ -114,6 +120,7 @@ const QuestionView: React.FC<QuestionProps> = ({ question, generation_id }) => {
 
                     <Divider className={styles.divider} />
 
+                    <LoadingButton loadingFunction={addAnswerChoices} className={styles.button}>Add answer choices</LoadingButton>
                     <Button onClick={del} className={styles.button}>Delete Item</Button>
                 </Form>
             )}

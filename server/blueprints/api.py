@@ -117,6 +117,26 @@ def update_question(question_id):
     }
 
 
+# add more answer choices for question
+@api.route("/question/<question_id>/more", methods=["POST"])
+def add_answer_choices(question_id):
+    data = request.get_json()
+
+    if not data:
+        return "Missing JSON in request", 400
+
+    question: Question = db.get_or_404(Question, question_id)
+    question.check_ownership(current_user.id)
+    
+    # query GPT-3 for more answer choices
+    # TODO: customize number of answer choices to add
+    question.generation.add_answer_choices(question)
+
+    return {
+        "message": "Added answer choices"
+    }
+
+
 # generate new item from custom question and answer
 @api.route("/generated/<generation_id>/new", methods=["POST"])
 @limiter.limit("30/hour")
