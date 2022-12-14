@@ -2,6 +2,7 @@ from typing import Any
 from apiclient import discovery
 from models import Generation, Question
 from oauth2client.service_account import ServiceAccountCredentials
+from lib.consts import FeedbackTypes
 import os
 from config import APP_FOLDER
 
@@ -57,8 +58,13 @@ class GoogleFormExport:
 
 
     def question_to_json(self, question: Question):
-        options = [{ "value": d.text } for d in question.distractors]
-        options.append({ "value": question.correct_answer })
+        incorrect = [choice for choice in question.answers if choice.user_feedback == FeedbackTypes.incorrect]
+        correct = [choice for choice in question.answers if choice.user_feedback == FeedbackTypes.correct]
+        
+        get_text = lambda choice: { "value": choice.text }
+        
+        incorrect = list(map(get_text, incorrect))
+        correct = list(map(get_text, correct))
 
         return {
             "title": question.question,
@@ -68,16 +74,12 @@ class GoogleFormExport:
                     "grading": {
                         "pointValue": 1,
                         "correctAnswers": {
-                            "answers": [
-                                {
-                                    "value": question.correct_answer
-                                }
-                            ]
+                            "answers": correct
                         }
                     },
                     "choiceQuestion": {
                         "type": "RADIO",
-                        "options": options,
+                        "options": incorrect + correct,
                         "shuffle": True
                     }
                 }
