@@ -46,85 +46,17 @@ class UpdateMixin:
 
 
 @dataclass
-class Question(UpdateMixin, db.Model):
-    __tablename__ = "question"
-
-    id: int = db.Column(db.Integer, primary_key=True)
-    generation_id: int = db.Column(db.Integer, db.ForeignKey("generation.id"))
-
-    # text of question asked
-    question: str = db.Column(db.String(ITEM_LENGTH))
-
-    # order in list of quiz questions
-    position: int = db.Column(db.Integer)
-
-    # all answer choices for question
-    # uses `ordering_list` to manage order
-    answers: List[AnswerChoice] = db.relationship(
-        "AnswerChoice",
-        order_by="AnswerChoice.position",
-        collection_class=create_ordering_list("position"),
-    )
-
-    # shard of uploaded content used to generate question
-    shard: int = db.Column(db.Integer, default=0)
-
-    @hybrid_property
-    def generation(self):
-        return db.session.query("Generation").get(self.generation_id)
-
-    @hybrid_method
-    def update(self, **kwargs):
-        if "answers" in kwargs:
-            for current, new in zip(self.answers, kwargs["answers"]):
-                current.update(**new)
-
-        kwargs.pop("answers", None)
-        super(Question, self).update(**kwargs)
-
-    @hybrid_method
-    def check_ownership(self, user_id):
-        if self.generation.user_id != user_id:
-            raise Unauthorized("User doesn't have access to this question")
-
-
-@dataclass
-class AnswerChoice(UpdateMixin, db.Model):
-    __tablename__ = "answerchoice"
-
-    id: int = db.Column(db.Integer, primary_key=True)
-    question_id: int = db.Column(db.Integer, db.ForeignKey("question.id"))
-
-    # position in list of answer choices for question
-    position: int = db.Column(db.Integer)
-
-    # text of answer choice
-    text: str = db.Column(db.String(ITEM_LENGTH))
-
-    # model's prediction on whether answer is correct or incorrect
-    predicted_feedback: FeedbackTypes = db.Column(db.Enum(FeedbackTypes))
-
-    # user's feedback on whether answer is correct or incorrect
-    user_feedback: FeedbackTypes = db.Column(db.Enum(FeedbackTypes), server_default=FeedbackTypes.unselected.name)
-
-    @hybrid_property
-    def question(self):
-        return db.session.query(Question).get(self.question_id)
-
-    @hybrid_method
-    def check_ownership(self, user_id):
-        if self.question.generation.user_id != user_id:
-            raise Unauthorized("User doesn't have access to this answer choice")
-
-
-@dataclass
 class Generation(db.Model):
     id: int = db.Column(db.Integer, primary_key=True)
     user_id: int = db.Column(db.Integer, db.ForeignKey("user.id"))
 
     filename: str = db.Column(db.String(FILENAME_LENGTH))
     unique_filename: str = db.Column(db.String(FILENAME_LENGTH))
-    questions: List[Question] = db.relationship("Question", backref="generation", cascade="all, delete-orphan")
+    questions: List[Question] = db.relationship(
+        "Question",
+        order_by="Question.position",
+        collection_class=create_ordering_list("position"),
+    )
 
     @hybrid_property
     def upload_path(cls):
@@ -177,6 +109,78 @@ class Generation(db.Model):
     def check_ownership(self, user_id):
         if self.user_id != user_id:
             raise Unauthorized("User doesn't have access to this quiz")
+
+
+@dataclass
+class Question(UpdateMixin, db.Model):
+    __tablename__ = "question"
+
+    id: int = db.Column(db.Integer, primary_key=True)
+    generation_id: int = db.Column(db.Integer, db.ForeignKey("generation.id"))
+
+    # text of question asked
+    question: str = db.Column(db.String(ITEM_LENGTH))
+
+    # order in list of quiz questions
+    position: int = db.Column(db.Integer)
+
+    # all answer choices for question
+    # uses `ordering_list` to manage order
+    answers: List[AnswerChoice] = db.relationship(
+        "AnswerChoice",
+        order_by="AnswerChoice.position",
+        collection_class=create_ordering_list("position"),
+    )
+
+    # shard of uploaded content used to generate question
+    shard: int = db.Column(db.Integer, default=0)
+
+    @hybrid_property
+    def generation(self):
+        return db.session.query(Generation).get(self.generation_id)
+
+    @hybrid_method
+    def update(self, **kwargs):
+        if "answers" in kwargs:
+            for current, new in zip(self.answers, kwargs["answers"]):
+                current.update(**new)
+
+        kwargs.pop("answers", None)
+        super(Question, self).update(**kwargs)
+
+    @hybrid_method
+    def check_ownership(self, user_id):
+        if self.generation.user_id != user_id:
+            raise Unauthorized("User doesn't have access to this question")
+
+
+@dataclass
+class AnswerChoice(UpdateMixin, db.Model):
+    __tablename__ = "answerchoice"
+
+    id: int = db.Column(db.Integer, primary_key=True)
+    question_id: int = db.Column(db.Integer, db.ForeignKey("question.id"))
+
+    # position in list of answer choices for question
+    position: int = db.Column(db.Integer)
+
+    # text of answer choice
+    text: str = db.Column(db.String(ITEM_LENGTH))
+
+    # model's prediction on whether answer is correct or incorrect
+    predicted_feedback: FeedbackTypes = db.Column(db.Enum(FeedbackTypes))
+
+    # user's feedback on whether answer is correct or incorrect
+    user_feedback: FeedbackTypes = db.Column(db.Enum(FeedbackTypes), server_default=FeedbackTypes.unselected.name)
+
+    @hybrid_property
+    def question(self):
+        return db.session.query(Question).get(self.question_id)
+
+    @hybrid_method
+    def check_ownership(self, user_id):
+        if self.question.generation.user_id != user_id:
+            raise Unauthorized("User doesn't have access to this answer choice")
 
 
 class User(UserMixin, db.Model):

@@ -51,6 +51,16 @@ const GenerationView: React.FC<GenerationProps> = ({ generation_id }) => {
         return <div>Loading generation...</div>
     }
 
+    const getQuestionPosition = (id: number) => {
+        return _.findIndex(generation.questions, { id });
+    }
+
+    const getAnswerPosition = (id: number, questionID: number) => {
+        const questionPosition = getQuestionPosition(questionID);
+
+        return _.findIndex(generation.questions[questionPosition].answers, { id });
+    }
+
     // check if any answer choices are unscored
     const answers = _.flatten(generation.questions.map(q => q.answers));
     const unscored = _.filter(answers, { user_feedback: FeedbackTypes.unselected });
@@ -172,7 +182,7 @@ const GenerationView: React.FC<GenerationProps> = ({ generation_id }) => {
                                                     
                                                     {unscored.map(a => 
                                                         <div style={{ marginLeft: "1em" }}>
-                                                            Question {a.question_id}, answer choice {a.position + 1}
+                                                            Question {getQuestionPosition(a.question_id)! + 1}, answer choice {getAnswerPosition(a.id, a.question_id) + 1}
                                                         </div>
                                                     )}
                                                 </AlertDescription>

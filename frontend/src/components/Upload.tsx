@@ -1,4 +1,4 @@
-import { Button, Text } from "@chakra-ui/react";
+import { Button, FormControl, FormHelperText, Text } from "@chakra-ui/react";
 import uploadSchema from "@schemas/upload.schema";
 import api from "@shared/api";
 import { ALL_GENERATIONS_URL, API_URL } from "@shared/consts";
@@ -43,6 +43,12 @@ const Upload: React.FC = () => {
                     />
                     
                     <Button type="submit" isLoading={props.isSubmitting}>Create</Button>
+
+                    {props.isSubmitting && 
+                        <FormControl>
+                            <FormHelperText>It may take a few minutes for questions to generate</FormHelperText>
+                        </FormControl>
+                    }
                 </Form>
             )}
         </Formik>
