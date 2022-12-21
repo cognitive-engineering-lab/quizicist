@@ -2,12 +2,7 @@ import { IconButton, IconButtonProps } from "@chakra-ui/react";
 import { useState } from "react";
 import { LoadingButtonProps } from "./LoadingButton";
 
-type LoadingIconButtonProps = {
-    // props to apply when loading
-    optimisticProps?: Omit<IconButtonProps, "aria-label">;
-}
-
-const LoadingIconButton: React.FC<LoadingButtonProps & IconButtonProps & LoadingIconButtonProps> = ({ loadingFunction, children, optimisticProps, ...props }) => {
+const LoadingIconButton: React.FC<LoadingButtonProps & IconButtonProps> = ({ loadingFunction, children, optimisticProps, ...props }) => {
     const [isLoading, setIsLoading] = useState(false);
 
     const handleClick = async () => {

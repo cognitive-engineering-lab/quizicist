@@ -175,21 +175,9 @@ def delete(question_id):
     }
 
 
-# reroll an item's distractors
-@api.route("/question/<question_id>/reroll", methods=["POST"])
-@limiter.limit("30/hour")
-def reroll(question_id):
-    question: Question = db.get_or_404(Question, question_id)
-    question.check_ownership(current_user.id)
-    question.reroll()
-
-    return {
-        "message": "Rerolled question's distractors"
-    }
-
-
 @api.route("/question/<question_id>/feedback", methods=["POST"])
 def question_feedback(question_id):
+    # TODO: update this route to use answer ID in URL
     data = request.get_json()
 
     if not data:
@@ -201,6 +189,19 @@ def question_feedback(question_id):
 
     return {
         "message": "Added feedback"
+    }
+
+
+@api.route("/question/<question_id>/<answer_id>/delete", methods=["POST"])
+def answer_delete(question_id, answer_id):
+    answer: AnswerChoice = db.get_or_404(AnswerChoice, answer_id)
+    answer.check_ownership(current_user.id)
+
+    db.session.delete(answer)
+    db.session.commit()
+
+    return {
+        "message": "Deleted answer choice"
     }
 
 

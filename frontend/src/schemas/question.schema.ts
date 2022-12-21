@@ -6,6 +6,8 @@ const questionSchema = customQuestionSchema.concat(
   yup.object({
     answers: yup.array().of(
       yup.object({
+        id: yup.number(),
+
         text: yup
           .string()
           .required()

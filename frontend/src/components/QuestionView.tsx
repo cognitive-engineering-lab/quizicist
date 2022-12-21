@@ -9,10 +9,10 @@ import styles from "./QuestionView.module.css";
 import api from "@shared/api";
 import TextField from "@components/fields/TextField";
 import LoadingButton from "@components/buttons/LoadingButton";
-import LoadingIconButton from "@components/buttons/LoadingIconButton";
 import { FeedbackTypes, getNewFeedback } from "@shared/feedback.type";
 import Generation from "@shared/generation.type";
 import _ from "lodash";
+import { fetcher } from "@hooks/fetcher";
 
 type QuestionProps = {
     question: Question;
@@ -28,8 +28,7 @@ const QuestionView: React.FC<QuestionProps> = ({ question, generation_id }) => {
         mutate(generation_url);
     }
 
-    // delete item
-    const del = async () => {
+    const deleteQuestion = async () => {
         // prevent loading by adding optimistic data
         const optimisticData = (current: Generation): Generation => {
             // remove current question from quiz data
@@ -39,7 +38,22 @@ const QuestionView: React.FC<QuestionProps> = ({ question, generation_id }) => {
         }
 
         await api.post(`${API_URL}/question/${question.id}/delete`);
-        mutate(generation_url, null, { optimisticData });
+        mutate(generation_url, fetcher, { optimisticData });
+    }
+
+    const deleteAnswerChoice = async (id: number) => {
+        // prevent loading by adding optimistic data
+        const optimisticData = (current: Generation): Generation => {
+            const q = _.find(current.questions, { id: question.id })!;
+
+            // remove answer choice from quiz data
+            _.remove(q.answers, (a) => a.id === id);
+
+            return current;
+        }
+
+        await api.post(`${API_URL}/question/${question.id}/${id}/delete`);
+        mutate(generation_url, fetcher, { optimisticData });
     }
 
     // send answer choice feedback (correct, incorrect) to server
@@ -91,37 +105,49 @@ const QuestionView: React.FC<QuestionProps> = ({ question, generation_id }) => {
                             placeholder="Answer choice"
                             submitOnBlur
                         >
-                            <LoadingIconButton
+                            <LoadingButton
                                 size="sm"
                                 className={styles.feedback}
                                 colorScheme={getFeedbackColor(answer.user_feedback!, "correct")}
                                 aria-label="This answer choice is correct"
-                                icon={<CheckIcon />}
                                 loadingFunction={() => addFeedback(index, FeedbackTypes.correct)}
                                 optimisticProps={{
                                     // TODO: clean up reuse of color scheme calls
                                     colorScheme: getFeedbackColor(getNewFeedback(answer.user_feedback!, FeedbackTypes.correct), "correct")
                                 }}
-                            />
-                            <LoadingIconButton
+                            >
+                                <CheckIcon style={{ marginRight: "0.5em" }} />{" "}Correct
+                            </LoadingButton>
+
+                            <LoadingButton
                                 size="sm"
                                 className={styles.feedback}
                                 colorScheme={getFeedbackColor(answer.user_feedback!, "incorrect")}
                                 aria-label="This answer choice is incorrect"
-                                icon={<CloseIcon />}
                                 loadingFunction={() => addFeedback(index,FeedbackTypes.incorrect)}
                                 optimisticProps={{
                                     // TODO: clean up reuse of color scheme calls
                                     colorScheme: getFeedbackColor(getNewFeedback(answer.user_feedback!, FeedbackTypes.incorrect), "incorrect")
                                 }}
-                            />
+                            >
+                                <CloseIcon style={{ marginRight: "0.5em" }} />{" "}Incorrect
+                            </LoadingButton>
+
+                            <LoadingButton
+                                size="sm"
+                                className={styles.feedback}
+                                aria-label="Delete this answer choice"
+                                loadingFunction={() => deleteAnswerChoice(answer.id!)}
+                            >
+                                Delete
+                            </LoadingButton>
                         </TextField>
                     ))}
 
                     <Divider className={styles.divider} />
 
                     <LoadingButton loadingFunction={addAnswerChoices} className={styles.button}>Add answer choices</LoadingButton>
-                    <Button onClick={del} className={styles.button}>Delete Item</Button>
+                    <Button onClick={deleteQuestion} className={styles.button}>Delete Item</Button>
                 </Form>
             )}
         </Formik>
