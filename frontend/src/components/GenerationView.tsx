@@ -6,13 +6,15 @@ import { ALL_GENERATIONS_URL, API_URL } from "@shared/consts";
 import Generation from "@shared/generation.type"
 import QuestionView from "./QuestionView";
 import { DeleteIcon } from "@chakra-ui/icons";
-import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Button, Text } from "@chakra-ui/react";
+import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Alert, AlertDescription, AlertIcon, AlertTitle, Box, Button, Text } from "@chakra-ui/react";
 import styles from "./GenerationView.module.css";
 import api from "@shared/api";
 import exportToFormsSchema from "@schemas/exportToForms.schema";
 import TextField from "@components/fields/TextField";
 import LoadingIconButton from "./buttons/LoadingIconButton";
 import addQuestionsSchema from "@schemas/addQuestions.schema";
+import _ from "lodash";
+import { FeedbackTypes } from "@shared/feedback.type";
 
 type GenerationProps = {
     generation_id: number;
@@ -48,6 +50,10 @@ const GenerationView: React.FC<GenerationProps> = ({ generation_id }) => {
     if (!generation) {
         return <div>Loading generation...</div>
     }
+
+    // check if any answer choices are unscored
+    const answers = _.flatten(generation.questions.map(q => q.answers));
+    const unscored = _.filter(answers, { user_feedback: FeedbackTypes.unselected });
 
     return (
         <div style={{ marginBottom: "2em" }}>
@@ -152,8 +158,35 @@ const GenerationView: React.FC<GenerationProps> = ({ generation_id }) => {
                         >
                             {(form) => (
                                 <Form>
+                                    {!!unscored.length && 
+                                        // if some answers are unscored, display alert
+                                        <Alert
+                                            status="error"
+                                            style={{ marginBottom: "1em" }}
+                                        >
+                                            <AlertIcon />
+                                            <Box>
+                                                <AlertTitle>All answer choices must be scored</AlertTitle>
+                                                <AlertDescription>
+                                                    Please assign either <code>correct</code> or <code>incorrect</code> to the following answer choices:
+                                                    
+                                                    {unscored.map(a => 
+                                                        <div style={{ marginLeft: "1em" }}>
+                                                            Question {a.question_id}, answer choice {a.position + 1}
+                                                        </div>
+                                                    )}
+                                                </AlertDescription>
+                                            </Box>
+                                        </Alert>
+                                    }
                                     <TextField name="email" title="Email" placeholder="email@example.com" />
-                                    <Button type="submit" isLoading={form.isSubmitting}>Export</Button>
+                                    <Button
+                                        type="submit"
+                                        isLoading={form.isSubmitting}
+                                        disabled={!!unscored.length}
+                                    >
+                                        Export
+                                    </Button>
                                 </Form>
                             )}
                         </Formik>
