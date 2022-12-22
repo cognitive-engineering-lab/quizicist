@@ -1,12 +1,13 @@
-import { FormControl, FormErrorMessage, FormLabel, Input, InputProps } from "@chakra-ui/react";
+import { FormControl, FormErrorMessage, FormLabel, FormLabelProps, Input, InputProps } from "@chakra-ui/react";
 import { FieldHookConfig, useField, useFormikContext } from "formik";
 import styles from "./Shared.module.css";
 
 type TextFieldProps = {
     submitOnBlur?: boolean;
+    labelProps?: FormLabelProps;
 }
 
-const TextField: React.FC<FieldHookConfig<string> & InputProps & TextFieldProps> = ({ title, placeholder, children, submitOnBlur, ...props}) => {
+const TextField: React.FC<FieldHookConfig<string> & InputProps & TextFieldProps> = ({ title, placeholder, children, submitOnBlur, labelProps, ...props}) => {
     const [field, meta] = useField(props);
     const { submitForm } = useFormikContext();
     
@@ -22,7 +23,7 @@ const TextField: React.FC<FieldHookConfig<string> & InputProps & TextFieldProps>
     
     return (
         <FormControl className={styles.control} isInvalid={!!meta.error && meta.touched}>
-            <FormLabel>
+            <FormLabel {...labelProps}>
                 {title}
                 {children}
             </FormLabel>

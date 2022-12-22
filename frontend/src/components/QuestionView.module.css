@@ -7,5 +7,18 @@
 }
 
 .feedback {
+    width: 100%;
+}
+
+.feedback:first-child {
+    margin-left: 1.5em;
+}
+
+.feedback:last-child {
+    float: right;
+}
+
+.feedback button {
+    width: fit-content;
     margin-left: 0.75em;
 }
