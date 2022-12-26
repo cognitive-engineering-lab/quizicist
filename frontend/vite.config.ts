@@ -10,6 +10,7 @@ export default defineConfig({
       { find: '@hooks', replacement: path.resolve(__dirname, 'src/hooks') },
       { find: '@schemas', replacement: path.resolve(__dirname, 'src/schemas') },
       { find: '@shared', replacement: path.resolve(__dirname, 'src/shared') },
+      { find: '@wrappers', replacement: path.resolve(__dirname, 'src/wrappers') },
     ],
   },
   plugins: [react()]

@@ -5,7 +5,7 @@ from lib.export import GoogleFormExport
 from lib.files import create_file_from_json
 from lib.mdbook import questions_to_toml
 from lib.parsers.md import md_parser
-from models import AnswerChoice, Generation, Question
+from models import AnswerChoice, Generation, Question, Message
 from db import db
 from limiter import limiter
 
@@ -225,6 +225,28 @@ def create_google_form(generation_id):
     return {
         "message": f"Shared form {form_id} with {email}"
     }
+
+
+@api.route("/message/upload", methods=["POST"])
+@limiter.limit("30/hour")
+def upload_message():
+    if "message_type" not in request.json:
+        return "Message type is required", 400
+
+    if "message" not in request.json:
+        return "Message is required", 400
+
+    message_type = int(request.json["message_type"])
+    message = Message(
+        user_id=current_user.id,
+        message_type=message_type,
+        message=request.json["message"]
+    )
+    
+    db.session.add(message)
+    db.session.commit()
+
+    return "Uploaded message"
 
 
 # download mdbook-quiz TOML file

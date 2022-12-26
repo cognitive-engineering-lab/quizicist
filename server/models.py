@@ -6,7 +6,7 @@ from db import db
 from flask import current_app
 from flask_login import UserMixin
 from lib.completion import complete, add_answer_choices
-from lib.consts import FeedbackTypes
+from lib.consts import FeedbackTypes, MessageTypes
 import os
 from sqlalchemy.ext.hybrid import hybrid_property, hybrid_method
 from sqlalchemy.ext.orderinglist import OrderingList
@@ -183,7 +183,17 @@ class AnswerChoice(UpdateMixin, db.Model):
             raise Unauthorized("User doesn't have access to this answer choice")
 
 
+# user-provided message about experience using quizicist
+class Message(db.Model):
+    id: int = db.Column(db.Integer, primary_key=True)
+    user_id: int = db.Column(db.Integer, db.ForeignKey("user.id"))
+
+    message: str = db.Column(db.String(2500))
+    message_type: MessageTypes = db.Column(db.Enum(MessageTypes))
+
+
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
     generations: List[Generation] = db.relationship("Generation", backref="user", cascade="all, delete-orphan")
+    messages: List[Message] = db.relationship("Message", backref="user", cascade="all, delete-orphan")

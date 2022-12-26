@@ -22,6 +22,7 @@
       "@hooks/*": ["hooks/*"],
       "@schemas/*": ["schemas/*"],
       "@shared/*": ["shared/*"],
+      "@wrappers/*": ["wrappers/*"],
     }
   },
   "include": ["src"],
