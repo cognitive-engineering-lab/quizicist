@@ -6,7 +6,7 @@ import { ALL_GENERATIONS_URL, API_URL } from "@shared/consts";
 import Generation from "@shared/generation.type"
 import QuestionView from "./QuestionView";
 import { DeleteIcon } from "@chakra-ui/icons";
-import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Alert, AlertDescription, AlertIcon, AlertTitle, Box, Button, Text } from "@chakra-ui/react";
+import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Alert, AlertDescription, AlertIcon, AlertTitle, Box, Button, ExpandedIndex, Link, Text } from "@chakra-ui/react";
 import styles from "./GenerationView.module.css";
 import api from "@shared/api";
 import exportToFormsSchema from "@schemas/exportToForms.schema";
@@ -15,6 +15,7 @@ import LoadingIconButton from "./buttons/LoadingIconButton";
 import addQuestionsSchema from "@schemas/addQuestions.schema";
 import _ from "lodash";
 import { FeedbackTypes } from "@shared/feedback.type";
+import { useState } from "react";
 
 type GenerationProps = {
     generation_id: number;
@@ -23,6 +24,7 @@ type GenerationProps = {
 const GenerationView: React.FC<GenerationProps> = ({ generation_id }) => {
     const generation_url = `${API_URL}/generated/${generation_id}`;
     const { data: generation } = useSWR<Generation>(generation_url, fetcher);
+    const [panel, setPanel] = useState<ExpandedIndex>(0);
 
     const create = async (data: any, { resetForm }: FormikHelpers<any>) => {
         await api.post(`${API_URL}/generated/${generation_id}/new`, data);
@@ -55,15 +57,11 @@ const GenerationView: React.FC<GenerationProps> = ({ generation_id }) => {
         return _.findIndex(generation.questions, { id });
     }
 
-    const getAnswerPosition = (id: number, questionID: number) => {
-        const questionPosition = getQuestionPosition(questionID);
-
-        return _.findIndex(generation.questions[questionPosition].answers, { id });
-    }
-
-    // check if any answer choices are unscored
-    const answers = _.flatten(generation.questions.map(q => q.answers));
-    const unscored = _.filter(answers, { user_feedback: FeedbackTypes.unselected });
+    // find all questions with unanswered choices
+    const unscored = _.filter(
+        generation.questions,
+        q => _.filter(q.answers, { user_feedback: FeedbackTypes.unselected }).length > 0
+    );
 
     return (
         <div style={{ marginBottom: "2em" }}>
@@ -77,7 +75,7 @@ const GenerationView: React.FC<GenerationProps> = ({ generation_id }) => {
                     loadingFunction={del}
                 />
             </Text>
-            <Accordion allowToggle>
+            <Accordion allowToggle onChange={setPanel} index={panel}>
                 {generation.questions.map((q, i) => (
                     <AccordionItem>
                         <h2>
@@ -178,11 +176,13 @@ const GenerationView: React.FC<GenerationProps> = ({ generation_id }) => {
                                             <Box>
                                                 <AlertTitle>All answer choices must be scored</AlertTitle>
                                                 <AlertDescription>
-                                                    Please assign either <code>correct</code> or <code>incorrect</code> to the following answer choices:
+                                                    Please assign either <code>correct</code> or <code>incorrect</code> to all answer choices in the following questions:
                                                     
-                                                    {unscored.map(a => 
+                                                    {unscored.map(q => 
                                                         <div style={{ marginLeft: "1em" }}>
-                                                            Question {getQuestionPosition(a.question_id)! + 1}, answer choice {getAnswerPosition(a.id, a.question_id) + 1}
+                                                            <Link onClick={() => setPanel(getQuestionPosition(q.id))}>
+                                                                Question {getQuestionPosition(q.id)! + 1}
+                                                            </Link>
                                                         </div>
                                                     )}
                                                 </AlertDescription>
