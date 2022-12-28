@@ -6,7 +6,7 @@ import { ALL_GENERATIONS_URL, API_URL } from "@shared/consts";
 import Generation from "@shared/generation.type"
 import QuestionView from "./QuestionView";
 import { DeleteIcon } from "@chakra-ui/icons";
-import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Alert, AlertDescription, AlertIcon, AlertTitle, Box, Button, ExpandedIndex, Link, Text } from "@chakra-ui/react";
+import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Alert, AlertDescription, AlertIcon, AlertTitle, Box, Button, Editable, EditableInput, EditablePreview, ExpandedIndex, Link, Text } from "@chakra-ui/react";
 import styles from "./GenerationView.module.css";
 import api from "@shared/api";
 import exportToFormsSchema from "@schemas/exportToForms.schema";
@@ -49,6 +49,12 @@ const GenerationView: React.FC<GenerationProps> = ({ generation_id }) => {
         resetForm();
     }
 
+    const updateTitle = async (filename: string) => {
+        // TODO: rename `filename` to `title` in schema
+        await api.post(`${API_URL}/generated/${generation_id}/update`, { filename });
+        mutate(generation_url);
+    }
+
     if (!generation) {
         return <div>Loading generation...</div>
     }
@@ -66,7 +72,15 @@ const GenerationView: React.FC<GenerationProps> = ({ generation_id }) => {
     return (
         <div style={{ marginBottom: "2em" }}>
             <Text fontSize='2xl' style={{ marginBottom: "0.5em" }}>
-                {generation.filename}
+                <Editable
+                    display="inline-block"
+                    defaultValue={generation.filename}
+                    onSubmit={updateTitle}
+                >
+                    <EditablePreview />
+                    <EditableInput />
+                </Editable>
+
                 <LoadingIconButton
                     size="sm"
                     className={styles.remove}
