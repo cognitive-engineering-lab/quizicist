@@ -24,7 +24,7 @@ type GenerationProps = {
 const GenerationView: React.FC<GenerationProps> = ({ generation_id }) => {
     const generation_url = `${API_URL}/generated/${generation_id}`;
     const { data: generation } = useSWR<Generation>(generation_url, fetcher);
-    const [panel, setPanel] = useState<ExpandedIndex>(0);
+    const [panel, setPanel] = useState<ExpandedIndex>(-1);
 
     const create = async (data: any, { resetForm }: FormikHelpers<any>) => {
         await api.post(`${API_URL}/generated/${generation_id}/new`, data);
