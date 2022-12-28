@@ -141,7 +141,7 @@ const GenerationView: React.FC<GenerationProps> = ({ generation_id }) => {
                                         placeholder="Which JavaScript keyword is used to declare a constant?"
                                     />
                                     
-                                    <Button type="submit" isLoading={form.isSubmitting}>Create</Button>
+                                    <Button type="submit" isLoading={form.isSubmitting}>Create question</Button>
                                 </Form>
                             )}
                         </Formik>

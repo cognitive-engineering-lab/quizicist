@@ -42,7 +42,7 @@ const Upload: React.FC = () => {
                         title="Content is markdown"
                     />
                     
-                    <Button type="submit" isLoading={props.isSubmitting}>Create</Button>
+                    <Button type="submit" isLoading={props.isSubmitting}>Create quiz</Button>
 
                     {props.isSubmitting && 
                         <FormControl>
