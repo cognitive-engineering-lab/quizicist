@@ -14,6 +14,11 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 
+@auth.route("/authenticated", methods=["GET"])
+def authenticated():
+    return { "authenticated": current_user.is_authenticated }
+
+
 # create user
 @auth.route("/authenticate", methods=["POST"])
 def authenticate():
