@@ -28,7 +28,7 @@ login_manager.init_app(app)
 # enable CORS
 CORS(app, supports_credentials=True)
 
-# add blueprints for JSON API, legacy routes, and authentication
+# add blueprints for JSON API and authentication
 app.register_blueprint(api, url_prefix="/api")
 app.register_blueprint(auth, url_prefix="/auth")
 

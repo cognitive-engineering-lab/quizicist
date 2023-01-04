@@ -46,7 +46,7 @@ class UpdateMixin:
 
 
 @dataclass
-class Generation(db.Model):
+class Generation(db.Model, UpdateMixin):
     id: int = db.Column(db.Integer, primary_key=True)
     user_id: int = db.Column(db.Integer, db.ForeignKey("user.id"))
 
@@ -73,18 +73,27 @@ class Generation(db.Model):
             for question in questions:
                 q = Question(
                     question=question["question"],
+                    original_question=question["question"], # TODO: is there a better way to do this?
                     shard=shard,
                 )
                 self.questions.append(q)
                 db.session.commit()
 
                 # create correct answer choice
-                correct = AnswerChoice(text=question["correct"], predicted_feedback=FeedbackTypes.correct)
+                correct = AnswerChoice(
+                    text=question["correct"],
+                    original_text=question["correct"],
+                    predicted_feedback=FeedbackTypes.correct
+                )
                 q.answers.append(correct)
 
                 # create answer choices for incorrect choices
                 for incorrect in question["incorrect"]:
-                    distractor = AnswerChoice(text=incorrect, predicted_feedback=FeedbackTypes.incorrect)
+                    distractor = AnswerChoice(
+                        text=incorrect,
+                        original_text=incorrect,
+                        predicted_feedback=FeedbackTypes.incorrect
+                    )
                     q.answers.append(distractor)
 
         # add distractors to db
@@ -99,6 +108,7 @@ class Generation(db.Model):
         for option in custom_output["options"]:
             choice = AnswerChoice(
                 text=option["text"],
+                original_text=option["text"], # TODO: is there a better way to do this?
                 predicted_feedback=option["predicted_feedback"]
             )
             question.answers.append(choice)
@@ -120,6 +130,9 @@ class Question(UpdateMixin, db.Model):
 
     # text of question asked
     question: str = db.Column(db.String(ITEM_LENGTH))
+
+    # original (unedited) text of question
+    original_question: str = db.Column(db.String(ITEM_LENGTH))
 
     # order in list of quiz questions
     position: int = db.Column(db.Integer)
@@ -166,6 +179,9 @@ class AnswerChoice(UpdateMixin, db.Model):
 
     # text of answer choice
     text: str = db.Column(db.String(ITEM_LENGTH))
+
+    # original (unedited) text of answer choice
+    original_text: str = db.Column(db.String(ITEM_LENGTH))
 
     # model's prediction on whether answer is correct or incorrect
     predicted_feedback: FeedbackTypes = db.Column(db.Enum(FeedbackTypes))

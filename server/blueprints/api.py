@@ -70,6 +70,23 @@ def get_generation(generation_id):
     return jsonify(generation)
 
 
+# update a quiz's data
+@api.route("/generated/<generation_id>/update", methods=["POST"])
+def update_generation(generation_id):
+    data = request.get_json()
+
+    if not data:
+        return "Missing JSON in request", 400
+
+    generation: Generation = db.get_or_404(Generation, generation_id)
+    generation.check_ownership(current_user.id)
+    generation.update(**data)
+
+    return {
+        "message": "Updated generation"
+    }
+
+
 # create more questions for existing generation
 @api.route("/generated/<generation_id>/more", methods=["POST"])
 @limiter.limit("10/hour")
@@ -148,6 +165,7 @@ def new_item(generation_id):
     question = Question(
         generation_id=generation.id,
         question=request.json["question"],
+        original_question=request.json["question"], # TODO: is there a better way to do this?
         shard=0, # TODO: this should not default to the first shard
     )
     db.session.add(question)

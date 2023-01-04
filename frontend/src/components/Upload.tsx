@@ -1,19 +1,17 @@
 import { Button, FormControl, FormHelperText, Text } from "@chakra-ui/react";
 import uploadSchema from "@schemas/upload.schema";
-import api from "@shared/api";
-import { ALL_GENERATIONS_URL, API_URL } from "@shared/consts";
 import { Formik, Form, FormikHelpers } from "formik";
-import { mutate } from "swr";
 import CheckboxField from "@components/fields/CheckboxField";
 import TextareaField from "@components/fields/TextareaField";
 import TextField from "@components/fields/TextField";
+import { useGenerationCreate } from "@hooks/mutation/mutationHooks";
 
 const Upload: React.FC = () => {
-    const upload = async (data: any, { resetForm }: FormikHelpers<any>) => {
-        await api.post(`${API_URL}/upload`, data);
+    const createGeneration = useGenerationCreate();
 
+    const upload = async (data: any, { resetForm }: FormikHelpers<any>) => {
+        await createGeneration(data);
         resetForm();
-        mutate(ALL_GENERATIONS_URL);
     }
 
     return (

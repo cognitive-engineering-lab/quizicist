@@ -1,8 +1,8 @@
 import { Formik, Form, FormikHelpers } from "formik";
-import useSWR, { mutate } from "swr";
+import useSWR from "swr";
 import { fetcher } from "@hooks/fetcher";
 import customQuestionSchema from "@schemas/customQuestion.schema";
-import { ALL_GENERATIONS_URL, API_URL } from "@shared/consts";
+import { API_URL } from "@shared/consts";
 import Generation from "@shared/generation.type"
 import QuestionView from "./QuestionView";
 import { DeleteIcon } from "@chakra-ui/icons";
@@ -16,6 +16,7 @@ import addQuestionsSchema from "@schemas/addQuestions.schema";
 import _ from "lodash";
 import { FeedbackTypes } from "@shared/feedback.type";
 import { useState } from "react";
+import { useCustomQuestion, useGenerationDelete, useGenerationUpdate, useQuestionAdd } from "@hooks/mutation/mutationHooks";
 
 type GenerationProps = {
     generation_id: number;
@@ -26,33 +27,20 @@ const GenerationView: React.FC<GenerationProps> = ({ generation_id }) => {
     const { data: generation } = useSWR<Generation>(generation_url, fetcher);
     const [panel, setPanel] = useState<ExpandedIndex>(-1);
 
+    const deleteGeneration = useGenerationDelete(generation_id);
+    const addQuestions = useQuestionAdd(generation_id);
+    const updateGeneration = useGenerationUpdate(generation_id);
+    const createCustomQuestion = useCustomQuestion(generation_id);
+
     const create = async (data: any, { resetForm }: FormikHelpers<any>) => {
-        await api.post(`${API_URL}/generated/${generation_id}/new`, data);
-    
+        await createCustomQuestion(data);
         resetForm();
-        mutate(generation_url);
-    }
-
-    const del = async () => {
-        await api.post(`${API_URL}/generated/${generation_id}/delete`);
-        mutate(ALL_GENERATIONS_URL);
-    }
-
-    const addQuestions = async (data: any) => {
-        await api.post(`${API_URL}/generated/${generation_id}/more`, data);
-        mutate(generation_url);
     }
 
     const exportToForms = async (data: any, { resetForm }: FormikHelpers<any>) => {
         await api.post(`${API_URL}/generated/${generation_id}/google_form`, data);
 
         resetForm();
-    }
-
-    const updateTitle = async (filename: string) => {
-        // TODO: rename `filename` to `title` in schema
-        await api.post(`${API_URL}/generated/${generation_id}/update`, { filename });
-        mutate(generation_url);
     }
 
     if (!generation) {
@@ -75,7 +63,7 @@ const GenerationView: React.FC<GenerationProps> = ({ generation_id }) => {
                 <Editable
                     display="inline-block"
                     defaultValue={generation.filename}
-                    onSubmit={updateTitle}
+                    onSubmit={(filename) => updateGeneration({ filename })}
                 >
                     <EditablePreview />
                     <EditableInput />
@@ -86,7 +74,7 @@ const GenerationView: React.FC<GenerationProps> = ({ generation_id }) => {
                     className={styles.remove}
                     aria-label="Delete quiz"
                     icon={<DeleteIcon color="red.500" />}
-                    loadingFunction={del}
+                    loadingFunction={deleteGeneration}
                 />
             </Text>
             <Accordion allowToggle onChange={setPanel} index={panel}>
@@ -101,7 +89,7 @@ const GenerationView: React.FC<GenerationProps> = ({ generation_id }) => {
                             </AccordionButton>
                         </h2>
                         <AccordionPanel pb={4}>
-                            <QuestionView key={q.id} question={q} generation_id={generation.id} />
+                            <QuestionView key={q.id} question={q} generation={generation} />
                         </AccordionPanel>
                     </AccordionItem>
                 ))}

@@ -10,50 +10,35 @@ import api from "@shared/api";
 import TextField from "@components/fields/TextField";
 import LoadingButton from "@components/buttons/LoadingButton";
 import { FeedbackTypes, getNewFeedback } from "@shared/feedback.type";
-import Generation from "@shared/generation.type";
 import _ from "lodash";
-import { fetcher } from "@hooks/fetcher";
+import { useAnswerChoiceAdd, useQuestionDelete, useQuestionUpdate } from "@hooks/mutation/mutationHooks";
+import { deleteAnswerOptimistic, deleteQuestionOptimistic } from "@hooks/mutation/optimisticData";
+import Generation from "@shared/generation.type";
 
 type QuestionProps = {
     question: Question;
-    generation_id: number;
+    generation: Generation;
 };
 
-const QuestionView: React.FC<QuestionProps> = ({ question, generation_id }) => {
-    const generation_url = `${API_URL}/generated/${generation_id}`;
+const QuestionView: React.FC<QuestionProps> = ({ question, generation }) => {
+    const generation_url = `${API_URL}/generated/${generation.id}`;
 
-    // update item content (question, answer choice text)
-    const update = async (data: any) => {
-        await api.post(`${API_URL}/question/${question.id}/update`, data);
-        mutate(generation_url);
-    }
+    const updateQuestion = useQuestionUpdate(generation.id, question.id);
 
-    const deleteQuestion = async () => {
-        // prevent loading by adding optimistic data
-        const optimisticData = (current: Generation): Generation => {
-            // remove current question from quiz data
-            _.remove(current.questions, (q) => q.id === question.id);
+    const deleteQuestion = useQuestionDelete(
+        generation.id,
+        question.id,
+        { optimisticData: () => deleteQuestionOptimistic(generation, question.id) }
+    );
 
-            return current;
-        }
-
-        await api.post(`${API_URL}/question/${question.id}/delete`);
-        mutate(generation_url, fetcher, { optimisticData });
-    }
+    const addAnswerChoices = useAnswerChoiceAdd(generation.id, question.id);
 
     const deleteAnswerChoice = async (id: number) => {
         // prevent loading by adding optimistic data
-        const optimisticData = (current: Generation): Generation => {
-            const q = _.find(current.questions, { id: question.id })!;
-
-            // remove answer choice from quiz data
-            _.remove(q.answers, (a) => a.id === id);
-
-            return current;
-        }
+        const optimisticData = deleteAnswerOptimistic(generation, question.id, id);
 
         await api.post(`${API_URL}/question/${question.id}/${id}/delete`);
-        mutate(generation_url, fetcher, { optimisticData });
+        mutate(generation_url, optimisticData);
     }
 
     // send answer choice feedback (correct, incorrect) to server
@@ -77,17 +62,12 @@ const QuestionView: React.FC<QuestionProps> = ({ question, generation_id }) => {
         return "gray";
     }
 
-    const addAnswerChoices = async () => {
-        await api.post(`${API_URL}/question/${question.id}/more`, { answers: 4 });
-        mutate(generation_url);
-    }
-
     return (
         <Formik
             enableReinitialize
             initialValues={questionSchema.cast(question)}
             validationSchema={questionSchema}
-            onSubmit={update}
+            onSubmit={updateQuestion}
         >
             {form => (
                 <Form>
@@ -143,15 +123,15 @@ const QuestionView: React.FC<QuestionProps> = ({ question, generation_id }) => {
                                         <CloseIcon style={{ marginRight: "0.5em" }} />{" "}Incorrect
                                     </LoadingButton>
 
-                                    <LoadingButton
+                                    <Button
                                         size="xs"
                                         className={styles.feedback}
                                         aria-label="Delete this answer choice"
                                         colorScheme="red"
-                                        loadingFunction={() => deleteAnswerChoice(answer.id!)}
+                                        onClick={() => deleteAnswerChoice(answer.id!)}
                                     >
                                         Delete
-                                    </LoadingButton>
+                                    </Button>
                                 </div>
                             </TextField>
                         ))}

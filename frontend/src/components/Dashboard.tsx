@@ -1,4 +1,4 @@
-import { Container, Divider, Text } from "@chakra-ui/react";
+import { Divider, Text } from "@chakra-ui/react";
 import GenerationView from "@components/GenerationView";
 import Upload from "@components/Upload";
 import useGenerations from "@hooks/useGenerations";
@@ -12,7 +12,7 @@ const Dashboard: React.FC = () => {
   }
 
   return (
-    <Container maxW="container.lg">
+    <>
       <Upload />
 
       <Divider className={styles.divider} />
@@ -20,8 +20,9 @@ const Dashboard: React.FC = () => {
       {generations?.map((g) => (
         <GenerationView key={g} generation_id={g} />
       ))}
+
       {generations?.length === 0 && <Text fontSize="large">You don't have any quizzes</Text>}
-    </Container>
+    </>
   );
 }
 
