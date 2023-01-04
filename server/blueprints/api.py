@@ -28,6 +28,11 @@ def require_authentication():
 @api.route("/upload", methods=["POST"])
 @limiter.limit("10/hour")
 def upload():
+    if "count" not in request.json:
+        return "Missing number of questions in request", 400
+
+    num_questions = int(request.json["count"])
+
     # save uploaded file
     filename, unique_filename = create_file_from_json()
 
@@ -41,7 +46,7 @@ def upload():
 
     # run completion, add generated questions to database
     parser = md_parser
-    generation.add_questions(parser)
+    generation.add_questions(parser, num_questions)
 
     db.session.commit()
 
@@ -94,10 +99,15 @@ def generate_more(generation_id):
     generation: Generation = db.get_or_404(Generation, generation_id)
     generation.check_ownership(current_user.id)
 
+    if "count" not in request.json:
+        return "Missing number of questions in request", 400
+
+    num_questions = int(request.json["count"])
+
     # run completion, add generated questions to database
     # TODO: generate only the number of questions provided
     parser = md_parser
-    generation.add_questions(parser)
+    generation.add_questions(parser, num_questions)
 
     return {
         "message": f"Added questions for {generation.filename}"

@@ -11,7 +11,7 @@ openai.api_key = os.getenv("OPENAI_SECRET_KEY")
 
 EDIT_MODE_INSTRUCTION = 'Convert the list of questions into an array of JSON objects parseable by Python. Do not assign the JSON to a variable. Each object should contain keys for "question", "correct", and "incorrect".'
 
-def postprocess_edit_mode(output: str):
+def postprocess_edit_mode(output: str, num_questions=NUM_QUESTIONS):
     edited = openai.Edit.create(
         model="code-davinci-edit-001",
         input=output,
@@ -19,15 +19,15 @@ def postprocess_edit_mode(output: str):
         n=1,
         temperature=0,
     )["choices"][0]["text"]
-    
+
     # decode generated JSON
     try:
         parsed = json.loads(edited)
     except json.JSONDecodeError:
         return False
 
-    # ensure gpt-3 generated 5 questions
-    if type(parsed) is not list or len(parsed) != NUM_QUESTIONS:
+    # ensure gpt-3 generated correct number of questions questions
+    if type(parsed) is not list or len(parsed) != num_questions:
         return False
 
     return parsed

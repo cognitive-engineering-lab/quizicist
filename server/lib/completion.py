@@ -40,32 +40,35 @@ def shard_chapter(components):
     return shards
 
 
-
-def run_gpt3(shard):
-    prompt = "\n".join([shard, APPEND_PROMPT])
+def run_gpt3(shard, num_questions):
+    prompt = Prompt(num_questions=num_questions)\
+        .add_text(shard, newlines=0)\
+        .add_introduction()\
+        .add_template()\
+        .add_instructions()
 
     # process question until 5 well-formatted questions have been generated
     # TODO: add tally for failed generations and quit after n
     while True:
         print(f"Running completion on shard...")
-        completion = "Question: " + openai.Completion.create(
+        completion = "Question:" + openai.Completion.create(
             engine=GPT_MODEL,
-            prompt=prompt,
+            prompt=prompt.prompt,
             max_tokens=NUM_QUESTIONS * ESTIMATED_QUESTION_SIZE,
             temperature=0.8,
         )["choices"][0]["text"]
 
-        processed = postprocess_edit_mode(completion)
+        processed = postprocess_edit_mode(completion, num_questions)
 
         if processed:
             return processed
 
 
-def complete(file_content, parser):
+def complete(file_content, parser, num_questions):
     components = parser(file_content)
     shards = shard_chapter(components)
 
-    return list(map(run_gpt3, shards))
+    return list(map(lambda shard: run_gpt3(shard, num_questions), shards))
 
 
 def add_answer_choices(file_content, parser, question):

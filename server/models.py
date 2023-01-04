@@ -64,10 +64,10 @@ class Generation(db.Model, UpdateMixin):
 
     # TODO: remove need for parser
     @hybrid_method
-    def add_questions(self, parser):
+    def add_questions(self, parser, num_questions):
         # run gpt-3 completion
         with open(self.upload_path) as upload:
-            shards = complete(upload, parser)
+            shards = complete(upload, parser, num_questions)
 
         for shard, questions in enumerate(shards):
             for question in questions:

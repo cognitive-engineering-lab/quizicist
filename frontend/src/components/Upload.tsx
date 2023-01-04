@@ -35,6 +35,8 @@ const Upload: React.FC = () => {
                         placeholder="Functions reduce duplicate code."
                     />
 
+                    <TextField name="count" title="Number of Questions" />
+
                     <CheckboxField
                         name="is_markdown"
                         title="Content is markdown"
