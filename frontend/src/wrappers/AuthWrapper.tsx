@@ -1,5 +1,4 @@
 import { useDisclosure } from "@chakra-ui/react";
-import ConsentModal from "@components/ConsentModal";
 import api from "@shared/api";
 import { AUTH_URL } from "@shared/consts";
 import { useEffect } from "react";
@@ -8,8 +7,11 @@ import { SWRConfig } from "swr";
 const AuthWrapper: React.FC<React.PropsWithChildren> = ({ children }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
 
-    const handleConsentAccept = async () => {
+    const authenticate = async () => {
+        onOpen();
+
         await api.post(`${AUTH_URL}/authenticate`);
+
         onClose();
     }
 
@@ -17,7 +19,7 @@ const AuthWrapper: React.FC<React.PropsWithChildren> = ({ children }) => {
         const res = await api.get(`${AUTH_URL}/authenticated`);
         
         if (!res.data.authenticated) {
-            onOpen();
+            authenticate();
         }
     }
 
@@ -25,7 +27,7 @@ const AuthWrapper: React.FC<React.PropsWithChildren> = ({ children }) => {
     useEffect(() => { checkAuthed() }, []);
 
     if (isOpen) {
-        return <ConsentModal handleAccept={handleConsentAccept} />;
+        return <div>Authenticating...</div>;
     }
 
     return (
@@ -34,8 +36,7 @@ const AuthWrapper: React.FC<React.PropsWithChildren> = ({ children }) => {
                 revalidateOnFocus: false,
                 onError: async (error) => {
                     if (error.response.status === 401) {
-                        // open consent modal if unauthenticated
-                        onOpen();
+                        authenticate();
                     }
                 },
             }}
