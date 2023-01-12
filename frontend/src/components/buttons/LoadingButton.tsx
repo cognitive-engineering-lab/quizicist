@@ -30,7 +30,7 @@ const LoadingButton: React.FC<LoadingButtonProps & ButtonProps> = ({ loadingFunc
     return (
         <Button
             {...props}
-            isLoading={isLoading && !optimisticProps}
+            isLoading={isLoading && !optimisticProps} // only show loading spinner if no optimistic props given
             onClick={handleClick}
         >
             {children}

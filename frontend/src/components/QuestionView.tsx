@@ -12,7 +12,7 @@ import LoadingButton from "@components/buttons/LoadingButton";
 import { FeedbackTypes, getNewFeedback } from "@shared/feedback.type";
 import _ from "lodash";
 import { useAnswerChoiceAdd, useQuestionDelete, useQuestionUpdate } from "@hooks/mutation/mutationHooks";
-import { deleteAnswerOptimistic, deleteQuestionOptimistic } from "@hooks/mutation/optimisticData";
+import { deleteAnswerOptimistic, deleteQuestionOptimistic, giveFeedbackOptimistic } from "@hooks/mutation/optimisticData";
 import Generation from "@shared/generation.type";
 
 type QuestionProps = {
@@ -46,8 +46,11 @@ const QuestionView: React.FC<QuestionProps> = ({ question, generation }) => {
         const answer = question.answers[answerIndex];
         const value = getNewFeedback(answer.user_feedback, feedback);
 
+        // prevent flickering by adding optimistic data
+        const optimisticData = giveFeedbackOptimistic(generation, question.id, answer.id, feedback);
+
         await api.post(`${API_URL}/question/${question.id}/feedback`, { answer: answer.id, value });
-        mutate(generation_url);
+        mutate(generation_url, optimisticData);
     }
 
     const getFeedbackColor = (feedback: FeedbackTypes, button: "correct" | "incorrect") => {
