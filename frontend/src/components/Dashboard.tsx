@@ -56,7 +56,7 @@ const Dashboard: React.FC = () => {
         <GenerationView key={g} generation_id={g} />
       ))}
 
-      {generations?.length === 0 && <Text fontSize="large">You don't have any quizzes</Text>}
+      {generations?.length === 0 && <Text fontSize="large" mb="1em">You don't have any quizzes</Text>}
     </>
   );
 }
