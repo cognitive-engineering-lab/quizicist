@@ -40,7 +40,7 @@ MYSQL_DB=<MySQL database>
 ```shell
 $ cd server
 $ sudo systemctl start memcached # start memcached to store rate-limiting data
-$ gunicorn -w 4 'main:app' --daemon --timeout 180 --log-file=gunicorn.log # start app with production WSGI container
+$ gunicorn -c gunicorn_config.py "main:app" --log-file=gunicorn.log # start app with production WSGI container
 $ caddy start # bind caddy to local app
 ```
 
