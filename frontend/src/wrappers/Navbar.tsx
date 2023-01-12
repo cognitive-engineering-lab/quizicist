@@ -3,7 +3,7 @@ import {
   Box,
   Flex,
   HStack,
-  Link,
+  Text,
   IconButton,
   useDisclosure,
   useColorModeValue,
@@ -15,23 +15,31 @@ import { NavLink as RouterNavLink } from "react-router-dom";
 const links = [
   { title: "My Quizzes", href: "/" },
   { title: "Give Feedback", href: "/feedback" },
-  { title: "Demo", href: "/demo" },
 ];
 
+const activeStyle = {
+  textDecoration: "underline",
+};
+
 const NavLink = ({ href, children }: { children: ReactNode, href: string }) => (
-  <Link
-    as={RouterNavLink}
-    px={2}
-    py={1}
-    rounded={"md"}
-    _hover={{
-      textDecoration: "none",
-      bg: useColorModeValue("gray.200", "gray.700"),
-    }}
+  <RouterNavLink
+    style={({ isActive }) => 
+      isActive ? activeStyle : undefined
+    }
     to={href}
   >
-    {children}
-  </Link>
+    <Text
+      px={2}
+      py={1}
+      rounded={"md"}
+      _hover={{
+        textDecoration: "none",
+        bg: useColorModeValue("gray.200", "gray.700"),
+      }}
+    >
+      {children}
+    </Text>
+  </RouterNavLink>
 );
 
 export default function Navbar() {
