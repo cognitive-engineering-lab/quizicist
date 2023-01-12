@@ -1,3 +1,13 @@
 .remove {
     margin-left: 1em;
+    float: right;
+}
+
+.utility {
+    margin-left: 1em;
+}
+
+.title-container {
+    width: 100%;
+    margin-bottom: 0.5em;
 }
