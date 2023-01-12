@@ -173,12 +173,12 @@ def new_item(generation_id):
     generation.check_ownership(current_user.id)
 
     question = Question(
-        generation_id=generation.id,
         question=request.json["question"],
-        original_question=request.json["question"], # TODO: is there a better way to do this?
-        shard=0, # TODO: this should not default to the first shard
+        original_question=request.json["question"],
+        is_custom_question=True,
+        shard=0, # TODO: this should probably not default to the first shard
     )
-    db.session.add(question)
+    generation.questions.append(question)
     db.session.commit()
 
     # add answer choices

@@ -171,6 +171,9 @@ class Question(db.Model, UpdateMixin):
     # original (unedited) text of question
     original_question: str = db.Column(db.String(ITEM_LENGTH))
 
+    # tracks whether question is user-written
+    is_custom_question: bool = db.Column(db.Boolean(), default=False, nullable=False)
+
     # order in list of quiz questions
     position: int = db.Column(db.Integer)
 
