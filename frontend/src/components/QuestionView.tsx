@@ -62,6 +62,9 @@ const QuestionView: React.FC<QuestionProps> = ({ question, generation }) => {
         return "gray";
     }
 
+    // remove deleted answer choices
+    _.remove(question.answers, (a) => a.deleted);
+
     return (
         <Formik
             enableReinitialize

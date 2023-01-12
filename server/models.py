@@ -5,6 +5,7 @@ from typing import List
 from db import db
 from flask import current_app
 from flask_login import UserMixin
+from flask_sqlalchemy.query import Query
 from lib.completion import complete, add_answer_choices
 from lib.consts import FeedbackTypes, MessageTypes
 import os
@@ -35,6 +36,36 @@ def create_ordering_list(attr: str) -> CustomList:
     return lambda: CustomList(attr)
 
 
+# implements the soft delete pattern, from Miguel Grinberg:
+# https://blog.miguelgrinberg.com/post/implementing-the-soft-delete-pattern-with-flask-and-sqlalchemy
+class QueryWithSoftDelete(Query):
+    _with_deleted = False
+
+    def __new__(cls, *args, **kwargs):
+        obj = super(QueryWithSoftDelete, cls).__new__(cls)
+        obj._with_deleted = kwargs.pop('_with_deleted', False)
+        if len(args) > 0:
+            super(QueryWithSoftDelete, obj).__init__(*args, **kwargs)
+            return obj.filter_by(deleted=False) if not obj._with_deleted else obj
+        return obj
+
+    def __init__(self, *args, **kwargs):
+        pass
+
+    def with_deleted(self):
+        return self.__class__(self._only_full_mapper_zero('get'),
+                              session=db.session(), _with_deleted=True)
+
+    def _get(self, *args, **kwargs):
+        # this calls the original query.get function from the base class
+        return super(QueryWithSoftDelete, self).get(*args, **kwargs)
+
+    def get(self, *args, **kwargs):
+        # the query.get method does not like it if there is a filter clause
+        # pre-loaded, so we need to implement it using a workaround
+        obj = self.with_deleted()._get(*args, **kwargs)
+        return obj if obj is None or self._with_deleted or not obj.deleted else None
+
 class UpdateMixin:
     @hybrid_method
     def update(self, **kwargs):
@@ -49,6 +80,9 @@ class UpdateMixin:
 class Generation(db.Model, UpdateMixin):
     id: int = db.Column(db.Integer, primary_key=True)
     user_id: int = db.Column(db.Integer, db.ForeignKey("user.id"))
+
+    query_class = QueryWithSoftDelete
+    deleted: bool = db.Column(db.Boolean(), default=False, nullable=False)
 
     filename: str = db.Column(db.String(FILENAME_LENGTH))
     unique_filename: str = db.Column(db.String(FILENAME_LENGTH))
@@ -122,11 +156,14 @@ class Generation(db.Model, UpdateMixin):
 
 
 @dataclass
-class Question(UpdateMixin, db.Model):
+class Question(db.Model, UpdateMixin):
     __tablename__ = "question"
 
     id: int = db.Column(db.Integer, primary_key=True)
     generation_id: int = db.Column(db.Integer, db.ForeignKey("generation.id"))
+
+    query_class = QueryWithSoftDelete
+    deleted: bool = db.Column(db.Boolean(), default=False, nullable=False)
 
     # text of question asked
     question: str = db.Column(db.String(ITEM_LENGTH))
@@ -168,11 +205,14 @@ class Question(UpdateMixin, db.Model):
 
 
 @dataclass
-class AnswerChoice(UpdateMixin, db.Model):
+class AnswerChoice(db.Model, UpdateMixin):
     __tablename__ = "answerchoice"
 
     id: int = db.Column(db.Integer, primary_key=True)
     question_id: int = db.Column(db.Integer, db.ForeignKey("question.id"))
+
+    query_class = QueryWithSoftDelete
+    deleted: bool = db.Column(db.Boolean(), default=False, nullable=False)
 
     # position in list of answer choices for question
     position: int = db.Column(db.Integer)
@@ -208,7 +248,7 @@ class Message(db.Model):
     message_type: MessageTypes = db.Column(db.Enum(MessageTypes))
 
 
-class User(UserMixin, db.Model):
+class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
 
     generations: List[Generation] = db.relationship("Generation", backref="user", cascade="all, delete-orphan")

@@ -120,7 +120,7 @@ def delete_generation(generation_id):
     generation: Generation = db.get_or_404(Generation, generation_id)
     generation.check_ownership(current_user.id)
 
-    db.session.delete(generation)
+    generation.deleted = True
     db.session.commit()
 
     return {
@@ -195,7 +195,7 @@ def delete(question_id):
     question: Question = db.get_or_404(Question, question_id)
     question.check_ownership(current_user.id)
 
-    db.session.delete(question)
+    question.deleted = True
     db.session.commit()
 
     return {
@@ -225,7 +225,7 @@ def answer_delete(question_id, answer_id):
     answer: AnswerChoice = db.get_or_404(AnswerChoice, answer_id)
     answer.check_ownership(current_user.id)
 
-    db.session.delete(answer)
+    answer.deleted = True
     db.session.commit()
 
     return {

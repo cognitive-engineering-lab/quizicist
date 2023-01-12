@@ -57,6 +57,9 @@ const GenerationView: React.FC<GenerationProps> = ({ generation_id }) => {
         q => _.filter(q.answers, { user_feedback: FeedbackTypes.unselected }).length > 0
     );
 
+    // remove deleted questions
+    _.remove(generation.questions, (q) => q.deleted);
+
     return (
         <div style={{ marginBottom: "2em" }}>
             <Text fontSize='2xl' style={{ marginBottom: "0.5em" }}>
