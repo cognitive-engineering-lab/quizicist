@@ -68,7 +68,18 @@ def complete(file_content, parser, num_questions):
     components = parser(file_content)
     shards = shard_chapter(components)
 
-    return list(map(lambda shard: run_gpt3(shard, num_questions), shards))
+    # divide questions evenly into shards
+    remainder = num_questions % len(shards)
+    questions_per_shard = num_questions // len(shards)
+
+    outputs = []
+    for index, shard in enumerate(shards):
+        if index < remainder:
+            outputs.append(run_gpt3(shard, questions_per_shard + 1))
+        else:
+            outputs.append(run_gpt3(shard, questions_per_shard))
+
+    return outputs
 
 
 def add_answer_choices(file_content, parser, question):
