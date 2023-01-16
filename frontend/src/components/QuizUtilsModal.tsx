@@ -12,7 +12,7 @@ const UTIL_COMPONENTS = {
 
 const UTIL_DESCRIPTIONS = {
     customQuestion: "Write a custom question",
-    export: "Export your quiz to Google Forms",
+    export: "Export your quiz",
     generateQuestions: "Generate more questions",
 }
 

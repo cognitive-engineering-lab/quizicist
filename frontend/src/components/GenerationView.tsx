@@ -63,7 +63,7 @@ const GenerationView: React.FC<GenerationProps> = ({ generation_id }) => {
                 <Button
                     size="xs"
                     className={styles.utility}
-                    aria-label="Export your quiz to Google Forms"
+                    aria-label="Export your quiz"
                     onClick={() => setUtil("export")}
                 >
                     Export
