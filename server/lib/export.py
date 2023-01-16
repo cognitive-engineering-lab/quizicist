@@ -58,11 +58,13 @@ class GoogleFormExport:
 
 
     def question_to_json(self, question: Question):
-        incorrect = [choice for choice in question.answers if choice.user_feedback == FeedbackTypes.incorrect]
-        correct = [choice for choice in question.answers if choice.user_feedback == FeedbackTypes.correct]
-        
+        # remove deleted answers
+        answers = list(filter(lambda choice: not choice.deleted, question.answers))
+
+        incorrect = [choice for choice in answers if choice.user_feedback == FeedbackTypes.incorrect]
+        correct = [choice for choice in answers if choice.user_feedback == FeedbackTypes.correct]
+
         get_text = lambda choice: { "value": choice.text }
-        
         incorrect = list(map(get_text, incorrect))
         correct = list(map(get_text, correct))
 
@@ -113,8 +115,9 @@ class GoogleFormExport:
 
         # add each question to form
         for question in generation.questions:
-            question_update = self.build_question_update(question)
-            self.form_service.forms().batchUpdate(formId=form_id, body=question_update).execute()
+            if not question.deleted:
+                question_update = self.build_question_update(question)
+                self.form_service.forms().batchUpdate(formId=form_id, body=question_update).execute()
         
         return form_id
 
