@@ -50,8 +50,12 @@ def resolve_include(match):
 
     listing_path = os.path.join(BOOK_DIR, listing_path)
 
-    with open(listing_path) as f:
-        return f.read()
+    # handle files not found in Rust Book listings
+    try:
+        with open(listing_path) as f:
+            return f.read()
+    except OSError:
+        return ""
 
 
 # recurse over MD AST, extracting raw text from inline elements
