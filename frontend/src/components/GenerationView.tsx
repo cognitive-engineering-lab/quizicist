@@ -15,6 +15,7 @@ import QuizUtilsModal, { UtilMode } from "./QuizUtilsModal";
 type GenerationProps = { generation_id: number };
 const GenerationView: React.FC<GenerationProps> = ({ generation_id }) => {
     const generation_url = `${API_URL}/generated/${generation_id}`;
+
     const { data: generation } = useSWR<Generation>(generation_url, fetcher);
     const [panel, setPanel] = useState<ExpandedIndex>(-1);
     const [util, setUtil] = useState<UtilMode>();

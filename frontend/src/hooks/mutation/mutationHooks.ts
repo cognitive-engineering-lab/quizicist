@@ -1,4 +1,8 @@
+import AnswerChoice from "@shared/answerchoice.type";
 import { ALL_GENERATIONS_URL, API_URL } from "@shared/consts";
+import { FeedbackTypes, getNewFeedback } from "@shared/feedback.type";
+import Generation from "@shared/generation.type";
+import { deleteQuestionOptimistic, giveFeedbackOptimistic } from "./optimisticData";
 import useMutationPost, { MutationPostOptions } from "./useMutationPost";
 
 const getGenerationURL = (generationId: number) => `${API_URL}/generated/${generationId}`;
@@ -70,14 +74,14 @@ export const useQuestionUpdate = (generationId: number, questionId: number, opti
 }
 
 /** Delete a question */
-export const useQuestionDelete = (generationId: number, questionId: number, options?: MutationPostOptions) => {
+export const useQuestionDelete = (generation: Generation, questionId: number, options?: MutationPostOptions) => {
     const { trigger } = useMutationPost(
-        getGenerationURL(generationId),
+        getGenerationURL(generation.id),
         `${API_URL}/question/${questionId}/delete`,
-        options
+        { ...options }
     );
 
-    return () => trigger();
+    return () => trigger({ optimisticData: deleteQuestionOptimistic(generation, questionId) });
 }
 
 /** Add answer choices to question */
@@ -90,4 +94,20 @@ export const useAnswerChoiceAdd = (generationId: number, questionId: number, opt
 
     // TODO: allow the user to customize number of answers
     return () => trigger({ answers: 4 });
+}
+
+/** Add feedback to answer choice (correct/incorrect) */
+export const useFeedbackAdd = (generation: Generation, questionId: number, options?: MutationPostOptions) => {
+    const { trigger } = useMutationPost(
+        getGenerationURL(generation.id),
+        `${API_URL}/question/${questionId}/feedback`,
+        { ...options }
+    );
+
+    return (answer: AnswerChoice, feedback: FeedbackTypes) => {
+        const value = getNewFeedback(answer.user_feedback, feedback);
+        const optimisticData = giveFeedbackOptimistic(generation, questionId, answer.id, feedback);
+
+        return trigger({ answer: answer.id, value }, { optimisticData });
+    }
 }
