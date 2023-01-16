@@ -1,4 +1,5 @@
 from math import ceil
+from multiprocessing import Pool
 import openai
 import os
 from dotenv import load_dotenv
@@ -72,14 +73,16 @@ def complete(file_content, parser, num_questions):
     remainder = num_questions % len(shards)
     questions_per_shard = num_questions // len(shards)
 
-    outputs = []
+    jobs = []
     for index, shard in enumerate(shards):
         if index < remainder:
-            outputs.append(run_gpt3(shard, questions_per_shard + 1))
+            jobs.append((shard, questions_per_shard + 1))
         else:
-            outputs.append(run_gpt3(shard, questions_per_shard))
+            jobs.append((shard, questions_per_shard))
 
-    return outputs
+    # parallelize GPT-3 calls
+    with Pool(len(jobs)) as pool:
+        return pool.starmap(run_gpt3, jobs)
 
 
 def add_answer_choices(file_content, parser, question):
