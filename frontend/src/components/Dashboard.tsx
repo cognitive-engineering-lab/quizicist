@@ -21,8 +21,8 @@ const Dashboard: React.FC = () => {
           <Stack spacing={3}>
             <Text>
               Quizicist is an experimental, <Link href="https://github.com/connorff/quizicist" textDecoration="underline">open-source</Link> tool developed by Brown University researchers that uses large language models to generate multiple-choice quizzes about educational material.
-              You can use these quizzes to help your students actively engage with what they're learning. To create your first quiz, you'll need text content from any educational source: lecture notes, textbooks, etc. You can provide up to 1,500 words.
-              Providing more content gives the model additional context about what you're teaching and often results in better quizzes.
+              You can use these quizzes to help your students actively engage with what they're learning. To create your first quiz, you'll need text content from any educational source: lecture notes, textbooks, etc.
+              Providing lengthy content gives the model more context about what you're teaching and often results in better quizzes.
             </Text>
             <Text>
               <b>Data privacy:</b> when you use Quizicist, we save all data from your interactions: the prompt, the content, and the generated quiz. If you use the Google Form export, we also save all form responses to evaluate the efficacy of Quizicist questions.
