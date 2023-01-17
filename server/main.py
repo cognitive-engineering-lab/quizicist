@@ -5,7 +5,7 @@ from flask_cors import CORS
 from blueprints.api import api
 from blueprints.auth import auth, login_manager
 from dotenv import load_dotenv
-from db import db
+from db import db, migrate
 from config import APP_FOLDER
 from limiter import limiter
 
@@ -16,8 +16,9 @@ load_dotenv()
 CONFIG_CLASS = "ProductionConfig" if os.getenv("ENV") == "prod" else "DebugConfig"
 app.config.from_object(f"config.{CONFIG_CLASS}")
 
-# initialize sqlite db
+# initialize sqlite db with migrations
 db.init_app(app)
+migrate.init_app(app, db)
 
 # limit requests by IP
 limiter.init_app(app)

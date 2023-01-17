@@ -92,6 +92,9 @@ class Generation(db.Model, UpdateMixin):
         collection_class=create_ordering_list("position"),
     )
 
+    # format of uploaded content
+    content_type: str = db.Column(db.String(10), default="Markdown", nullable=False)
+
     @hybrid_property
     def upload_path(cls):
         return os.path.join(current_app.config["UPLOAD_FOLDER"], cls.unique_filename)
