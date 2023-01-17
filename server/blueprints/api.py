@@ -33,6 +33,9 @@ def upload():
 
     num_questions = int(request.json["count"])
 
+    if num_questions > 15 or num_questions < 1:
+        return "Invalid number of questions", 400
+
     # save uploaded file
     filename, unique_filename = create_file_from_json()
 
@@ -103,6 +106,9 @@ def generate_more(generation_id):
         return "Missing number of questions in request", 400
 
     num_questions = int(request.json["count"])
+
+    if num_questions > 10 or num_questions < 1:
+        return "Invalid number of questions", 400
 
     # run completion, add generated questions to database
     # TODO: generate only the number of questions provided

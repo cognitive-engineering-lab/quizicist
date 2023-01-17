@@ -107,7 +107,7 @@ class Generation(db.Model, UpdateMixin):
             for question in questions:
                 q = Question(
                     question=question["question"],
-                    original_question=question["question"], # TODO: is there a better way to do this?
+                    original_question=question["question"],
                     shard=shard,
                 )
                 self.questions.append(q)

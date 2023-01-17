@@ -5,8 +5,9 @@ const uploadSchema = yup.object({
     content: yup.string().required().default("").label("Quiz content"),
     count: yup
         .number()
-        .min(0)
-        .max(5)
+        .integer()
+        .min(1)
+        .max(15)
         .required()
         .default(5)
         .label("Number of questions"),

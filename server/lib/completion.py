@@ -65,20 +65,35 @@ def run_gpt3(shard, num_questions):
             return processed
 
 
-def complete(file_content, parser, num_questions):
-    components = parser(file_content)
-    shards = shard_chapter(components)
-
-    # divide questions evenly into shards
+# divide quiz questions evenly by shard
+# don't allow more than five questions per shard
+def divide_questions(shards, num_questions):
+    # find questions per shard and remainder after division
     remainder = num_questions % len(shards)
     questions_per_shard = num_questions // len(shards)
 
     jobs = []
-    for index, shard in enumerate(shards):
-        if index < remainder:
-            jobs.append((shard, questions_per_shard + 1))
-        else:
-            jobs.append((shard, questions_per_shard))
+
+    # handle case where more than five questions per shard
+    if questions_per_shard > NUM_QUESTIONS or (questions_per_shard == NUM_QUESTIONS and remainder > 0):
+        remaining_questions = num_questions - NUM_QUESTIONS * len(shards)
+
+        jobs.extend(divide_questions(shards, remaining_questions))
+        jobs.extend(divide_questions(shards, num_questions - remaining_questions))
+    # handle normal case (max questions per shard <= 5)
+    else:
+        for index, shard in enumerate(shards):
+            if index < remainder:
+                jobs.append((shard, questions_per_shard + 1))
+            elif questions_per_shard > 0:
+                jobs.append((shard, questions_per_shard))
+
+    return jobs
+
+def complete(file_content, parser, num_questions):
+    components = parser(file_content)
+    shards = shard_chapter(components)
+    jobs = divide_questions(shards, num_questions)
 
     # parallelize GPT-3 calls
     with Pool(len(jobs)) as pool:
