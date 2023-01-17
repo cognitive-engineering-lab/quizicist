@@ -1,7 +1,7 @@
 import { Button, FormControl, FormHelperText, Text } from "@chakra-ui/react";
-import uploadSchema from "@schemas/upload.schema";
+import uploadSchema, { CONTENT_TYPES } from "@schemas/upload.schema";
 import { Formik, Form, FormikHelpers } from "formik";
-import CheckboxField from "@components/fields/CheckboxField";
+import SelectField from "@components/fields/SelectField";
 import TextareaField from "@components/fields/TextareaField";
 import TextField from "@components/fields/TextField";
 import { useGenerationCreate } from "@hooks/mutation/mutationHooks";
@@ -35,12 +35,9 @@ const Upload: React.FC = () => {
                         placeholder="Functions reduce duplicate code."
                     />
 
-                    <TextField name="count" title="Number of Questions" />
+                    <SelectField name="content_type" title="Content format" values={CONTENT_TYPES} />
 
-                    <CheckboxField
-                        name="is_markdown"
-                        title="Content is markdown"
-                    />
+                    <TextField name="count" title="Number of Questions" />
                     
                     <Button type="submit" isLoading={props.isSubmitting}>Create quiz</Button>
 

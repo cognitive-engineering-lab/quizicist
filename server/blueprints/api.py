@@ -12,6 +12,11 @@ from limiter import limiter
 # routes for JSON API-based Flask app
 api = Blueprint("api", __name__, template_folder="templates")
 
+# content parsers for uploaded text
+PARSERS = {
+    "Markdown": md_parser,
+    "Text": lambda content: content, # TODO: is there any parsing needed for plain text?
+}
 
 # require authentication for API routes
 @api.before_request
@@ -36,6 +41,12 @@ def upload():
     if num_questions > 15 or num_questions < 1:
         return "Invalid number of questions", 400
 
+    content_type = request.json("content_type")
+    if content_type not in ["Markdown", "Text"]:
+        return "Invalid content type", 400
+
+    parser = PARSERS[content_type]
+
     # save uploaded file
     filename, unique_filename = create_file_from_json()
 
@@ -43,12 +54,12 @@ def upload():
     generation = Generation(
         user_id=current_user.id,
         filename=filename,
-        unique_filename=unique_filename
+        unique_filename=unique_filename,
+        content_type=content_type
     )
     db.session.add(generation)
 
     # run completion, add generated questions to database
-    parser = md_parser
     generation.add_questions(parser, num_questions)
 
     db.session.commit()
@@ -111,8 +122,7 @@ def generate_more(generation_id):
         return "Invalid number of questions", 400
 
     # run completion, add generated questions to database
-    # TODO: generate only the number of questions provided
-    parser = md_parser
+    parser = PARSERS[generation.content_type]
     generation.add_questions(parser, num_questions)
 
     return {

@@ -1,5 +1,7 @@
 import * as yup from "yup";
 
+export const CONTENT_TYPES = ["Markdown", "Text"];
+
 const uploadSchema = yup.object({
     title: yup.string().required().default("").label("Quiz title"),
     content: yup.string().required().default("").label("Quiz content"),
@@ -11,7 +13,11 @@ const uploadSchema = yup.object({
         .required()
         .default(5)
         .label("Number of questions"),
-    is_markdown: yup.boolean().default(false).label("Is markdown"),
+    content_type: yup
+        .string()
+        .oneOf(CONTENT_TYPES)
+        .default(CONTENT_TYPES[0])
+        .label("Content type"),
 });
 
 export default uploadSchema;
