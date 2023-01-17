@@ -82,7 +82,7 @@ class GoogleFormExport:
                     "choiceQuestion": {
                         "type": "RADIO",
                         "options": incorrect + correct,
-                        "shuffle": True
+                        "shuffle": False
                     }
                 }
             }
