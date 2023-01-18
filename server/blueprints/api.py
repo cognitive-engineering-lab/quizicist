@@ -7,6 +7,7 @@ from lib.mdbook import questions_to_toml
 from models import AnswerChoice, Generation, Question, Message, PARSERS
 from db import db
 from limiter import limiter
+import openai.error as OpenAIError
 
 # routes for JSON API-based Flask app
 api = Blueprint("api", __name__, template_folder="templates")
@@ -300,3 +301,21 @@ def download_toml(generation_id):
         mimetype="text/plain",
         headers={ "Content-disposition": f"attachment; filename={filename}-{generation_id}.toml" }
     )
+
+@api.errorhandler(OpenAIError.ServiceUnavailableError)
+def handle_bad_request(e):
+    return {
+        "message": "OpenAI is experiencing server issues. Please wait a few minutes and try again."
+    }, 500
+
+@api.errorhandler(OpenAIError.RateLimitError)
+def handle_bad_request(e):
+    return {
+        "message": "We're currently experiencing high demand. Please wait a few minutes and try again."
+    }, 500
+
+@api.errorhandler(OpenAIError.Timeout)
+def handle_bad_request(e):
+    return {
+        "message": "OpenAI took too long to respond. Please try again. If the error is not resolved, please submit feedback detailing your error."
+    }, 500

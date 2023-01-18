@@ -1,10 +1,11 @@
-import { useDisclosure } from "@chakra-ui/react";
+import { useDisclosure, useToast } from "@chakra-ui/react";
 import api from "@shared/api";
 import { AUTH_URL } from "@shared/consts";
 import { useEffect } from "react";
 import { SWRConfig } from "swr";
 
 const AuthWrapper: React.FC<React.PropsWithChildren> = ({ children }) => {
+    const toast = useToast();
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     const authenticate = async () => {
@@ -37,6 +38,16 @@ const AuthWrapper: React.FC<React.PropsWithChildren> = ({ children }) => {
                 onError: async (error) => {
                     if (error.response.status === 401) {
                         authenticate();
+                    }
+                    else if (error.response.data.message) {
+                        // display popup with backend error message
+                        toast({
+                            title: "Quizicist ran into an error",
+                            description: error.response.data.message,
+                            status: "error",
+                            duration: 9000,
+                            isClosable: true,
+                        });
                     }
                 },
             }}
