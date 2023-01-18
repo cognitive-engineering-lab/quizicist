@@ -4,19 +4,12 @@ from flask_login import current_user
 from lib.export import GoogleFormExport
 from lib.files import create_file_from_json
 from lib.mdbook import questions_to_toml
-from lib.parsers.md import md_parser
-from models import AnswerChoice, Generation, Question, Message
+from models import AnswerChoice, Generation, Question, Message, PARSERS
 from db import db
 from limiter import limiter
 
 # routes for JSON API-based Flask app
 api = Blueprint("api", __name__, template_folder="templates")
-
-# content parsers for uploaded text
-PARSERS = {
-    "Markdown": md_parser,
-    "Text": lambda content: content, # TODO: is there any parsing needed for plain text?
-}
 
 # require authentication for API routes
 @api.before_request
@@ -41,8 +34,8 @@ def upload():
     if num_questions > 15 or num_questions < 1:
         return "Invalid number of questions", 400
 
-    content_type = request.json("content_type")
-    if content_type not in ["Markdown", "Text"]:
+    content_type = request.json["content_type"]
+    if content_type not in ["Markdown", "Plain Text"]:
         return "Invalid content type", 400
 
     parser = PARSERS[content_type]

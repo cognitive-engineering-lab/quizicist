@@ -1,6 +1,6 @@
 import * as yup from "yup";
 
-export const CONTENT_TYPES = ["Markdown", "Text"];
+export const CONTENT_TYPES = ["Markdown", "Plain Text"];
 
 const uploadSchema = yup.object({
     title: yup.string().required().default("").label("Quiz title"),

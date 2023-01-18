@@ -1,5 +1,4 @@
 from __future__ import annotations
-from blueprints.shared import PARSERS
 from dataclasses import dataclass
 from typing import List
 from db import db
@@ -8,6 +7,8 @@ from flask_login import UserMixin
 from flask_sqlalchemy.query import Query
 from lib.completion import complete, add_answer_choices
 from lib.consts import FeedbackTypes, MessageTypes
+from lib.parsers.md import md_parser
+from lib.parsers.text import parse_text
 import os
 from sqlalchemy.ext.hybrid import hybrid_property, hybrid_method
 from sqlalchemy.ext.orderinglist import OrderingList
@@ -18,6 +19,11 @@ import types
 ITEM_LENGTH=1000
 FILENAME_LENGTH=400
 
+# content parsers for uploaded text
+PARSERS = {
+    "Markdown": md_parser,
+    "Plain Text": parse_text,
+}
 
 # `dataclasses.todict` tries to initialize lists with a generator
 # which fails because the `OrderingList` constructor takes a `str`
@@ -139,8 +145,7 @@ class Generation(db.Model, UpdateMixin):
     @hybrid_method
     def add_answer_choices(self, question: Question):
         with open(self.upload_path) as upload:
-            # TODO: remove parser requirement
-            custom_output = add_answer_choices(upload, PARSERS["rust"], question)
+            custom_output = add_answer_choices(upload, PARSERS[self.content_type], question)
         
         for option in custom_output["options"]:
             choice = AnswerChoice(

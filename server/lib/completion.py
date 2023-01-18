@@ -4,7 +4,7 @@ import openai
 import os
 from dotenv import load_dotenv
 from .prompt import Prompt
-from .consts import APPEND_PROMPT, GPT_MODEL, MAX_CONTEXT_SIZE, ESTIMATED_QUESTION_SIZE, NUM_QUESTIONS
+from .consts import GPT_MODEL, MAX_CONTEXT_SIZE, ESTIMATED_QUESTION_SIZE, NUM_QUESTIONS
 from .postprocess import postprocess_edit_mode, postprocess_manual
 
 # set up openai

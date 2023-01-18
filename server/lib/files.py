@@ -39,7 +39,7 @@ def create_file_from_json() -> Tuple[str, str]:
     
     title = request.json["title"]
     content = request.json["content"]
-    is_markdown = request.json["is_markdown"]
+    is_markdown = request.json["content_type"] == "Markdown"
 
     if not title:
         raise ValueError("Title is a required field")
