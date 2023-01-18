@@ -1,5 +1,5 @@
 from math import ceil
-from multiprocessing import Pool
+from multiprocessing.dummy import Pool
 import openai
 import os
 from dotenv import load_dotenv
