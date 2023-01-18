@@ -1,14 +1,19 @@
 import { Alert, AlertDescription, AlertIcon, AlertTitle, Box, Button, Link, Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
+import ExportTextbox from "@components/ExportTextbox";
+import { fetcher } from "@hooks/fetcher";
 import exportToFormsSchema from "@schemas/exportToForms.schema";
 import api from "@shared/api";
-import { API_URL, SERVER_URL } from "@shared/consts";
+import { API_URL } from "@shared/consts";
 import { FeedbackTypes } from "@shared/feedback.type";
 import { Formik, Form } from "formik";
 import _ from "lodash";
+import useSWR from "swr";
 import TextField from "../fields/TextField";
 import { QuizUtilFormProps } from "./shared";
 
 const ExportQuizForm: React.FC<QuizUtilFormProps> = ({ generation, setPanel, onClose }) => {
+    const { data: toml } = useSWR<string>(`${API_URL}/generated/${generation.id}/toml`, fetcher);
+
     const submit = async (data: any) => {
         await api.post(`${API_URL}/generated/${generation.id}/google_form`, data);
         onClose();
@@ -23,18 +28,6 @@ const ExportQuizForm: React.FC<QuizUtilFormProps> = ({ generation, setPanel, onC
     const getQuestionPosition = (id: number) => {
         return _.findIndex(generation.questions, { id });
     }
-
-    const downloadTOML = () => {
-        const url = `${SERVER_URL}${API_URL}/generated/${generation.id}/toml`
-
-        // programmatically create link with href of TOML file
-        const a = document.createElement("a");
-        a.href = url;
-        a.setAttribute("download", url);
-        a.click();
-
-        a.remove();
-    }
     
     // find all questions with unanswered choices
     const unscored = _.filter(
@@ -42,10 +35,27 @@ const ExportQuizForm: React.FC<QuizUtilFormProps> = ({ generation, setPanel, onC
         q => _.filter(q.answers, { user_feedback: FeedbackTypes.unselected }).length > 0
     );
 
+    // represent quiz questions as plain text
+    const plainText = generation.questions
+        .filter(q => !q.deleted)
+        .map(q => {
+            const question = q.question;
+            const answers = q.answers
+                .filter(a => !a.deleted)
+                .map(a => {
+                    const letter = String.fromCharCode(97 + a.position);
+
+                    return `    ${letter}: ${a.text}`
+                })
+
+            return `Question: ${question}\n${answers.join("\n")}\n`;
+    });
+
     return (
         <Tabs variant='enclosed'>
             <TabList>
                 <Tab>Google Forms</Tab>
+                <Tab>Plain text</Tab>
                 <Tab>mdbook-quiz</Tab>
             </TabList>
             <TabPanels>
@@ -95,7 +105,10 @@ const ExportQuizForm: React.FC<QuizUtilFormProps> = ({ generation, setPanel, onC
                     </Formik>
                 </TabPanel>
                 <TabPanel>
-                    <Button onClick={downloadTOML} mt="1em">Download mdbook-quiz TOML</Button>
+                    <ExportTextbox value={plainText.join("\n")} />
+                </TabPanel>
+                <TabPanel>
+                    {toml && <ExportTextbox value={toml} />}
                 </TabPanel>
             </TabPanels>
             </Tabs>

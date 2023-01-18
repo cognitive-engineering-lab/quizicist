@@ -1,5 +1,5 @@
 from pathlib import Path
-from flask import Blueprint, Response, jsonify, request
+from flask import Blueprint, jsonify, request
 from flask_login import current_user
 from lib.errors import QuizicistError
 from lib.export import GoogleFormExport
@@ -291,14 +291,7 @@ def download_toml(generation_id):
     generation: Generation = db.get_or_404(Generation, generation_id)
     generation.check_ownership(current_user.id)
 
-    toml = questions_to_toml(generation.questions)
-    filename = Path(generation.filename).stem
-
-    return Response(
-        toml,
-        mimetype="text/plain",
-        headers={ "Content-disposition": f"attachment; filename={filename}-{generation_id}.toml" }
-    )
+    return questions_to_toml(generation.questions)
 
 @api.errorhandler(QuizicistError)
 def handle_quizicist_error(e):
