@@ -1,10 +1,11 @@
 from pathlib import Path
 from flask import Blueprint, Response, jsonify, request
 from flask_login import current_user
+from lib.errors import QuizicistError
 from lib.export import GoogleFormExport
 from lib.files import create_file_from_json
 from lib.mdbook import questions_to_toml
-from models import AnswerChoice, Generation, Question, Message, PARSERS
+from models import AnswerChoice, Generation, Question, Message
 from db import db
 from limiter import limiter
 import openai.error as OpenAIError
@@ -39,8 +40,6 @@ def upload():
     if content_type not in ["Markdown", "Plain Text"]:
         return "Invalid content type", 400
 
-    parser = PARSERS[content_type]
-
     # save uploaded file
     filename, unique_filename = create_file_from_json()
 
@@ -54,7 +53,7 @@ def upload():
     db.session.add(generation)
 
     # run completion, add generated questions to database
-    generation.add_questions(parser, num_questions)
+    generation.add_questions(num_questions)
 
     db.session.commit()
 
@@ -116,8 +115,7 @@ def generate_more(generation_id):
         return "Invalid number of questions", 400
 
     # run completion, add generated questions to database
-    parser = PARSERS[generation.content_type]
-    generation.add_questions(parser, num_questions)
+    generation.add_questions(num_questions)
 
     return {
         "message": f"Added questions for {generation.filename}"
@@ -302,20 +300,24 @@ def download_toml(generation_id):
         headers={ "Content-disposition": f"attachment; filename={filename}-{generation_id}.toml" }
     )
 
+@api.errorhandler(QuizicistError)
+def handle_quizicist_error(e):
+    return { "message": str(e) }, 500
+
 @api.errorhandler(OpenAIError.ServiceUnavailableError)
-def handle_bad_request(e):
+def handle_service_unavailable():
     return {
         "message": "OpenAI is experiencing server issues. Please wait a few minutes and try again."
     }, 500
 
 @api.errorhandler(OpenAIError.RateLimitError)
-def handle_bad_request(e):
+def handle_rate_limit():
     return {
         "message": "We're currently experiencing high demand. Please wait a few minutes and try again."
     }, 500
 
 @api.errorhandler(OpenAIError.Timeout)
-def handle_bad_request(e):
+def handle_timeout():
     return {
         "message": "OpenAI took too long to respond. Please try again. If the error is not resolved, please submit feedback detailing your error."
     }, 500

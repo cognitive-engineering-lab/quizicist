@@ -3,8 +3,9 @@ from multiprocessing import Pool
 import openai
 import os
 from dotenv import load_dotenv
-from .prompt import Prompt
 from .consts import GPT_MODEL, MAX_CONTEXT_SIZE, ESTIMATED_QUESTION_SIZE, NUM_QUESTIONS
+from .errors import QuizicistError
+from .prompt import Prompt
 from .postprocess import postprocess_edit_mode, postprocess_manual
 
 # set up openai
@@ -94,6 +95,10 @@ def complete(file_content, parser, num_questions):
     components = parser(file_content)
     shards = shard_chapter(components)
     jobs = divide_questions(shards, num_questions)
+
+    # limit content size to three shards
+    if len(shards) > 3:
+        raise QuizicistError("Your uploaded content is too long. Please shorten the prompt and try again.")
 
     # parallelize GPT-3 calls
     with Pool(len(jobs)) as pool:
