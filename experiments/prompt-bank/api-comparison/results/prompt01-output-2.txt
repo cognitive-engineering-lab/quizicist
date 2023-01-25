@@ -1,0 +1,65 @@
+Question: 
+                Correct: We can implement a trait on a type only if at least one of the trait or the type is local to our crate.
+                Incorrect: Traits are a way to group data types together to define a set of behaviors necessary to accomplish some purpose.
+                Incorrect: We can implement standard library traits like Display on custom types like Tweet as part of our aggregator crate functionality.
+                Incorrect: Traits are defined using the trait keyword and then the trait’s name.
+
+Question: 
+                Correct: To use a default implementation to summarize instances of NewsArticle, we specify an empty impl block with impl Summary for NewsArticle {}.
+                Incorrect: We can use traits to define shared behavior in a concrete way.
+                Incorrect: Default implementations can call other methods in the same trait, even if those other methods don’t have a default implementation.
+                Incorrect: To implement a trait on a type, we use the impl keyword, then the trait name, then use the for keyword, and specify the name of the type.
+
+Question: 
+                Correct: We can use the impl Trait syntax to define functions that accept many different types that implement a particular trait.
+                Incorrect: Traits are a way to define shared behavior in an abstract way.
+                Incorrect: To use a default implementation, we only need to define the method that doesn’t have a default implementation.
+                Incorrect: We can implement external traits on external types as long as they’re both local to our crate.
+
+Question: fn some_function(t: &T, u: &U) -> i32
+fn some_function(t: &T, u: &U) -> i32 where T: Display + Clone, U: Clone + Debug,
+What is the difference between the two code snippets?
+                Correct: The first function does not have a where clause, while the second function has a where clause specifying trait bounds.
+                Incorrect: The first function has a where clause, while the second function does not.
+                Incorrect: The first function returns an i32, while the second function returns a String.
+                Incorrect: The first function does not specify any traits, while the second function specifies two traits.
+
+Question: fn returns_summarizable() -> impl Summary {
+    Tweet {
+        username: String::from("horse_ebooks"),
+        content: String::from(
+            "of course, as you probably already know, people",
+        ),
+        reply: false,
+        retweet: false,
+    }
+}
+fn returns_summarizable(switch: bool) -> impl Summary {
+    if switch {
+        NewsArticle {
+            headline: String::from(
+                "Penguins win the Stanley Cup Championship!",
+            ),
+            location: String::from("Pittsburgh, PA, USA"),
+            author: String::from("Iceburgh"),
+            content: String::from(
+                "The Pittsburgh Penguins once again are the best \n                 hockey team in the NHL.",
+            ),
+        }
+    } else {
+        Tweet {
+            username: String::from("horse_ebooks"),
+            content: String::from(
+                "of course, as you probably already know, people",
+            ),
+            reply: false,
+            retweet: false,
+        }
+    }
+}
+What is the difference between the two code snippets?
+                Correct: The first snippet returns a Tweet, while the second snippet returns either a NewsArticle or a Tweet depending on the value of the switch parameter.
+                Incorrect: The first snippet returns a Tweet, while the second snippet returns a NewsArticle.
+                Incorrect: The first snippet returns a Tweet, while the second snippet returns a Summary.
+                Incorrect: The first snippet returns a Summary, while the second snippet returns a Tweet.
+

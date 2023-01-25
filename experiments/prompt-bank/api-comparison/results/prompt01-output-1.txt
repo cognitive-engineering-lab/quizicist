@@ -1,0 +1,38 @@
+Question: pub trait Summary {
+    fn summarize(&self) -> String;
+}
+                Correct: What is the syntax for implementing the Summary trait on a type?
+                Incorrect: What does the Summary trait provide?
+                Incorrect: What is the syntax for using the Summary trait in a binary crate?
+                Incorrect: How can a trait provide a default implementation?
+
+Question: fn summarize(&self) -> String {
+    String::from("(Read more...)")
+}
+                Correct: What is the syntax for providing a default implementation of a trait method?
+                Incorrect: What does the summarize method do?
+                Incorrect: What is the syntax for overriding a default implementation of a trait method?
+                Incorrect: How can a trait call other methods in the same trait?
+
+Question: impl Summary for Tweet {
+    fn summarize_author(&self) -> String {
+        format!("@{}", self.username)
+    }
+}
+                Correct: What is the syntax for implementing a trait method that doesn't have a default implementation?
+                Incorrect: What is the syntax for calling a trait method?
+                Incorrect: What is the syntax for defining a trait method signature?
+                Incorrect: How can a trait provide a default implementation?
+
+Question: fn some_function(t: &T, u: &U) -> i32 where T: Display + Clone, U: Clone + Debug,
+                Correct: The first snippet uses a trait bound syntax to specify requirements for parameters passed to a function, while the second snippet uses the impl Trait syntax to return a value from a function.
+                Incorrect: The first snippet uses the impl Trait syntax to return a value from a function, while the second snippet uses a trait bound syntax to specify requirements for parameters passed to a function.
+                Incorrect: The first snippet uses a trait bound syntax to specify an implementation of a trait, while the second snippet uses the impl Trait syntax to return a value from a function.
+                Incorrect: The first snippet uses the impl Trait syntax to return a value from a function, while the second snippet uses a trait bound syntax to create a generic type.
+
+Question: fn returns_summarizable() -> impl Summary { Tweet { username: String::from("horse_ebooks"), content: String::from("of course, as you probably already know, people"), reply: false, retweet: false, } }
+                Correct: The first snippet uses a trait bound syntax to specify requirements for parameters passed to a function, while the second snippet uses the impl Trait syntax to return a value from a function.
+                Incorrect: The first snippet uses the impl Trait syntax to return a value from a function, while the second snippet uses a trait bound syntax to specify requirements for parameters passed to a function.
+                Incorrect: The first snippet uses a trait bound syntax to specify an implementation of a trait, while the second snippet uses the impl Trait syntax to return a value from a function.
+                Incorrect: The first snippet uses the impl Trait syntax to return a value from a function, while the second snippet uses a trait bound syntax to create a generic type.
+

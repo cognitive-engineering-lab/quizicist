@@ -1,0 +1,138 @@
+[
+    {
+        "code": "fn some_function(t: &T, u: &U) -> i32\nwhere\n    T: Display + Clone,\n    U: Clone + Debug,\n{\n    // ...\n}",
+        "question": "What syntax allows a function to accept any type that implements a trait?",
+        "correct": "impl Trait",
+        "incorrect": ["Generic type parameters", "Trait bounds", "where clause"]
+    },
+    {
+        "code": "pub fn notify(item: &impl Summary) {\n    println!(\"Breaking news! {}\", item.summarize());\n}",
+        "question": "What syntax allows a function to return any type that implements a trait?",
+        "correct": "impl Trait",
+        "incorrect": ["Generic type parameters", "Trait bounds", "where clause"]
+    }
+]
+
+[
+    {
+        "code": "fn notify(item: &impl Summary)",
+        "question": "What is the difference between these two functions?",
+        "correct": "The first uses the impl Trait syntax, while the second uses a trait bound.",
+        "incorrect": [
+            "The first uses a trait bound, while the second uses the impl Trait syntax.",
+            "The first takes an item of any type, while the second takes an item of a specific type.",
+            "The first returns an item of any type, while the second returns an item of a specific type."
+        ]
+    },
+    {
+        "code": "fn notify(item: &T)",
+        "question": "What is the difference between these two functions?",
+        "correct": "The first uses the impl Trait syntax, while the second uses a trait bound.",
+        "incorrect": [
+            "The first uses a trait bound, while the second uses the impl Trait syntax.",
+            "The first takes an item of any type, while the second takes an item of a specific type.",
+            "The first returns an item of any type, while the second returns an item of a specific type."
+        ]
+    },
+    {
+        "code": "fn some_function(t: &T, u: &U) -> i32",
+        "question": "What is the difference between these two functions?",
+        "correct": "The second uses a where clause to specify the trait bounds for the generic type parameters.",
+        "incorrect": [
+            "The first uses a where clause to specify the trait bounds for the generic type parameters.",
+            "The first takes two items of any type, while the second takes two items of specific types.",
+            "The first returns an item of any type, while the second returns an item of a specific type."
+        ]
+    },
+    {
+        "code": "fn some_function(t: &T, u: &U) -> i32\nwhere\n    T: Display + Clone,\n    U: Clone + Debug,",
+        "question": "What is the difference between these two functions?",
+        "correct": "The second uses a where clause to specify the trait bounds for the generic type parameters.",
+        "incorrect": [
+            "The first uses a where clause to specify the trait bounds for the generic type parameters.",
+            "The first takes two items of any type, while the second takes two items of specific types.",
+            "The first returns an item of any type, while the second returns an item of a specific type."
+        ]
+    }
+]
+
+[
+{
+"code":
+pub trait Summary {
+    fn summarize(&self) -> String {
+        String::from("(Read more...)")
+    }
+}
+
+pub struct Tweet {
+    pub username: String,
+    pub content: String,
+    pub reply: bool,
+    pub retweet: bool,
+}
+
+impl Summary for Tweet {
+},
+"question": "What syntax is used to implement the trait?",
+"correct": "Impl Summary for Tweet",
+"incorrect": ["Impl Tweet for Summary", "Use Summary for Tweet", "Implement Tweet for Summary"]
+},
+
+{
+"code":
+println!("1 new tweet: {}", tweet.summarize());
+},
+"question": "How is the summarize method called on the tweet instance?",
+"correct": "tweet.summarize()",
+"incorrect": ["summarize(tweet)", "tweet::summarize()", "Summary::summarize(tweet)"]
+},
+
+{
+"code":
+pub trait Summary {
+    fn summarize_author(&self) -> String;
+
+    fn summarize(&self) -> String {
+        format!("(Read more from {}...)", self.summarize_author())
+    }
+}
+
+pub struct Tweet {
+    pub username: String,
+    pub content: String,
+    pub reply: bool,
+    pub retweet: bool,
+}
+
+impl Summary for Tweet {
+    fn summarize_author(&self) -> String {
+        format!("@{}", self.username)
+    }
+},
+"question": "What is the output of the summarize method?",
+"correct": "(Read more from @username...)",
+"incorrect": ["@username", "Read more", "(Read more...)"]
+}
+]
+
+Question: What is the output of the summarize method?
+Correct answer: (Read more from @username...)
+Incorrect answer: @username
+Incorrect answer: Read more
+Incorrect answer: (Read more...)
+
+[
+    {
+        "code": "fn some_function(t: &T, u: &U) -> i32\nwhere\n    T: Display + Clone,\n    U: Clone + Debug,\n{\n    // ...\n}",
+        "question": "What syntax allows a function to accept any type that implements a trait?",
+        "correct": "impl Trait",
+        "incorrect": ["Generic type parameters", "Trait bounds", "where clause"]
+    },
+    {
+        "code": "pub fn notify(item: &impl Summary) {\n    println!(\"Breaking news! {}\", item.summarize());\n}",
+        "question": "What syntax allows a function to return any type that implements a trait?",
+        "correct": "impl Trait",
+        "incorrect": ["Generic type parameters", "Trait bounds", "where clause"]
+    }
+]

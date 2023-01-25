@@ -1,0 +1,1 @@
+You are writing a multiple choice quiz. Each question should present a hypothetical code snippet (1-10 lines of code). The code snippet should be related to the content above. The code snippet should NOT reuse code from above. The question should then ask a question about the code snippet's design. Do NOT simply ask what the code snippet does.

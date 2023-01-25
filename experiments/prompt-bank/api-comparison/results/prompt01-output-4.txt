@@ -1,0 +1,30 @@
+Question: What is the purpose of a trait definition?
+                Correct: To group related method signatures together to define a set of behaviors necessary to accomplish some purpose.
+                Incorrect: To define the behavior of a particular type.
+                Incorrect: To specify that a generic type can be any type that has certain behavior.
+                Incorrect: To provide an implementation within curly brackets.
+
+Question: What is the syntax for implementing a trait on a type?
+                Correct: impl <Trait> for <Type>
+                Incorrect: <Type> implement <Trait>
+                Incorrect: impl <Type> <Trait>
+                Incorrect: <Trait> <Type>
+
+Question: What is the purpose of a default implementation of a trait?
+                Correct: To provide useful functionality and only require implementors to specify a small part of it.
+                Incorrect: To define the behavior of a particular type.
+                Incorrect: To group related method signatures together to define a set of behaviors necessary to accomplish some purpose.
+                Incorrect: To specify that a generic type can be any type that has certain behavior.
+
+Question: What is the difference between using the impl Trait syntax and the trait bound syntax for generic types?
+                Correct: The impl Trait syntax is more concise and works for straightforward cases, while the trait bound syntax can express more complexity.
+                Incorrect: The trait bound syntax is more concise and works for straightforward cases, while the impl Trait syntax can express more complexity.
+                Incorrect: The impl Trait syntax makes for more concise code in all cases, while the trait bound syntax can express more complexity.
+                Incorrect: The trait bound syntax makes for more concise code in all cases, while the impl Trait syntax can express more complexity.
+
+Question: How can you force two parameters to be of the same type when using trait bounds?
+                Correct: Use the generic type parameter after a colon and inside angle brackets.
+                Incorrect: Use the generic type parameter before a colon and inside angle brackets.
+                Incorrect: Use the generic type parameter before a colon and outside angle brackets.
+                Incorrect: Use the generic type parameter after a colon and outside angle brackets.
+

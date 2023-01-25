@@ -1,0 +1,45 @@
+Question: What does the impl Trait syntax used in the above code snippet allow us to do?
+                Code: fn notify(item: impl Summary) {
+    println!("Breaking news! {}", item.summarize());
+}
+                Correct: Create a function that can accept any type that has the Summary trait as a parameter.
+                Incorrect: Create a function that can accept any type as a parameter.
+                Incorrect: Create a trait that can accept any type as a parameter.
+                Incorrect: Create a function that can accept two types as parameters.
+
+Question: What does the default implementation defined in the above code snippet allow us to do?
+                Code: pub trait Summary {
+    fn summarize(&self) -> String {
+        String::from("(Read more...)")
+    }
+}
+                Correct: Provide implementations of the Summary trait on types with minimal code.
+                Incorrect: Require implementations of the Summary trait on types with minimal code.
+                Incorrect: Provide implementations of the Summary trait on any type.
+                Incorrect: Require implementations of the Summary trait on any type.
+
+Question: What does the above code snippet do?
+                Code: impl Summary for Tweet {
+    fn summarize_author(&self) -> String {
+        format!("@{}", self.username)
+    }
+}
+                Correct: Implements the Summary trait on the Tweet type.
+                Incorrect: Implements the Summary trait on the NewsArticle type.
+                Incorrect: Defines a default implementation of the Summary trait.
+                Incorrect: Defines a method signature of the Summary trait.
+
+Question: What is the purpose of the where clause in the function signature?
+                Code: fn returns_summarizable<T, U>(t: &T, u: &U) -> i32 where T: Display + Clone, U: Clone + Debug, { println!("T and U implement the traits required."); 0 }
+                Correct: To constrain the types of the parameters to types that implement the specified traits.
+                Incorrect: To output a message.
+                Incorrect: To return the value 0.
+                Incorrect: To define the generic types T and U.
+
+Question: How does this function allow us to specify the parameter type?
+                Code: pub fn notify(item: &(impl Summary + Display)) { println!("Breaking news! {}", item.summarize()); }
+                Correct: By using the impl Trait syntax.
+                Incorrect: By using a trait bound with the generic type parameter.
+                Incorrect: By using the + syntax.
+                Incorrect: By specifying the Summary trait.
+

@@ -1,0 +1,1 @@
+You are creating a multiple choice quiz. Each question should begin with two short code snippets (1-3 lines of code each) that contain patterns or APIs from the content above. The question should compare differences between the code snippets.

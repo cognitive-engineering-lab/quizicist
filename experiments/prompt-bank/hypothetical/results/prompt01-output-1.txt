@@ -1,0 +1,63 @@
+Question: What does the above code do?
+                Code: fn notify<T: Summary>(item: T) {
+    println!("Breaking news! {}", item.summarize());
+}
+                Correct: It defines a function called notify that accepts a type implementing the Summary trait.
+                Incorrect: It calls the summarize method on an item parameter.
+                Incorrect: It prints a Breaking news! message to the console.
+                Incorrect: It defines a trait called Summary.
+
+Question: What does the above code do?
+                Code: impl Summary for NewsArticle {
+    fn summarize(&self) -> String {
+        format!("{}, by {} ({})", self.headline, self.author, self.location)
+    }
+}
+                Correct: It implements the Summary trait for the NewsArticle type.
+                Incorrect: It prints a Breaking news! message to the console.
+                Incorrect: It defines a function called notify that accepts a type implementing the Summary trait.
+                Incorrect: It defines a trait called Summary.
+
+Question: What does the above code do?
+                Code: pub trait Summary {
+    fn summarize(&self) -> String {
+        String::from("(Read more...)")
+    }
+}
+                Correct: It defines a trait called Summary with a default implementation of the summarize method.
+                Incorrect: It implements the Summary trait for the NewsArticle type.
+                Incorrect: It prints a Breaking news! message to the console.
+                Incorrect: It defines a function called notify that accepts a type implementing the Summary trait.
+
+Question: What type is the return type of this function?
+                Code: fn returns_summarizable<T: Display + Clone>(switch: bool) -> T {
+    if switch {
+        NewsArticle {
+            headline: String::from("Penguins win the Stanley Cup Championship!"),
+            location: String::from("Pittsburgh, PA, USA"),
+            author: String::from("Iceburgh"),
+            content: String::from("The Pittsburgh Penguins once again are the best hockey team in the NHL."),
+        }
+    } else {
+        Tweet {
+            username: String::from("horse_ebooks"),
+            content: String::from("of course, as you probably already know, people"),
+            reply: false,
+            retweet: false,
+        }
+    }
+}
+                Correct: T
+                Incorrect: impl Summary
+                Incorrect: String
+                Incorrect: i32
+
+Question: What is the parameter's type?
+                Code: fn notify<T: Summary>(item: &T) {
+    println!("Breaking news! {}", item.summarize());
+}
+                Correct: &T
+                Incorrect: T
+                Incorrect: impl Summary
+                Incorrect: String
+

@@ -1,0 +1,30 @@
+Question: 
+                Correct: We can implement a trait on a type only if at least one of the trait or the type is local to our crate.
+                Incorrect: We can implement a trait on a type only if both the trait and the type are local to our crate.
+                Incorrect: We can implement a trait on external types.
+                Incorrect: We can implement external traits on a type only if both the trait and the type are local to our crate.
+
+Question: 
+                Correct: Default implementations can call other methods in the same trait, even if those other methods don’t have a default implementation.
+                Incorrect: Default implementations cannot call other methods in the same trait, even if those other methods don’t have a default implementation.
+                Incorrect: Default implementations must call other methods in the same trait, even if those other methods don’t have a default implementation.
+                Incorrect: Default implementations can call other methods in the same trait only if those other methods have a default implementation.
+
+Question: 
+                Correct: We use the impl Trait syntax to define a function that accepts many different types that implement a particular trait.
+                Incorrect: We use the impl Trait syntax to define a trait that defines common behavior for types.
+                Incorrect: We use the impl Trait syntax to define a trait that only accepts certain types that implement a particular trait.
+                Incorrect: We use the impl Trait syntax to define a variable that can be of many different types.
+
+Question: fn some_function(t: &T, u: &U) -> i32 where T: Display + Clone, U: Clone + Debug,
+                Correct: fn some_function(t: &T, u: &U) -> i32 where T: Display + Clone, U: Clone + Debug,
+                Incorrect: fn some_function<T, U>(t: &T, u: &U) -> i32 where T: Display + Clone, U: Clone + Debug,
+                Incorrect: fn some_function(t: &T, u: &U) -> i32 impl Trait where T: Display + Clone, U: Clone + Debug,
+                Incorrect: fn some_function(t: &T, u: &U) -> i32 where T: &impl Summary, U: &impl Summary
+
+Question: returns_summarizable(switch: bool) -> impl Summary
+                Correct: returns_summarizable(switch: bool) -> impl Summary
+                Incorrect: returns_summarizable(switch: bool) -> NewsArticle + Tweet
+                Incorrect: returns_summarizable(switch: bool) -> impl Summary + Tweet
+                Incorrect: returns_summarizable(switch: bool) -> &impl Summary
+
