@@ -1,4 +1,4 @@
-import { FormControl, FormErrorMessage, FormLabel, FormLabelProps, Input, InputProps } from "@chakra-ui/react";
+import { FormControl, FormErrorMessage, FormLabel, FormLabelProps, Hide, Input, InputProps, Show } from "@chakra-ui/react";
 import { FieldHookConfig, useField, useFormikContext } from "formik";
 import styles from "./Shared.module.css";
 
@@ -25,8 +25,15 @@ const TextField: React.FC<FieldHookConfig<string> & InputProps & TextFieldProps>
         <FormControl className={styles.control} isInvalid={!!meta.error && meta.touched}>
             <FormLabel {...labelProps}>
                 {title}
-                {children}
+
+                <Show breakpoint='(min-width: 30em)'>
+                    {children}
+                </Show>
             </FormLabel>
+
+            <Hide breakpoint='(min-width: 30em)'>
+                {children}
+            </Hide>
 
             <Input
                 {...field}
