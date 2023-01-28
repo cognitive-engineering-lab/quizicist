@@ -6,7 +6,7 @@ from flask import current_app
 from flask_login import UserMixin
 from flask_sqlalchemy.query import Query
 from lib.completion import complete, add_answer_choices
-from lib.consts import FeedbackTypes, MessageTypes
+from lib.consts import ExportTypes, FeedbackTypes, MessageTypes
 from lib.parsers.md import md_parser
 from lib.parsers.text import parse_text
 import os
@@ -76,6 +76,14 @@ class UpdateMixin:
     @hybrid_method
     def update(self, **kwargs):
         for key, value in kwargs.items():
+            # don't modify ID
+            if key in ["id"]:
+                continue
+
+            # don't modify deleted items
+            if self.deleted:
+                continue
+
             if hasattr(self, key):
                 setattr(self, key, value)
 
@@ -83,9 +91,20 @@ class UpdateMixin:
 
 
 @dataclass
+class Export(db.Model):
+    id: int = db.Column(db.Integer, primary_key=True)
+    generation_id: int = db.Column(db.Integer, db.ForeignKey("generation.id"))
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+
+    export_type: ExportTypes = db.Column(db.Enum(ExportTypes))
+    google_form_id: str = db.Column(db.String, nullable=True)
+
+
+@dataclass
 class Generation(db.Model, UpdateMixin):
     id: int = db.Column(db.Integer, primary_key=True)
     user_id: int = db.Column(db.Integer, db.ForeignKey("user.id"))
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
 
     query_class = QueryWithSoftDelete
     deleted: bool = db.Column(db.Boolean(), default=False, nullable=False)
@@ -97,6 +116,8 @@ class Generation(db.Model, UpdateMixin):
         order_by="Question.position",
         collection_class=create_ordering_list("position"),
     )
+
+    exports: List[Export] = db.relationship(Export, backref="generation")
 
     # format of uploaded content
     content_type: str = db.Column(db.String(10), default="Markdown", nullable=False)
@@ -263,6 +284,7 @@ class Message(db.Model):
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
 
     generations: List[Generation] = db.relationship("Generation", backref="user", cascade="all, delete-orphan")
     messages: List[Message] = db.relationship("Message", backref="user", cascade="all, delete-orphan")

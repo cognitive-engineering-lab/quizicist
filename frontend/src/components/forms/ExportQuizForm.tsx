@@ -105,10 +105,18 @@ const ExportQuizForm: React.FC<QuizUtilFormProps> = ({ generation, setPanel, onC
                     </Formik>
                 </TabPanel>
                 <TabPanel>
-                    <ExportTextbox value={plainText.join("\n")} />
+                    <ExportTextbox
+                        value={plainText.join("\n")}
+                        generation={generation}
+                        export_type={2}
+                    />
                 </TabPanel>
                 <TabPanel>
-                    {toml && <ExportTextbox value={toml} />}
+                    {toml && <ExportTextbox
+                        value={toml}
+                        generation={generation}
+                        export_type={1}
+                    />}
                 </TabPanel>
             </TabPanels>
             </Tabs>

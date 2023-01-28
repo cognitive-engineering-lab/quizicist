@@ -1,11 +1,11 @@
-from pathlib import Path
 from flask import Blueprint, jsonify, request
 from flask_login import current_user
+from lib.consts import ExportTypes
 from lib.errors import QuizicistError
 from lib.export import GoogleFormExport
 from lib.files import create_file_from_json
 from lib.mdbook import questions_to_toml
-from models import AnswerChoice, Generation, Question, Message
+from models import AnswerChoice, Export, Generation, Question, Message
 from db import db
 from limiter import limiter
 import openai.error as OpenAIError
@@ -246,6 +246,8 @@ def answer_delete(question_id, answer_id):
 @limiter.limit("10/hour")
 def create_google_form(generation_id):
     generation: Generation = db.get_or_404(Generation, generation_id)
+    generation.check_ownership(current_user.id)
+
     email = request.json["email"]
 
     if not email:
@@ -258,8 +260,39 @@ def create_google_form(generation_id):
     # share form with provided email
     export.share_form(form_id, email)
 
+    # log export with forms ID
+    export_entry = Export(
+        generation_id=generation.id,
+        export_type=ExportTypes.google_forms,
+        google_form_id=form_id
+    )
+    db.session.add(export_entry)
+    db.session.commit()
+
     return {
         "message": f"Shared form {form_id} with {email}"
+    }
+
+
+@api.route("/generated/<generation_id>/log_export", methods=["POST"])
+def log_export(generation_id):
+    generation: Generation = db.get_or_404(Generation, generation_id)
+    generation.check_ownership(current_user.id)
+
+    export_type = request.json["export_type"]
+
+    if not export_type:
+        return "Missing export type in request", 400
+    
+    export_entry = Export(
+        generation_id=generation.id,
+        export_type=int(export_type),
+    )
+    db.session.add(export_entry)
+    db.session.commit()
+
+    return {
+        "message": "Logged quiz export"
     }
 
 
