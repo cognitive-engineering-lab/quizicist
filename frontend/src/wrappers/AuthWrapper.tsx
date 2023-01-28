@@ -49,6 +49,16 @@ const AuthWrapper: React.FC<React.PropsWithChildren> = ({ children }) => {
                             isClosable: true,
                         });
                     }
+                    else {
+                        // display popup with generic error message
+                        toast({
+                            title: "Quizicist ran into an error",
+                            description: "If this continues happening, please provide feedback on the feedback page.",
+                            status: "error",
+                            duration: 9000,
+                            isClosable: true,
+                        });
+                    }
                 },
             }}
         >

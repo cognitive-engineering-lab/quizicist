@@ -114,7 +114,7 @@ class GoogleFormExport:
         self.make_form_quiz(form_id)
 
         # add each question to form
-        for question in generation.questions:
+        for question in generation.questions[::-1]:
             if not question.deleted:
                 question_update = self.build_question_update(question)
                 self.form_service.forms().batchUpdate(formId=form_id, body=question_update).execute()
