@@ -69,8 +69,22 @@ const QuestionView: React.FC<QuestionProps> = ({ question, generation }) => {
                             submitOnBlur
                             labelProps={{
                                 fontSize: "lg",
+                                display: "flex",
+                                whiteSpace: "nowrap",
                             }}
-                        />
+                        >
+                            <div className={styles.feedback}>
+                                <Button
+                                    size="xs"
+                                    className={styles.feedback}
+                                    aria-label="Delete question"
+                                    colorScheme="red"
+                                    onClick={deleteQuestion}
+                                >
+                                    Delete
+                                </Button>
+                            </div>
+                        </TextField>
 
                         {form.values.answers?.map((answer, index) => (
                             <TextField
@@ -122,7 +136,6 @@ const QuestionView: React.FC<QuestionProps> = ({ question, generation }) => {
                     <Divider className={styles.divider} />
 
                     <LoadingButton loadingFunction={addAnswerChoices} className={styles.button}>Add answer choices</LoadingButton>
-                    <Button onClick={deleteQuestion} className={styles.button}>Delete Item</Button>
                 </Form>
             )}
         </Formik>
