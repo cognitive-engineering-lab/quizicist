@@ -75,7 +75,9 @@ const QuestionView: React.FC<QuestionProps> = ({ question, generation }) => {
                         >
                             <div className={styles.feedback}>
                                 <Button
-                                    size="xs"
+                                    size="sm"
+                                    height="28px"
+                                    width="38px"
                                     className={styles.feedback}
                                     aria-label="Delete question"
                                     colorScheme="red"
