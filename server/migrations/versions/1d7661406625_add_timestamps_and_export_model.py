@@ -23,7 +23,7 @@ def upgrade():
     sa.Column('generation_id', sa.Integer(), nullable=True),
     sa.Column('created_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
     sa.Column('export_type', sa.Enum('google_forms', 'mdbook', 'plain_text', name='exporttypes'), nullable=True),
-    sa.Column('google_form_id', sa.String(), nullable=True),
+    sa.Column('google_form_id', sa.String(length=200), nullable=True),
     sa.ForeignKeyConstraint(['generation_id'], ['generation.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
