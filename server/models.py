@@ -97,7 +97,7 @@ class Export(db.Model):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
 
     export_type: ExportTypes = db.Column(db.Enum(ExportTypes))
-    google_form_id: str = db.Column(db.String, nullable=True)
+    google_form_id: str = db.Column(db.String(200), nullable=True)
 
 
 @dataclass
