@@ -1,14 +1,15 @@
-## What you'll need
- - An [OpenAI account](https://beta.openai.com/signup) (preferably on the paid plan)
- - A local copy of the [Rust Book](https://github.com/rust-lang/book)
+# Quizicist: an AI-powered quiz generator
 
 ## Getting started
+Want to quickly generate a quiz? Visit our hosted Quizicist instance at [quizici.st](https://quizici.st). With a piece of text content (eg. a textbook or lecture notes), Quizicist can generate a quiz in minutes. Once you review the questions and mark answers as correct or incorrect, you can export the quiz to Google Forms, [mdbook-quiz](https://github.com/cognitive-engineering-lab/mdbook-quiz), or plain text.
+
+## Running Quizicist locally
+Running into rate limits at [quizici.st](https://quizici.st)? Quizicist can be deployed locally with the following instructions:
 
 ### Environment variables
-You'll need to create a `.env` file in the root of the project with the following key-value pairs:
+You'll need to create a `.env` file in the root of the project with the following key-value pair:
 ```
 OPENAI_SECRET_KEY=<your openai API key>
-RUST_BOOK_PATH=/path/to/copy/of/rust-book
 ```
 
 ### Dependencies
@@ -34,8 +35,3 @@ In another shell:
 ```shell
 $ cd frontend && npm run dev -- --port 3000
 ```
-
-## Using the app
- 1. Navigate to http://localhost:3000
- 2. In the file selector, choose a markdown file from either the [Rust Book's source](https://github.com/rust-lang/book/tree/main/src) or [MDN Learn's source](https://github.com/mdn/content/tree/main/files/en-us/learn/javascript)
- 3. Once submitted, the request will take ~30 seconds and redirect to a page displaying each generated question
