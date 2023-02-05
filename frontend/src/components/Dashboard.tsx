@@ -27,6 +27,9 @@ const Dashboard: React.FC = () => {
             <Text>
               <b>Data privacy:</b> when you use Quizicist, we save all data from your interactions: the prompt, the content, and the generated quiz. If you use the Google Form export, we also save all form responses to evaluate the efficacy of Quizicist questions.
             </Text>
+            <Text>
+              <b>Disclaimer:</b> the generated content may be offensive or harmful. We do not endorse any output of the model, and you should carefully review ALL generated content before sharing with others.
+            </Text>
           </Stack>
         }
       />
