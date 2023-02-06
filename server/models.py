@@ -285,6 +285,7 @@ class Message(db.Model):
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
+    admin_expires = db.Column(db.DateTime)
 
     generations: List[Generation] = db.relationship("Generation", backref="user", cascade="all, delete-orphan")
     messages: List[Message] = db.relationship("Message", backref="user", cascade="all, delete-orphan")

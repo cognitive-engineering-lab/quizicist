@@ -7,6 +7,8 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Helmet } from "react-helmet";
+import AdminAuth from "@components/AdminAuth";
+import AdminDashboard from "@components/AdminDashboard";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
@@ -28,6 +30,8 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/feedback" element={<MessageForm />} />
+              <Route path="/admin/authenticate" element={<AdminAuth />} />
+              <Route path="/admin" element={<AdminDashboard />} />
             </Routes>
           </Container>
         </BrowserRouter>

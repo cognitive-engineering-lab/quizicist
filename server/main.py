@@ -4,6 +4,7 @@ from flask import Flask
 from flask_cors import CORS
 from blueprints.api import api
 from blueprints.auth import auth, login_manager
+from blueprints.admin import admin, bcrypt
 from dotenv import load_dotenv
 from db import db, migrate
 from config import APP_FOLDER
@@ -26,12 +27,16 @@ limiter.init_app(app)
 # initialize flask-login authentication
 login_manager.init_app(app)
 
+# initialize password hashing utils
+bcrypt.init_app(app)
+
 # enable CORS
 CORS(app, supports_credentials=True)
 
-# add blueprints for JSON API and authentication
+# add blueprints for JSON API, authentication, and admin routes
 app.register_blueprint(api, url_prefix="/api")
 app.register_blueprint(auth, url_prefix="/auth")
+app.register_blueprint(admin, url_prefix="/admin")
 
 @app.before_first_request
 def setup():
