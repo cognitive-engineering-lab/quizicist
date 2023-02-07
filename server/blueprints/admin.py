@@ -1,9 +1,11 @@
+from dataclasses import asdict
 from datetime import datetime, timedelta
+from typing import List
 from db import db
 from flask import Blueprint, request
 from flask_bcrypt import Bcrypt
 from flask_login import current_user
-from models import User
+from models import Generation, User
 import os
 from limiter import limiter
 
@@ -47,3 +49,23 @@ def authenticate():
     db.session.commit()
 
     return { "message": "Successfully authenticated" }
+
+@admin.route("/generated", methods=["GET"])
+def get_generations():
+    custom_properties = ["total_question_edits", "total_answer_edits", "time_to_export", "content_tokens", "percent_feedback_matching"]
+
+    generations: List[Generation] = Generation.query.all()
+    generations = list(filter(lambda generation: generation.interacted_with, generations))
+
+    # dirty hack to display all custom properties in JSON
+    serialized = []
+    for generation in generations:
+        properties = {}
+        for property in custom_properties:
+            properties[property] = getattr(generation, property)
+
+        generation = asdict(generation)
+        generation.update(properties)
+        serialized.append(generation)
+
+    return serialized

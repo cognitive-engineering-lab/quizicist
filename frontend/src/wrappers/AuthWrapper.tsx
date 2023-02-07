@@ -2,11 +2,13 @@ import { useDisclosure, useToast } from "@chakra-ui/react";
 import api from "@shared/api";
 import { AUTH_URL } from "@shared/consts";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { SWRConfig } from "swr";
 
 const AuthWrapper: React.FC<React.PropsWithChildren> = ({ children }) => {
     const toast = useToast();
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const navigate = useNavigate();
 
     const authenticate = async () => {
         onOpen();
@@ -37,7 +39,12 @@ const AuthWrapper: React.FC<React.PropsWithChildren> = ({ children }) => {
                 revalidateOnFocus: false,
                 onError: async (error) => {
                     if (error.response.status === 401) {
+                        // handle unauthenticated user
                         authenticate();
+                    }
+                    else if (error.response.status === 403) {
+                        // handle authenticated user attempting to access admin data
+                        navigate("/admin/authenticate");
                     }
                     else if (error.response.data.message) {
                         // display popup with backend error message

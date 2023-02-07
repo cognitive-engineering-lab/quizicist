@@ -13,8 +13,8 @@ import AdminDashboard from "@components/AdminDashboard";
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <ChakraProvider>
-      <AuthWrapper>
-        <BrowserRouter>
+      <BrowserRouter>
+        <AuthWrapper>
           <Helmet>
             <meta charSet="UTF-8" />
             <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -34,8 +34,8 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
               <Route path="/admin" element={<AdminDashboard />} />
             </Routes>
           </Container>
-        </BrowserRouter>
-      </AuthWrapper>
+        </AuthWrapper>
+      </BrowserRouter>
     </ChakraProvider>
   </React.StrictMode>
 );

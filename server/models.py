@@ -5,7 +5,8 @@ from db import db
 from flask import current_app
 from flask_login import UserMixin
 from flask_sqlalchemy.query import Query
-from lib.completion import complete, add_answer_choices
+from Levenshtein import distance
+from lib.completion import complete, add_answer_choices, chapter_tokens
 from lib.consts import ExportTypes, FeedbackTypes, MessageTypes
 from lib.parsers.md import md_parser
 from lib.parsers.text import parse_text
@@ -126,6 +127,75 @@ class Generation(db.Model, UpdateMixin):
     def upload_path(cls):
         return os.path.join(current_app.config["UPLOAD_FOLDER"], cls.unique_filename)
 
+    # check if quiz has been interacted with
+    @hybrid_property
+    def interacted_with(self):
+        # all non-default questions
+        edited_questions = filter(lambda question: question.edited, self.questions)
+        if len(list(edited_questions)) > 0:
+            return True
+
+        # has been exported
+        if len(self.exports) > 0:
+            return True
+
+        return False
+
+    @hybrid_property
+    def total_question_edits(self):
+        distances = map(lambda question: distance(question.original_question, question.question), self.questions)
+        return sum(distances)
+    
+    @hybrid_property
+    def total_answer_edits(self):
+        answers = [answer for question in self.questions for answer in question.answers]
+        distances = map(lambda answer: distance(answer.original_text, answer.text), answers)
+        return sum(distances)
+
+    @hybrid_property
+    def time_to_export(self):
+        if not self.exports:
+            return None
+
+        first_export: Export = self.exports[0]
+        return (first_export.created_at - self.created_at).total_seconds() / 60.0
+
+    @hybrid_property
+    def content_tokens(self):
+        parser = PARSERS[self.content_type]
+
+        with open(self.upload_path) as upload:
+            parsed = parser(upload)
+
+        return chapter_tokens(parsed)
+
+    # percent of user-provided feedback that matches prediction
+    @hybrid_property
+    def percent_feedback_matching(self):
+        def get_question_feedback(question: Question):
+            matching = 0
+            not_matching = 0
+
+            for answer in question.answers:
+                if answer.user_feedback == FeedbackTypes.unselected:
+                    continue
+
+                if answer.user_feedback == answer.predicted_feedback:
+                    matching += 1
+                else:
+                    not_matching += 1
+            
+            return matching, not_matching
+        
+        feedback = map(get_question_feedback, self.questions)
+        feedback = tuple(map(sum, zip(*feedback)))
+        total = feedback[0] + feedback[1]
+
+        if total == 0:
+            return None
+
+        return feedback[0] * 100 / total
+
     # TODO: remove need for parser
     @hybrid_method
     def add_questions(self, num_questions):
@@ -185,7 +255,6 @@ class Generation(db.Model, UpdateMixin):
         if self.user_id != user_id:
             raise Unauthorized("User doesn't have access to this quiz")
 
-
 @dataclass
 class Question(db.Model, UpdateMixin):
     __tablename__ = "question"
@@ -222,6 +291,23 @@ class Question(db.Model, UpdateMixin):
     @hybrid_property
     def generation(self):
         return db.session.query(Generation).get(self.generation_id)
+
+    @hybrid_property
+    def edited(self):
+        # is deleted
+        if self.deleted:
+            return True
+
+        # is custom question
+        if self.is_custom_question:
+            return True
+
+        # question edited
+        if self.original_question != self.question:
+            return True
+
+        # answer edited
+        return any(map(lambda answer: answer.edited, self.answers))
 
     @hybrid_method
     def update(self, **kwargs):
@@ -266,6 +352,19 @@ class AnswerChoice(db.Model, UpdateMixin):
     @hybrid_property
     def question(self):
         return db.session.query(Question).get(self.question_id)
+
+    @hybrid_property
+    def edited(self):
+        if self.deleted:
+            return True
+
+        if self.original_text != self.text:
+            return True
+
+        if self.user_feedback != FeedbackTypes.unselected:
+            return True
+
+        return False
 
     @hybrid_method
     def check_ownership(self, user_id):
