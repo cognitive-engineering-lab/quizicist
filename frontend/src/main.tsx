@@ -5,7 +5,7 @@ import AuthWrapper from "@wrappers/AuthWrapper";
 import Navbar from "@wrappers/Navbar";
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { HashRouter, Route, Routes } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import AdminAuth from "@components/AdminAuth";
 import AdminDashboard from "@components/AdminDashboard";
@@ -13,7 +13,7 @@ import AdminDashboard from "@components/AdminDashboard";
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <ChakraProvider>
-      <BrowserRouter>
+      <HashRouter>
         <AuthWrapper>
           <Helmet>
             <meta charSet="UTF-8" />
@@ -35,7 +35,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
             </Routes>
           </Container>
         </AuthWrapper>
-      </BrowserRouter>
+      </HashRouter>
     </ChakraProvider>
   </React.StrictMode>
 );
