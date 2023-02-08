@@ -7,6 +7,7 @@ type AnswerChoice = {
 
     position: number;
     text: string;
+    original_text: string;
     
     predicted_feedback: FeedbackTypes;
     user_feedback: FeedbackTypes;

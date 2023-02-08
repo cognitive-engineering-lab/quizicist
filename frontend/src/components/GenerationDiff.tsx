@@ -10,6 +10,7 @@ const GenerationDiff: React.FC<GenerationDiffProps> = ({ generation }) => {
             customQuestions: true,
             deletedAnswers: true,
             deletedQuestions: true,
+            originalText: true,
         });
     
     const current = exportToText(generation, {});

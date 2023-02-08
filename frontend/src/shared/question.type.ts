@@ -5,6 +5,7 @@ type Question = {
     deleted: boolean;
 
     question: string;
+    original_question: string;
     position: number;
     answers: AnswerChoice[];
     
