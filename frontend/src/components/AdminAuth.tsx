@@ -1,4 +1,4 @@
-import { Button, FormControl, FormErrorMessage, FormLabel, Input } from "@chakra-ui/react";
+import { Button, Container, FormControl, FormErrorMessage, FormLabel, Input } from "@chakra-ui/react";
 import api from "@shared/api";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -27,14 +27,16 @@ const AdminAuth: React.FC = () => {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <FormControl isInvalid={!!error}>
-                <FormLabel>Admin password</FormLabel>
-                <Input type="password" value={password} onChange={handleChange} />
-                {error && <FormErrorMessage>{error}</FormErrorMessage>}
-            </FormControl>
-            <Button mt={4} onClick={handleSubmit}>Submit</Button>
-        </form>
+        <Container maxW="container.lg" pt="2em">
+            <form onSubmit={handleSubmit}>
+                <FormControl isInvalid={!!error}>
+                    <FormLabel>Admin password</FormLabel>
+                    <Input type="password" value={password} onChange={handleChange} />
+                    {error && <FormErrorMessage>{error}</FormErrorMessage>}
+                </FormControl>
+                <Button mt={4} onClick={handleSubmit}>Submit</Button>
+            </form>
+        </Container>
     );
 }
 

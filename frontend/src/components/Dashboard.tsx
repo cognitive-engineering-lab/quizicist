@@ -1,4 +1,4 @@
-import { Divider, Link, ListItem, Stack, Text, UnorderedList } from "@chakra-ui/react";
+import { Container, Divider, Link, ListItem, Stack, Text, UnorderedList } from "@chakra-ui/react";
 import GenerationView from "@components/GenerationView";
 import Upload from "@components/Upload";
 import useGenerations from "@hooks/useGenerations";
@@ -13,7 +13,7 @@ const Dashboard: React.FC = () => {
   }
 
   return (
-    <>
+    <Container maxW="container.lg" pt="2em">
       <CollapsibleAlert
         storageKey="introduction-message"
         title="Welcome to Quizicist!"
@@ -66,7 +66,7 @@ const Dashboard: React.FC = () => {
       {generations?.map((g) => (
         <GenerationView key={g} generation_id={g} />
       ))}
-    </>
+    </Container>
   );
 }
 

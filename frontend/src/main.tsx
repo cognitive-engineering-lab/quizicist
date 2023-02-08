@@ -1,4 +1,4 @@
-import { ChakraProvider, Container } from "@chakra-ui/react";
+import { ChakraProvider } from "@chakra-ui/react";
 import Dashboard from "@components/Dashboard";
 import MessageForm from "@components/MessageForm";
 import AuthWrapper from "@wrappers/AuthWrapper";
@@ -26,14 +26,12 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
 
           <Navbar />
 
-          <Container maxW="container.lg" pt="2em">
-            <Routes>
-              <Route path="/" element={<Dashboard />} />
-              <Route path="/feedback" element={<MessageForm />} />
-              <Route path="/admin/authenticate" element={<AdminAuth />} />
-              <Route path="/admin" element={<AdminDashboard />} />
-            </Routes>
-          </Container>
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/feedback" element={<MessageForm />} />
+            <Route path="/admin/authenticate" element={<AdminAuth />} />
+            <Route path="/admin" element={<AdminDashboard />} />
+          </Routes>
         </AuthWrapper>
       </HashRouter>
     </ChakraProvider>

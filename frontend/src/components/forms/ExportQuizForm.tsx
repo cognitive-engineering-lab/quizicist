@@ -10,6 +10,7 @@ import _ from "lodash";
 import useSWR from "swr";
 import TextField from "../fields/TextField";
 import { QuizUtilFormProps } from "./shared";
+import { exportToText } from "./utils";
 
 const ExportQuizForm: React.FC<QuizUtilFormProps> = ({ generation, setPanel, onClose }) => {
     const { data: toml } = useSWR<string>(`${API_URL}/generated/${generation.id}/toml`, fetcher);
@@ -36,20 +37,7 @@ const ExportQuizForm: React.FC<QuizUtilFormProps> = ({ generation, setPanel, onC
     );
 
     // represent quiz questions as plain text
-    const plainText = generation.questions
-        .filter(q => !q.deleted)
-        .map(q => {
-            const question = q.question;
-            const answers = q.answers
-                .filter(a => !a.deleted)
-                .map(a => {
-                    const letter = String.fromCharCode(97 + a.position);
-
-                    return `    ${letter}: ${a.text}`
-                })
-
-            return `Question: ${question}\n${answers.join("\n")}\n`;
-    });
+    const plainText = exportToText(generation, {});
 
     return (
         <Tabs variant='enclosed'>
@@ -106,7 +94,7 @@ const ExportQuizForm: React.FC<QuizUtilFormProps> = ({ generation, setPanel, onC
                 </TabPanel>
                 <TabPanel>
                     <ExportTextbox
-                        value={plainText.join("\n")}
+                        value={plainText}
                         generation={generation}
                         export_type={2}
                     />

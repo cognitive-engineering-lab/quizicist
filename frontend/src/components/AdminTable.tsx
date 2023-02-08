@@ -45,8 +45,11 @@ const useSortColumns = <T,>(rows: T[], def: SortColumn[] = []) => {
   return { rows, sortColumns, onSortColumnsChange: setSortColumns };
 };
 
-type AdminTableProps = { generations: Generation[] };
-const AdminTable: React.FC<AdminTableProps> = ({ generations }) => {
+type AdminTableProps = {
+  generations: Generation[];
+  setGeneration: (arg0: Generation | null) => void;
+};
+const AdminTable: React.FC<AdminTableProps> = ({ generations, setGeneration }) => {
   const sortProps = useSortColumns(generations);
 
   const columns = [
@@ -58,7 +61,11 @@ const AdminTable: React.FC<AdminTableProps> = ({ generations }) => {
     { key: "percent_feedback_matching", name: "Matching feedback %", sortable: true, },
   ];
 
-  return <DataGrid columns={columns} {...sortProps} />;
+  return <DataGrid
+    {...sortProps}
+    columns={columns}
+    onRowClick={setGeneration}
+  />;
 };
 
 export default AdminTable;

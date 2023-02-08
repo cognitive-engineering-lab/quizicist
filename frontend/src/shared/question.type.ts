@@ -9,6 +9,7 @@ type Question = {
     answers: AnswerChoice[];
     
     shard: number;
+    is_custom_question: boolean;
 };
 
 export default Question;
