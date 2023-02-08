@@ -22,7 +22,7 @@ jobs:
       - name: Build React app
         working-directory: ./frontend
         run: |
-          npm ci
+          npm ci --legacy-peer-deps
           npm run build
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3
