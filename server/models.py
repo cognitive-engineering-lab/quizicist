@@ -127,12 +127,16 @@ class Generation(db.Model, UpdateMixin):
     def upload_path(cls):
         return os.path.join(current_app.config["UPLOAD_FOLDER"], cls.unique_filename)
 
+    @hybrid_property
+    def undeleted_questions(self):
+        return [question for question in self.questions if not question.deleted]
+
     # check if quiz has been interacted with
     @hybrid_property
     def interacted_with(self):
-        # all non-default questions
-        edited_questions = filter(lambda question: question.edited, self.questions)
-        if len(list(edited_questions)) > 0:
+        # containes edited questions
+        edited_questions = [question for question in self.undeleted_questions if question.edited]
+        if len(edited_questions) > 0:
             return True
 
         # has been exported
@@ -143,12 +147,12 @@ class Generation(db.Model, UpdateMixin):
 
     @hybrid_property
     def total_question_edits(self):
-        distances = map(lambda question: distance(question.original_question, question.question), self.questions)
+        distances = map(lambda question: distance(question.original_question, question.question), self.undeleted_questions)
         return sum(distances)
     
     @hybrid_property
     def total_answer_edits(self):
-        answers = [answer for question in self.questions for answer in question.answers]
+        answers = [answer for question in self.undeleted_questions for answer in question.undeleted_answers]
         distances = map(lambda answer: distance(answer.original_text, answer.text), answers)
         return sum(distances)
 
@@ -171,12 +175,12 @@ class Generation(db.Model, UpdateMixin):
 
     @hybrid_property
     def num_questions(self):
-        return len(self.questions)
+        return len(self.undeleted_questions)
 
     @hybrid_property
     def percent_answers_scored(self):
-        answers = [answer for question in self.questions for answer in question.answers]
-        scored = list(filter(lambda answer: answer.user_feedback != FeedbackTypes.unselected, answers))
+        answers = [answer for question in self.undeleted_questions for answer in question.undeleted_answers]
+        scored = [answer for answer in answers if answer.user_feedback != FeedbackTypes.unselected]
 
         return len(scored) * 100 / len(answers)
 
@@ -187,7 +191,7 @@ class Generation(db.Model, UpdateMixin):
             matching = 0
             not_matching = 0
 
-            for answer in question.answers:
+            for answer in question.undeleted_answers:
                 if answer.user_feedback == FeedbackTypes.unselected:
                     continue
 
@@ -198,7 +202,7 @@ class Generation(db.Model, UpdateMixin):
             
             return matching, not_matching
         
-        feedback = map(get_question_feedback, self.questions)
+        feedback = map(get_question_feedback, self.undeleted_questions)
         feedback = tuple(map(sum, zip(*feedback)))
         total = feedback[0] + feedback[1]
 
@@ -304,6 +308,10 @@ class Question(db.Model, UpdateMixin):
         return db.session.query(Generation).get(self.generation_id)
 
     @hybrid_property
+    def undeleted_answers(self):
+        return [answer for answer in self.answers if not answer.deleted]
+
+    @hybrid_property
     def edited(self):
         # is deleted
         if self.deleted:
@@ -318,7 +326,7 @@ class Question(db.Model, UpdateMixin):
             return True
 
         # answer edited
-        return any(map(lambda answer: answer.edited, self.answers))
+        return any(map(lambda answer: answer.edited, self.undeleted_answers))
 
     @hybrid_method
     def update(self, **kwargs):
