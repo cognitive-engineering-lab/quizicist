@@ -59,6 +59,8 @@ const AdminTable: React.FC<AdminTableProps> = ({ generations, setGeneration }) =
     { key: "total_question_edits", name: "Question edits", sortable: true },
     { key: "total_answer_edits", name: "Answer edits", sortable: true },
     { key: "percent_feedback_matching", name: "Matching feedback %", sortable: true, },
+    { key: "num_questions", name: "Questions", sortable: true, },
+    { key: "percent_answers_scored", name: "% answers scored", sortable: true, },
   ];
 
   return <DataGrid

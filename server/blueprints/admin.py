@@ -52,7 +52,15 @@ def authenticate():
 
 @admin.route("/generated", methods=["GET"])
 def get_generations():
-    custom_properties = ["total_question_edits", "total_answer_edits", "time_to_export", "content_tokens", "percent_feedback_matching"]
+    custom_properties = [
+        "total_question_edits",
+        "total_answer_edits",
+        "time_to_export",
+        "content_tokens",
+        "percent_feedback_matching",
+        "num_questions",
+        "percent_answers_scored",
+    ]
 
     generations: List[Generation] = Generation.query.all()
     generations = list(filter(lambda generation: generation.interacted_with, generations))

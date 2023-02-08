@@ -169,6 +169,17 @@ class Generation(db.Model, UpdateMixin):
 
         return chapter_tokens(parsed)
 
+    @hybrid_property
+    def num_questions(self):
+        return len(self.questions)
+
+    @hybrid_property
+    def percent_answers_scored(self):
+        answers = [answer for question in self.questions for answer in question.answers]
+        scored = list(filter(lambda answer: answer.user_feedback != FeedbackTypes.unselected, answers))
+
+        return len(scored) * 100 / len(answers)
+
     # percent of user-provided feedback that matches prediction
     @hybrid_property
     def percent_feedback_matching(self):
