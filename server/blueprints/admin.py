@@ -70,7 +70,13 @@ def get_generations():
     for generation in generations:
         properties = {}
         for property in custom_properties:
-            properties[property] = getattr(generation, property)
+            value = getattr(generation, property)
+            
+            # round if answer is float
+            if isinstance(value, float):
+                value = round(value, 2)
+
+            properties[property] = value
 
         generation = asdict(generation)
         generation.update(properties)
