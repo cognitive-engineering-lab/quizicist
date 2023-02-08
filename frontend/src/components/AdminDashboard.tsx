@@ -8,10 +8,10 @@ import AdminTable from "./AdminTable";
 import GenerationDiff from "./GenerationDiff";
 
 const AdminDashboard = () => {
-    const { data: generations, isLoading } = useSWR(`${SERVER_URL}/admin/generated`, fetcher);
+    const { data: generations, isLoading, error } = useSWR(`${SERVER_URL}/admin/generated`, fetcher);
     const [generation, setGeneration] = useState<null | Generation>(null);
 
-    if (isLoading) {
+    if (isLoading || error) {
         return <div>Loading data...</div>;
     }
 
