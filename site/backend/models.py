@@ -1,15 +1,16 @@
 from __future__ import annotations
 from dataclasses import dataclass
 from typing import List
-from db import db
+from .db import db
 from flask import current_app
 from flask_login import UserMixin
 from flask_sqlalchemy.query import Query
 from Levenshtein import distance
-from lib.completion import complete, add_answer_choices, chapter_tokens
-from lib.consts import ExportTypes, FeedbackTypes, MessageTypes
-from lib.parsers.md import md_parser
-from lib.parsers.text import parse_text
+from quizicist.completion import complete, add_answer_choices, chapter_tokens
+from quizicist.parsers.md import md_parser
+from quizicist.parsers.text import parse_text
+from quizicist.consts import FeedbackTypes
+from .lib.consts import ExportTypes, MessageTypes
 import os
 from sqlalchemy.ext.hybrid import hybrid_property, hybrid_method
 from sqlalchemy.ext.orderinglist import OrderingList

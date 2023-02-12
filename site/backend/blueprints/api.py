@@ -1,13 +1,13 @@
 from flask import Blueprint, jsonify, request
 from flask_login import current_user
-from lib.consts import ExportTypes
-from lib.errors import QuizicistError
-from lib.export import GoogleFormExport
-from lib.files import create_file_from_json
-from lib.mdbook import questions_to_toml
-from models import AnswerChoice, Export, Generation, Question, Message
-from db import db
-from limiter import limiter
+from quizicist.errors import QuizicistError
+from ..lib.consts import ExportTypes
+from ..lib.export import GoogleFormExport
+from ..lib.files import create_file_from_json
+from ..lib.mdbook import questions_to_toml
+from ..models import AnswerChoice, Export, Generation, Question, Message
+from ..db import db
+from ..limiter import limiter
 import openai.error as OpenAIError
 
 # routes for JSON API-based Flask app

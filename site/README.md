@@ -16,7 +16,8 @@ $ sudo apt-get install memcached
 $ python -m venv quiz-env # create quiz-env virtual environment
 $ source quiz-env/bin/activate
 $ pip install wheel
-$ pip install --no-cache-dir -r requirements.txt # install dependencies without cache (helps low-RAM VMs)
+$ cd lib && pip install -e . && cd ..
+$ cd site && pip install --no-cache-dir -r requirements.txt # install dependencies without cache (helps low-RAM VMs)
 ```
 
 ### Environment
@@ -38,9 +39,9 @@ MYSQL_DB=<MySQL database>
 ### Running the server
 
 ```shell
-$ cd server
+$ cd site
 $ sudo systemctl start memcached # start memcached to store rate-limiting data
-$ gunicorn -c gunicorn_config.py "main:app" --log-file=gunicorn.log # start app with production WSGI container
+$ gunicorn -c gunicorn_config.py "backend.main:app" --log-file=gunicorn.log # start app with production WSGI container
 $ caddy start # bind caddy to local app
 ```
 

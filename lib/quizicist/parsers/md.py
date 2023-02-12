@@ -10,7 +10,7 @@ from ..consts import TOP_LEVEL_COMPONENTS
 
 # required to resolve code listings
 load_dotenv()
-BOOK_DIR = os.path.join(os.getenv("RUST_BOOK_PATH"), "src")
+BOOK_DIR = os.path.join(os.getenv("RUST_BOOK_PATH") or "", "src")
 
 tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
 

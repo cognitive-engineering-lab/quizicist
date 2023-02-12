@@ -1,10 +1,10 @@
 from typing import Any
 from apiclient import discovery
-from models import Generation, Question
+from ..models import Generation, Question
 from oauth2client.service_account import ServiceAccountCredentials
-from lib.consts import FeedbackTypes
+from quizicist.consts import FeedbackTypes
 import os
-from config import APP_FOLDER
+from ..config import APP_FOLDER
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -12,7 +12,7 @@ load_dotenv()
 
 SCOPES = ['https://www.googleapis.com/auth/forms.body', 'https://www.googleapis.com/auth/drive']
 DISCOVERY_DOC = "https://forms.googleapis.com/$discovery/rest?version=v1"
-KEY_FILE_LOCATION = os.path.join(APP_FOLDER, os.getenv("SERVICE_ACCOUNT_JSON"))
+KEY_FILE_LOCATION = os.path.join(APP_FOLDER, os.getenv("SERVICE_ACCOUNT_JSON") or "")
 
 
 class GoogleFormExport:

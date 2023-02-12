@@ -15,23 +15,26 @@ OPENAI_SECRET_KEY=<your openai API key>
 ### Dependencies
 You'll also need to install dependencies:
 ```shell
-$ pip install -r requirements.txt
+$ cd lib && pip3 install -e . && cd ..
+$ cd site && pip3 install -r requirements.txt
 $ cd frontend && npm install
 ```
 
 ### Database
 Whe developing/running locally, we use SQLite to store generated items:
 ```shell
-$ python server/create_db.py # set up local sqlite database
+$ cd site
+$ python3 create_db.py # set up local sqlite database
 ```
 
 ### Running the server + frontend
 In one shell:
 ```shell
-$ flask --app server/main --debug run --port 5000 # run server in debug mode
+$ cd site
+$ flask --app backend/main --debug run --port 5000 # run server in debug mode
 ```
 
 In another shell:
 ```shell
-$ cd frontend && npm run dev -- --port 3000
+$ cd site/frontend && npm run dev -- --port 3000
 ```

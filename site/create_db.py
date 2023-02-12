@@ -1,5 +1,5 @@
-from main import app
-from db import db
+from backend.main import app
+from backend.db import db
 
 # if running as a script, create db
 if __name__ == "__main__":
