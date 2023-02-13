@@ -3,7 +3,6 @@ name: Deploy App
 on:
   push:
     branches: [ master ]
-  pull_request:
 
 jobs:
   frontend:
@@ -20,7 +19,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Build React app
-        working-directory: ./frontend
+        working-directory: ./site/frontend
         run: |
           npm ci --legacy-peer-deps
           npm run build
@@ -28,5 +27,5 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./frontend/dist
+          publish_dir: ./site/frontend/dist
           cname: quizici.st
