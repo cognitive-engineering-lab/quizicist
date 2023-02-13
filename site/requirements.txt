@@ -14,6 +14,7 @@ SQLAlchemy==1.4.42
 Flask-SQLAlchemy==3.0.2
 Flask-Migrate==4.0.1
 alembic==1.9.2
+mysqlclient==2.1.1
 
 # Google Forms
 oauth2client==4.1.3
@@ -23,3 +24,4 @@ google-api-python-client==2.68.0
 Werkzeug==2.2.2
 Levenshtein==0.20.9
 toml==0.10.2
+pymemcache==4.0.0
