@@ -21,7 +21,7 @@ $ cd frontend && npm install
 ```
 
 ### Database
-Whe developing/running locally, we use SQLite to store generated items:
+When developing/running locally, we use SQLite to store generated items:
 ```shell
 $ cd site
 $ python3 create_db.py # set up local sqlite database
