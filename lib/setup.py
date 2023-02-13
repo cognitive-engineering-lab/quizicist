@@ -10,5 +10,6 @@ setup(
         "mistletoe==0.9.0",
         "transformers==4.22.1",
         "beautifulsoup4==4.11.1",
+        "lxml==4.9.1",
     ],
 )

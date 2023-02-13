@@ -1,5 +1,5 @@
 from typing import List
-import tomllib
+import toml
 from ..models import Question
 from quizicist.consts import FeedbackTypes
 
@@ -27,4 +27,4 @@ def questions_to_toml(questions: List[Question]):
     # remove questions without one correct answer
     questions = filter(lambda question: len(get_answer_by_feedback(question, FeedbackTypes.correct)) == 1, questions)
 
-    return tomllib.dumps({ "questions": list(map(serialize_question, questions)) })
+    return toml.dumps({ "questions": list(map(serialize_question, questions)) })

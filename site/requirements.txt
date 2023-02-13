@@ -22,3 +22,4 @@ google-api-python-client==2.68.0
 # Misc
 Werkzeug==2.2.2
 Levenshtein==0.20.9
+toml==0.10.2

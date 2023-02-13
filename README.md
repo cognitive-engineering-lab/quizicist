@@ -17,7 +17,7 @@ You'll also need to install dependencies:
 ```shell
 $ cd lib && pip3 install -e . && cd ..
 $ cd site && pip3 install -r requirements.txt
-$ cd frontend && npm install
+$ cd frontend && npm install --legacy-peer-deps
 ```
 
 ### Database
