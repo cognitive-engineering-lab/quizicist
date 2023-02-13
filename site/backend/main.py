@@ -2,20 +2,20 @@ import os
 from pathlib import Path
 from flask import Flask
 from flask_cors import CORS
-from blueprints.api import api
-from blueprints.auth import auth, login_manager
-from blueprints.admin import admin, bcrypt
 from dotenv import load_dotenv
-from db import db, migrate
-from config import APP_FOLDER
-from limiter import limiter
+from .blueprints.api import api
+from .blueprints.auth import auth, login_manager
+from .blueprints.admin import admin, bcrypt
+from .db import db, migrate
+from .config import APP_FOLDER, ProductionConfig, DebugConfig
+from .limiter import limiter
 
 app = Flask(__name__)
 
 # set config based on ENV variable
 load_dotenv()
-CONFIG_CLASS = "ProductionConfig" if os.getenv("ENV") == "prod" else "DebugConfig"
-app.config.from_object(f"config.{CONFIG_CLASS}")
+CONFIG = ProductionConfig if os.getenv("ENV") == "prod" else DebugConfig
+app.config.from_object(CONFIG)
 
 # initialize sqlite db with migrations
 db.init_app(app)

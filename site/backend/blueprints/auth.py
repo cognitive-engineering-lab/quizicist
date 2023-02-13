@@ -1,7 +1,7 @@
 from flask import Blueprint
 from flask_login import LoginManager, login_user, current_user
-from models import User
-from db import db
+from ..models import User
+from ..db import db
 
 login_manager = LoginManager()
 

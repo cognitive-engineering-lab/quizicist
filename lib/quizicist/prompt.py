@@ -1,5 +1,5 @@
 from __future__ import annotations
-from lib.consts import NUM_QUESTIONS
+from .consts import NUM_QUESTIONS
 
 
 TEMPLATE = {

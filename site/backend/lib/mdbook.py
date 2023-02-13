@@ -1,7 +1,7 @@
 from typing import List
 import toml
-from models import Question
-from lib.consts import FeedbackTypes
+from ..models import Question
+from quizicist.consts import FeedbackTypes
 
 def get_answer_by_feedback(question: Question, feedback: FeedbackTypes):
     return [choice.text for choice in question.answers if choice.user_feedback == feedback]

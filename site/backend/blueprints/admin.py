@@ -1,13 +1,13 @@
 from dataclasses import asdict
 from datetime import datetime, timedelta
 from typing import List
-from db import db
+from ..db import db
 from flask import Blueprint, request
 from flask_bcrypt import Bcrypt
 from flask_login import current_user
-from models import Generation, User
+from ..models import Generation, User
 import os
-from limiter import limiter
+from ..limiter import limiter
 
 # routes for admin dashboard
 admin = Blueprint("admin", __name__, template_folder="templates")
