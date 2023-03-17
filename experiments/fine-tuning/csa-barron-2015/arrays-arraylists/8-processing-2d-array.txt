@@ -1,0 +1,84 @@
+There are three common ways to traverse a two-dimensional array:
+• row-column (for accessing elements, modifying elements that are class objects, or replacing elements)
+• for-each loop (for accessing elements or modifying elements that are class objects, but no replacement)
+• row-by-row array processing (for accessing, modifying, or replacement)
+
+Example 1
+Find the sum of all elements in a matrix mat. Here is a row-column traversal.
+/** Precondition: mat is initialized with integer values. */
+int sum = 0;
+for (int r = 0; r < mat.length; r++)
+    for (int c = 0; c < mat[r].length; c++)
+        sum += mat[r][c];
+
+NOTE
+1. mat[r][c] represents the rth row and the cth column.
+2. Rows are numbered from 0 to mat.length-1, and columns are numbered from 0 to mat[r].length-1. Any index that is outside these bounds will generate an ArrayIndexOutOfBoundsException.
+Since elements are not being replaced, nested for-each loops can be used instead:
+for (int[] row : mat) //for each row array in mat
+    for (int element : row) //for each element in this row
+            sum += element;
+
+NOTE
+Starting in 2015, you will need to know how to use a nested for-each traversal. You will also need to know how to process a matrix as shown below, using the third type of traversal, row-by-row array processing. This traversal assumes access to a method that processes an array. So, continuing with the example to find the sum of all elements in mat: In the class where mat is defined, suppose you have the method sumArray.
+/** @return the sum of integers in arr */
+public int sumArray(int[] arr)
+{ /* implementation not shown */ }
+
+You could use this method to sum all the elements in mat as follows:
+int sum = 0;
+for (int row = 0; row < mat.length; row++) //for each row in mat,
+    sum += sumArray(mat[row]); //add that row’s total to sum
+
+Note how, since mat[row] is an array of int for 0 ≤ row < mat.length, you can use the sumArray method for each row in mat.
+
+Example 2
+Add 10 to each element in row 2 of matrix mat.
+for (int c = 0; c < mat[2].length; c++)
+    mat[2][c] += 10;
+
+NOTE
+1. In the for loop, you can use c < mat[k].length, where 0 ≤ k < mat.length, since each row has the same number of elements.
+2. You cannot use a for-each loop here because elements are being replaced.
+3. You can, however, use row-by-row array processing. Suppose you have method addTen shown below.
+/** Add 10 to each int in arr */
+public void addTen(int[] arr)
+{
+    for (int i = 0; i < arr.length; i++)
+        arr[i] += 10;
+}
+
+You could add 10 to each element in row 2 with the single statement
+addTen(mat[2]);
+You could also add 10 to every element in mat:
+for (int row = 0; row < mat.length; row++)
+    addTen(mat[row]);
+
+Example 3
+Suppose Card objects have a mutator method changeValue:
+public void changeValue(int newValue)
+{ value = newValue; }
+
+Now consider the declaration
+Card[][] cardMatrix;
+
+Suppose cardMatrix is initialized with Card objects. A piece of code that traverses the cardMatrix and changes the value of each Card to v is
+for (Card[] row : cardMatrix) //for each row array in cardMatrix,
+    for (Card c : row) //for each Card in that row,
+        c.changeValue(v); //change the value of that card
+
+Alternatively:
+for (int row = 0; row < cardMatrix.length; row++)
+    for (int col = 0; col < cardMatrix[0].length; col++)
+    cardMatrix[row][col].changeValue(v);
+
+NOTE
+The use of the nested for-each loop is OK. Modifying the objects in the matrix with a mutator method is fine. What you can’t do is replace the Card objects with new Cards.
+
+Example 4
+You can process the major and minor diagonals of a square matrix as follows:
+int[][] mat = new int[SIZE][SIZE]; //SIZE is a constant int value
+for (int i = 0; i < SIZE; i++)
+    Process mat[i][i]; //major diagonal
+    OR
+    Process mat[i][SIZE - i - 1]; //minor diagonal

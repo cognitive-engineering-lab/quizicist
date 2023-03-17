@@ -1,0 +1,47 @@
+All of this data that is passed from driver classes to object classes and vice versa creates a complicated operation that’s occurring behind the scenes. Consider this example: the programmer decides to write a class that represents a vinyl record player (for music), or “turntable.” The driver class will then operate the turntable, turning it on and off, controlling it, and putting on/taking off the desired record. For this program, we will have three classes: Turntable and Record, which represent each of these objects, and PlayRecord, which will be the driver that relates them.
+In theory, we would have to perform the following steps in the driver:
+create (instantiate) a turntable object
+create one or more record objects
+place the record onto the turntable
+switch on the turntable
+
+Some code from these classes might look like this:
+public class Record
+{
+	// data not shown
+	public Record()
+	// constructor code and other methods not shown
+}
+
+public class Turntable
+{
+ private Record r;
+ // other data not shown
+ public Turntable(Record r1)
+ {
+	r = r1;
+	// other statements not shown
+ }
+ // other methods not shown
+}
+
+public class PlayRecord
+{
+	public static void play()
+	{
+		Record rec = new Record();
+		Turntable tt = new Turntable(rec);
+		// other statements not shown
+	}
+	// other methods not shown
+}
+
+In this example, note that Turntable is an aggregate class, since part of its instance data involves another object. More importantly for this section, note the instantiation of the Record object in the driver, the “passing” of that object to the Turntable class, and the assignment r = r1. When an object is passed to another class and, as a result, received through a parameter, a reference is created to the object. Think of it this way: if you just picked up your favorite Taylor Swift record (you know you love her) and wanted to play it, you wouldn’t need two copies of the album. In the same way, we don’t have to create a copy of the Record object; we just need to create another reference to it in order for it to be used in the Turntable class. This is the only way the Turntable class can use this record, since it was instantiated in the driver. The record can then be used in context (in this case, assigned to the data field r) and then the reference will disappear once the constructor is over. Since the reference is not an actual copy of the object, its life is not affected.
+Another way to think of references is to think of superheroes and their secret identities. Clark Kent was just another name for the person; he was still Superman the whole time. They were the same guy with the same superpowers, the same attributes, and the same ability to perform cool superhero actions. Therefore, “Clark Kent” was simply a reference created to refer to the same guy.
+It is extremely important to know that primitive data is not copied by reference; it is copied by value itself.
+When received as a parameter, primitive data is actually copied, while object data will simply receive a new reference to the object itself. Primitives are copied by value; objects are copied by reference.
+Here’s the really confusing part—or maybe not really. If a copy of a primitive data value is made, then the two copies (the original and the new one) exist exclusively. Therefore, if you change the value of one copy, the other is not affected. On the other hand, if a new reference to an object is made, then a modification of the object through the reference will be reflected by all references. Again, the superhero example: if Superman dyed his hair blond because it was all the rage, then both Clark Kent and Superman will have blond hair. They are two names that reference the same guy, so any changes will be reflected in all the references. If we suddenly decided that Superman/Clark Kent should be called “Blue Guy” instead of either of these two names, we are still referring to the same guy; he now has three aliases instead of two.
+This is important for understanding object equality. Two objects are considered equivalent only if they are, in fact, the same object. In the superhero example above, Clark Kent is equal to Superman, since they are the exact same person.
+Now imagine that Superman has an identical twin brother named Duperman with alter ego Klarc Tenk. Since Duperman and Klarc Tenk are the same person, Duperman is equal to Klarc Tenk. Therefore, in Java Duperman == Klarc Tenk is true. However, even though they are identical twins, Superman and Duperman are different people. Therefore, Superman is not equal to Duperman. In Java, Superman and Duperman could be identified as identical twins using the equals method of the Object class. The equals method takes an Object parameter and returns true if and only if the two object have identical data, regardless of whether they are the same object. While the boolean statement Superman == Duperman is false, the statement Superman.equals(Duperman) is true.
+Sometimes to call a method it may be necessary for the calling object to be able to refer to itself. When an object calls a method, an implicit reference is assigned to the calling object. The name of this implicit reference is this. The keyword this is a reference to the current calling object and may be used as an object variable. For example:
+this.mySize

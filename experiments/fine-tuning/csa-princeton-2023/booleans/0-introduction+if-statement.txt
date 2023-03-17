@@ -1,0 +1,33 @@
+Now that we have some tools to make the computer accomplish a simple task, let’s discuss how to make our programs a little more…interesting.
+When you wake up in the morning, some tasks occur automatically, while others may depend on a decision. For example, if your alarm clock sounds at 6:00 a.m.…wait, what if it doesn’t? If it sounds at 6:00 a.m., you proceed with your morning rituals; if it does not sound, you wake up late and have to speed up, or change, your routine. When you sit down to eat your favorite breakfast cereal…none is left! Now what?
+Most, if not all, of the actions we perform depend on decisions. These decisions affect whether or not we perform the actions, or even how we perform the actions. Programs possess this exact ability to make decisions and react accordingly. In this way, the programmer can control the flow of the program.
+If you read the above examples closely, you will literally find the word if as a pivotal word in your decisions of what actions to perform next. The reserved word if is a conditional statement used in Java when programmers want to control the flow of the programs—e.g., if they want Line 2 to occur ONLY if a condition in Line 1 is true. This is referred to as flow control.
+The syntax of a simple if statement is
+if (condition) statement;
+
+Syntax statements in this book will be presented in pseudocode in order to illustrate the general form, and then further examples will be given. Pseudocode is not Java code that will compile, but it shows the format of the Java statements that we will write later.
+Consider an instance when you are asking a parent whether you can go out to the mall with a friend on Friday night. The (classic) parent response usually looks something like this: If you clean your room, you can go to the mall on Friday.
+In pseudocode, the parent’s response could be written as
+if (you clean your room) go to the mall;
+
+In this example, “you clean your room” is the condition of the if statement and “go to the mall” is the statement. The condition in an if statement must have a boolean result. Note that if you do clean your room (true), you will go to the mall; however, if you do not clean your room (false), you will not go to the mall. The if statement is written in this way; the programmer is now controlling the flow of the program. Thus, “go to the mall” will occur if the condition is true, but will be skipped if the condition is false. Another popular (pseudocode) way to write this statement is
+if (you clean your room)
+    go to the mall;
+
+This construction simply uses white space to make the code more readable. The AP Exam may present an if statement in either of these formats.
+Let’s try a code example. Consider the following lines from a Java program:
+int num1 = 4, num2 = 5;
+if (num1 == num2)
+    System.out.print("The numbers are the same.");
+
+Since we have an if statement, one of two possibilities can occur, based on whether num1 has the same value as num2: (1) the program will display the string literal "The numbers are the same." if the condition is true, or (2) the program will not display any output if the condition is false.
+Note the use, here, of the boolean operator == (also known as the equality operator); do not confuse this boolean operator with the assignment operator =. A boolean operator asks a question, while an assignment operator executes a command. num1 = 4 assigns the value 4 to the variable num1, while num1 == num2 determines whether the two values are equal. The assignment statement produces no other result, while the boolean statement returns a truth value based on the comparison.
+Wouldn’t it be nice if conditions in life depended on just one comparison, as our previous code example did? If we dig a bit deeper into our alarm clock example from before, there are probably a few more decisions that need to be made in order to begin your morning rituals; a few of these decisions might be, “is it a school day?”…“do I feel healthy?”…“is my blanket glued to my mattress, trapping me between them?” Note that each of these questions, regardless of its plausibility, has a true or false (boolean) answer.
+If (see how many times we use this word?) we want to incorporate a more complicated condition into our code, we must create a compound condition. Compound conditions include at least one boolean operator; all of these and their meanings are as follows:
+&& logical and
+|| logical or
+! logical not
+== is equal to
+!= is not equal to
+
+Let’s explore how each of these can be incorporated into a program.

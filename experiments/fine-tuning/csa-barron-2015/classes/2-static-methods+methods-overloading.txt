@@ -1,0 +1,82 @@
+The methods discussed in the preceding sections—constructors, accessors, and mutators—all operate on individual objects of a class. They are called instance methods. A method that performs an operation for the entire class, not its individual objects, is called a static method (sometimes called a class method).
+The implementation of a static method uses the keyword static in its header. There is no implied object in the code (as there is in an instance method). Thus, if the code tries to call an instance method or invoke a private instance variable for this nonexistent object, a syntax error will occur. A static method can, however, use a static variable in its code. For example, in the Employee example on p. 94, you could add a static method that returns the employeeCount:
+
+public static int getEmployeeCount()
+{ return employeeCount; }
+
+Here’s an example of a static method that might be used in the BankAccount class. Suppose the class has a static variable intRate, declared as follows:
+
+private static double intRate;
+
+The static method getInterestRate may be as follows:
+
+public static double getInterestRate()
+{
+    System.out.println("Enter interest rate for bank account");
+    System.out.println("Enter in decimal form:");
+    intRate = IO.readDouble(); // read user input
+    return intRate;
+}
+
+Since the rate that’s read in by this method applies to all bank accounts in the class, not to any particular BankAccount object, it’s appropriate that the method should be static.
+Recall that an instance method is invoked in a client program by using an object variable followed by the dot operator followed by the method name:
+
+BankAccount b = new BankAccount(); //invokes the deposit method for
+b.deposit(acctPassword, amount); //BankAccount object b
+
+A static method, by contrast, is invoked by using the class name with the dot operator: double interestRate = BankAccount.getInterestRate();
+Often a class that contains the main() method is used as a driver program to test other classes. Usually such a class creates no objects of the class. So all the methods in the class must be static. Note that at the start of program execution, no objects exist yet. So the main() method must always be static.
+For example, here is a program that tests a class for reading integers entered at the keyboard.
+
+import java.util.*;
+
+public class GetListTest {
+    /** @return a list of integers from the keyboard */
+    public static List<Integer> getList()
+    {
+        List<Integer> a = new ArrayList<Integer>();
+        < code to read integers into a>
+        return a;
+    }
+
+    /**
+     * Write contents of List a.
+     *
+     * @param a the list
+     */
+    public static void writeList(List<Integer> a) {
+        System.out.println("List is : " + a);
+    }
+
+    public static void main(String[] args) {
+        List<Integer> list = getList();
+        writeList(list);
+    }
+}
+
+1. The calls to writeList(list) and getList() do not need to be preceded by
+GetListTest plus a dot because main is not a client program: It is in the same
+class as getList and writeList.
+2. If you omit the keyword static from the getList or writeList header, you
+get an error message like the following:
+Can’t make static reference to method getList()
+in class GetListTest
+
+The compiler has recognized that there was no object variable preceding the
+method call, which means that the methods were static and should have been
+declared as such.
+Overloaded methods are two or more methods in the same class that have the same name but different parameter lists. For example,
+
+public class DoOperations
+{
+    public int product(int n) { return n * n; }
+    public double product(double x) { return x * x; }
+    public double product(int x, int y) { return x * y; }
+    ...
+
+The compiler figures out which method to call by examining the method’s signature. The signature of a method consists of the method’s name and a list of the parameter types. Thus, the signatures of the overloaded product methods are
+product(int)
+product(double)
+product(int, int)
+Note that for overloading purposes, the return type of the method is irrelevant. You can’t have two methods with identical signatures but different return types. The compiler will complain that the method call is ambiguous.
+Having more than one constructor in the same class is an example of overloading. Overloaded constructors provide a choice of ways to initialize objects of the class.

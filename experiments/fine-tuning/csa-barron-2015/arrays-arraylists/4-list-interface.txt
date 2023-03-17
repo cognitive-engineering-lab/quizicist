@@ -1,0 +1,21 @@
+A class that implements the List<E> interface—ArrayList<E>, for example—is a list of elements of type E. In a list, duplicate elements are allowed. The elements of the list are indexed, with 0 being the index of the first element.
+A list allows you to
+• Access an element at any position in the list using its integer index.
+• Insert an element anywhere in the list.
+• Iterate over all elements using ListIterator or Iterator (not in the AP subset).
+
+Here are the methods you should know.
+boolean add(E obj)
+Appends obj to the end of the list. Always returns true. If the specified element is not of type E, throws a ClassCastException.
+int size()
+Returns the number of elements in the list.
+E get(int index)
+Returns the element at the specified index in the list.
+E set(int index, E element)
+Replaces item at specified index in the list with specified element. Returns the element that was previously at index. Throws a ClassCastException if the specified element is not of type E.
+void add(int index, E element)
+Inserts element at specified index. Elements from position index and higher have 1 added to their indices. Size of list is incremented by 1.
+E remove(int index)
+Removes and returns the element at the specified index. Elements to the right of position index have 1 subtracted from their indices. Size of list is decreased by 1.
+Iterator<E> iterator()
+Returns an iterator over the elements in the list, in proper sequence, starting at the first element.

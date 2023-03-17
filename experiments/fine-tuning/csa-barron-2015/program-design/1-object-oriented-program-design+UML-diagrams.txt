@@ -1,0 +1,57 @@
+Object-oriented programming has been the dominant programming methodology since the mid 1990s. It uses an approach that blurs the lines of the waterfall model. Anal ysis of the problem, development of the design, and pieces of the implementation all overlap and influence one another.
+Here are the steps in object-oriented design:
+• Identify classes to be written.
+• Identify behaviors (i.e., methods) for each class.
+• Determine the relationships between classes.
+• Write the interface (public method headers) for each class.
+• Implement the methods.
+
+Identify the objects in the program by picking out the nouns in the program speci fication. Ignore pronouns and nouns that refer to the user. Select those nouns that seem suitable as classes, the “big-picture” nouns that describe the major objects in the application. Some of the other nouns may end up as attributes of the classes.
+Many applications have similar object types: a low-level basic component; a collec
+tion of low-level components; a controlling object that puts everything together; and a display object that could be a GUI (graphical user interface) but doesn’t have to be.
+
+Example 1
+Write a program that maintains an inventory of stock items for a small store.
+Nouns to consider: inventory, item, store.
+Basic Object: StockItem
+Collection: Inventory (a list of StockItems)
+Controller: Store (has an Inventory, uses a StoreDisplay)
+Display: StoreDisplay (could be a GUI)
+
+Example 2
+Write a program that simulates a game of bingo. There should be at least two play
+ers, each of whom has a bingo card, and a caller who calls the numbers.
+Nouns to consider: game, players, bingo card, caller.
+Basic Objects: BingoCard, Caller
+Collection: Players (each has a BingoCard)
+Controller: GameMaster (sets up the Players and Caller)
+Display: BingoDisplay (shows each player’s card and displays winners, etc.)
+
+Example 3
+Write a program that creates random bridge deals and displays them in a specified format. (The specification defines a “deal” as consisting of four hands. It also describes a deck of cards, and shows how each card should be displayed.)
+Nouns to consider: deal, hand, format, deck, card.
+Basic Object: Card
+Collection: Deck (has an array of Cards)
+Hand (has an array of Cards)
+Deal (has an array of Hands)
+Dealer (has a Deck, or several Decks)
+Controller: Formatter (has a Deal and a TableDisplay)
+Display: TableDisplay (could be a GUI)
+
+Identifying Behaviors
+Find all verbs in the program description that help lead to the solution of the programming task. These are likely behaviors that will probably become the methods of the classes. Now decide which methods belong in which classes. Recall that the process of bundling a group of methods and data fields into a class is called encapsulation.
+Think carefully about who should do what. Do not ask a basic object to perform operations for the group. For example, a StockItem should keep track of its own details (price, description, how many on the shelf, etc.) but should not be required to search for another item. A Card should know its value and suit but should not be responsible for keeping track of how many cards are left in a deck. A Caller in a bingo game should be responsible for keeping track of the numbers called so far and for producing the next number but not for checking whether a player has bingo: That is the job of an individual player (element of Players) and his BingoCard.
+You will also need to decide which data fields each class will need and which data structures should store them. For example, if an object represents a list of items, consider an array or ArrayList as the data structure.
+
+INHERITANCE RELATIONSHIPS
+Look for classes with common behaviors. This will help identify inheritance relationships. Recall the is-a relationship—if object1 is-a object2, then object2 is a candidate for a superclass.
+COMPOSITION RELATIONSHIPS
+Composition relationships are defined by the has-a relationship. For example, a Nurse has-a Uniform. Typically, if two classes have a composition relationship, one of them contains an instance variable whose type is the other class.
+Note that a wrapper class always implements a has-a relationship with any objects that it wraps.
+An excellent way to keep track of the relationships between classes and show the inheritance hierarchy in your programs is with a UML (Unified Modeling Language) diagram. This is a standard graphical scheme used by object-oriented programmers. Although it is not part of the AP subset, on the AP exam you may be expected to interpret simple UML diagrams and inheritance hierarchies.
+Here is a simplified version of the UML rules:
+• Represent classes with rectangles.
+• Use angle brackets with the word “abstract” or “interface” to indicate either an abstract class or interface.
+• Show the is-a relationship between classes with an open up-arrow.
+• Show the is-a relationship that involves an interface with an open, dotted up arrow.
+• Show the has-a relationship with a down arrow or sideways arrow (indicates composition).

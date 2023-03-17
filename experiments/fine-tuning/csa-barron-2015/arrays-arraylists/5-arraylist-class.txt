@@ -1,0 +1,117 @@
+This is an array implementation of the List<E> interface. The main difference between an array and an ArrayList is that an ArrayList is resizable during run time, whereas an array has a fixed size at construction.
+Shifting of elements, if any, caused by insertion or deletion, is handled automatically by ArrayList. Operations to insert or delete at the end of the list are very efficient. Be aware, however, that at some point there will be a resizing; but, on average, over time, an insertion at the end of the list is a single, quick operation. In general, insertion or deletion in the middle of an ArrayList requires elements to be shifted to accommodate a new element (add), or to close a “hole” (remove).
+
+THE METHODS OF ArrayList<E>
+In addition to the two add methods, and size, get, set, and remove, you must know the following constructor.
+ArrayList()
+Constructs an empty list.
+
+NOTE
+Each method above that has an index parameter—add, get, remove, and set—throws an IndexOutOfBoundsException if index is out of range. For get, remove, and set, index is out of range if
+index < 0 || index >= size()
+For add, however, it is OK to add an element at the end of the list. Therefore index is out of range if
+index < 0 || index > size()
+
+Using ArrayList<E>
+Example 1
+//Create an ArrayList containing 0 1 4 9.
+List<Integer> list = new ArrayList<Integer>(); //An ArrayList is-a List
+for (int i = 0; i < 4; i++)
+    list.add(i * i); //example of auto-boxing
+//i*i wrapped in an Integer before insertion
+Integer intOb = list.get(2); //assigns Integer with value 4 to intOb.
+//Leaves list unchanged.
+int n = list.get(3); //example of auto-unboxing
+//Integer is retrieved and converted to int
+//n contains 9
+Integer x = list.set(3, 5); //list is 0 1 4 5
+//x contains Integer with value 9
+x = list.remove(2);
+//list is 0 1 5
+//x contains Integer with value 4
+list.add(1, 7);
+//list is 0 7 1 5
+list.add(2, 8);
+//list is 0 7 8 1 5
+
+Example 2
+//Traversing an ArrayList of Integer.
+//Print the elements of list, one per line.
+for (Integer num : list)
+    System.out.println(num);
+
+Example 3
+/** Precondition: List list is an ArrayList that contains Integer
+* values sorted in increasing order.
+* Postcondition: value inserted in its correct position in list.
+*/
+public static void insert(List<Integer> list, Integer value)
+{
+    int index = 0;
+    //find insertion point
+    while (index < list.size() &&
+        value.compareTo(list.get(index)) > 0)
+        index++;
+    //insert value
+    list.add(index, value);
+}
+
+NOTE
+Suppose value is larger than all the elements in list. Then the insert method will throw an IndexOutOfBoundsException if the first part of the test is omitted, namely index < list.size().
+
+Example 4
+/** @return an ArrayList of random integers from 0 to 100 */
+public static List<Integer> getRandomIntList()
+{
+    List<Integer> list = new ArrayList<Integer>();
+    System.out.print("How many integers? ");
+    int length = IO.readInt(); //read user input
+    for (int i = 0; i < length; i++)
+    {
+        int newNum = (int) (Math.random() * 101);
+        list.add(new Integer(newNum));
+    }
+    return list;
+}
+
+NOTE
+1. The variable list is declared to be of type List<Integer> (the interface) but is instantiated as type ArrayList<Integer> (the implementation).
+2. The add method in getRandomIntList is the List method that appends its parameter to the end of the list.
+
+Example 5
+/** Swap two values in list, indexed at i and j. */
+public static void swap(List<E> list, int i, int j)
+{
+    E temp = list.get(i);
+    list.set(i, list.get(j));
+    list.set(j, temp);
+}
+
+Example 6
+/** Print all negatives in list a.
+* Precondition: a contains Integer values.
+*/
+public static void printNegs(List<Integer> a)
+{
+    System.out.println("The negative values in the list are: ");
+    for (Integer i : a)
+        if (i.intValue() < 0)
+            System.out.println(i);
+}
+
+Example 7
+/** Change every even-indexed element of strList to the empty string.
+* Precondition: strList contains String values.
+*/
+public static void changeEvenToEmpty(List<String> strList)
+{
+    boolean even = true;
+    int index = 0;
+    while (index < strList.size())
+    {
+        if (even)
+            strList.set(index, "");
+        index++;
+        even = !even;
+    }
+}

@@ -1,0 +1,73 @@
+To come up with a recursive algorithm, you have to be able to frame a process recursively (i.e., in terms of a simpler case of itself). This is different from framing it iteratively, which repeats a process until a final condition is met. A good strategy for writing recursive methods is to first state the algorithm recursively in words.
+
+Example 1
+Write a method that returns n! (n factorial).
+n! defined iteratively n! defined recursively
+0! = 1 0! = 1
+1! = 1 1! = (1)(0!)
+2! = (2)(1) 2! = (2)(1!)
+3! = (3)(2)(1) 3! = (3)(2!)
+. . . . . .
+
+The general recursive definition for n! is
+n! = (1: n = 0) | (n(n - 1)!: n > 0)
+
+The definition seems to be circular until you realize that if 0! is defined, all higher factorials are defined. Code for the recursive method follows directly from the recursive definition:
+/** Compute n! recursively.
+* @param n a nonnegative integer
+* @return n!
+*/
+public static int factorial(int n)
+{
+    if (n == 0) //base case
+        return 1;
+    else
+        return n * factorial(n - 1);
+}
+
+Example 2
+Write a recursive method revDigs that outputs its integer parameter with the digits reversed. For example,
+revDigs(147) outputs 741
+revDigs(4) outputs 4
+
+First, describe the process recursively: Output the rightmost digit. Then, if there are still digits left in the remaining number n/10, reverse its digits. Repeat this until n/10 is 0. Here is the method:
+/** @param n a nonnegative integer
+* @return n with its digits reversed
+*/
+public static void revDigs(int n)
+{
+    System.out.print(n % 10); //rightmost digit
+    if (n / 10 != 0) //base case
+        revDigs(n / 10);
+}
+
+NOTE
+On the AP exam, you are expected to “understand and evaluate” recursive methods. This means that you would not be asked to come up with the code for methods such as factorial and revDigs (as shown above). You could, however, be asked to identify output for any given call to factorial or revDigs.
+Recall the Fibonacci sequence 1, 1, 2, 3, 5, 8, 13, ... . The nth Fibonacci number equals the sum of the previous two numbers if n ≥ 3. Recursively,
+Fib(n) = (1: n = 1, 2) | (Fib(n − 1) + Fib(n − 2): n ≥ 3)
+
+Here is the method:
+/** @param n a positive integer
+* @return the nth Fibonacci number
+*/
+public static int fib(int n)
+{
+    if (n == 1 || n == 2)
+        return 1;
+    else
+        return fib(n - 1) + fib(n - 2);
+}
+
+Notice that there are two recursive calls in the last line of the method. So to find Fib(5), for example, takes eight recursive calls to fib!
+In general, each call to fib makes two more calls, which is the tipoff for an exponential algorithm (i.e., one that is very inefficient). This is much slower than the run time of the corresponding iterative algorithm (see Chapter 5, Question 13).
+You may ask: Since every recursive algorithm can be written iteratively, when should programmers use recursion? Bear in mind that recursive algorithms can incur extra run time and memory. Their major plus is elegance and simplicity of code.
+
+General Rules for Recursion
+1. Avoid recursion for algorithms that involve large local arrays—too many recursive calls can cause memory over flow.
+2. Use recursion when it significantly simplifies code.
+3. Avoid recursion for simple iterative methods like factorial, Fibonacci, and the linear search on the next page.
+4. Recursion is especially useful for
+• Branching processes like traversing trees or directories.
+• Divide-and-conquer algorithms like mergesort and binary search.
+
+Mergesort and quicksort are discussed in Chapter 8.

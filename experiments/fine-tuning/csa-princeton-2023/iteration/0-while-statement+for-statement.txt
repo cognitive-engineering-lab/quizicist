@@ -1,0 +1,61 @@
+When programmers want a statement (or multiple statements) to occur repeatedly, they have two options: (1) copy and paste the statement as many times as necessary (inefficient and ugly), or (2) write a conditional statement called a loop (efficient and “elegant”).
+On the AP Exam, you will be expected to know two types of loops: while and for.
+The syntax of a while loop is as follows:
+while (condition) statement;
+
+Note its similarity to the if statement. The while statement is a loop that does exactly what its name implies: the loop cycles again and again, while the condition is true. Consider a paint-soaked paintbrush that you just used to paint your bedroom. Hopefully, you will not store the paintbrush away until it is no longer dirty. A while loop that could represent this situation in pseudocode would look like:
+1 while (paintbrush is dirty)
+2 do not put away paintbrush;
+3 put away paintbrush;
+
+Note that if the condition is true (paintbrush is dirty), line 2 will continue to execute, over and over again, until the condition is false (paintbrush is not dirty). Once the condition is false, line 2 is skipped and line 3 is finally executed.
+Unfortunately, this loop is fundamentally flawed. Although its logic seems to be correct, it is not. Within the statement(s) of a loop, the variable(s) in the condition must be modified so that there is a chance that the truth value of the condition will be changed. How will the paintbrush become less dirty —is this a self-cleaning paintbrush? Probably not. Therefore, the paintbrush will actually remain dirty, and Java will keep executing line 2, forever. When this happens, the programmer has written an infinite loop, which is a logical error and is therefore undesirable. Ever have your computer randomly “freeze” in the middle of your work, leaving it unresponsive and causing you to lose that perfectly sculpted digital picture that you just spent an hour perfecting? That is an infinite loop and definitely not desirable.
+On the AP Exam, you must trace code in multiple-choice questions and detect infinite loops. In free-response questions, you must write code that is free of infinite loops.
+While loops, like if statements, are therefore dependent on their conditions. If a condition is more intricate, as it usually is (Do we put the paintbrush away if it is not dirty but it is wet? Not dirty but it is still not clean?), we can use the techniques outlined in the previous section. Boolean operators are mandatory and compound conditions and/or blocking are appropriate when necessary. A more realistic pseudocode representation of our paintbrush example could be
+1 while (paintbrush is dirty && paintbrush is wet) // ! means NOT wet
+2 {
+3   clean paintbrush; // is it COMPLETELY clean?
+4   dry paintbrush; // is it COMPLETELY dry?
+5   do not put paintbrush away;
+6 }
+7 put paintbrush away;
+
+In this example, the paintbrush will continue to be cleaned and dried (and not put away) until it is either NOT dirty or NOT wet, or both, at which point the condition will be false and the paintbrush will be put away. Remember that an && condition is true only if both conditions are true; therefore, if the paintbrush is not dirty but is still wet (or vice versa), it will be put away. Is this the desired result? Who cares?! Reading code is not about logical understanding of a situation; rather, it is about understanding the code and its result.
+It is also worth noting here that an && statement may be short-circuited. Since both boolean statements on either side of the && must be true, a false result from the first statement will automatically render the condition false. As a result, Java will completely skip the second condition, bypassing the rest of the condition.
+A for statement is another type of loop. For loops and while loops are equally effective in controlling the flow of a program when a statement (or set of statements) is to be executed repeatedly. The syntax is quite different, however:
+    for (initializer; condition; incrementer) statement;
+
+Since the for loop requires more components, it can potentially avoid an infinite loop situation, although there is no guarantee. Let’s try a pseudocode example. Consider a younger sibling who is learning to count to 22. The child will start with 1 and continue counting until reaching 22, and then stop. The counting process repeats until the condition is met. Pseudocode may look like:
+for (start with 1; not yet reached 22; go to the next number) count the number;
+
+The execution of a for loop is more difficult to understand. Here are the steps:
+1. The initializer will occur first, beginning the process.
+2. The condition will be checked to make sure it is true.
+3. The statement(s) will execute.
+4. The incrementer will occur, changing the number.
+5. See step (1) and keep repeating (1) to (4), until (2) is false. 6. The loop ends.
+
+A code example of this situation, outputting the current number to the screen, could be:
+for (int num = 1; num <= 22; num++)
+    System.out.println(num);
+
+This code will produce each counting number and output it to the screen, each on a separate line. Once again, remember that boolean operators are mandatory and compound conditions and/or blocking are appropriate when necessary.
+Take Note: for loops and while loops are interchangeable, although one method may look more elegant than the other.
+On the AP Exam, multiple-choice questions may show you several loop structures in both formats and ask you questions that compare the results, so you should practice working between them. On a free-response question that asks you to write a loop, you will be equally correct whether you decide to write a for loop or a while loop.
+For and while statements are loops; if statements are not.
+
+The following two code examples involving loops have identical results:
+int num = 1;
+while (num <= 3)
+{
+    System.out.println(num);
+    num++;
+}
+System.out.println("Done");
+---
+for (int num = 1; num <= 3; num++)
+    System.out.println(num);
+    System.out.println("Done");
+
+Each set of code is equally effective and equally respected in both the programming world and on the AP Exam. But multiple-choice questions can use either format, or both, so you should familiarize yourself with both.
+While loops perform the blocked statement(s) once, and then evaluate the condition to determine whether the loop continues; for loops evaluate the condition first and then perform the blocked statement(s) if the condition is initially true.

@@ -1,0 +1,44 @@
+Picture a Java class as a closet, with essentially limitless possibilities. If you were to declare a single shelf to hold, say, board game boxes…that would be a great way to organize your collection of games, toys, and other sophisticated possessions.
+A class is organized in this way using methods.
+A method is a group of code that performs a specific task.
+
+Although a class can simply contain a list of commands, any program that accomplishes a task could easily balloon to 100 lines of code, or more. Instead of writing a class that contains a giant list of disorganized code, writing separate methods for each small task (within the overarching task) is an excellent way to make your code more readable. In addition, method based classes enable easier flow control.
+To understand this concept, let’s break down a bright, sunny Saturday in the middle of the summer (don’t worry—you will make it). Perhaps some of the activities you would do might include getting out of bed (obviously), eating breakfast, taking a shower, getting ready for the beach, driving to the beach, enjoying the beach, and eating lunch. Each of these activities has its own specific components; for example, part of eating breakfast includes drinking orange juice and taking a daily vitamin supplement. The pseudocode of a program that simulates this Saturday’s activities might look like this:
+public class Saturday1
+{
+	hear alarm;
+	turn off alarm;
+	get out of bed;
+	make breakfast;
+	eat breakfast;…
+
+You get the idea…. A long list of commands that occur top-down. Now, consider each of these general activities as a separate grouping of smaller activities, called a method. Each small activity will be defined later, but your Saturday class would look much cleaner:
+public class Saturday2
+{
+	wake up method; // includes alarm
+	eat breakfast method; // includes preparation, OJ, vitamin, etc.
+	take a shower method; // includes preparing for the shower, etc.
+	beach method; // includes prep for the beach, driving to the beach, etc.
+	eat lunch method;
+}
+
+The result is a cleaner, more structured class that is easier to read. A class that is created to control a larger program, such as Saturday2, is called a driver class because it drives the program through its general structure which will, in turn, execute the smaller commands. Note also that if, for some reason, the programmer wanted the simulation to take a shower before eating breakfast, the two lines would be switched in Saturday2 and the job would be done. Performing the same change in Saturday1 would involve switching multiple lines of code. Even more poignant would be a simulation that repeats method calls, such as one that represents your extra hungry older brother, who eats breakfast twice. The driver would simply call the breakfast method twice (or use a loop to call it more than twice) and the job would be completed.
+An object class is a different kind of class which houses the “guts” of the methods that the driver class calls. As you understand this setup, you will see that your driver classes begin to shorten, while your object classes expand. For example, the driver of a car truly performs a relatively small set of actions in order to drive the car: start the engine, buckle the seatbelt, check the mirrors, accelerate, brake, steer. The driver does not actually understand (nor does he need to) exactly how these operations work: he just does them. How does the accelerator pedal actually make the car move more quickly? Doesn’t matter. The “driver” just operates the pedal and the rest happens under the hood. The object class is the “under the hood” class. It defines all of the aspects of an object; more specifically, it defines what the object has and what the object does.
+The object class referred to in this section should not be confused with the Object class in the Java language which is the Parent class of all classes. The Object class is part of the Java.lang package. Every class in Java is a descendent of this class. Every class in Java inherits the methods of the Object class.
+For the AP Exam, you must be able to write, troubleshoot, and understand object AND driver classes, as well as understand how they interact. These skills are HUGE in the free-response questions!
+Back to the breakfast example… pseudocode for the object class might look something like this:
+public class Saturday3
+{
+	wake up(…)
+	{
+		hear alarm;
+		turn off alarm;
+		get out of bed;
+	}
+	breakfast(…)
+	{
+		make breakfast;
+		eat breakfast;
+	}
+
+Since our object class could be used for any day of the week, not just Saturday, BeachDay might be a more appropriate name for this class. The driver class from before, which executes a series of actions for this particular day, might be called Saturday.

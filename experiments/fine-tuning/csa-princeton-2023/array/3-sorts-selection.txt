@@ -1,0 +1,71 @@
+Probably the most useful algorithms you will learn in AP Computer Science A are sorting algorithms—but they are also probably the most difficult to understand. If you’ve been keeping up within this book so far, then you have a good start. 
+As the name implies, sorting algorithms will take data in an array and rearrange it into a particular order. We already know that this technique is useful if we want to search for data using the binary search algorithm. But imagine this automated process in real life: a process that automatically sorts the cups in your cabinet in height order, a process that automatically takes your homework assignments and arranges them in time order, and a process that sorts your to-do list in priority order. Needless to say: sorting algorithms are extremely powerful. 
+The selection sort is the first sorting algorithm we will discuss, and one of the three sorting algorithms you need to know for the AP Exam. This is a search-and-swap algorithm, so you should remember that the selection sort searches and swaps. Similar to a sequential search, the sort will first traverse the array for the lowest value. Once it finds the lowest value, it will swap its position in the array with the data at index 0. Now the first element is sorted. The process then repeats for index 1. The rest of the array will be searched for the lowest value and swapped with the data at index 1. Note that if the lowest value is already in position, it will stay there. 
+Consider the array below. We would like to sort this array from least to greatest.
+8 6 10 2 4
+
+Our strategy will be to first find the smallest element in the array and put it in the first position. We will then find the smallest of the remaining elements and put that in the second position. We will continue to do this until the array is ordered. 
+We can start by looking at every element in the array (starting with the first element) and finding the smallest element. It’s easy for a person to quickly glance through the array and see which element is smallest, but the sorting algorithm that we will implement can compare only two elements at once. So here’s how we can find the smallest element: take the number in the first cell in the array and assign it to a variable called smallestSoFar. We’ll also assign the position of that value to a variable called position. In this case, smallestSoFar will equal 8 and position will be 0. Note that even though we are assigning 8 to smallestSoFar, the first cell of the array will contain 8; we didn’t actually remove it. 
+smallestSoFar = 8; 
+position = 0; 
+
+8 6 10 2 4
+
+Next we’ll walk through the array and compare the next value to smallestSoFar. The next value is 6, which is less than 8, so smallestSoFar becomes 6 and position becomes 1. 
+smallestSoFar = 6; 
+position = 1; 
+
+8 6 10 2 4
+
+Now let’s look at the next value in the array. 10 is larger than 6, so smallestSoFar remains 6.
+smallestSoFar = 6; 
+position = 1; 
+
+8 6 10 2 4
+
+The next value in the array is 2: 2 is smaller than 6. 
+smallestSoFar = 2; 
+position = 3; 
+
+8 6 10 2 4
+
+And finally, we look at the last element, 4. Because 4 is greater than 2, and we are at the end of the array, we know that 2 is the smallest element. 
+smallestSoFar = 2; 
+position = 3; 
+
+8 6 10 2 4
+
+Now we know that 2 is the smallest element in the array. Because we want to order the array from least to greatest, we need to put 2 in the first cell in the array. We don’t simply want to overwrite the 8 that is in the first cell, though. What we’ll do is swap the 2 with the 8 to get 
+
+2 6 10 8 4
+
+We now have the smallest element in place. Next we’ll need to find the second smallest element in the array. We can do this using the same approach we employed to find the smallest element. Because we know that 2 is the smallest element, we have to look at the elements only in positions 1 to 4 for the second smallest element. 
+Start by assigning 6 to smallestSoFar and 1 to position and then compare 6 to 10. Six is the smaller element. Next, compare 6 to 8; 6 is still the smaller element. Finally, compare 6 to 4; 4 is smaller, and because we have no more elements in the array, 4 must be the second smallest element in the array. 
+Swap 4 with the second element in the array to get 
+
+2 4 10 8 6
+
+Make another pass through the array to find the third smallest element, and swap it into the third cell. The third smallest element is 6. 
+
+2 4 6 8 10
+
+Finally, we look at the last two elements. Eight is smaller than 10, so we don’t need to do anything. Our array is now sorted from least to greatest. 
+
+Here is how a selection sort can be implemented in Java. The following implementation will sort the elements from least to greatest and will begin by sorting the smallest elements first. 
+//precondition: numbers is an array of ints 
+//postcondition: numbers is sorted in ascending order 
+1 public static void selectionSort1(int[] numbers) 2 { 
+3 for (int i = 0; i < numbers.length – 1; i++) 4 { 
+5 int position = i; 
+6 for (int k = i + 1; k < numbers.length; k++) 7 { 
+8 if (numbers[k] < numbers[position]) 
+9 { 
+10 position = k; 
+11 } 
+12 } 
+13 int temp = numbers[i];
+14 numbers[i] = numbers[position]; 
+15 numbers[position] = temp; 
+16 } 
+17 } 
+How could this be useful? Consider a case in which you have an unsorted array of 1,000 Student objects, and each Student object has a method that returns a grade point average for that Student. What if you would like to find the five students with the highest grade point average? In this case, it would be a waste of time to sort the entire array. Instead, we can just run through five cycles of the second implementation of the selection sort shown above, and the top five students will be sorted. 

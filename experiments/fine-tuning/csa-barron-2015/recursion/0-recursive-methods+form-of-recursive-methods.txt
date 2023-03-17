@@ -1,0 +1,93 @@
+A recursive method is a method that calls itself. For example, here is a program that calls a recursive method stackWords.
+public class WordPlay {
+    public static void stackWords() {
+        String word = IO.readString(); // read user input
+        if (word.equals("."))
+            System.out.println();
+        else
+            stackWords();
+        System.out.println(word);
+    }
+
+    public static void main(String args[]) {
+        System.out.println("Enter list of words, one per line.");
+        System.out.println("Final word should be a period (.)");
+        stackWords();
+    }
+}
+
+Here is the output if you enter
+hold
+my
+hand
+.
+
+You get
+.
+hand
+my
+hold
+
+The program reads in a list of words terminated with a period, and prints the list in reverse order, starting with the period. How does this happen?
+Each time the recursive call to stackWords() is made, execution goes back to the start of a new method call. The computer must remember to complete all the pending calls to the method. It does this by stacking the statements that must still be executed as follows: The first time stackWords() is called, the word "hold" is read and tested for being a period. No it’s not, so stackWords() is called again. The statement to output "hold" (which has not yet been executed) goes on a stack, and execution goes to the start of the method. The word "my" is read. No, it’s not a period, so the command to output "my" goes on the stack. And so on. The stack looks something like this before the recursive call in which the period is read:
+System.out.println("hand");
+System.out.println("my");
+System.out.println("hold");
+
+Imagine that these statements are stacked like plates. In the final stackWords() call, word has the value ".". Yes, it is a period, so the stackWords() line is skipped, the period is printed on the screen, and the method call terminates. The computer now completes each of the previous method calls in turn by “popping” the statements off the top of the stack. It prints "hand", then "my", then "hold", and execution of method stackWords() is complete.1
+
+NOTE
+1. Each time stackWords() is called, a new local variable word is created.
+2. The first time the method actually terminates, the program returns to complete the most recently invoked previous call. That’s why the words get reversed in this example.
+Every recursive method has two distinct parts:
+• A base case or termination condition that causes the method to end.
+• A nonbase case whose actions move the algorithm toward the base case and termination.
+
+Here is the framework for a simple recursive method that has no specific return type.
+public void recursiveMeth( ... )
+{
+    if (base case)
+        < Perform some action >
+    else
+    {
+        < Perform some other action >
+        recursiveMeth( ... ); //recursive method call
+    }
+}
+
+The base case typically occurs for the simplest case of the problem, such as when an integer has a value of 0 or 1. Other examples of base cases are when some key is found, or an end-of-file is reached. A recursive algorithm can have more than one base case.
+In the else or nonbase case of the framework shown, the code fragment < Perform some other action > and the method call recursiveMeth can sometimes be interchanged without altering the net effect of the algorithm. Be careful though, because what does change is the order of executing statements. This can sometimes be disastrous. (See the eraseBlob example on p. 299.)
+
+Example 1
+public void drawLine(int n)
+{
+    if (n == 0)
+        System.out.println("That’s all, folks!");
+    else
+    {
+        for (int i = 1; i <= n; i++)
+            System.out.print("*");
+        System.out.println();
+        drawLine(n - 1);
+    }
+}
+
+The method call drawLine(3) produces this output:
+***
+**
+*
+That’s all, folks!
+
+NOTE
+1. A method that has no pending statements following the recursive call is an example of tail recursion. Method drawLine is such a case, but stackWords is not.
+2. The base case in the drawLine example is n == 0. Notice that each subsequent call, drawLine(n - 1), makes progress toward termination of the method. If your method has no base case, or if you never reach the base case, you will create infinite recursion. This is a catastrophic error that will cause your computer eventually to run out of memory and give you heart-stopping messages like java.lang.StackOverflowError
+
+Example 2
+//Illustrates infinite recursion.
+public void catastrophe(int n)
+{
+    System.out.println(n);
+    catastrophe(n);
+}
+
+Try running the case catastrophe(1) if you have lots of time to waste! A recursive method must have a base case.

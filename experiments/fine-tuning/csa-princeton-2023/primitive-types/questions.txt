@@ -1,0 +1,108 @@
+question-section:0
+4 1
+Assuming all other statements in the program are correct, each of the following statements will allow the program to compile EXCEPT
+(A) // This is a comment
+(B) /* This is a comment */
+(C) // myName is a good identifier name
+(D) // myname is a good identifier name
+(E*) All of the above statements will compile.
+
+question-section:0
+4 1
+Assuming all other statements in the program are correct, each of the following statements will allow the program to compile EXCEPT
+(A) System.out.print(1);
+(B) System.out.print("1");
+(C*) System.out.print(side1);
+(D) System.out.print("side1");
+(E) All of the above statements will compile.
+
+question-section:1
+4 1
+Assuming all other statements in the program are correct, each of the following statements will allow the program to compile EXCEPT
+(A) System.out.print("Ilove Java");
+(B) System.out.println("Ilove" + "Java");
+(C*) System.out.print(1 + "love" + Java");
+(D) System.out.println(1 + "love" + "Java");
+(E) System.out.print("I love" + " " + "Java");
+
+question-section:3
+2 1
+Consider the following code segment:
+int a = 3;
+int b = 6;
+int c = 8;
+int d = a / b;
+c /= d;
+System.out.print(c);
+
+Which of the following will be output by the code segment?
+(A) 4
+(B) 8
+(C) 12
+(D) 16
+(E*) There will be no output because of a run-time error.
+
+question-section:3
+2 1
+Consider the following code segment:
+int a = 10;
+double b = 10.7;
+double c = a + b;
+int d = a + c;
+System.out.println(c + " " + d);
+
+What will be output as a result of executing the code segment?
+(A) 20 20
+(B) 20.0 30
+(C) 20.7 31
+(D) 20.730.7
+(E*) Nothing will be printed because of a compile-time error.
+
+question-section:3
+4 2
+Consider the following code segment:
+int a = 10;
+double b = 10.7;
+int d = a + b;
+
+Line 3 will not compile in the code segment above. With which of the following statements could we replace this line so that it compiles?
+I. int d = (int) a + b;
+II. int d = (int) (a + b);
+III. int d = a + (int) b;
+(A) I only
+(B) II only
+(C) III only
+(D) I and III only
+(E*) II and III only
+
+question-section:3
+2 1
+Consider the following code segment.
+int a = 11;
+int b = 4;
+double x = 11;
+double y = 4;
+System.out.print(a / b);
+System.out.print(", ");
+System.out.print(x / y);
+System.out.print(", ");
+System.out.print(a / y);
+
+What is printed as a result of executing the code segment?
+(A) 3, 2.75, 3
+(B) 3, 2.75, 2.75
+(C) 2, 3, 2
+(D*) 2, 2.75, 2.75
+(E) Nothing will be printed because of a compile-time error.
+
+question-section:3
+2 1
+Consider the following statement:
+int i = x % 50;
+
+If x is a positive integer, which of the following could NOT be the value of i after the statement above executes?
+(A) 0
+(B) 10
+(C) 25
+(D) 40
+(E*) 50

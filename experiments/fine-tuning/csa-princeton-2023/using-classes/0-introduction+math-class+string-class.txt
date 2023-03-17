@@ -1,0 +1,96 @@
+An object is an entity or data type we create in Java. To do so, we use a class built specifically for this purpose. Classes contain instance fields (data) belonging to the object and methods to manipulate that data. We will review this in more detail in a later chapter. For now, let’s dive into the Math class.
+Part of the AP Computer Science Java subset is the Math class. The Math class stores common numbers used in mathematical calculations (Math.PI and Math.E) and methods to perform mathematical functions. The methods of the Math class are static. There will be more on static methods later, but, for now, understand that to call the methods of the Math class, the programmer must type Math. before the name of the method. The Math class contains many methods, but only a few are part of the AP Computer Science Java Subset. Unlike most classes that we use to create an object, we normally do not create Math objects. 
+Common Math Methods
+Math.abs(x) //x is an int 
+An int equal to the absolute value of x
+
+Math.abs(x) //x is a double 
+A double equal to the absolute value of x
+
+Math.pow(base, exponent) 
+A double equal to the base raised to the exponent
+
+Math.sqrt(x) 
+A double equal to the square root of x
+
+Math.random() 
+A random double in the range (0, 1)
+
+Understanding operator precedence is essential for multiple-choice questions on the AP Exam and, perhaps more importantly, for showing off on social media when those “solve this problem” memes pop up and everyone argues over the right answer.
+
+It is important to note that Math.PI is a static variable of the Math class. Therefore, it can be called only if the class has been imported by putting the following statement at the top of the class coding: 
+import java.lang.Math;
+String is an object data type, meaning it has a class with many methods describing the behavior of the object. Below is a table of common methods utilized in the String class.
+
+Common String Methods
+length() 
+An int equal to the length of the string
+
+substring(int beginIndex) 
+A String that is a substring of this string starting at the character at the beginIndex, through to the end of the string
+
+substring(int beginIndex, int endIndex)
+A String that is a substring of this string starting at the character at the beginIndex, up to but not including the character at the endIndex
+
+equals(ObjectanObject) 
+A boolean reflecting the status after comparing this string to the specified object. 
+String str1 = "frog"; 
+String str2 = "frog"; 
+boolean isEqual = str1.equals(str2); 
+// returns true
+
+compareTo(String anotherString) 
+An int reflecting the status after comparing two strings lexicographically. 
+- Returns an integer < 0 if string1 comes before string2 
+- Returns an integer 0 if string1 is the same as string2 
+- Returns an integer > 0 if string1 comes after string2 
+String str1 = "cat"; 
+String str2 = "dog"; 
+str1.compareTo(str2); // returns -1 
+str1.compareTo("cat"); // returns 0 
+str2.compareTo(str1); // returns 1
+
+There are many more methods in the String class that can make your programming technique easier. They can be found in the Java API documentation. 
+While the char data type is not directly tested, it can be useful to understand that the data in the String class is an array of characters. Therefore, strings have many analogous tools to arrays. Consider the coding below. 
+String sample = "Sample"
+System.out.print(sample.length()); 
+
+The coding will output the number 6. The length() method of the String class will output the number of characters in the string, much as length is the number of elements in an array. Furthermore, the strings use indices in much the same way. The index of the first character in a string is 0, and the index of the last character is length() – 1. 
+Indices are useful when dealing with substrings, which are portions of strings. The String class has two substring methods. One has two integer parameters 
+String substring (int from, int to) 
+
+This method returns, as a String object, the substring starting at index from and ending at index to – 1. Note that the character at index to will NOT be included in the substring. Therefore, using the String sample from above, the command 
+System.out.print(sample.substring(1, 4)) 
+will display 
+amp 
+
+Note that 
+System.out.println(sample.substring(1, 7)); 
+
+will result in an IndexOutOfBoundsException since the index 7 – 1 = 6 is outside the bounds of the string. 
+
+The other substring method works similarly but uses only one parameter, to indicate the starting index. The resulting substring will continue to the end of the string. Therefore, the command
+System.out.print(sample.substring(1)) 
+will display 
+ample 
+
+This process can be reversed using the indexOf method of the String class. This method takes a substring as a parameter and returns the first occurrence of that substring. For example, 
+sample.indexOf("amp") 
+
+will return 1, as the substring first occurs at index 1. However, sample.indexOf("amb") 
+will return –1, as this substring does not occur. 
+
+The String class is an immutable class. In other words, it has no mutator methods. Thus, if you wish to change the contents of a String object, the new contents must be reassigned to the variable. 
+Let’s look at the following code: 
+String sample = "Sample"; 
+sample.substring(1, 4); 
+
+While this code will not cause an error, "amp" is not stored, making it rather useless. Instead, we assign the String obtained from the substring command back into the original variable so that sample will now contain the literal "amp". 
+sample = sample.substring(1, 4);
+
+When using methods of any class, you should remember that the parameters used to call the method must match the data types of the arguments of the defined method. 
+For example, substring is defined as: 
+substring(int beginIndex, int endIndex) 
+
+Therefore, the following code would cause a compiler error because the parameters are expected to be int data types. 
+sample = sample.substring(1.0, 4.0); 

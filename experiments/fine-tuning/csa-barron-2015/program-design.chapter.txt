@@ -1,0 +1,245 @@
+=====software-development-lifecycle=====
+Students of introductory computer science typically see themselves as programmers. They no sooner have a new programming project in their heads than they’re at the computer, typing madly to get some code up and running. (Is this you?) To succeed as a programmer, however, you have to combine the practical skills of a software engineer with the analytical mindset of a computer scientist. A software engineer oversees the life cycle of software development: initiation of the project, analysis of the specification, and design of the program, as well as implementation, testing, and maintenance of the final product. A computer scientist (among other things!) analyzes the implementation, correctness, and efficiency of algorithms. All these topics are tested on the APCS exam.
+The Waterfall Model
+The waterfall model of software development came about in the 1960s in order to bring structure and efficiency into the process of creating large programs.
+The specification is a written description of the project. Typically it is based on a customer's requirements. The first step in writing a program is to analyze the specification, make sure you understand it, and clarify with the customer anything that is unclear.
+Even for a small-scale program a good design can save programming time and enhance the reliability of the final program. The design is a fairly detailed plan for solving the problem outlined in the specification. It should include all objects that will be used in the solution, the data structures that will implement them, plus a detailed list of the tasks to be performed by the program.
+A good design provides a fairly detailed overall plan at a glance, without including the minutiae of Java code.
+Program implementation is the coding phase. Design and implementation are discussed in more detail on p. 210.
+TEST DATA
+Not every possible input value can be tested, so a programmer should be diligent in selecting a representative set of test data. Typical values in each part of a domain of the program should be selected, as well as endpoint values and out-of-range values. If only positive input is required, your test data should include a negative value just to check that your program handles it appropriately.
+
+Example
+A program must be written to insert a value into its correct position in this sorted list:
+2 5 9
+Test data should include
+• A value less than 2
+• A value between 2 and 5
+• A value between 5 and 9
+• A value greater than 9
+• 2, 5, and 9
+• A negative value
+
+TYPES OF ERRORS (BUGS)
+• A compile-time error occurs during compilation of the program. The compiler is unable to translate the program into bytecode and prints an appropriate error message. A syntax error is a compile-time error caused by violating the rules of the programming language. Some examples are omitting semicolons or braces, using undeclared identifiers, using keywords inappropriately, having parameters that don’t match in type and number, and invoking a method for an object whose class definition doesn’t contain that method.
+• A run-time error occurs during execution of the program. The Java run-time environment throws an exception, which means that it stops execution and prints an error message. Typical causes of run-time errors include attempting to divide an integer by zero, using an array index that is out of bounds, attempting to open a file that cannot be found, and so on. An error that causes a program to run forever (“infinite loop”) can also be regarded as a run-time error. (See also Errors and Exceptions, p. 74.)
+• An intent or logic error is one that fails to carry out the specification of the program. The program compiles and runs but does not do the job. These are sometimes the hardest types of errors to fix.
+
+ROBUSTNESS
+Always assume that any user of your program is not as smart as you are. You must therefore aim to write a robust program, namely one that
+• Won’t give inaccurate answers for some input data.
+• Won’t crash if the input data are invalid.
+• Won’t allow execution to proceed if invalid data are entered.
+Examples of bad input data include out-of-range numbers, characters instead of numerical data, and a response of “maybe” when “yes” or “no” was asked for.
+Note that bad input data that invalidates a computation won’t be detected by Java. Your program should include code that catches the error, allows the error to be fixed, and allows program execution to resume.
+
+Program maintenance involves upgrading the code as circumstances change. New features may be added. New programmers may come on board. To make their task easier, the original program must have clear and precise documentation.
+
+=====object-oriented-program-design=====
+Object-oriented programming has been the dominant programming methodology since the mid 1990s. It uses an approach that blurs the lines of the waterfall model. Anal ysis of the problem, development of the design, and pieces of the implementation all overlap and influence one another.
+Here are the steps in object-oriented design:
+• Identify classes to be written.
+• Identify behaviors (i.e., methods) for each class.
+• Determine the relationships between classes.
+• Write the interface (public method headers) for each class.
+• Implement the methods.
+
+Identify the objects in the program by picking out the nouns in the program speci fication. Ignore pronouns and nouns that refer to the user. Select those nouns that seem suitable as classes, the “big-picture” nouns that describe the major objects in the application. Some of the other nouns may end up as attributes of the classes.
+Many applications have similar object types: a low-level basic component; a collec
+tion of low-level components; a controlling object that puts everything together; and a display object that could be a GUI (graphical user interface) but doesn’t have to be.
+
+Example 1
+Write a program that maintains an inventory of stock items for a small store.
+Nouns to consider: inventory, item, store.
+Basic Object: StockItem
+Collection: Inventory (a list of StockItems)
+Controller: Store (has an Inventory, uses a StoreDisplay)
+Display: StoreDisplay (could be a GUI)
+
+Example 2
+Write a program that simulates a game of bingo. There should be at least two play
+ers, each of whom has a bingo card, and a caller who calls the numbers.
+Nouns to consider: game, players, bingo card, caller.
+Basic Objects: BingoCard, Caller
+Collection: Players (each has a BingoCard)
+Controller: GameMaster (sets up the Players and Caller)
+Display: BingoDisplay (shows each player’s card and displays winners, etc.)
+
+Example 3
+Write a program that creates random bridge deals and displays them in a specified format. (The specification defines a “deal” as consisting of four hands. It also describes a deck of cards, and shows how each card should be displayed.)
+Nouns to consider: deal, hand, format, deck, card.
+Basic Object: Card
+Collection: Deck (has an array of Cards)
+Hand (has an array of Cards)
+Deal (has an array of Hands)
+Dealer (has a Deck, or several Decks)
+Controller: Formatter (has a Deal and a TableDisplay)
+Display: TableDisplay (could be a GUI)
+
+Identifying Behaviors
+Find all verbs in the program description that help lead to the solution of the programming task. These are likely behaviors that will probably become the methods of the classes. Now decide which methods belong in which classes. Recall that the process of bundling a group of methods and data fields into a class is called encapsulation.
+Think carefully about who should do what. Do not ask a basic object to perform operations for the group. For example, a StockItem should keep track of its own details (price, description, how many on the shelf, etc.) but should not be required to search for another item. A Card should know its value and suit but should not be responsible for keeping track of how many cards are left in a deck. A Caller in a bingo game should be responsible for keeping track of the numbers called so far and for producing the next number but not for checking whether a player has bingo: That is the job of an individual player (element of Players) and his BingoCard.
+You will also need to decide which data fields each class will need and which data structures should store them. For example, if an object represents a list of items, consider an array or ArrayList as the data structure.
+
+INHERITANCE RELATIONSHIPS
+Look for classes with common behaviors. This will help identify inheritance relationships. Recall the is-a relationship—if object1 is-a object2, then object2 is a candidate for a superclass.
+COMPOSITION RELATIONSHIPS
+Composition relationships are defined by the has-a relationship. For example, a Nurse has-a Uniform. Typically, if two classes have a composition relationship, one of them contains an instance variable whose type is the other class.
+Note that a wrapper class always implements a has-a relationship with any objects that it wraps.
+
+=====UML-diagrams=====
+An excellent way to keep track of the relationships between classes and show the inheritance hierarchy in your programs is with a UML (Unified Modeling Language) diagram. This is a standard graphical scheme used by object-oriented programmers. Although it is not part of the AP subset, on the AP exam you may be expected to interpret simple UML diagrams and inheritance hierarchies.
+Here is a simplified version of the UML rules:
+• Represent classes with rectangles.
+• Use angle brackets with the word “abstract” or “interface” to indicate either an abstract class or interface.
+• Show the is-a relationship between classes with an open up-arrow.
+• Show the is-a relationship that involves an interface with an open, dotted up arrow.
+• Show the has-a relationship with a down arrow or sideways arrow (indicates composition).
+
+=====implementing-classes=====
+For each method in a class, list all of the other classes needed to implement that particular method. These classes are called collaborators. A class that has no collaborators is independent.
+To implement the classes, often an incremental, bottom-up approach is used. This means that independent classes are fully implemented and tested before being incorporated into the overall project. Typically, these are the basic objects of the program, like StockItem, Card, and BingoCard. Unrelated classes in a programming project can be implemented by different programmers.
+Note that a class can be tested using a dummy Tester class that will be discarded when the methods of the class are working. Constructors, then methods, should be added, and tested, one at a time. A driver class that contains a main method can be used to test the program as you go. The purpose of the driver is to test the class fully before incorporating it as an object in a new class.
+When each of the independent classes is working, classes that depend on just one other class are implemented and tested, and so on. This may lead to a working, bare bones version of the project. New features and enhancements can be added later.
+Design flaws can be corrected at each stage of development. Remember, a design is never set in stone: It simply guides the implementation.
+
+In a top-down design, the programmer starts with an overview of the program, selecting the highest-level controlling object and the tasks needed. During development of the program, subsidiary classes may be added to simplify existing classes.
+A good programmer avoids chunks of repeated code wherever possible. To this end, if several methods in a class require the same task, like a search or a swap, you should use helper methods. The reduce method in the Rational class on p. 118 is an example of such a method. Also, wherever possible you should enhance the readability of your code by using helper methods to break long methods into smaller tasks. The use of helper methods within a class is known as procedural abstraction and is an example of top-down development within a class. This process of breaking a long method into a sequence of smaller tasks is sometimes called stepwise refinement.
+Instance variables and helper methods are generally declared as private, which prevents client classes from accessing them. This strategy is called information hiding.
+Sometimes it makes more sense in the development of a class to test a calling method before testing a method it invokes. A stub is a dummy method that stands in for a method until the actual method has been written and tested. A stub typically has an output statement to show that it was called in the correct place, or it may return some reasonable values if necessary.
+
+=====algorithms=====
+An algorithm is a precise step-by-step procedure that solves a problem or achieves a goal. Don’t write any code for an algorithm in a method until the steps are completely clear to you.
+
+Example 1
+A program must test the validity of a four-digit code number that a person will enter to be able to use a photocopy machine. The number is valid if the fourth digit equals the remainder when the sum of the first three digits is divided by seven.
+Classes in the program may include an IDNumber, the four-digit code; Display, which would handle input and output; and IDMain, the driver for the program. The data structure used to implement an IDNumber could be an instance variable of type int, or an instance variable of type String, or four instance variables of type int—one per digit, and so on.
+A top-down design for the program that tests the validity of the number is reflected in the steps of the main method of IDMain:
+Create Display
+Read in IDNumber
+Check validity
+Print message
+Each method in this design is tested before the next method is added to main. If the display will be handled in a GUI (graphical user interface), stepwise refinement of the design might look like this:
+Create Display
+    Construct a Display
+    Create window panels
+    Set up text fields
+    Add panels and fields to window
+Read in IDNumber
+    Prompt and read
+Check validity of IDNumber
+    Check input
+        Check characters
+        Check range
+    Separate into digits
+    Check validity property
+Print message
+    Write number
+    State if valid
+
+NOTE
+1. The IDNumber class, which contains the four-digit code, is responsible for the following operations:
+    Split value into separate digits
+    Check condition for validity
+The Display class, which contains objects to read and display, must also contain an IDNumber object. It is responsible for the following operations:
+    Set up display
+    Read in code number
+    Display validity message
+Creating these two classes with their data fields (instance variables) and operations (methods) is an example of encapsulation.
+
+2. The Display method readCodeNumber needs private helper methods to check the input: checkCharacters and checkRange. This is an example of procedural abstraction (use of helper methods) and information hiding (making them private).
+3. Initially the programmer had just an IDNumber class and a driver class. The Display class was added as a refinement, when it was realized that handling the input and message display was separate from checking the validity of the IDNumber. This is an example of top-down development (adding an auxiliary class to clarify the code).
+4. The IDNumber class contains no data fields that are objects. It is therefore an in dependent class. The Display class, which contains an IDNumber data member, has a composition relationship with IDNumber (Display has-a IDNumber).
+5. When testing the final program, the programmer should be sure to include each of the following as a user-entered code number: a valid four-digit number, an invalid four-digit number, an n-digit number, where n 6= 4, and a “number” that contains a nondigit character. A robust program should be able to deal with all these cases.
+
+Example 2
+A program must create a teacher’s grade book. The program should maintain a class list of students for any number of classes in the teacher’s schedule. A menu should be provided that allows the teacher to
+• Create a new class of students.
+• Enter a set of scores for any class.
+• Correct any data that’s been entered.
+• Display the record of any student.
+• Calculate the final average and grade for all students in a class.
+• Print a class list, with or without grades.
+• Add a student, delete a student, or transfer a student to another class.
+• Save all the data in a file.
+
+=====identifying-classes-1=====
+Use the nouns in the specification as a starting point for identifying classes in the program. The nouns are: program, teacher, grade book, class list, class, student, schedule, menu, set of scores, data, record, average, grade, and file. Eliminate each of the following:
+program (Always eliminate “program” when used in this context.)
+teacher (Eliminate, because he or she is the user.)
+schedule (This will be reflected in the name of the external file for each class, e.g., apcs_period3.dat.)
+data, record (These are synonymous with student name, scores, grades, etc., and will be covered by these features.)
+class (This is synonymous with class list.)
+
+The following seem to be excellent candidates for classes: GradeBook, ClassList, Student, and FileHandler. Other possibilities are Menu, ScoreList, and a GUI_Display. On further thought: Basic independent objects are Student, Menu, Score, and FileHandler. Group objects are ClassList (collection of students), ScoreList (collection of scores), and AllClasses (collection of ClassLists). The controlling class is the GradeBook. A Display class is essential for many of the grade book operations, like showing a class list or displaying information for a single student.
+
+There are no inheritance relationships. There are many composition relationships between objects, however. The GradeBook has-a Menu, the ClassList has-a Student (several, in fact!), a Student has-a name, average, grade, list_of_scores, etc. The programmer must decide whether to code these attributes as classes or data fields.
+
+=====identifying-behaviors-1=====
+Use the verbs in the specification to identify required operations in the program. The verbs are: maintain <list>, provide <menu>, allow <user>, create <list>, enter <scores>, correct <data>, display <record>, calculate <average>, calculate <grade>, print <list>, add <student>, delete <student>, transfer <student>, and save <data>.
+You must make some design decisions about which class is responsible for which behavior. For example, will a ClassList display the record of a single Student, or will a Student display his or her own record? Who will enter scores—the GradeBook, a ClassList, or a Student? Is it desirable for a Student to enter scores of other Students? Probably not!
+
+Here are some preliminary decisions. The GradeBook will provideMenu. The menu selection will send execution to the relevant object.
+The ClassList will maintain an updated list of each class. It will have these public methods: addStudent, deleteStudent, transferStudent, createNewClass, printClassList, printScores, and updateList. A good candidate for a helper method in this class is search for a given student.
+Each Student will have complete personal and grade information. Public methods will include setName, getName, enterScore, correctData, findAverage, getAverage, getGrade, and displayRecord.
+Saving and retrieving information is crucial to this program. The FileHandler will take care of openFileForReading, openFileForWriting, closeFiles, loadClass, and saveClass. The FileHandler class should be written and tested right at the beginning, using a small dummy class list.
+Score, ScoreList, and Student are easy classes to implement. When these are working, the programmer can go on to ClassList. Finally the Display GUI class, which will have the GradeBook, can be developed. This is an example of bottom-up development.
+
+Example 3
+A program simulates a game of Battleships, which is a game between two players, each of whom has a grid where ships are placed. Each player has five ships:
+battleship o o o o o
+cruiser o o o o
+submarine o o o
+destroyer o o
+frigate o
+The grids of the players’ fleets may look like this. Any two adjacent squares that are taken must belong to the same ship, i.e., different ships shouldn’t “touch.”
+Each player’s grid is hidden from the other player. Players alternate “shooting” at each other’s ships by calling out a position, a row and column number. A player must make an honest response, “hit” or “miss.” If it’s a hit, a player gets another turn. If the whole ship has been hit, the owner must say something like, “You sank my cruiser.” Each player must keep track of hits and misses. The first player to sink his opponent’s fleet is the winner.
+
+=====identifying-classes-2=====
+The nouns in the specification are program, game, players, grid, ship, battleship, cruiser, submarine, destroyer, frigate, square, position, opponent, row, column, turn, hits, misses, fleet, winner.
+
+Eliminate each of the following:
+program Always eliminate.
+row, col These are parts of a given position or square, more suitable as instance variables for a position or square object.
+hits, misses These are simply marked positions and probably don’t need their own class.
+turn Taking a turn is an action and will be described by a method rather than a class.
+opponent This is another word for player.
+
+The following seem to be good candidates for classes: Player, Grid, Position, Ship, Battleship, Cruiser, Submarine, Destroyer, and Frigate. Additionally, it seems there should be a GameManager and Display.
+
+This program provides two examples of inheritance relationships. Each of the five ships is-a Ship, and shares common features, like isHit, isSunk, and array of positions. However, each has a unique name, length, and position in the grid. This means that Ship is a good candidate for an abstract class with abstract methods like getLength, getName, and getPositions, which depend on the kind of ship.
+The second inheritance relationship is between the grids. There are two types of
+grids for each player: his own FleetGrid (the current state of his own ships) and his opponent’s HitGrid, which keeps track of his hits and misses. Each of these grids is-a Grid. A grid is a candidate for an interface, with a list of methods like getAdjacentNeighbors, getRightNeighbor, etc. Each of FleetGrid and HitGrid would implement Grid.
+There are several composition relationships in this program. A Player has-a HitGrid and a FleetGrid and also has five ships. The GameManager has each of the two Player objects and also has-a Display. The Display has each of the grids.
+
+=====identifying-behaviors-2=====
+Use the verbs to identify key methods in the program: simulate<game>, place <ships>, shoot<at position>, call out<position>, respond<hit or miss>, sink <ship>, inform that<ship was sunk>, keep track of<hits or misses>, sink <opponent’s fleet>, win<game>.
+You need to decide who will do what. There’s no definitive way of implementingthe program, but it seems clear that the GameManager should run the game and declare the winner. Should the GameManager also be in charge of announcing if a ship is sunk? It makes sense because the game manager can see both players’ grids. Each player should keep track of his calls, so that he can make an intelligent next call and also respond “hit” or “miss.” Will each player have a display? Or will the Display have both players? You have to set it up so that a player can’t see his opponent’s FleetGrid, but he can see his own and also a grid showing the state of the calls he has made. Should each player have a list of his ships, so he can keep track of the state of his fleet? And what about each ship in the fleet? Should a ship have a list of its positions, and should it keep track of if it’s hit or sunk?
+Saving and retrieving updated information is crucial to this program. It seems a bit overwhelming. Where should you start? The Ship classes are low-level classes, independent of the players and grids. Start with these and test that you can get accurate information about each ship. In your driver program create an ArrayList<Ship>. Have a loop that prints information about each ship. Polymorphism will take care of getting the correct information about each ship.
+Now try the Grid classes. This is a complicated program where each small piece should be coded and tested with simple output. For example, a Grid can be displayed with a two-dimensional array of 0’s and 1’s to show the positions of ships. Other symbols can be used to show what’s been hit and what’s been sunk.
+When everything is working with the grids, you could add a Display class that has Grid variables and a display method.
+Try a Player. Give him a list of ships, two grids and a Display.
+Then create a GameManager. Give her two Player variables and be sure she has a playGame method.
+The program development shown above is an example of bottom-up development.
+
+=====program-analysis=====
+Program Correctness
+Testing that a program works does not prove that the program is correct. After all, you can hardly expect to test programs for every conceivable set of input data. Computer scientists have developed mathematical techniques to prove correctness in certain cases, but these are beyond the scope of the APCS course. Nevertheless, you are expected to be able to make assertions about the state of a program at various points during its execution.
+
+Assertions
+An assertion is a precise statement about a program at any given point. The idea is that if an assertion is proved to be true, then the program is working correctly at that point.
+An informal step on the way to writing correct algorithms is to be able to make different kinds of assertions about your code.
+
+PRECONDITION
+The precondition for any piece of code, whether it is a method, loop, or block, is a statement of what is true immediately before execution of that code.
+POSTCONDITION
+The postcondition for a piece of code is a statement of what is true immediately after execution of that code.
+
+Efficiency
+An efficient algorithm is one that is economical in the use of
+• CPU time. This refers to the number of machine operations required to carry out the algorithm (arithmetic operations, comparisons, data movements, etc.).
+• Memory. This refers to the number and complexity of the variables used.
+
+Some factors that affect run-time efficiency include unnecessary tests, excessive movement of data elements, and redundant computations, especially in loops.
+Always aim for early detection of output conditions: Your sorting algorithm should halt when the list is sorted; your search should stop if the key element has been found. In discussing efficiency of an algorithm, we refer to the best case, worst case, and average case. The best case is a configuration of the data that causes the algorithm to run in the least possible amount of time. The worst case is a configuration that leads to the greatest possible run time. Typical configurations (i.e., not specially chosen data) give the average case. It is possible that best, worst, and average cases don’t differ much in their run times.
+For example, suppose that a list of distinct random numbers must be searched for a given key value. The algorithm used is a sequential search starting at the beginning of the list. In the best case, the key will be found in the first position examined. In the worst case, it will be in the last position or not in the list at all. On average, the key will be somewhere in the middle of the list.

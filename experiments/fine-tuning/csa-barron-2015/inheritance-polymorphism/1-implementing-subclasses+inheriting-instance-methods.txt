@@ -1,0 +1,124 @@
+The inheritance relationship between a subclass and a superclass is specified in the declaration of the subclass, using the keyword extends. The general format looks like this:
+public class Superclass
+{
+    //private instance variables
+    //other data members
+    //constructors
+    //public methods
+    //private methods
+}
+public class Subclass extends Superclass
+{
+    //additional private instance variables
+    //additional data members
+    //constructors (Not inherited!)
+    //additional public methods
+    //inherited public methods whose implementation is overridden //additional private methods
+}
+
+For example, consider the following inheritance hierarchy:
+Student -> GradStudent
+Student -> UnderGrad
+
+The implementation of the classes may look something like this (discussion follows the code):
+
+public class Student {
+    // data members
+    public final static int NUM_TESTS = 3;
+    private String name;
+    private int[] tests;
+    private String grade;
+
+    // constructor
+    public Student() {
+        name = "";
+        tests = new int[NUM_TESTS];
+        grade = "";
+    }
+
+    // constructor
+    public Student(String studName, int[] studTests, String studGrade) {
+        name = studName;
+        tests = studTests;
+        grade = studGrade;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getGrade() {
+        return grade;
+    }
+
+    public void setGrade(String newGrade) {
+        grade = newGrade;
+    }
+
+    public void computeGrade() {
+        if (name.equals(""))
+            grade = "No grade";
+        else if (getTestAverage() >= 65)
+            grade = "Pass";
+        else
+            grade = "Fail";
+    }
+
+    public double getTestAverage() {
+        double total = 0;
+        for (int score : tests)
+            total += score;
+        return total / NUM_TESTS;
+    }
+}
+
+public class UnderGrad extends Student {
+    public UnderGrad() // default constructor
+    {
+        super();
+    }
+
+    // constructor
+    public UnderGrad(String studName, int[] studTests, String studGrade) {
+        super(studName, studTests, studGrade);
+    }
+
+    public void computeGrade() {
+        if (getTestAverage() >= 70)
+            setGrade("Pass");
+        else
+            setGrade("Fail");
+    }
+}
+
+public class GradStudent extends Student {
+    private int gradID;
+
+    public GradStudent() // default constructor
+    {
+        super();
+        gradID = 0;
+    }
+
+    // constructor
+    public GradStudent(String studName, int[] studTests,
+            String studGrade, int gradStudID) {
+        super(studName, studTests, studGrade);
+        gradID = gradStudID;
+    }
+
+    public int getID() {
+        return gradID;
+    }
+
+    public void computeGrade() {
+        // invokes computeGrade in Student superclass
+        super.computeGrade();
+        if (getTestAverage() >= 90)
+            setGrade("Pass with distinction");
+    }
+}
+The semantics of talking about inheritance is tricky. Subclasses do not inherit the private instance variables or private methods of their superclasses. However, objects of subclasses contain memory for those private instance variables, even though they can’t directly access them. A subclass inherits all the public and protected data members of its parent.
+In the Student example, the UnderGrad and GradStudent subclasses inherit all of the methods of the Student superclass. Notice, however, that the Student instance variables name, tests, and grade are private and are therefore not inherited or directly accessible to the methods in the UnderGrad and GradStudent subclasses. A subclass can, however, directly invoke the public accessor and mutator methods of the super class. Thus, both UnderGrad and GradStudent use getTestAverage. Additionally, both UnderGrad and GradStudent use setGrade to access indirectly—and modify—grade.
+If, instead of private, the access specifier for the instance variables in Student were public or protected, then the subclasses could directly access these variables. The keyword protected is not part of the AP Java subset.
+Classes on the same level in a hierarchy diagram do not inherit anything from each other (for example, UnderGrad and GradStudent). All they have in common is the identical code they inherit from their superclass.

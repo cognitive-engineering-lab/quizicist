@@ -1,0 +1,45 @@
+=====recursion=====
+The final flow control structure that appears on the AP Exam is called recursion. It is not represented in the free-response questions and appears at least once in the multiple-choice questions (but typically only a few times). This structure has a result similar to a loop, but approaches the task in a different manner. 
+Remember those little wind-up toys you played with when you were little? You know, the plastic teeth or bunny (or whatever) with the little white knob on the side? You would wind the knob over and over, and when you let go, the little teeth would move across the table. The more you wound the knob, the longer the teeth would walk. Since the winding is the same action repeated, it can be considered a loop. The unwinding action, however, differentiates this situation from a while or for loop. When an unwinding or “winding down” occurs as a result of a “winding up,” recursion is lurking in the shadows. 
+The distinguishing characteristic of a recursive method is a call to the very method itself; this statement is called a recursive call. In order to prevent an infinite loop, the recursive method includes a base case, which signals execution to stop recursing and return to each prior recursive call, finishing the job for each. Let’s use an easy example to illustrate this somewhat confusing topic, and then we’ll spice up the example a bit afterward.
+Suppose you have a giant bag of small, multicolored, candy-coated chocolates. As a programmer, you naturally do not want to eat these candies in a haphazard manner; instead, you want to use some sort of algorithm. You decide that you will eat random candies, one at a time, until you reach your favorite color; when your favorite color is reached, you will systematically eat the same colors you ate previously, in backward order. 
+For example, if you eat red -> blue -> orange -> blue -> green, and green is your base case, you will then eat blue -> orange -> blue -> red and the recursion is complete. Pretty tough to remember, right? Well, a recursive method renders this task a cinch. In pseudocode, 
+eatCandy (color of current candy) 
+{ 
+    if (current candy color is green) 
+        done eating; 
+    else 
+        eat more candy; 
+} 
+
+Although there is no for or while loop in the code, the recursive call to the method will exhibit a looping quality; unlike our previous loops, however, there is a forward/backward progression, as described above. 
+Let’s add to this task: tell the user that you’re done eating once you finish. Would adding the following line after the if-else statement accomplish this task? 
+display I’m done; 
+
+The way recursion works, the task will be accomplished, although perhaps not according to plan. When the base case is reached, execution of the current method is completed, and then the process continues all the way back to the initial recursive call. Since the “I’m done” message is displayed after, and regardless of, the if-else, it will be displayed each time a recursive iteration completes. The result is the displaying of “I’m done” once for every candy that you ate. Nine candies, nine “I’m done” outputs. It works, but probably not as planned. 
+
+=====recursively-traversing-arrays=====
+Although it is more common to use a for loop to step through an array, it is also possible to use a recursion. For example, say you have a lineup of football players, each of whom has a numbered helmet. You want to step through the lineup and find the position of the person who has “9” written on his helmet.
+A recursive solution for this problem is very easy to implement. You need to look through an array of int values and find the position of a specific value, if it’s there. 
+First, we’ll need to describe the problem in recursive terms. 
+If we’ve looked through every item, then return –1. 
+If the current item in the array is a match, return its position. Or else, restart the process with the next item in the array. 
+
+public int findPosition(int nums[], int key, int currentIndex) { 
+    //if we’ve already looked through 
+    //the entire array 
+    if (nums.length <= currentIndex) 
+        return -1; 
+    //if the next item in the array is a match, 
+    //then return it 
+    if (nums[currentIndex] == key)
+        return currentIndex; 
+    //else, step past the current item in the array, 
+    //and repeat the search on the next item 
+    return findPosition(nums, key, currentIndex + 1);
+} 
+
+This example is slightly more subtle than the others because we’re carrying information from one recursive call to the next. Specifically, we’re using the currentIndex field to pass information from one recursive call to another. Thus, the first recursive call starts looking at position 0, the next one at position 1, and so on. 
+Let’s go back to our football-player example. You want to step through a lineup of football players and return the position of the player who has the helmet with “9” written on it. Your code would be of the following form: 
+int [] players = //represents the football players 
+int pos = findPosition(players, 9, 0);

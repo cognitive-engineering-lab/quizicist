@@ -1,0 +1,62 @@
+One more item that needs to be mentioned… do you see how each method in the object class has a “title,” or header? The header is used to indicate the overall function of a method.
+This is a Java book, right? So let’s look at some Java. These two classes are designed to simulate a phone downloading and opening a new app.
+1 import Phone;
+2 public class UsePhoneApp
+3 {
+4   public UsePhoneApp() // just do it, we’ll explain later
+5   {
+6       Phone myPhone = new Phone();
+7       myPhone.downloadApp();
+8       myPhone.openApp();
+9       myPhone.closeApp();
+10  }
+11 }
+
+1 public class Phone
+2 {
+3   private boolean hasApp;
+4   public Phone()
+5   {
+6       hasApp = false;
+7   }
+8   public void downloadApp()
+9   {
+10      hasApp = true;
+11  }
+12
+13  public void closeApp() // closes the app
+14  {
+15      if (hasApp)
+16          System.out.println ("App is closed.");
+17  }
+18
+19  public void openApp() // opens the app
+20  {
+21      if (hasApp)
+22          System.out.println ("App is running…"); 23 }
+24  }
+
+OUTPUT:
+App is running…
+App is closed.
+
+There are many components in this program; first, note that we now have two classes that make up a single program. In isolation, neither of these classes would produce a useful result. The UsePhoneApp class would not compile because the compiler does not understand the methods if they are not present (compiler: what does openApp mean?); the Phone class would compile but would not actually perform any actions without UsePhoneApp (compiler: when do I openApp, and on which phone?). In order to allow the UsePhoneApp class to access the Phone class, the line
+import Phone;
+
+must be used at the top of the file above the class declaration.
+Lines 4–7 in Phone make up a special kind of method called a constructor. An object must be constructed before it can perform any actions, just as a car must be built before it can be driven. Line 6 in UsePhoneApp calls this constructor method, which “builds” the Phone object; this command must occur before the non-constructor methods are called; otherwise, the compiler will return an error. Imagine someone pressing an imaginary accelerator pedal and trying to drive somewhere, without a car. Interesting, but not possible.
+Line 3 of Phone defines whether the Phone has an app (true) or does not (false). This is the sole attribute of a Phone object in our program; more complex programs may have dozens or even hundreds of attributes (a phone, in reality, has many more attributes, such as a screen, volume buttons, etc.). The programmer should write these attributes, called instance variables or fields. Following the data fields is the constructor, as we stated before, and then a series of methods that control what the Phone can do.
+An object class defines what an object HAS and DOES. A method has several components. The method header is built in a very specific way; its syntax is as follows:
+visibility returnType methodName (param1, param2,…)
+
+The visibility of a method can be public or private, depending on the situation (more on this later). The return type identifies what type of data, if any, will be returned from the method after its commands are executed. The name of a method, similar to the name of a variable, should be an intuitive name that summarizes the function of the method; it should conform to the same specifications as a variable name (begin with a lowercase letter, etc.). The parameters, which are optional, are the data that the method needs in order to perform its job.
+In our previous example, the method header for closeApp was: public void closeApp()
+
+This is functional, but it is also relatively simple for the example. Its visibility is public, its return type is void (there is no information returned), and it does not have parameters. A more realistic method to close an app on a phone might require information regarding when it should be closed, and might return data, such as whether or not it was closed successfully. Thus, the revised method header might look like
+public boolean closeApp (int minutes)
+
+Note that the single parameter, minutes, is defined with its type. Since minutes will be a temporary variable that exists only during the execution of this method, it must be defined as new, right in the header. A method can have any number of parameters, depending on the programmer’s design decisions for the program.
+A method must begin with a header containing a visibility modifier (private or public), a return type or void if no information will be returned, and a method name. Parameter(s) are optional, depending on the method’s requirements to perform its task.
+The ultimate purpose of a method is to perform some sort of task with respect to the object. Note that openApp() and closeApp() simply access the data field hasApp and react accordingly; i.e., the message is displayed only if the value hasApp is true. downloadApp() is more profound, in a way; rather than simply accessing data, it actually changes the value of a data field—in this case, updates hasApp to true once the “app” is “downloaded.” As a result, it is common in Java to label methods like openApp() and closeApp() as accessor methods and to label methods like downloadApp() as mutator methods.
+We have used an analogy to a car several times already in this chapter, but it’s a great way to understand these concepts. When you want to start a car, you have to go through a series of steps. Since all of those steps perform, ultimately, a single action—the car starting—a method would be a great way to keep the “car starting” commands in a single, convenient unit. As a programmer, you would have to decide what data the method would need in order to work (parameter(s)) and what data, if any, the method would return. Does the car need a key to start? A password code? Does the brake pedal have to be depressed? This information would all be accepted through parameters. Should the method return whether the car has started? How long it took to start? A code that represents whether it needs an oil change? These are all examples of possible return data.
+In some cases, there may be a situation in which the car can be started multiple ways—for example, the owner has a push-button starter and a remote starter. The designer could write two startCar methods (or three, or four…), each one performing the same task but requiring different information (parameters) to do the task. This process is called overloading and can be accomplished by writing two or more methods with identical names but different types and/or numbers of parameters.

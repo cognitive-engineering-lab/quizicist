@@ -1,0 +1,65 @@
+An array is a data structure used to implement a list object, where the elements in the list are of the same type; for example, a class list of 25 test scores, a membership list of 100 names, or a store inventory of 500 items.
+For an array of N elements in Java, index values (“subscripts”) go from 0 to N − 1. Individual elements are accessed as follows: If arr is the name of the array, the elements are arr[0], arr[1], . . . , arr[N-1]. If a negative subscript is used, or a subscript k where k ≥ N, an ArrayIndexOutOfBoundsException is thrown.
+
+Initialization
+In Java, an array is an object; therefore, the keyword new must be used in its creation. The size of an array remains fixed once it has been created. As with String objects, however, an array reference may be reassigned to a new array of a different size.
+
+Example
+All of the following are equivalent. Each creates an array of 25 double values and assigns the reference data to this array.
+1. double[] data = new double[25];
+2. double data[] = new double[25];
+3. double[] data;
+data = new double[25];
+
+A subsequent statement like
+data = new double[40];
+reassigns data to a new array of length 40. The memory allocated for the previous data array is recycled by Java’s automatic garbage collection system.
+When arrays are declared, the elements are automatically initialized to zero for the primitive numeric data types (int and double), to false for boolean variables, or to null for object references.
+It is possible to declare several arrays in a single statement. For example,
+int[] intList1, intList2; //declares intList1 and intList2 to contain int values
+int[] arr1 = new int[15], arr2 = new int[30]; //reserves 15 slots for arr1, 30 for arr2
+
+Small arrays whose values are known can be declared with an initializer list. For example, instead of writing
+int[] coins = new int[4];
+coins[0] = 1;
+coins[1] = 5;
+coins[2] = 10;
+coins[3] = 25;
+you can write
+int[] coins = {1, 5, 10, 25};
+This construction is the one case where new is not required to create an array.
+
+A Java array has a final public instance variable (i.e., a constant), length, which can be accessed when you need the number of elements in the array. For example,
+String[] names = new String[25];
+< code to initialize names >
+
+//loop to process all names in array
+for (int i = 0; i < names.length; i++)
+< process names >
+
+NOTE
+1. The array subscripts go from 0 to names.length-1; therefore, the test on i in the for loop must be strictly less than names.length.
+2. length is not a method and therefore is not followed by parentheses. Contrast this with String objects, where length is a method and must be followed by parentheses. For example,
+String s = "Confusing syntax!";
+int size = s.length(); //assigns 17 to size
+Use a for-each loop whenever you need access to every element in an array without replacing or removing any elements. Use a for loop in all other cases: to access the index of any element, to replace or remove elements, or to access just some of the elements. Note that if you have an array of objects (not primitive types), you can use the for each loop and mutator methods of the object to modify the fields of any instance (see the shuffleAll method on p. 239).
+
+Example 1
+/** @return the number of even integers in array arr of integers */ public static int countEven(int[] arr)
+{
+    int count = 0;
+    for (int num : arr)
+        if ( num % 2 == 0) //num is even
+            count++;
+    return count;
+}
+Example 2
+/** Change each even-indexed element in array arr to 0.
+* Precondition: arr contains integers.
+* Postcondition: arr[0], arr[2], arr[4], ... have value 0.
+*/
+public static void changeEven(int[] arr)
+{
+    for (int i = 0; i < arr.length; i += 2)
+        arr[i] = 0;
+}

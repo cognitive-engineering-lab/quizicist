@@ -1,0 +1,336 @@
+question-section:0
+3 1
+A program that reads in a five-digit identification number is to be written. The specification does not state whether zero can be entered as a first digit. The programmer should 
+(A) write the code to accept zero as a first digit since zero is a valid digit. 
+(B) write the code to reject zero as a first digit since five-digit integers do not start with zero. 
+(C) eliminate zero as a possibility for any of the digits. 
+(D) treat the identification number as a four-digit number if the user enters a number starting with zero. 
+(E*) check with the writer of the specification whether zero is acceptable as a first digit. 
+
+question-section:1
+3 2
+Refer to the following three program descriptions: 
+I Test whether there exists at least one three-digit integer whose value equals the sum of the squares of its digits. 
+II Read in a three-digit code number and check if it is valid according to some given formula. 
+III Passwords consist of three digits and three capital letters in any order. Read in a password, and check if there are any repeated characters. 
+For which of the preceding program descriptions would a ThreeDigitNumber class be suitable? 
+(A) I only 
+(B) II only 
+(C) III only 
+(D*) I and II only 
+(E) I, II, and III 
+
+question-section:2
+5 1
+Top-down programming is illustrated by which of the following? 
+(A) Writing a program from top to bottom in Java 
+(B) Writing an essay describing how the program will work, without including any Java code 
+(C) Using driver programs to test all methods in the order that they’re called in the program 
+(D) Writing and testing the lowest level methods first and then combining them to form appropriate abstract operations 
+(E*) Writing the program in terms of the operations to be performed and then refining these operations by adding more detail
+
+question-section:2
+5 2
+Which of the following should influence your choice of a particular algorithm? 
+I The run time of the algorithm 
+II The memory requirements of the algorithm 
+III The ease with which the logic of the algorithm can be understood 
+(A) I only 
+(B) III only 
+(C) I and III only 
+(D) I and II only 
+(E*) I, II, and III 
+
+question-section:4
+3 2
+A list of numbers is stored in a sorted array. It is required that the list be maintained in sorted order. This requirement leads to inefficient execution for which of the following processes? 
+I Summing the five smallest numbers in the list 
+II Finding the maximum value in the list 
+III Inserting and deleting numbers 
+(A) I only 
+(B*) III only 
+(C) II and III only 
+(D) I and III only 
+(E) I, II, and III 
+
+question-section:0
+5 1
+Which of the following is not necessarily a feature of a robust program? 
+(A) Does not allow execution to proceed with invalid data 
+(B) Uses algorithms that give correct answers for extreme data values 
+(C*) Will run on any computer without modification 
+(D) Will not allow division by zero 
+(E) Will anticipate the types of errors that users of the program may make 
+
+question-section:0
+3 1
+A certain freight company charges its customers for shipping overseas according to this scale: 
+$80 per ton for a weight of 10 tons or less 
+$40 per ton for each additional ton over 10 tons but not exceeding 25 tons 
+$30 per ton for each additional ton over 25 tons 
+
+For example, to ship a weight of 12 tons will cost 10(80) + 2(40) = $880. To ship 26 tons will cost 10(80) + 15(40) + 1(30) = $1430. 
+A method takes as parameter an integer that represents a valid shipping weight and outputs the charge for the shipment. Which of the following is the smallest set of input values for shipping weights that will adequately test this method? 
+(A) 10, 25 
+(B) 5, 15, 30 
+(C*) 5, 10, 15, 25, 30 
+(D) 0, 5, 10, 15, 25, 30 
+(E) 5, 10, 15, 20, 25, 30
+
+question-section:0
+1 1
+A code segment calculates the mean of values stored in integers n1, n2, n3, and n4 and stores the result in average, which is of type double. What kind of error is caused with this statement? 
+double average = n1 + n2 + n3 + n4 / (double) 4; 
+(A*) Logic 
+(B) Run-time 
+(C) Overflow 
+(D) Syntax 
+(E) Type mismatch 
+
+question-section:0
+3 1
+A program evaluates binary arithmetic expressions that are read from an input file. All of the operands are integers, and the only operators are +, -, *, and /. In writing the program, the programmer forgot to include a test that checks whether the right-hand operand in a division expression equals zero. When will this oversight be detected by the computer? 
+(A) At compile time 
+(B) While editing the program 
+(C) As soon as the data from the input file is read 
+(D*) During evaluation of the expressions 
+(E) When at least one incorrect value for the expressions is output
+
+question-section:4
+5 1
+Which best describes the precondition of a method? It is an assertion that 
+(A*) describes precisely the conditions that must be true at the time the method is called. 
+(B) initializes the parameters of the method. 
+(C) describes the effect of the method on its postcondition. 
+(D) explains what the method does. 
+(E) states what the initial values of the local variables in the method must be.
+
+question-section:4
+1 1
+Consider the following code fragment:
+
+/** Precondition: a1, a2, a3 contain 3 distinct integers. 
+* Postcondition: max contains the largest of a1, a2, a3. 
+*/ 
+//first set max equal to larger of a1 and a2 
+if (a1 > a2) 
+    max = a1; 
+else 
+    max = a2; 
+//set max equal to larger of max and a3 
+if (max < a3) 
+    max = a3; 
+
+For this algorithm, which of the following initial setups for a1, a2, and a3 will cause 
+(1) the least number of computer operations (best case) and 
+(2) the greatest number of computer operations (worst case)? 
+(A*) (1) largest value in a1 or a2 (2) largest value in a3 
+(B) (1) largest value in a2 or a3 (2) largest value in a1 
+(C) (1) smallest value in a1 (2) largest value in a2 
+(D) (1) largest value in a2 (2) smallest value in a3 
+(E) (1) smallest value in a1 or a2 (2) largest value in a3 
+
+question-section:4
+1 1
+Refer to the following code segment.
+
+/** Compute the mean of integers 1 .. N. 
+* N is an integer >= 1 and has been initialized. 
+*/ 
+int k = 1; 
+double mean, sum = 1.0; 
+while (k < N) 
+{ 
+    /* loop body */ 
+} 
+mean = sum / N; 
+
+What is the precondition for the while loop? 
+(A) k ≥ N, sum = 1.0 
+(B) sum = 1 + 2 + 3 + ... + k 
+(C) k < N, sum = 1.0 
+(D*) N ≥ 1, k = 1, sum = 1.0 
+(E) mean = sum / N
+
+question-section:4
+1 1
+The sequence of Fibonacci numbers is 1, 1, 2, 3, 5, 8, 13, 21, . . . . The first two Fibonacci numbers are each 1. Each subsequent number is obtained by adding the previous two. Consider this method: 
+
+/** Precondition: n >= 1. 
+* Postcondition: The nth Fibonacci number has been returned. 
+*/ 
+public static int fib(int n) 
+{ 
+    int prev = 1, next = 1, sum = 1; 
+    for (int i = 3; i <= n; i++) 
+    { 
+        /* assertion */ 
+        sum = next + prev; 
+        prev = next; 
+        next = sum; 
+    } 
+    return sum; 
+} 
+
+Which of the following is a correct /* assertion */ about the loop variable i? 
+(A) 1 ≤ i ≤ n 
+(B) 0 ≤ i ≤ n 
+(C*) 3 ≤ i ≤ n 
+(D) 3 < i ≤ n 
+(E) 3 < i < n+1 
+
+question-section:4
+1 1
+Refer to the following method. 
+
+/** Precondition: a and b are initialized integers. */ 
+public static int mystery(int a, int b) 
+{ 
+    int total = 0, count = 1; 
+    while (count <= b) 
+    { 
+        total += a; 
+        count++; 
+    } 
+    return total; 
+} 
+
+What is the postcondition for method mystery? 
+(A) total = a + b 
+(B) total = a^b 
+(C) total = b^a 
+(D*) total = a * b 
+(E) total = a/b
+
+question-section:1
+3 2
+A program is to be written that prints an invoice for a small store. A copy of the invoice will be given to the customer and will display 
+• A list of items purchased. 
+• The quantity, unit price, and total price for each item. 
+• The amount due. 
+Three candidate classes for this program are Invoice, Item, and ItemList, where an Item is a single item purchased and ItemList is the list of all items purchased. 
+Which class is a reasonable choice to be responsible for the amountDue method, which returns the amount the customer must pay? 
+I Item 
+II ItemList 
+III Invoice 
+(A) I only 
+(B) III only 
+(C) I and II only 
+(D*) II and III only 
+(E) I, II, and III 
+
+question-section:1
+5 1
+Which is a false statement about classes in object-oriented program design? 
+(A) If a class C1 has an instance variable whose type is another class, C2, then C1 has-a C2. 
+(B) If a class C1 is associated with another class, C2, then C1 depends on C2 for its implementation. 
+(C*) If classes C1 and C2 are related such that C1 is-a C2, then C2 has-a C1. 
+(D) If class C1 is independent, then none of its methods will have parameters that are objects of other classes. 
+(E) Classes that have common methods do not necessarily define an inheritance relationship.
+
+question-section:1
+3 1
+A Java program maintains a large database of vehicles and parts for a car dealership. Some of the classes in the program are Vehicle, Car, Truck, Tire, Circle, SteeringWheel, and AirBag. The declarations below show the relationships between classes. Which is a poor choice? 
+(A) public class Vehicle 
+{
+    ... 
+    private Tire[] tires; 
+    private SteeringWheel sw; 
+    ... 
+} 
+(B*) public class Tire extends Circle 
+{
+    ... 
+    //inherits methods that compute circumference 
+    //and center point 
+} 
+(C) public class Car extends Vehicle 
+{
+    ... 
+    //inherits private Tire[] tires from Vehicle class 
+    //inherits private SteeringWheel sw from Vehicle class 
+    ... 
+} 
+(D) public class Tire 
+{
+    ... 
+    private String rating; //speed rating of tire 
+    private Circle boundary; 
+} 
+(E) public class SteeringWheel 
+{
+    ... 
+    private AirBag ab; //AirBag is stored in SteeringWheel 
+    private Circle boundary; 
+} 
+
+question-section:1
+3 1
+A Java programmer has completed a preliminary design for a large program. The programmer has developed a list of classes, determined the methods for each class, established the relationships between classes, and written an outline for each class. Which class(es) should be implemented first? 
+(A) Any superclasses 
+(B) Any subclasses 
+(C) All collaborator classes (classes that will be used to implement other classes) 
+(D) The class that represents the dominant object in the program 
+(E*) All independent classes (classes that have no references to other classes)
+
+question-section:3
+3 1
+Consider the following program description:
+
+A program is to be written that simulates bumper cars in a video game. The cars move on a square grid and are located on grid points (x, y), where x and y are integers between −20 and 20. A bumper car moves in a random direction, either left, right, up, or down. If it reaches a boundary (i.e., x or y is ±20), then it reverses direction. If it is about to collide with another bumper car, it reverses direction. Your program should be able to add bumper cars and run the simulation. One step of the simulation allows each car in the grid to move. After a bumper car has reversed direction twice, its turn is over and the next car gets to move. 19. To identify classes in the program, the nouns in the specification are listed: program, bumper car, grid, grid point, integer, direction, boundary, simulation 
+
+How many nouns in the list should immediately be discarded because they are unsuitable as classes for the program? 
+(A) 0 
+(B) 1 
+(C*) 2 
+(D) 3 
+(E) 4
+
+question-section:3
+3 1
+Consider the following program description:
+
+A program is to be written that simulates bumper cars in a video game. The cars move on a square grid and are located on grid points (x, y), where x and y are integers between −20 and 20. A bumper car moves in a random direction, either left, right, up, or down. If it reaches a boundary (i.e., x or y is ±20), then it reverses direction. If it is about to collide with another bumper car, it reverses direction. Your program should be able to add bumper cars and run the simulation. One step of the simulation allows each car in the grid to move. After a bumper car has reversed direction twice, its turn is over and the next car gets to move. 19. To identify classes in the program, the nouns in the specification are listed: program, bumper car, grid, grid point, integer, direction, boundary, simulation 
+
+A programmer decides to include the following classes in the program.
+• Simulation will run the simulation. 
+• Display will show the state of the game. 
+• BumperCar will know its identification number, position in the grid, and current direction when moving. 
+• GridPoint will be a position in the grid. It will be represented by two integer fields, x_coord and y_coord. 
+• Grid will keep track of all bumper cars in the game, the number of cars, and their positions in the grid. It will update the grid each time a car moves. It will be implemented with a two-dimensional array of BumperCar. 
+
+Which operation should not be the responsibility of the GridPoint class? 
+(A*) isEmpty returns false if grid point contains a BumperCar, true otherwise 
+(B) atBoundary returns true if x or y coordinate = ±20, false otherwise 
+(C) left if not at left boundary, change grid point to 1 unit left of current point 
+(D) up if not at top of grid, change grid point to 1 unit above current point 
+(E) get_x return x-coordinate of this point 
+
+question-section:3
+3 1
+Consider the following program description:
+
+A program is to be written that simulates bumper cars in a video game. The cars move on a square grid and are located on grid points (x, y), where x and y are integers between −20 and 20. A bumper car moves in a random direction, either left, right, up, or down. If it reaches a boundary (i.e., x or y is ±20), then it reverses direction. If it is about to collide with another bumper car, it reverses direction. Your program should be able to add bumper cars and run the simulation. One step of the simulation allows each car in the grid to move. After a bumper car has reversed direction twice, its turn is over and the next car gets to move. 19. To identify classes in the program, the nouns in the specification are listed: program, bumper car, grid, grid point, integer, direction, boundary, simulation 
+
+A programmer decides to include the following classes in the program.
+• Simulation will run the simulation. 
+• Display will show the state of the game. 
+• BumperCar will know its identification number, position in the grid, and current direction when moving. 
+• GridPoint will be a position in the grid. It will be represented by two integer fields, x_coord and y_coord. 
+• Grid will keep track of all bumper cars in the game, the number of cars, and their positions in the grid. It will update the grid each time a car moves. It will be implemented with a two-dimensional array of BumperCar. 
+
+Which method is not suitable for the BumperCar class? 
+(A) public boolean atBoundary() 
+//Returns true if BumperCar at boundary, false otherwise. 
+(B) public void selectRandomDirection() 
+//Select random direction (up, down, left, or right) 
+// at start of turn. 
+(C) public void reverseDirection() 
+//Move to grid position that is in direction opposite to 
+// current direction. 
+(D) public void move() 
+//Take turn to move. Stop move after two changes 
+// of direction. 
+(E*) public void update() 
+//Modify Grid to reflect new position after each stage 
+// of move.

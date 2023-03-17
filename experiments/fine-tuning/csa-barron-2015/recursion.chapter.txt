@@ -1,0 +1,358 @@
+=====recursive-methods=====
+A recursive method is a method that calls itself. For example, here is a program that calls a recursive method stackWords.
+public class WordPlay {
+    public static void stackWords() {
+        String word = IO.readString(); // read user input
+        if (word.equals("."))
+            System.out.println();
+        else
+            stackWords();
+        System.out.println(word);
+    }
+
+    public static void main(String args[]) {
+        System.out.println("Enter list of words, one per line.");
+        System.out.println("Final word should be a period (.)");
+        stackWords();
+    }
+}
+
+Here is the output if you enter
+hold
+my
+hand
+.
+
+You get
+.
+hand
+my
+hold
+
+The program reads in a list of words terminated with a period, and prints the list in reverse order, starting with the period. How does this happen?
+Each time the recursive call to stackWords() is made, execution goes back to the start of a new method call. The computer must remember to complete all the pending calls to the method. It does this by stacking the statements that must still be executed as follows: The first time stackWords() is called, the word "hold" is read and tested for being a period. No it’s not, so stackWords() is called again. The statement to output "hold" (which has not yet been executed) goes on a stack, and execution goes to the start of the method. The word "my" is read. No, it’s not a period, so the command to output "my" goes on the stack. And so on. The stack looks something like this before the recursive call in which the period is read:
+System.out.println("hand");
+System.out.println("my");
+System.out.println("hold");
+
+Imagine that these statements are stacked like plates. In the final stackWords() call, word has the value ".". Yes, it is a period, so the stackWords() line is skipped, the period is printed on the screen, and the method call terminates. The computer now completes each of the previous method calls in turn by “popping” the statements off the top of the stack. It prints "hand", then "my", then "hold", and execution of method stackWords() is complete.1
+
+NOTE
+1. Each time stackWords() is called, a new local variable word is created.
+2. The first time the method actually terminates, the program returns to complete the most recently invoked previous call. That’s why the words get reversed in this example.
+
+=====form-of-recursive-methods=====
+Every recursive method has two distinct parts:
+• A base case or termination condition that causes the method to end.
+• A nonbase case whose actions move the algorithm toward the base case and termination.
+
+Here is the framework for a simple recursive method that has no specific return type.
+public void recursiveMeth( ... )
+{
+    if (base case)
+        < Perform some action >
+    else
+    {
+        < Perform some other action >
+        recursiveMeth( ... ); //recursive method call
+    }
+}
+
+The base case typically occurs for the simplest case of the problem, such as when an integer has a value of 0 or 1. Other examples of base cases are when some key is found, or an end-of-file is reached. A recursive algorithm can have more than one base case.
+In the else or nonbase case of the framework shown, the code fragment < Perform some other action > and the method call recursiveMeth can sometimes be interchanged without altering the net effect of the algorithm. Be careful though, because what does change is the order of executing statements. This can sometimes be disastrous. (See the eraseBlob example on p. 299.)
+
+Example 1
+public void drawLine(int n)
+{
+    if (n == 0)
+        System.out.println("That’s all, folks!");
+    else
+    {
+        for (int i = 1; i <= n; i++)
+            System.out.print("*");
+        System.out.println();
+        drawLine(n - 1);
+    }
+}
+
+The method call drawLine(3) produces this output:
+***
+**
+*
+That’s all, folks!
+
+NOTE
+1. A method that has no pending statements following the recursive call is an example of tail recursion. Method drawLine is such a case, but stackWords is not.
+2. The base case in the drawLine example is n == 0. Notice that each subsequent call, drawLine(n - 1), makes progress toward termination of the method. If your method has no base case, or if you never reach the base case, you will create infinite recursion. This is a catastrophic error that will cause your computer eventually to run out of memory and give you heart-stopping messages like java.lang.StackOverflowError
+
+Example 2
+//Illustrates infinite recursion.
+public void catastrophe(int n)
+{
+    System.out.println(n);
+    catastrophe(n);
+}
+
+Try running the case catastrophe(1) if you have lots of time to waste! A recursive method must have a base case.
+
+=====writing-recursive-methods=====
+To come up with a recursive algorithm, you have to be able to frame a process recursively (i.e., in terms of a simpler case of itself). This is different from framing it iteratively, which repeats a process until a final condition is met. A good strategy for writing recursive methods is to first state the algorithm recursively in words.
+
+Example 1
+Write a method that returns n! (n factorial).
+n! defined iteratively n! defined recursively
+0! = 1 0! = 1
+1! = 1 1! = (1)(0!)
+2! = (2)(1) 2! = (2)(1!)
+3! = (3)(2)(1) 3! = (3)(2!)
+. . . . . .
+
+The general recursive definition for n! is
+n! = (1: n = 0) | (n(n - 1)!: n > 0)
+
+The definition seems to be circular until you realize that if 0! is defined, all higher factorials are defined. Code for the recursive method follows directly from the recursive definition:
+/** Compute n! recursively.
+* @param n a nonnegative integer
+* @return n!
+*/
+public static int factorial(int n)
+{
+    if (n == 0) //base case
+        return 1;
+    else
+        return n * factorial(n - 1);
+}
+
+Example 2
+Write a recursive method revDigs that outputs its integer parameter with the digits reversed. For example,
+revDigs(147) outputs 741
+revDigs(4) outputs 4
+
+First, describe the process recursively: Output the rightmost digit. Then, if there are still digits left in the remaining number n/10, reverse its digits. Repeat this until n/10 is 0. Here is the method:
+/** @param n a nonnegative integer
+* @return n with its digits reversed
+*/
+public static void revDigs(int n)
+{
+    System.out.print(n % 10); //rightmost digit
+    if (n / 10 != 0) //base case
+        revDigs(n / 10);
+}
+
+NOTE
+On the AP exam, you are expected to “understand and evaluate” recursive methods. This means that you would not be asked to come up with the code for methods such as factorial and revDigs (as shown above). You could, however, be asked to identify output for any given call to factorial or revDigs.
+
+=====analysis-of-recursive-methods=====
+Recall the Fibonacci sequence 1, 1, 2, 3, 5, 8, 13, ... . The nth Fibonacci number equals the sum of the previous two numbers if n ≥ 3. Recursively,
+Fib(n) = (1: n = 1, 2) | (Fib(n − 1) + Fib(n − 2): n ≥ 3)
+
+Here is the method:
+/** @param n a positive integer
+* @return the nth Fibonacci number
+*/
+public static int fib(int n)
+{
+    if (n == 1 || n == 2)
+        return 1;
+    else
+        return fib(n - 1) + fib(n - 2);
+}
+
+Notice that there are two recursive calls in the last line of the method. So to find Fib(5), for example, takes eight recursive calls to fib!
+In general, each call to fib makes two more calls, which is the tipoff for an exponential algorithm (i.e., one that is very inefficient). This is much slower than the run time of the corresponding iterative algorithm (see Chapter 5, Question 13).
+You may ask: Since every recursive algorithm can be written iteratively, when should programmers use recursion? Bear in mind that recursive algorithms can incur extra run time and memory. Their major plus is elegance and simplicity of code.
+
+General Rules for Recursion
+1. Avoid recursion for algorithms that involve large local arrays—too many recursive calls can cause memory over flow.
+2. Use recursion when it significantly simplifies code.
+3. Avoid recursion for simple iterative methods like factorial, Fibonacci, and the linear search on the next page.
+4. Recursion is especially useful for
+• Branching processes like traversing trees or directories.
+• Divide-and-conquer algorithms like mergesort and binary search.
+
+Mergesort and quicksort are discussed in Chapter 8.
+
+=====recursive-helper-methods=====
+A common technique in designing recursive algorithms is to have a public nonrecursive driver method that calls a private recursive helper method to carry out the task. The main reasons for doing this are
+• To hide the implementation details of the recursion from the user.
+• To enhance the efficiency of the program.
+
+Example 1
+Consider the simple example of recursively finding the sum of the first n positive integers.
+/** @param n a positive integer
+* @return 1 + 2 + 3 + ... + n
+*/
+public static int sum(int n)
+{
+    if (n == 1)
+        return 1;
+    else
+        return n + sum(n - 1);
+}
+
+Notice that you get infinite recursion if n ≤ 0. Suppose you want to include a test for n > 0 before you execute the algorithm. Placing this test in the recursive method is inefficient because if n is initially positive, it will remain positive in subsequent recursive calls. You can avoid this problem by using a driver method called getSum, which does the test on n just once. The recursive method sum becomes a private helper method.
+public class FindSum {
+    /**
+     * Private recursive helper method.
+     *
+     * @param n a positive integer
+     * @return 1 + 2 + 3 + ... + n
+     */
+    private static int sum(int n) {
+        if (n == 1)
+            return 1;
+        else
+            return n + sum(n - 1);
+    }
+
+    /* Driver method */
+    public static int getSum(int n) {
+        if (n > 0)
+            return sum(n);
+        else {
+            throw new IllegalArgumentException("Error: n must be positive");
+        }
+    }
+}
+
+NOTE
+This is a trivial method used to illustrate a private recursive helper method. In practice, you would never use recursion to find a simple sum!
+
+=====recursive-helper-method-optimized=====
+Example 2
+Consider a recursive solution to the problem of doing a sequential search for a key in an array of strings. If the key is found, the method returns true, otherwise it returns false.
+The solution can be stated recursively as follows:
+• If the key is in a[0], then the key is found.
+• If not, recursively search the array starting at a[1].
+• If you are past the end of the array, then the key wasn’t found. Here is a straightforward (but inefficient) implementation:
+
+public class Searcher {
+    /**
+     * Recursively search array a for key. * @param a the array of String objects
+     * * @param key a String object
+     *
+     * @return true if a[k] equals key for 0 <= k < a.length; * false otherwise
+     */
+    public boolean search(String[] a, String key) {
+        if (a.length == 0) // base case. key not found
+            return false;
+        else if (a[0].compareTo(key) == 0) // base case
+            return true; // key found
+        else {
+            String[] shorter = new String[a.length - 1];
+            for (int i = 0; i < shorter.length; i++)
+                shorter[i] = a[i + 1];
+            return search(shorter, key);
+        }
+    }
+
+    public static void main(String[] args) {
+        String[] list = { "Mary", "Joe", "Lee", "Jake" };
+        Searcher s = new Searcher();
+        System.out.println("Enter key: Mary, Joe, Lee or Jake.");
+        String key = IO.readString(); // read user input
+        boolean result = s.search(list, key);
+        if (!result)
+            System.out.println(key + " was not found.");
+        else
+            System.out.println(key + " was found.");
+    }
+}
+
+Notice how horribly inefficient the search method is: For each recursive call, a new array shorter has to be created! It is much better to use a parameter, startIndex, to keep track of where you are in the array. Replace the search method above with the following one, which calls the private helper method recurSearch:
+/** Driver method. Searches array a for key.
+* Precondition: a contains at least one element.
+* @param a the array of String objects
+* @param key a String object
+* @return true if a[k] equals key for 0 <= k < a.length; * false otherwise
+*/
+public boolean search(String[] a, String key)
+{
+    return recurSearch(a, 0, key);
+}
+/** Recursively search array a for key, starting at startIndex. * Precondition:
+* - a contains at least one element.
+* - 0 <= startIndex <= a.length.
+* @return true if a[k] equals key for 0 <= k < a.length; * false otherwise
+*/
+private boolean recurSearch(String[] a, int startIndex,
+String key)
+{
+    if(startIndex == a.length) //base case. key not found
+        return false;
+    else if(a[startIndex].compareTo(key) == 0) //base case
+        return true; //key found
+    else
+        return recurSearch(a, startIndex+1, key);
+}
+
+NOTE
+1. Using the parameter startIndex avoids having to create a new array object for each recursive call. Making startIndex a parameter of a helper method hides implementation details from the user.
+2. The helper method is private because it is called only by search within the Searcher class.
+3. It’s easy to modify the search method to return the index in the array where the key is found: Make the return type int and return startIndex if the key is found, -1 (say) if it isn’t.
+
+=====recursion-in-2d-grids=====
+Here is a commonly used technique: using recursion to traverse a two-dimensional array. The problem comes in several different guises, for example,
+1. A game board from which you must remove pieces.
+2. A maze with walls and paths from which you must try to escape. 3. White “containers” enclosed by black “walls” into which you must “pour paint.”
+In each case, you will be given a starting position (row, col) and instructions on what to do. The recursive solution typically involves these steps:
+
+Check that the starting position is not out of range:
+    If (starting position satisfies some requirement)
+        Perform some action to solve problem
+        RecursiveCall(row+ 1, col)
+        RecursiveCall(row− 1, col)
+        RecursiveCall(row, col+ 1)
+        RecursiveCall(row, col− 1)
+
+Example
+On the right is an image represented as a square grid of black and white cells. Two cells in an image are part of the same “blob” if each is black and there is a sequence of moves from one cell to the other, where each move is either horizontal or vertical to an adjacent black cell. For example, the diagram represents an image that contains two blobs, one of them consisting of a single cell.
+Assuming the following Image class declaration, you are to write the body of the eraseBlob method, using a recursive algorithm.
+public class Image {
+    private final int BLACK = 1;
+    private final int WHITE = 0;
+    private int[][] image; // square grid
+    private int size; // number of rows and columns
+
+    public Image() // constructor
+    { /* implementation not shown */ }
+
+    public void display() // displays Image
+    { /* implementation not shown */ }
+
+    /**
+     * Precondition: Image is defined with either BLACK or WHITE cells. *
+     * Postcondition: If 0 <= row < size, 0 <= col < size, and * image[row][col] is
+     * BLACK, set all cells in the * same blob to WHITE. Otherwise image is
+     * unchanged. * @param row the given row
+     *
+     * @param col the given column
+     */
+    public void eraseBlob(int row, int col)
+    { /* your code goes here */ }
+}
+
+Solution:
+public void eraseBlob(int row, int col) {
+    if (row >= 0 && row < size && col >= 0 && col < size)
+        if (image[row][col] == BLACK) {
+            image[row][col] = WHITE;
+            eraseBlob(row - 1, col);
+            eraseBlob(row + 1, col);
+            eraseBlob(row, col - 1);
+            eraseBlob(row, col + 1);
+        }
+}
+
+NOTE
+1. The ordering of the four recursive calls is irrelevant.
+2. The test
+if (image[row][col] == BLACK)
+can be included as the last piece of the test in the first line:
+if (row >= 0 && ...
+If row or col is out of range, the test will short-circuit, avoiding the dreaded ArrayIndexOutOfBoundsException.
+3. If you put the statement
+image[row][col] = WHITE;
+after the four recursive calls, you get infinite recursion if your blob has more than one cell. This is because, when you visit an adjacent cell, one of its recursive calls visits the original cell. If this cell is still BLACK, yet more recursive calls are generated, ad infinitum.
+
+A final thought: Recursive algorithms can be tricky. Try to state the solution recursively in words before you launch into code. Oh, and don’t forget the base case!

@@ -1,0 +1,93 @@
+An abstract class is a superclass that represents an abstract concept, and therefore should not be instantiated. For example, a maze program could have several different maze components—paths, walls, entrances, and exits. All of these share certain features (e.g., location, and a way of displaying). They can therefore all be declared as subclasses of the abstract class MazeComponent. The program will create path objects, wall objects, and so on, but no instances of MazeComponent.
+An abstract class may contain abstract methods. An abstract method has no imple mentation code, just a header. The rationale for an abstract method is that there is no good default code for the method. Every subclass will need to override this method, so why bother with a meaningless implementation in the superclass? The method appears in the abstract class as a placeholder. The implementation for the method oc curs in the subclasses. If a class contains any abstract methods, it must be declared an abstract class.
+
+An abstract class is declared with the keyword abstract in the header:
+public abstract class AbstractClass
+{ ...
+The keyword extends is used as before to declare a subclass:
+public class SubClass extends AbstractClass
+{ ...
+If a subclass of an abstract class does not provide implementation code for all the abstract methods of its superclass, it too becomes an abstract class and must be declared as such to avoid a compile-time error:
+public abstract class SubClass extends AbstractClass
+{ ...
+Here is an example of an abstract class, with two concrete (nonabstract) subclasses.
+
+public abstract class Shape {
+    private String name;
+
+    // constructor
+    public Shape(String shapeName) {
+        name = shapeName;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public abstract double area();
+
+    public abstract double perimeter();
+
+    public double semiPerimeter() {
+        return perimeter() / 2;
+    }
+}
+
+public class Circle extends Shape {
+    private double radius;
+
+    // constructor
+    public Circle(double circleRadius, String circleName) {
+        super(circleName);
+        radius = circleRadius;
+    }
+
+    public double perimeter() {
+        return 2 * Math.PI * radius;
+    }
+
+    public double area() {
+        return Math.PI * radius * radius;
+    }
+}
+
+public class Square extends Shape {
+    private double side;
+
+    // constructor
+    public Square(double squareSide, String squareName) {
+        super(squareName);
+        side = squareSide;
+    }
+
+    public double perimeter() {
+        return 4 * side;
+    }
+
+    public double area() {
+        return side * side;
+    }
+}
+
+NOTE
+1. It is meaningless to define perimeter and area methods for Shape—thus, these are declared as abstract methods.
+2. An abstract class can have both instance variables and concrete (nonabstract) methods. See, for example, name, getName, and semiPerimeter in the Shape class.
+3. Abstract methods are declared with the keyword abstract. There is no method body. The header is terminated with a semicolon.
+4. A concrete (non-abstract) subclass of an abstract superclass must provide implementation code for all abstract methods of the superclass. Therefore both the Circle and Square classes implement both the perimeter and area methods.
+5. It is possible for an abstract class to have no abstract methods. (An abstract subclass of an abstract superclass inherits the abstract methods without explicitly declaring them.)
+6. An abstract class may or may not have constructors.
+7. No instances can be created for an abstract class:
+Shape a = new Shape("blob"); //Illegal.
+//Can’t create instance of abstract class.
+Shape c = new Circle(1.5, "small circle"); //legal
+8. Polymorphism works with abstract classes as it does with concrete classes:
+Shape circ = new Circle(10, "circle");
+Shape sq = new Square(9.4, "square");
+Shape s = null;
+System.out.println("Which shape?");
+String str = IO.readString(); //read user input
+if (str.equals("circle"))
+    s = circ;
+else
+    s = sq;
+System.out.println("Area of " + s.getName() + " is " + s.area());

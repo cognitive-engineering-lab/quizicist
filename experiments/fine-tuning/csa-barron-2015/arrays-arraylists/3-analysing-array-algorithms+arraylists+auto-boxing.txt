@@ -1,0 +1,70 @@
+Example 1
+Discuss the efficiency of the countNegs method below. What are the best and worst case configurations of the data?
+/** Precondition: arr[0],...,arr[arr.length-1] contain integers.
+* @return the number of negative values in arr
+*/
+public static int countNegs(int[] arr)
+{
+    int count = 0;
+    for (int num : arr)
+        if (num < 0)
+            count++;
+    return count;
+}
+
+Solution:
+This algorithm sequentially examines each element in the array. In the best case, there are no negative elements, and count++ is never executed. In the worst case, all the elements are negative, and count++ is executed in each pass of the for loop.
+
+Example 2
+The code fragment below inserts a value, num, into its correct position in a sorted array of integers. Discuss the efficiency of the algorithm.
+
+/** Precondition:
+* - arr[0],...,arr[n-1] contain integers sorted in increasing order.
+* - n < arr.length.
+* Postcondition: num has been inserted in its correct position.
+*/
+{
+    //find insertion point
+    int i = 0;
+    while (i < n && num > arr[i])
+    i++;
+    //if necessary, move elements arr[i]...arr[n-1] up 1 slot
+    for (int j = n; j >= i + 1; j--)
+    arr[j] = arr[j-1];
+    //insert num in i-th slot and update n
+    arr[i] = num;
+    n++;
+}
+
+Solution:
+In the best case, num is greater than all the elements in the array: Because it gets inserted at the end of the list, no elements must be moved to create a slot for it. The worst case has num less than all the elements in the array. In this case, num must be inserted in the first slot, arr[0], and every element in the array must be moved up one position to create a slot.
+This algorithm illustrates a disadvantage of arrays: Insertion and deletion of an ele ment in an ordered list is inefficient, since, in the worst case, it may involve moving all the elements in the list.
+An ArrayList provides an alternative way of storing a list of objects and has the fol lowing advantages over an array:
+• An ArrayList shrinks and grows as needed in a program, whereas an array has a fixed length that is set when the array is created.
+• In an ArrayList list, the last slot is always list.size()-1, whereas in a partially filled array, you, the programmer, must keep track of the last slot currently in use.
+• For an ArrayList, you can do insertion or deletion with just a single statement. Any shifting of elements is handled automatically. In an array, however, insertion or deletion requires you to write the code that shifts the elements.
+
+The Collections API
+The ArrayList class is in the Collections API (Application Programming Interface), which is a library provided by Java. Most of the API is in java.util. This library gives the programmer access to prepackaged data structures and the methods to manipulate them. The implementations of these container classes are invisible and should not be of concern to the programmer. The code works. And it is reusable.
+All of the collections classes, including ArrayList, have the following features in common:
+• They are designed to be both memory and run-time efficient.
+• They provide methods for insertion and removal of items (i.e., they can grow and shrink).
+• They provide for iteration over the entire collection.
+
+Inheritance is a defining feature of the Collections API. The interfaces that are used to manipulate the collections specify the operations that must be defined for any con tainer class that implements that interface.
+
+Collections and Generics
+The collections classes are generic, with type parameters. Thus, List<E> and ArrayList<E> contain elements of type E. When a generic class is declared, the type parameter is replaced by an actual object type. For example,
+private ArrayList<Clown> clowns;
+
+NOTE
+1. The clowns list must contain only Clown objects. An attempt to add an Acrobat to the list, for example, will cause a compile-time error.
+2. Since the type of objects in a generic class is restricted, the elements can be accessed without casting.
+3. All of the type information in a program with generic classes is examined at compile time. After compilation the type information is erased. This feature of generic classes is known as erasure. During execution of the program, any attempt at incorrect casting will lead to a ClassCastException.
+There are no primitive types in collections classes. An ArrayList must contain objects, not types like double and int. Numbers must therefore be boxed—placed in wrapper classes like Integer and Double—before insertion into an ArrayList.
+Auto-boxing is the automatic wrapping of primitive types in their wrapper classes.
+To retrieve the numerical value of an Integer (or Double) stored in an ArrayList, the intValue() (or doubleValue()) method must be invoked (unwrapping). Auto unboxing is the automatic conversion of a wrapper class to its corresponding primitive type. This means that you don’t need to explicitly call the intValue() or doubleValue() methods. Be aware that if a program tries to auto-unbox null, the method will throw a NullPointerException.
+Note that while auto-boxing and -unboxing cut down on code clutter, these oper ations must still be performed behind the scenes, leading to decreased run-time effi ciency. It is much more efficient to assign and access primitive types in an array than an ArrayList. You should therefore consider using an array for a program that manip ulates sequences of numbers and does not need to use objects.
+
+NOTE
+Auto-boxing and -unboxing is a feature in Java 5.0 and later versions and will not be tested on the AP exam. It is OK, however, to use this convenient feature in code that you write in the free-response questions.

@@ -1,0 +1,53 @@
+There are two ways to compare String objects:
+1. Use the equals method that is inherited from the Object class and overridden to do the correct thing:
+if (string1.equals(string2)) ...
+This returns true if string1 and string2 are identical strings, false otherwise.
+2. Use the compareTo method. The String class has a compareTo method:
+int compareTo(String otherString)
+It compares strings in dictionary (lexicographical) order:
+• If string1.compareTo(string2) < 0, then string1 precedes string2 in the dictionary.
+• If string1.compareTo(string2) > 0, then string1 follows string2 in the dictionary.
+• If string1.compareTo(string2) == 0, then string1 and string2 are identical. (This test is an alternative to string1.equals(string2).)
+Be aware that Java is case-sensitive. Thus, if s1 is "cat" and s2 is "Cat", s1.equals(s2) will return false.
+
+Characters are compared according to their position in the ASCII chart. All you need to know is that all digits precede all capital letters, which precede all lowercase letters. Thus "5" comes before "R", which comes before "a". Two strings are com pared as follows: Start at the left end of each string and do a character-by-character comparison until you reach the first character in which the strings differ, the kth char acter, say. If the kth character of s1 comes before the kth character of s2, then s1 will come before s2, and vice versa. If the strings have identical characters, except that s1 terminates before s2, then s1 comes before s2. Here are some examples:
+String s1 = "HOT", s2 = "HOTEL", s3 = "dog";
+if (s1.compareTo(s2) < 0)) //true, s1 terminates first
+...
+if (s1.compareTo(s3) > 0)) //false, "H" comes before "d"
+Don’t Use == to Test Strings!
+The expression if(string1 == string2) tests whether string1 and string2 are the same reference. It does not test the actual strings. Using == to compare strings may lead to unexpected results.
+
+Example 1
+String s = "oh no!";
+String t = "oh no!";
+if (s == t) ...
+The test returns true even though it appears that s and t are different references. The reason is that for efficiency Java makes only one String object for equivalent string literals. This is safe in that a String cannot be altered.
+Example 2
+String s = "oh no!";
+String t = new String("oh no!");
+if (s == t) ...
+The test returns false because use of new creates a new object, and s and t are different references in this example!
+The moral of the story? Use equals not == to test strings. It always does the right thing.
+
+The Java String class provides many methods, only a small number of which are in the AP Java subset. In addition to the constructors, comparison methods, and concatenation operator + discussed so far, you should know the following methods:
+int length()
+Returns the length of this string.
+String substring(int startIndex)
+Returns a new string that is a substring of this string. The substring starts with the character at startIndex and extends to the end of the string. The first character is at index zero. The method throws an IndexOutOfBoundsException if startIndex is negative or larger than the length of the string. Note that if you’re using Java 7 or above, you will see the error StringIndexOutOfBoundsException. However, the AP Java subset lists only IndexOutOfBoundsException, which is what they will use on the AP exam.
+String substring(int startIndex, int endIndex)
+Returns a new string that is a substring of this string. The substring starts at index startIndex and extends to the character at endIndex-1. (Think of it this way: startIndex is the first character that you want; endIndex is the first character that you don’t want.) The method throws a StringIndexOutOfBoundsException if startIndex is negative, or endIndex is larger than the length of the string, or startIndex is larger than endIndex.
+int indexOf(String str)
+Returns the index of the first occurrence of str within this string. If str is not a substring of this string, -1 is returned. The method throws a NullPointerException if str is null.
+Here are some examples:
+"unhappy".substring(2) //returns "happy"
+"cold".substring(4) //returns "" (empty string)
+"cold".substring(5) //StringIndexOutOfBoundsException
+"strawberry".substring(5,7) //returns "be"
+"crayfish".substring(4,8) //returns "fish"
+"crayfish".substring(4,9) //StringIndexOutOfBoundsException
+"crayfish".substring(5,4) //StringIndexOutOfBoundsException
+String s = "funnyfarm";
+int x = s.indexOf("farm"); //x has value 5
+x = s.indexOf("farmer"); //x has value -1
+int y = s.length(); //y has value 9

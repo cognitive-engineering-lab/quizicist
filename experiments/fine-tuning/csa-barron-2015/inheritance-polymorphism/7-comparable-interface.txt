@@ -1,0 +1,91 @@
+Starting in 2015, this will not be tested on the AP exam. Students will, however, be required to use compareTo for comparison of strings (p. 178).
+The standard java.lang package contains the Comparable interface, which provides a useful method for comparing objects.
+Classes written for objects that need to be compared
+should implement Comparable.
+public interface Comparable
+{
+    int compareTo(Object obj);
+}
+Any class that implements Comparable must provide a compareTomethod. This method compares the implicit object (this) with the parameter object (obj) and returns a nega tive integer, zero, or a positive integer depending on whether the implicit object is less than, equal to, or greater than the parameter. If the two objects being compared are not type compatible, a ClassCastException is thrown by the method.
+Example
+The abstract Shape class defined previously (p. 143) is modified to implement the Comparable interface:
+public abstract class Shape implements Comparable {
+    private String name;
+
+    // constructor
+    public Shape(String shapeName) {
+        name = shapeName;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public abstract double area();
+
+    public abstract double perimeter();
+
+    public double semiPerimeter() {
+        return perimeter() / 2;
+    }
+
+    public int compareTo(Object obj) {
+        final double EPSILON = 1.0e-15; // slightly bigger than //machine precision
+        Shape rhs = (Shape) obj;
+        double diff = area() - rhs.area();
+        if (Math.abs(diff) <= EPSILON * Math.abs(area()))
+            return 0; // area of this shape equals area of obj
+        else if (diff < 0)
+            return -1; // area of this shape less than area of obj
+        else
+            return 1; // area of this shape greater than area of obj }
+    }
+}
+
+NOTE
+1. The Circle, Square, and other subclasses of Shape will all automatically imple ment Comparable and inherit the compareTo method.
+2. It is tempting to use a simpler test for equality of areas, namely
+if (diff == 0)
+return 0;
+But recall that real numbers can have round-off errors in their storage (Box p. 65). This means that the simple test may return false even though the two areas are essentially equal. A more robust test is implemented in the code given, namely to test if the relative error in diff is small enough to be considered zero.
+3. The Object class is a universal superclass (see p. 174). This means that the compareTo method can take as a parameter any object reference that imple ments Comparable.
+4. One of the first steps of a compareTo method must cast the Object argument to the class type, in this case Shape. If this is not done, the compiler won’t find the area method—remember, an Object is not necessarily a Shape.
+5. The algorithm one chooses in compareTo should in general be consistent with the equals method (see p. 176): Whenever object1.equals(object2) returns true, object1.compareTo(object2) returns 0.
+Here is a program that finds the larger of two Comparable objects.
+
+public class FindMaxTest {
+    /** Return the larger of two objects a and b. */
+    public static Comparable max(Comparable a, Comparable b) {
+        if (a.compareTo(b) > 0) // if a > b ...
+            return a;
+        else
+            return b;
+    }
+
+    public static void main(String[] args) {
+        Shape s1 = new Circle(3.0, "circle");
+        Shape s2 = new Square(4.5, "square");
+        System.out.println("Area of " + s1.getName() + " is " +
+                s1.area());
+        System.out.println("Area of " + s2.getName() + " is " +
+                s2.area());
+        Shape s3 = (Shape) max(s1, s2);
+        System.out.println("The larger shape is the " +
+                s3.getName());
+    }
+}
+
+Here is the output:
+Area of circle is 28.27
+Area of square is 20.25
+The larger shape is the circle
+
+NOTE
+1. The max method takes parameters of type Comparable. Since s1 is-a Comparable object and s2 is-a Comparable object, no casting is necessary in the method call.
+2. The max method can be called with any two Comparable objects, for example, two String objects or two Integer objects (see Chapter 4).
+3. The objects must be type compatible (i.e., it must make sense to compare them). For example, in the program shown, if s1 is-a Shape and s2 is-a String, the compareTo method will throw a ClassCastException at the line
+Shape rhs = (Shape) obj;
+4. The cast is needed in the line
+Shape s3 = (Shape) max(s1, s2);
+since max(s1, s2) returns a Comparable.
+5. A primitive type is not an object and therefore cannot be passed as Comparable. You can, however, use a wrapper class and in this way convert a primitive type to a Comparable (see p. 180).

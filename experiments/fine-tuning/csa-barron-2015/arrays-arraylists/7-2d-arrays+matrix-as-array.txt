@@ -1,0 +1,31 @@
+A two-dimensional array (matrix) is often the data structure of choice for objects like board games, tables of values, theater seats, and mazes.
+Look at the following 3 × 4 matrix:
+2 6 8 7
+1 5 4 0
+9 3 2 8
+
+If mat is the matrix variable, the row subscripts go from 0 to 2 and the column sub scripts go from 0 to 3. The element mat[1][2] is 4, whereas mat[0][2] and mat[2][3] are both 8. As with one-dimensional arrays, if the subscripts are out of range, an ArrayIndexOutOfBoundsException is thrown.
+
+Each of the following declares a two-dimensional array:
+int[][] table; //table can reference a 2-D array of integers
+//table is currently a null reference
+double[][] matrix = new double[3][4]; //matrix references a 3 × 4
+//array of real numbers.
+//Each element has value 0.0
+String[][] strs = new String[2][5]; //strs references a 2 × 5
+//array of String objects.
+//Each element is null
+An initializer list can be used to specify a two-dimensional array:
+int[][] mat = { {3, 4, 5}, //row 0
+{6, 7, 8} }; //row 1
+This defines a 2×3 rectangular array (i.e., one in which each row has the same number of elements).
+The initializer list is a list of lists in which each inside list represents a row of the matrix.
+A matrix is implemented as an array of rows, where each row is a one-dimensional array of elements. Suppose mat is the 3 × 4 matrix
+2 6 8 7
+1 5 4 0
+9 3 2 8
+Then mat is an array of three arrays:
+mat[0] contains {2, 6, 8, 7}
+mat[1] contains {1, 5, 4, 0}
+mat[2] contains {9, 3, 2, 8}
+The quantity mat.length represents the number of rows. In this case it equals 3 because there are three row-arrays in mat. For any given row k, where 0 ≤ k < mat.length, the quantity mat[k].length represents the number of elements in that row, namely the number of columns. ( Java allows a variable number of elements in each row. Since these “jagged arrays” are not part of the AP Java subset, you can assume that mat[k].length is the same for all rows k of the matrix, i.e., that the matrix is rectangular.)

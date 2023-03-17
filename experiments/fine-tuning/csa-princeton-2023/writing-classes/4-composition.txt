@@ -1,0 +1,62 @@
+Now that we have written classes to run a program, we must get these classes to interact correctly in order to create a functioning program. We have the driver, we have the car, now we need to put the driver into the car to eagerly drive to the AP Computer Science A Exam on exam day.
+The driver and object classes must reside in the same folder on the computer. If you are using an interactive development environment (as opposed to command line programming), you often have to create a “Project” or some similar structure in the software that will hold all of the program’s files in one place. Remember that the driver depends on the object class in order to compile, and the object class depends on the driver to make it actually do anything.
+
+Consider a program that will take “flower” objects and “plant” them into a garden. The flower objects might be outlined in an object class called Flower. One class will perform the planting, so we can call it MakeGarden.
+Suppose the Flower constructor method has the following header: public Flower(int xPosition, int yPosition) where xPosition and yPosition are the horizontal and vertical coordinates in the garden, respectively, where the flower object will be planted. Our driver would have to first “create” the flowers, and then plant them accordingly.
+In order to create an object, we must instantiate the object using its corresponding class. Each time we instantiate a flower object, we must assign it an object reference variable; as the fancy name implies, this is just a variable name. Some lines in MakeGarden might look like this:
+Flower f1 = new Flower(2, 1);
+Flower f2 = new Flower(2, 2);
+Flower f3 = new Flower(2, 3);
+
+These lines will instantiate three different flower objects, each containing its own instance data. f1, f2, and f3 are used to distinguish between the objects. We can then use these objects to perform methods. Consider a plant method in the Flower class; this method would “plant” the flower and might have the following header:
+public void plant()
+
+In MakeGarden, we must invoke this method through the objects. Let’s say we want to plant only f1 and f3, but not f2. We would add the following lines:
+f1.plant();
+f3.plant();
+
+Now let’s say the plant method, instead, returns whether or not the plant was successfully planted. This altered plant method might have the header:
+public boolean plant()
+
+Now we can use the returned data to output an appropriate message in the driver:
+if (f1.plant())
+	System.out.print("Planted successfully.");
+else
+	System.out.print("There was a problem.");
+
+Because we are invoking f1.plant, f1 should be planted as requested. Since the plant method returns a boolean value, we can place f1.plant in the context of an if statement (it produces a truth value so it is considered a condition) and now it also functions as part of a control structure. Awesome!
+Let’s add to our garden situation. As you know, other items can appear in a garden besides flowers. Plants, bushes, and weeds can appear in gardens. Each of these items would probably have its own object class, since their instance data and methods would be different from those of flowers. For example, a flower has flower petals, while a plant does not; weeds often grow on their own without water, whereas most flowers and plants do not. Regardless, separate object classes can be created for each of these object types, and the driver can hold them all together, as long as they are all stored in the same folder on the computer.
+Assuming each of these object classes has been created and each corresponding object class has a plant method as outlined above, MakeGarden might include these lines:
+Flower f1 = new Flower();
+Flower f2 = new Flower();
+Plant p1 = new Plant();
+Plant p2 = new Plant();
+Weed w1 = new Weed();
+if (f1.plant())
+	System.out.println("Planted successfully");
+if (f2.plant())
+	System.out.println("Planted successfully");
+if (p1.plant())
+	System.out.println("Planted successfully");
+if (w1.plant())
+	System.out.println("You have a weed.");
+
+Note that MakeGarden does not instantiate any Bush objects, and does not attempt to plant the p2 object. Note also that we cannot see the entire class!
+The programmer has the task of deciding which objects to instantiate of which type, when and whether to use them, and how to use them appropriately, based on their class specifications. Still think you can go directly to the final draft?
+Let’s add another layer. Programmers often recognize that an object is actually composed of many smaller, or more basic, objects. If you think about a flower, it actually has several parts, each of which has data and does particular actions. As a result, we could write object classes for, say, the stalk and the root system. The Stalk class and the RootSystem class, then, would reside as attributes of each flower. Their classes, again, must be placed in the same folder as the rest of the program’s classes. The programmer can then set up the Flower class as follows:
+public class Flower
+{
+	// other data not shown
+	private Stalk st;
+	private RootSystem rootSys;
+	public Flower()
+	{
+		st = new Stalk();
+		rootSys = new RootSystem();
+		// other commands not shown
+	}
+	// other methods not shown
+}
+This means that every Flower object has a stalk and a root system. The Flower class, then, is called an aggregate class because it is made up of, among other data, instances of other classes. This setup is more realistic; think of any object in your room, and you can probably see pretty quickly that it is made of smaller objects, each with its own data and methods. A laptop computer has keys, ports, and a screen, which can all be considered objects because they have stuff and do stuff. A dresser has drawers, but we can go even deeper…a drawer has walls and a floor and can be opened or closed…the floor of a drawer has a shape and is made of a certain material and can be broken if the drawer is overstuffed…you get the idea. Luckily, as programmers, we get to decide the detail of the object classes, and the answer typically lies in the desired function of the program, as we stated before. Do you really need to know what material the floor of the drawer is made of? Most people do not, although a furniture retailer might. Again, it all depends on the application.
+The free-response questions on the AP Exam will present some sort of context and will often tell you exactly what class(es) and/or method(s) to write, so they don’t get a wild variety of solutions from test takers around the world.
+Otherwise, they could literally be forced to read thousands of completely different approaches to a given task. This fact is not good for our creativity, but it’s great for scoring a 5; save your creative juices for those extra college classes you can take when you AP out of CS!

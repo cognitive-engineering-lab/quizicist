@@ -1,0 +1,71 @@
+In Java both primitive types and object references are passed by value. When an ob ject’s reference is a parameter, the same mechanism of copying into local memory is used. The key difference is that the address (reference) is copied, not the values of the individual instance variables. As with primitive types, changes made to the parameters will not change the values of the matching arguments. What this means in practice is that it is not possible for a method to replace an object with another one—you can’t change the reference that was passed. It is, however, possible to change the state of the object to which the parameter refers through methods that act on the object.
+
+Example 1
+A method that changes the state of an object.
+/** Subtracts fee from balance in b if current balance too low. */ public static void chargeFee(BankAccount b, String password, double fee)
+{
+    final double MIN_BALANCE = 10.00;
+    if (b.getBalance() < MIN_BALANCE)
+    b.withdraw(password, fee);
+}
+public static void main(String[] args)
+{
+    final double FEE = 5.00;
+    BankAccount andysAccount = new BankAccount("AndyS", 7.00); chargeFee(andysAccount, "AndyS", FEE);
+    ...
+}
+
+The andysAccount reference is unchanged throughout the program segment. The ob ject to which it refers, however, has been changed. This is significant. Contrast this with Example 2 below in which an attempt is made to replace the object itself.
+
+Example 2
+A chooseBestAccountmethod attempts—erroneously—to set its betterFund param eter to the BankAccount with the higher balance:
+public static void chooseBestAccount(BankAccount better,
+BankAccount b1, BankAccount b2)
+{
+    if (b1.getBalance() > b2.getBalance())
+    better = b1;
+    else
+    better = b2;
+}
+public static void main(String[] args)
+{
+    BankAccount briansFund = new BankAccount("BrianL", 10000);
+    BankAccount paulsFund = new BankAccount("PaulM", 90000);
+    BankAccount betterFund = null;
+    chooseBestAccount(betterFund, briansFund, paulsFund);
+    ...
+}
+
+The intent is that betterFund will be a reference to the paulsFund object after ex ecution of the chooseBestAccount statement. A look at the memory slots illustrates why this fails.
+
+Note that the betterFund reference continues to be null, contrary to the programmer’s intent.
+The way to fix the problem is to modify the method so that it returns the better account. Returning an object from a method means that you are returning the address of the object.
+public static BankAccount chooseBestAccount(BankAccount b1, BankAccount b2)
+{
+    BankAccount better;
+    if (b1.getBalance() > b2.getBalance())
+        better = b1;
+    else
+        better = b2;
+    return better;
+}
+public static void main(String[] args)
+{
+    BankAccount briansFund = new BankAccount("BrianL", 10000); BankAccount paulsFund = new BankAccount("PaulM", 90000); BankAccount betterFund = chooseBestAccount(briansFund, paulsFund); ...
+}
+
+The effect of this is to create the betterFund reference, which refers to the same object as paulsFund
+
+What the method does not do is create a new object to which betterFund refers. To do that would require the keyword new and use of a BankAccount constructor. Assuming that a getPassword() accessor has been added to the BankAccount class, the code would look like this:
+public static BankAccount chooseBestAccount(BankAccount b1,
+BankAccount b2)
+{
+    BankAccount better;
+    if (b1.getBalance() > b2.getBalance())
+        better = new BankAccount(b1.getPassword(), b1.getBalance());
+    else
+        better = new BankAccount(b2.getPassword(), b2.getBalance());
+    return better;
+}
+
+Modifying more than one object in a method can be accomplished using a wrapper class (see p. 180).

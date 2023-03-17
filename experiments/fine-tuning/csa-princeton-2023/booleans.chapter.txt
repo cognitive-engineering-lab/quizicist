@@ -1,0 +1,105 @@
+=====introduction=====
+Now that we have some tools to make the computer accomplish a simple task, let’s discuss how to make our programs a little more…interesting.
+When you wake up in the morning, some tasks occur automatically, while others may depend on a decision. For example, if your alarm clock sounds at 6:00 a.m.…wait, what if it doesn’t? If it sounds at 6:00 a.m., you proceed with your morning rituals; if it does not sound, you wake up late and have to speed up, or change, your routine. When you sit down to eat your favorite breakfast cereal…none is left! Now what?
+Most, if not all, of the actions we perform depend on decisions. These decisions affect whether or not we perform the actions, or even how we perform the actions. Programs possess this exact ability to make decisions and react accordingly. In this way, the programmer can control the flow of the program.
+
+=====if-statement=====
+If you read the above examples closely, you will literally find the word if as a pivotal word in your decisions of what actions to perform next. The reserved word if is a conditional statement used in Java when programmers want to control the flow of the programs—e.g., if they want Line 2 to occur ONLY if a condition in Line 1 is true. This is referred to as flow control.
+The syntax of a simple if statement is
+if (condition) statement;
+
+Syntax statements in this book will be presented in pseudocode in order to illustrate the general form, and then further examples will be given. Pseudocode is not Java code that will compile, but it shows the format of the Java statements that we will write later.
+Consider an instance when you are asking a parent whether you can go out to the mall with a friend on Friday night. The (classic) parent response usually looks something like this: If you clean your room, you can go to the mall on Friday.
+In pseudocode, the parent’s response could be written as
+if (you clean your room) go to the mall;
+
+In this example, “you clean your room” is the condition of the if statement and “go to the mall” is the statement. The condition in an if statement must have a boolean result. Note that if you do clean your room (true), you will go to the mall; however, if you do not clean your room (false), you will not go to the mall. The if statement is written in this way; the programmer is now controlling the flow of the program. Thus, “go to the mall” will occur if the condition is true, but will be skipped if the condition is false. Another popular (pseudocode) way to write this statement is
+if (you clean your room)
+    go to the mall;
+
+This construction simply uses white space to make the code more readable. The AP Exam may present an if statement in either of these formats.
+Let’s try a code example. Consider the following lines from a Java program:
+int num1 = 4, num2 = 5;
+if (num1 == num2)
+    System.out.print("The numbers are the same.");
+
+Since we have an if statement, one of two possibilities can occur, based on whether num1 has the same value as num2: (1) the program will display the string literal "The numbers are the same." if the condition is true, or (2) the program will not display any output if the condition is false.
+Note the use, here, of the boolean operator == (also known as the equality operator); do not confuse this boolean operator with the assignment operator =. A boolean operator asks a question, while an assignment operator executes a command. num1 = 4 assigns the value 4 to the variable num1, while num1 == num2 determines whether the two values are equal. The assignment statement produces no other result, while the boolean statement returns a truth value based on the comparison.
+Wouldn’t it be nice if conditions in life depended on just one comparison, as our previous code example did? If we dig a bit deeper into our alarm clock example from before, there are probably a few more decisions that need to be made in order to begin your morning rituals; a few of these decisions might be, “is it a school day?”…“do I feel healthy?”…“is my blanket glued to my mattress, trapping me between them?” Note that each of these questions, regardless of its plausibility, has a true or false (boolean) answer.
+If (see how many times we use this word?) we want to incorporate a more complicated condition into our code, we must create a compound condition. Compound conditions include at least one boolean operator; all of these and their meanings are as follows:
+&& logical and
+|| logical or
+! logical not
+== is equal to
+!= is not equal to
+
+Let’s explore how each of these can be incorporated into a program.
+
+=====operators-in-pseudocode=====
+Consider a situation in which you need a study break and decide to visit your local bakery for a snack. Your favorite dessert is typically Italian cannoli but you will also accept an apple turnover. But apple turnovers are somewhat dry, so you will buy one only if they are selling coffee that day.
+Since this example is relatively complicated, let’s break it into chunks. We will use pseudocode for this example.
+Let’s outline the conditions presented in this example, in order:
+    The bakery has cannoli.
+    The bakery has apple turnovers.
+    The bakery has coffee.
+
+The complication here is that some of these decisions depend on others. For example, if the bakery DOES have cannoli, then it doesn’t matter whether it has apple turnovers. Again, step by step: start with condition (1)
+if (bakery has cannoli) buy dessert;
+
+Now, another decision must be made, based on this decision; if the bakery DOES have cannoli, we get our desired dessert. If it does NOT have cannoli, we must try the apple turnover.
+if (bakery has cannoli)
+    buy dessert; // occurs only if bakery has cannoli
+else if (bakery has apple turnovers) // occurs only if bakery has no cannoli
+    buy dessert; // occurs only if bakery has apple turnovers
+
+Note the else keyword used here. else is used if the programmer wants a statement to execute if the condition is false.
+It’s not that easy, though…we must consider the coffee. Since you will buy an apple turnover only if there is ALSO coffee for sale, the && operator is appropriate here:
+1 if (bakery has cannoli)
+2 buy dessert; // bakery has cannoli
+3 else if (bakery has apple turnovers && bakery has coffee) // no cannoli
+4 buy dessert; // bakery has apple turnovers AND coffee
+
+This pseudocode seems to work, but we must check for logical errors.
+Using the numbered lines of pseudocode, let’s trace the possibilities using a trace table.
+has cannoli: line 1, condition is true -> line 2, buy dessert
+no cannoli, no turnovers, no coffee: line 1, false -> line 3, false -> no dessert
+no cannoli, yes turnovers, no coffee: line 1, false -> line 3, false -> no dessert
+no cannoli, no turnovers, yes coffee: line 1, false -> line 3, false -> no dessert
+no cannoli, yes turnovers, yes coffee: line 1, false -> line 3, true -> line 4, buy dessert
+
+Moral of the story: This bakery had better get itself together.
+
+There is a lot of pseudocode here! Controlling the flow of a program can be difficult and confusing, which is why it is a popular topic on the AP Exam. But it is also important because most programs, like most things we do in life, rely on conditions and react accordingly.
+If we look at the bakery example one more time, the line
+buy dessert;
+
+occurs twice. Good programming style attempts to repeat the same lines of code as little as possible, if ever. Therefore, we can rearrange the boolean operators in the following way, creating the same result:
+if (bakery has cannoli OR (bakery has apple turnovers AND bakery has coffee))
+    buy dessert;
+
+That is a hefty boolean condition; however, it (1) eliminates the repetition of code and (2) provides a more “elegant” programming solution. “Elegant” is a relative term, of course, but the AP Exam often uses this subjective term to write code and to confuse you. Either way, you should be familiar with both ways.
+The AP Exam free-response questions do not require you to write code with “elegance”; in the free-response questions they will accept any code solution as long as it fulfills the specifications of the question.
+To make things more complicated (or more life-like), consider a further idea. What if we want to execute several commands when a condition is true (or false) instead of just one? For example, using the bakery case, let’s say that buying cannoli is so exciting that we must devour it right away. In other words, if the conditions are met for the bakery having cannoli, we want to buy it AND eat it. The pseudocode would look something like:
+1 if (bakery has cannoli)
+2 {
+3   buy dessert; // bakery has cannoli
+4   eat dessert;
+5 }
+6 else if (bakery has apple turnovers && bakery has coffee) // no cannoli
+7   buy dessert; // bakery has apple turnovers AND coffee
+
+The { and } symbols in lines 2 and 5 indicate blocking, a technique used in flow control statements that allows the programmer to execute a series of commands (instead of just one) when a given condition is satisfied.
+
+Here is a summary for evaluating boolean expressions:
+An && (and) expression is true if BOTH A and B are true. An || (or) expression is true if EITHER A or B is true, or if they are both true.
+The ! (not) operator simply reverses the truth value of the variable.
+The truth value of an expression is often abbreviated to a single letter. Thus, A may represent an expression such as x >= 0. The expression will either be true or false depending on the value of x, but for simplicity’s sake we just refer to the whole expression as A.
+Consider the following three expressions:
+To evaluate A && B
+First evaluate A. If A is false then stop: the whole expression is false. Since false && anything is false, there is no need to continue after the first false has been evaluated. This idea is called short-circuit evaluation. This idea is used (and tested) frequently. However, if A is true, then you must evaluate B to determine the truth value of the whole expression.
+
+To evaluate A || B
+First evaluate A. If A is true then stop: the whole expression is true. Since true || anything is true, there is no need to continue after the first true has been evaluated. This is short-circuit evaluation again. However, if A is false, then you must evaluate B to determine the truth value of the whole expression.
+
+To evaluate !A
+First evaluate A. If A is true, the whole expression is false. If A is false, the whole expression is true.

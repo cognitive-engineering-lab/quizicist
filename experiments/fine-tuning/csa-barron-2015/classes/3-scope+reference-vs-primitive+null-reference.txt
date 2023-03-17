@@ -1,0 +1,93 @@
+The scope of a variable or method is the region in which that variable or method is visible and can be accessed.
+The instance variables, static variables, and methods of a class belong to that class’s scope, which extends from the opening brace to the closing brace of the class definition. Within the class all instance variables and methods are accessible and can be referred to simply by name (no dot operator!).
+A local variable is defined inside a method. It can even be defined inside a statement. Its scope extends from the point where it is declared to the end of the block in which its declaration occurs. A block is a piece of code enclosed in a {} pair. When a block is exited, the memory for a local variable is automatically recycled.
+Local variables take precedence over instance variables with the same name. (Using the same name, however, creates ambiguity for the programmer, leading to errors. You should avoid the practice.)
+
+An instance method is always called for a particular object. This object is an implicit parameter for the method and is referred to with the keyword this. You are expected to know this vocabulary for the exam.
+In the implementation of instance methods, all instance variables can be written with the prefix this followed by the dot operator.
+
+Example 1
+In the method call obj.doSomething("Mary",num), where obj is some class object and doSomething is a method of that class, "Mary" and num, the parameters in parentheses, are explicit parameters, whereas obj is an implicit parameter.
+Example 2
+Here’s an example where this is used as a parameter.
+public class Person {
+    private String name;
+    private int age;
+
+    public Person(String aName, int anAge) {
+        name = aName;
+        age = anAge;
+    }
+
+    /** @return the String form of this person */
+    public String toString() {
+        return name + " " + age;
+    }
+
+    public void printPerson() {
+        System.out.println(this);
+    }
+    // Other variables and methods are not shown.
+}
+
+Suppose a client class has these lines of code:
+Person p = new Person("Dan", 10);
+p.printPerson();
+The statement
+System.out.println(this);
+in the printPerson method means “print the current Person object.” The output should be: Dan 10. Note that System.out.println invokes the toString method of the Person class.
+
+The deposit method of the BankAccount class can refer to balance as follows:
+public void deposit(String acctPassword, double amount)
+{
+    this.balance += amount;
+}
+The use of this is unnecessary in the above example.
+
+Consider a rational number class called Rational, which has two private instance variables:
+private int num; //numerator
+private int denom; //denominator
+Now consider a constructor for the Rational class:
+public Rational(int num, int denom)
+{
+    this.num = num;
+    this.denom = denom;
+}
+It is definitely not a good idea to use the same name for the explicit parameters and the private instance variables. But if you do, you can avoid errors by referring to this.num and this.denom for the current object that is being constructed. (This particular use of this will not be tested on the exam.)
+All of the numerical data types, like double and int, as well as types char and boolean, are primitive data types. All objects are reference data types. The difference lies in the way they are stored.
+Consider the statements
+int num1 = 3;
+int num2 = num1;
+
+The variables num1 and num2 can be thought of as memory slots, labeled num1 and num2, respectively
+If either of the above variables is now changed, the other is not affected. Each has its own memory slot.
+Contrast this with the declaration of a reference data type. Recall that an object is created using new:
+Date d = new Date(2, 17, 1948);
+This declaration creates a reference variable d that refers to a Date object. The value of d is the address in memory of that object
+
+Suppose the following declaration is now made:
+Date birthday = d;
+This statement creates the reference variable birthday, which contains the same address as d
+
+Having two references for the same object is known as aliasing. Aliasing can cause unintended problems for the programmer. The statement
+d.changeDate();
+will automatically change the object referred to by birthday as well. What the programmer probably intended was to create a second object called birthday whose attributes exactly matched those of d. This cannot be accomplished without using new. For example,
+Date birthday = new Date(d.getMonth(), d.getDay(), d.getYear()); The statement d.changeDate() will now leave the birthday object unchanged.
+The declaration
+BankAccount b;
+defines a reference b that is uninitialized. (To construct the object that b refers to requires the new operator and a BankAccount constructor.) An uninitialized object variable is called a null reference or null pointer. You can test whether a variable refers to an object or is uninitialized by using the keyword null:
+if (b == null)
+If a reference is not null, it can be set to null with the statement
+b = null;
+An attempt to invoke an instance method with a null reference may cause your program to terminate with a NullPointerException. For example,
+
+public class PersonalFinances
+{
+    BankAccount b; //b is a null reference
+    ...
+    b.withdraw(acctPassword, amt); //throws a NullPointerException
+    ... //if b not constructed with new
+
+If you fail to initialize a local variable in a method before you use it, you will get a compile-time error. If you make the same mistake with an instance variable of a class, the compiler provides reasonable default values for primitive variables (0 for numbers,
+
+false for booleans), and the code may run without error. However, if you don’t initialize reference instance variables in a class, as in the above example, the compiler will set them to null. Any method call for an object of the class that tries to access the null reference will cause a run-time error: The program will terminate with a NullPointerException.

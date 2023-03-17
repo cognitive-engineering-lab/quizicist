@@ -1,0 +1,86 @@
+Consider a simple Deck class in which a deck of cards is represented by the integers 0 to 51.
+
+public class Deck {
+    private int[] deck;
+    public static final int NUMCARDS = 52;
+
+    /** constructor */
+    public Deck() {
+        deck = new int[NUMCARDS];
+        for (int i = 0; i < NUMCARDS; i++)
+            deck[i] = i;
+    }
+
+    /** Write contents of Deck. */
+    public void writeDeck() {
+        for (int card : deck)
+            System.out.print(card + " ");
+        System.out.println();
+        System.out.println();
+    }
+
+    /** Swap arr[i] and arr[j] in array arr. */
+    private void swap(int[] arr, int i, int j) {
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+
+    /**
+     * Shuffle Deck: Generate a random permutation by picking a
+     * random card from those remaining and putting it in the
+     * next slot, starting from the right.
+     */
+    public void shuffle() {
+        int index;
+        for (int i = NUMCARDS - 1; i > 0; i--) {
+            // generate an int from 0 to i
+            index = (int) (Math.random() * (i + 1));
+            swap(deck, i, index);
+        }
+    }
+}
+
+Here is a simple driver class that tests the Deck class:
+
+public class DeckMain {
+    public static void main(String args[]) {
+        Deck d = new Deck();
+        d.shuffle();
+        d.writeDeck();
+    }
+}
+
+NOTE
+There is no evidence of the array that holds the deck of cards—deck is a private instance variable and is therefore invisible to clients of the Deck class.
+Suppose a large card tournament needs to keep track of many decks. The code to do this could be implemented with an array of Deck:
+
+public class ManyDecks {
+    private Deck[] allDecks;
+    public static final int NUMDECKS = 500;
+
+    /** constructor */
+    public ManyDecks() {
+        allDecks = new Deck[NUMDECKS];
+        for (int i = 0; i < NUMDECKS; i++)
+            allDecks[i] = new Deck();
+    }
+
+    /** Shuffle the Decks. */
+    public void shuffleAll() {
+        for (Deck d : allDecks)
+            d.shuffle();
+    }
+
+    /** Write contents of all the Decks. */
+    public void printDecks() {
+        for (Deck d : allDecks)
+            d.writeDeck();
+    }
+}
+
+NOTE
+1. The statement
+allDecks = new Deck[NUMDECKS];
+creates an array, allDecks, of 500 Deck objects. The default initialization for these Deck objects is null. In order to initialize them with actual decks, the Deck constructor must be called for each array element. This is achieved with the for loop of the ManyDecks constructor.
+2. In the shuffleAll method, it’s OK to use a for-each loop to modify each deck in the array with the mutator method shuffle.

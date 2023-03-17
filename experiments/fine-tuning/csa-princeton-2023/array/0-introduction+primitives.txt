@@ -1,0 +1,47 @@
+An array is a data structure that makes handling like (as in similar) data easier. An array may store primitive data values or object references. Each piece of data is called an element, and an index is used to specify the location of the element we wish to access. Imagine an airline that sells more than a thousand tickets a day. If we want to process that data to accumulate statistics on origin cities or prices of tickets, each ticket could be instantiated separately, using a unique object reference variable for each ticket. Imagine then invoking a method on each of those object reference variables. By putting the data into an array, and then using a loop to access each element of the array, the code becomes much more efficient.
+In order to instantiate an array, you must first decide what type of data will be contained in the array. Suppose you are creating a program that will keep track of your test grades in your APCS class. Since grades are usually represented by integer numbers, you will create an array of integers. The syntax for instantiating an array of integers is
+int [] <identifier> = new int [<array size>];
+
+This format is used if you do not yet know the values that will be stored in the array. Alternatively, if you already know the data values, you can instantiate the array using an initializer list:
+int [] <identifier> = {<data1>, <data2>, ..., <data n>};
+
+Notice the square brackets—these are standard symbols in Java that signify an array is present. The braces (curly brackets) indicate an initializer list. In the beginning of the semester, you do not yet know your grades. In order to create an array called testGrades that will eventually store your first 5 test grades, you could write a statement like this:
+int [] testGrades = new int[5];
+
+This array object will store your test grades and keep them organized using index numbers (or locations). Just as your tests might be organized as Chapter 1 Test, Chapter 2 Test, etc., your data will be accessed through the identifier of the array and index number. The tricky part is that array indices start with the number 0 instead of 1. Therefore, if your Chapter 1 Test is the first test score in the array, it will be stored at index 0. If the first test you have in APCS reviews a previous course, then it’s Chapter 0 instead of Chapter 1. If you did not instantiate the array using an initializer list, then you will assign data values using the index numbers; you will do the same process to access the data regardless of how you created the array. For example, if you scored a 95 on the first test, you could write the line:
+testGrades[0] = 95;
+
+Creating an array with five scores at once might look like this, int [ ] testScores = {90, 80, 100, 85, 92};
+Let’s say that, after looking over your test, you realize that your teacher made a grading error and you actually scored a 98. You can either increment the data value or reassign it:
+testGrades[0] += 3;
+or
+testGrades[0] = 98;
+
+You can also perform any integer operation, and also display the value to the user, with that same format.
+Let’s step it up a notch. Suppose, after all 5 tests are complete, your teacher feels that the scores are too high and decides to deflate the grades. (You didn’t think this book would discuss only nice teachers, did you?) The programmer can use a simple loop in order to traverse the array and change every value accordingly, rather than writing 5 separate lines. Since an array’s length is well-defined, a for loop is usually appropriate for arrays. Provided that the array is full, meaning all 5 values are assigned, the following loop will traverse the array and subtract 2 points from every grade:
+for (int index = 0; index < 5; index++)
+	testGrades[index] -= 2;
+
+Note the values of index will be 0, 1, 2, 3, and 4, even though it stores 5 elements. Since the index numbers start at 0, you must stop traversing the array before index 5, or your will receive an ArrayIndexOutOfBoundsException and the program execution will be interrupted. Free Response Questions on the AP Exam often test your ability to write code that does not go out of bounds.
+An array also has a constant value returned by < arrayName >, length that will return the number of elements in the array. The above loop could be written:
+for (int index = 0; index < testgrades.length; index++)
+	testGrades(index) -= 2;
+
+Much better than writing multiple lines, right? The loop systematically changes every value in the array. We are just scratching the surface of the usefulness of arrays, and we have already improved our coding efficiency.
+The AP Exam will require you to create, traverse, and modify arrays; freeresponse questions are loaded with arrays and will specifically state that an array must be created. The Course and Exam Description states, specifically, that free response questions 3 and 4 have to do with arrays (3 is Array/ArrayList and 4 is 2D Array).
+The programmer needs to ensure that every element of the array contains a meaningful value, or undesired results may occur. In an array of integers, the value of an unassigned element will default to 0. Consider the following code segment that will calculate the average of your 5 test grades:
+int total = 0, len = testGrades.length;
+double average;
+for (int index = 0; index < len; index++)
+	total += testGrades[index];
+average = (double) total / len;
+
+If all 5 of your test grades are stored in the array, this code segment will calculate the average correctly. If you did not input one of your scores, however, it will remain stored as 0 and incorrectly drag down your average, which is (definitely) an undesired result.
+There is an alternative way to execute the previous code segment. This involves using an enhanced-for loop. An enhanced-for loop can be used to automatically go through each element of an array.
+int total = 0, len = testGrades.length;
+double average;
+for (int grade : testGrades)
+	total += grade;
+average = (double)total / len;
+
+In the enhanced-for statement, a previously declared array or an ArrayList (more on ArrayLists later) must be referenced after the colon. The loop will iterate for each element in the list, from index 0 to index length - 1. However, no variable is used to refer to the current index. Instead, the element located at the current index is stored as the variable declared before the colon. (The variable must be of the same type stored in the array.) Therefore, the enhanced-for loop above stores each element, one at a time in increasing order by index, of the array testGrades as grade. It then adds grade to total. Thus, the enhanced-for loop has the same functionality as the for loop in the previous example. The benefits of the enhanced-for loop are that it will not cause an ArrayIndexOutOfBoundsException when traversing an array and that it shortens the notation of the element considerably.

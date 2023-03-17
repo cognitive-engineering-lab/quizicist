@@ -1,0 +1,43 @@
+The most primitive uses for the first computers were to perform complex calculations. They were basically gigantic calculators. As a result, one of the most basic operations we use in Java involves arithmetic. 
+The symbols +, -, *, and / represent the operations addition, subtraction, multiplication, and division, respectively. The operator % is also used in Java: called the “modulus” operator, this symbol will produce the numerical remainder of a division. For example, 3 % 2 would evaluate to 1, since 3 divided by 2 yields 1, with 1 as a remainder. These operations can be performed intuitively on numerical values; they can also be performed on variables that store numerical values.
+Speaking of math, back to our triangle example… 
+Consider the following statement in a program: 
+int side2 = 2, side3 = 3; 
+
+(Note that you can write multiple assignment statements in a single line, as long as the data types are the same.) 
+If we wanted to write a statement that found the sum of these data and assigned the result to another variable called sumOfSides, we could easily write 
+sumOfSides = 2 + 3; // method 1 
+
+But this statement is less useful than 
+sumOfSides = side2 + side3; // method 2 
+
+Since the data is assigned to variables, for which values can vary, method 2 will reflect those changes while method 1 will not. 
+This same technique can be applied to all of the mathematical operators. Remember that a mixture of mathematical operations follows a specific order of precedence. Java will perform the multiplication and division operations (including modulus), from left to right, followed by the addition and subtraction operations in the same order. If programmers want to change the order of precedence of the operators, they can use parentheses. 
+Consider these lines of code: 
+System.out.print(3 - 4/5); // statement 3 
+System.out.print(3 -(4/5)); // statement 4 
+System.out.print((3 - 4)/5); // statement 5
+
+In statement 3, the division occurs first, followed by the subtraction (3 minus the answer). 
+In statement 4, the same thing happens, so it is mathematically equivalent to statement 3. 
+In statement 5, the parentheses override the order of operations, so the subtraction occurs, and then the answer is divided by 5. 
+Okay, here’s where it gets crazy. Can you predict the output of these statements? Believe it or not, the output of statements 3 and 4 is 3; the output of statement 5 is 0. These results demonstrate the fact that data in Java is strongly typed. 
+When you perform a mathematical operation on two integers, Java will return the answer as an integer, as well. Therefore, although 4/5 is actually 0.8, Java will return a value of 0. Likewise, Java will evaluate 5/4 to be 1. The decimal part is cut off (not rounded), so that the result will also be an integer. Negative numbers work the same way. Java will return –4/5 as 0 and –5/4 as –1. Strange, huh? 
+
+As is true with all computer science, there is a workaround for this called casting. Casting is a process through which data is forced to “look like” another type of data to the compiler. Think of someone who is cast in a show to play a part; although actors have personal identities, they assume new identities for the audience. The following modifications to statement 3 demonstrate different ways of casting: 
+System.out.print(3 - (double)(4)/5); // statement 3.1
+System.out.print(3 - 4/(double)5); // statement 3.2 
+
+These statements will cast 4 and 5, respectively, to be double values of 4.0 and 5.0. As a result, the division will be “upgraded” to a division between double values, not integers, and the desired result will be returned. The following statements, although they will compile without error, will not display the desired result of 2.2. 
+System.out.print((double)3 - 4/5); // statement 3.3 
+System.out.print(3 - (double)(4/5)); // statement 3.4 
+
+Casting has a higher precedence than arithmetic operators, except parentheses, of course. Therefore, statement 3.3 will first convert 3 to 3.0, but will then perform integer division before completing the subtracting. The result is 3.0. In statement 3.4, the result of dividing the integers is cast to a double; since the integer division evaluates to 0, the cast will simply make the result 0.0, yielding an output of 3.0 once again. Very tricky! 
+The increment operator (++) is used to increase the value of a number by one. For example, if the value of a variable x is 3, then x++ will increment the value of x to 4. This has the exact same effect as writing x = x + 1, and is nothing more than convenient shorthand. 
+Conversely, the decrement operator (--) is used to quickly decrease the value of a number by one. For example, if the value of a variable named x is 3, then x-- decreases the value of x to 2. This has the exact same effect as writing x = x – 1. 
+Other shortcut operators include +=, -=, *=, /=, and %=. These shortcuts perform the indicated operation and assign the result to the original variable. For example, 
+a += b; 
+
+is an equivalent command to 
+a = a + b;
+Humans are pretty smart when it comes to guessing intent For instance, you probably noticed that there’s a missing period between this sentence and the one before it. (If not, slow down: AP Computer Science A Exam questions require close reading when looking for errors.) Computers, on the other hand, are literal—more annoyingly so, probably, than those teachers who ask whether you’re physically capable of going to the bathroom when you ask whether you can go. To that end, then, it’s crucial that you end each complete statement (i.e., sentence) with a semicolon, which is our way of telling the Java compiler that it’s reached the end of a step. This doesn’t mean that you need to place a semicolon after every line— remember that line breaks exist only to make code more readable to humans —but you must place one after any complete declaration or statement. 

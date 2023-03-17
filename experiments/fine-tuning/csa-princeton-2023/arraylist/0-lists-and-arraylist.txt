@@ -1,0 +1,36 @@
+There are two big limitations of the powerful array structure in Java: an array has a fixed length and it can store only one type of data. If you wanted to represent, say, a friend’s collection of action figures, an array would require all of the action figures to be the same type. Generally speaking, they must all be flying superheroes, or they must all have protective body armor, etc. 
+Likewise, a collection of action figures represented as an array could store only a fixed number of action figures, no more and no less. If there are extra, unused slots, they stay there, which could be problematic if you have an array of helmeted heroes and you try to remove the helmet from every element in every index of the array. Once you reach the first empty spot, there is no hero and therefore no helmet, so the directions do not make sense; in Java, the compiler will return a NullPointerException for this situation. 
+An ArrayList addresses both of these issues. An ArrayList object is dynamically sized, expanding and compressing as elements are added and removed. An ArrayList can also store multiple types of data, without limit. 
+Let’s use an example to understand the advantages and disadvantages of arrays versus ArrayLists. Consider your lunch bag that you take to school. If you wanted to represent your lunch bag using an array or ArrayList structure, which would be more accurate?
+Naturally, the answer to this question depends on (1) the details of the objects in the bag—in this case, the types of lunch items—and (2) the programmer’s choice of which is more appropriate. If your lunch contains a sandwich object, a fruit object, and a drink object, the ArrayList structure might be a better choice. Furthermore, as the components of the lunch are removed, the lunch bag theoretically shrinks (or can shrink). An ArrayList seems appropriate. 
+Let’s consider the same lunch example, but this time, suppose the items are stored in a plastic container with compartments. Regardless of whether you have not yet eaten your lunch, you are done with your lunch, or it’s currently anytime in between, the number and setup of the compartments do not change. We will discuss a workaround for “tricking” the array into thinking the lunch objects are all the same type. These facts and abilities render an array structure more appropriate than an ArrayList. 
+To further demonstrate the usefulness of an ArrayList structure, note that it is also possible to create a typed ArrayList, which allows only objects of the same type to be stored in the list. This structure combines useful aspects of both arrays and ArrayLists. 
+In order to instantiate an ArrayList called lunchBag that will store the various components of our lunch, we use the following line of code: 
+ArrayList lunchBag = new ArrayList(); 
+
+Note that, unlike the syntax we use for instantiating an array, neither the type of object nor the length of the list is defined initially. 
+In order to access data from within the list, particular methods must be invoked; unlike for array structures in Java, there is not a convenient bracket notation available with lists. To return the second object, an Apple object, in the ArrayList and store it using the variable food, the line of code would be
+Apple red = lunchBag.get(1); 
+
+There are several other useful methods available in the List class, and they are all mentioned in the AP Exam Quick Reference, although their functionality is (obviously) not given. These methods include add, set, remove, and size. 
+If the programmer decides it is more appropriate to keep the dynamic sizing ability of the ArrayList while fixing the type of data it can hold (as in an array), it would be instantiated as follows: 
+ArrayList<Apple> lunchBag = new ArrayList<Apple>(); 
+
+One of the drawbacks of using ArrayList is that only objects can be stored in an ArrayList. The primitive data types int and double cannot be stored in ArrayLists. If programmers want to store integer and double data types, they must use the Integer or Double wrapper classes. Integer and Double objects can be created using integers and doubles, respectively, as parameters. For example, 
+Integer n = new Integer(5); 
+Double x = new Double(6.1); 
+
+To call the values, use the intValue() and doubleValue() methods. The following commands 
+int a = n.intValue(); 
+int y = x.doubleValue(); 
+
+assign a = 5 and y = 6.1.
+
+Additionally, the AP Computer Science Java Subset includes the static variables MIN_VALUE and MAX_VALUE of the Integer class. These store the minimum and maximum possible values of the integer data type.
+
+Array vs Arraylist
+After an array is created, it cannot be resized. --> ArrayLists will automatically resize as new elements are added.
+No import statement is needed to use an array, unless the array holds elements that require an import statement. --> You must import java.util.ArrayList, or use the full package name whenever you use an ArrayList.
+Elements are accessed using index notation (e.g., myArray[2]). --> Elements are accessed using methods of the ArrayList class (e.g., myList.get(2), myList.add("George")).
+Arrays can be constructed to hold either primitives or object references. --> ArrayList instances can hold only object references, not primitives. The Integer and Double wrapper classes must be used to store integer and double primitives in an ArrayList.
+Each array can be declared for only one type of element. For example, if an array is declared to hold strings, you cannot store an integer in it. --> An ArrayList can hold a heterogeneous collection of objects. For example, the following is perfectly legal (though not recommended): ArrayList list = new ArrayList(); list.add(new String("A String">)); list.add(new Integer(4));

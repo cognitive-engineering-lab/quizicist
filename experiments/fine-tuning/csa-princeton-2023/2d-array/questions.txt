@@ -1,0 +1,238 @@
+question-section:0
+2 1
+Consider the following code segment:
+int[][] num = new int [4][4];
+for (int i = 0; i < num.length; i++)
+{
+    for (int k = 0; k < num.length; k++
+    {
+        num[i][k] = i * k;
+    }
+}
+
+What are the contents of num after the code segment has executed?
+(A*) 0 0 0 0
+0 1 2 3
+0 2 4 6
+0 3 6 9
+(B) 0 1 2 3
+1 2 3 4
+2 3 4 5
+3 4 5 6
+(C) 0 3 6 9
+0 2 4 6
+0 1 2 3
+0 0 0 0
+(D) 1 1 1 1
+2 2 2 2
+3 3 3 3
+4 4 4 4
+(E) 0 0 0 0
+1 2 3 4
+2 4 6 8
+3 6 9 12
+
+question-section:0
+4 1
+The following class, Arr2d, is meant to represent a 2-dimensional array object. The constructor will initialize Arr2d using the number of rows and columns that have been passed. Choose the statement that will initialize the array in the constructor.
+public class Arr2D {
+    private int [][] arr;
+    Arr2D (int rows, int columns)
+    {
+        /*missing code */
+    }
+}
+(A) int [] arr = new String [rows][columns];
+(B) int [][] arr = new String [rows - 1][columns - 1];
+(C*) arr = new String [rows][columns];
+(D) arr = new String [rows - 1][columns - 1];
+(E) int arr [][] = new String [rows][columns];
+
+question-section:0
+2 1
+Consider the following code segment:
+int [][] numbers = {{1, 2, 3, 4}, {5, 6, 7, 8}};
+for (int [] nums : numbers)
+    for (int n : nums)
+        System.out.print(n + " ");
+System.out.print("\n");
+
+What is printed as a result of executing the code segment?
+(A*) 1 2 3 4 5 6 7 8
+(B) 1 2 3 4
+5 6 7 8
+(C) 1 2
+3 4
+5 6
+7 8
+(D) 5 6 7 8
+1 2 3 4
+(E) A compiler error would occur.
+
+question-section:0
+2 1
+Consider the following code segment:
+int[][] numbers = new int [4][4];
+initializeIt(numbers);
+int total = 0;
+for (int z = 0; z < numbers.length; z++)
+{
+    total += numbers[z][numbers [0].length – 1 – z];
+}
+
+The call to initializeIt() on the second line initializes the array numbers so that it looks like the following:
+1 2 5 3
+7 9 4 0
+3 3 2 5
+4 5 8 1
+
+What will be the value of total after the code has executed?
+(A) 11
+(B) 12
+(C) 13
+(D*) 14
+(E) 15
+
+question-section:0
+2 1
+Consider the following code segment:
+int[][] numbers = new int[3][6];
+initializeIt(numbers);
+int total = 0;
+for (int j = 0; j < numbers.length; j++)
+{
+    for (int k = 0; k < numbers[0].length; k += 2)  {
+        total+= numbers[j][k];
+    }
+}
+
+The call to initializeIt() on the second line initializes the array numbers so that it looks like the following:
+2 4 6 3 2 1
+5 6 7 4 2 9
+4 0 5 6 4 2
+
+What will be the value of total after the code has executed?
+(A) 18
+(B) 35
+(C*) 37
+(D) 72
+(E) 101
+
+question-section:0
+2 1
+Consider the following code segment:
+int[][] num = new int[4][4];
+for (int i = 0; i < num.length; i++)
+{
+    for (int k = 0; k < num[0].length; k++)
+    {
+        num[i][k] = i * k;
+    }
+}
+
+What are the contents of num after the code segment has executed?
+(A*) 0 0 0 0
+0 1 2 3
+0 2 4 6
+0 3 6 9
+(B) 0 1 2 3
+1 2 3 4
+2 3 4 5
+3 4 5 6
+(C) 0 3 6 9
+0 2 4 6
+0 1 2 3
+0 0 0 0
+(D) 1 1 1 1
+2 2 2 2
+3 3 3 3
+4 4 4 4
+(E) 0 0 0 0
+1 2 3 4
+2 4 6 8
+3 6 9 12
+
+question-section:0
+2 1
+Consider the following code segment:
+int [][] numbers = {{1, 2, 3, 4},{5, 6, 7, 8}}; initializeIt(numbers);
+String line =””;
+for (int a = 0; a < numbers[0].length; a++)
+{
+    for (int b = 0; b < numbers.length; b++)
+    {
+        line += numbers[b][a] + “ “;
+    }
+    line += “\n”;
+}
+System.out.println(line);
+
+The call to initializeIt() on the second line initializes the array so that it looks like the following:
+1 2 3 4
+5 6 7 8
+
+What will be printed after the code has executed?
+(A) 1 2 3 4
+5 6 7 8
+(B) 5 6 7 8
+1 2 3 4
+(C) 8 7 6 5
+4 3 2 1
+(D) 1 2
+3 4
+5 6
+7 8
+(E*) 1 5
+2 6
+3 4
+4 8
+
+question-section:0
+2 1
+Consider the following client code and method:
+int [][] numbers = {{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}};
+int [] myArr = mystery(numbers, 2);
+for (int j: myArr)
+    System.out.print(j + " ");
+
+public static int [] mystery(int [][] arr, int n) {
+    int [] m = new int[arr.length];
+    for (int i = 0; i < arr.length; i++)
+        m[i] = arr[i][n];
+    return m;
+}
+
+What will be printed after the code executes?
+(A) 5 6 7 8
+(B) 2 6 10
+(C) 9 10 11 12
+(D) 4 8 12
+(E*) 3 7 11
+
+question-section:0
+2 1
+Consider the following code:
+int [][] numbers = {{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}};
+for (int r = numbers.length - 1; r > 0 ; r--)  {
+    for (int c = 0; c < numbers[r].length; c++)
+    {
+        numbers[r - 1][c] = numbers[r][c];
+    }
+}
+
+Which of the following represents the current values in the array?
+(A) 1 2 3 4
+5 6 7 8
+9 10 11 12
+(B) 9 10 11 12
+5 6 7 8
+1 2 3 4
+(C) 1 2 3 4
+1 2 3 4
+1 2 3 4
+(D*) 9 10 11 12
+9 10 11 12
+9 10 11 12
+(E) 12 11 10 9
+8 7 6 5
+4 3 2 1

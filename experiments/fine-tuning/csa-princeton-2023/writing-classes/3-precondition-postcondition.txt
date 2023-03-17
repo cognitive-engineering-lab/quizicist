@@ -1,0 +1,25 @@
+A precondition is a comment that is intended to inform the user more about the condition of the method and guarantees it to be true.
+On the AP Exam, the precondition shows up as a comment immediately above the method. It is the responsibility of the program that calls the method not to pass parameters that violate the precondition.
+/*** preconditon — a and b are positive integers
+*/
+public int sum(int a, int b)
+{ }
+
+A postcondition is a condition that must always be true just after the execution of some section of code or after an operation in a formal specification.
+On the AP Exam, the postcondition is written as a comment either before or within the method as shown in the example below. The method designer is responsible for making sure that these conditions are met.
+public int sum100(int a, int b)
+{
+	<code>
+	// postcondition—returns 100, if sum is greater than 100, or the value of sum
+	if (sum < 100)
+		return sum;
+	else
+		return 100;
+}
+
+A method may accept any number of parameters, but may return only one data value or object.
+As a final example for this section, consider a programmer who is trying to write an object class that represents a book (like this book, only arbitrarily more interesting). Some of the data the programmer may consider are:
+What does a book have? A cover, pages, words,… What can a book do? It can be read, be skimmed, be put away,…
+From this information, the programmer can begin to write the object class. The programmer must first determine which item(s) are relevant to the situation, so as to keep the object class as efficient as possible. For example, if the programmer is designing a book to be used as a paperweight, it is probably not important to discuss how many words are in the book, so that data field would not be incorporated into the program. Likewise, if the programmer is not a student studying a ridiculous number of books in a short amount of time (sound familiar?), then it may not be relevant to have a method that skims the book, rather than reading it closely. The class will then be built based on these decisions.
+As you can see, the planning of the program is just as important as, if not more important than, the actual writing of the program. In some classes, your teacher may remind you to “write an outline” or “write a first draft” before you compose the final product, and you might skip that step and go right to the end unit, and still be successful. For programming at any profound level, which is required in this course to some extent, planning is essential in order for your program to work well and in order to increase your efficiency. Remember, the AP Exam is strictly timed.
+The AP Exam tests the planning of a class by presenting a lengthy description of the requirements, along with other interacting classes in the project.

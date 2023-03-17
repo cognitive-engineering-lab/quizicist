@@ -1,0 +1,92 @@
+question-section:0
+4 1
+A math teacher is writing a program that will correctly calculate the area of a circle. Recall that the area of a circle is pi times the radius squared (πr2). Assuming Math.PI returns an accurate decimal approximation of pi, which of the following statements WILL NOT calculate an accurate area of a circle with radius 22?
+(A) r*r*Math.PI; // r is the int 22
+(B) r*r*Math.PI; // r is the double 22.0
+(C) (double)r*r*Math.PI; // r is the int 22
+(D) (double)(r*r)*Math.PI; // r is the int 22
+(E*) All of the above choices will calculate an accurate area.
+
+question-section:0
+2 1
+Consider the following code segment:
+String s = "This is the beginning";
+String t = s.substring(5);
+int n = t.indexOf("the");
+Which of the following will be the value of n?
+(A) –1
+(B*) 3
+(C) 7
+(D) 9
+(E) n will have no value because of a run-time error.
+
+question-section:0
+1 1
+Given the following code, what line will cause a compiler error?
+String word = "Sunday Funday Celebration 1.0"; 2 word.substring(7);
+word.substring(3, 6);
+word.indexOf("day");
+word.indexOf(1.0);
+word.compareTo("day");
+(A) line 2
+(B) line 3
+(C) line 4
+(D*) line 5
+(E) line 6
+
+question-section:0
+4 1
+Given the following code, which of the following would cause a run time error?
+String s1 = "pizza";
+(A) String s2 = s1.substring(0, 2);
+(B) String s2 = s1.substring(1, 3);
+(C) String s2 = s1.substring(3, 3);
+(D) String s2 = s1.substring(2, 3);
+(E*) String s2 = s1.substring(4, 6);
+
+question-section:0
+2 1
+Given the following code, what is the final value stored in s3?
+String s1 = "kangaroo";
+String s3 = s1.substring(1, 2);
+(A) "k"
+(B) "ka"
+(C*) "a"
+(D) "an"
+(E) "kn"
+
+question-section:0
+2 1
+Given the following code, what is the final value stored in s4?
+String s1 = "tango";
+String s4 = s1.substring(s1.length() - 2);
+(A) "g"
+(B*) "go"
+(C) "o"
+(D) "og"
+(E) A compiler error will occur.
+
+question-section:0
+4 1
+Given that “A” comes before “a” in the dictionary and the following variables have been defined and initialized, which is true?
+String str1 = "january";
+String str2 = "June";
+String str3 = "July";
+(A) str1.compareTo(str3) < 0
+(B) str3.compareTo(str2) > 0
+(C) str1.compareTo(str2) < 0
+(D*) str1.compareTo(str2) > 0
+(E) str2.compareTo(str3) < 0
+
+question-section:0
+2 1
+Given the following code, what is the final value stored in p?
+String word = "boottool";
+int p = word.indexOf("oo");
+word.substring(p + 2);
+p = word.indexOf("oo");
+(A) 0
+(B*) 1
+(C) 2
+(D) 5
+(E) 6

@@ -1,0 +1,82 @@
+The insertion sort is a little less intuitive. Rather than traversing the entire array, it compares the first two elements and, depending on the comparison, inserts the second value “in front” of the first value into index 0, moving the first value to index 1. The first two elements are now sorted. Then the third element is checked, and the inserting continues. Note that here, also, an already sorted element will remain in its position. 
+Below is an array with 9 elements. This array is sorted from least to greatest except for the last element. 
+
+2 3 5 8 11 14 17 22 15
+
+We would like to move 15 so that the entire array is in order. First, we’ll temporarily assign 15 to a variable. This will give us room to shift the other elements to the right if needed. 
+temp = 15 
+
+2 3 5 8 11 14 17 22
+
+We then compare 15 to the first element to its left: 22. Because 22 is larger than 15, we shift 22 to the right.
+temp = 15 
+
+2 3 5 8 11 14 17 -> 22
+
+We then compare 15 to the next element: 17. Because 17 is larger, we shift that to the right also. 
+temp = 15 
+
+2 3 5 8 11 14 -> 17 22
+
+Next we compare 15 to 14. Because 15 is larger, we don’t want to shift 14 to the right. Instead, we insert 15 into the empty cell in the array. Now the array is correctly sorted. 
+Insert 15:
+
+2 3 5 8 11 14 15 17 22
+
+Now we’ll look at how we can use the idea illustrated above to sort an entire array. This example will start at the beginning of the sorting process. 
+Here is the array that we are going to sort. 
+8 6 7 10
+
+First, we’ll look at just the first two elements of the array to make sure that they are sorted relative to each other. 
+8 6 7 10
+
+To do this, we’ll pull 6 (the number that is farthest to the right in our subarray) out of the array and temporarily assign it to a variable. We’ll then compare 6 to 8. Because 8 is larger, shift 8 to the right and then put 6 in the cell where 8 was. 
+temp = 6 
+
+8 -> 7 10
+
+Here’s what the array looks like. 
+6 8 7 10
+
+Now we need to put 7 in the proper place relative to 6 and 8. We start by assigning 7 temporarily to a variable. 
+temp = 7 
+
+6 8 _ 10
+
+We then compare 7 to the first number to its left: 8. Because 7 is less than 8, we shift 8 one place to the right. 
+temp = 7 
+
+6 -> 8 10
+
+Next, we’ll compare 7 to the next number in the array: 6. Because 6 is less than 7, we don’t want to shift 6 to the right. Instead, we will put 7 in the second cell. Our array now looks like the following: 
+6 7 8 10
+
+Now we need to put 10 in its place relative to the first 3 elements in the array.
+6 7 8 10
+
+temp = 10 
+
+6 7 8 _
+
+First we compare 10 to 8; because 8 is smaller than 10, we don’t need to shift 8 to the right. In fact, we can put 10 right back into the cell from which it came. 
+6 7 8 10
+
+Here is how an insertion sort can be implemented in Java. 
+//precondition: x is an array of integers; x.length >= 0 
+//postcondition: x is sorted from least to greatest 
+1 public static void insertionSort(int[] x) 
+2 { 
+3 for (int i = 1; i < x.length; i++) 
+4 { 
+5 int temp = x[i]; 
+6 int j = i – 1; 
+7 while (j >= 0 && x[j] > temp) 
+8 { 
+9 x[j + 1] = x[j]; 
+10 j--; 
+11 } 
+12 x[j + 1] = temp; 
+13 } 
+14 } 
+Note that like the selection sort, the insertion sort contains nested loops. In this case, we have a while loop nested within a for loop.
+The for loop, beginning on line 3, proceeds from index 1 to the end of the array. The while loop goes through the array from i to 0 and shifts elements that are larger than temp to the right on line 9. On line 12, we put the value of temp into its proper place in the array. 

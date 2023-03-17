@@ -1,0 +1,37 @@
+Consider the statements
+Student s = new GradStudent();
+GradStudent g = new GradStudent();
+int x = s.getID(); //compile-time error
+int y = g.getID(); //legal
+Both s and g represent GradStudent objects, so why does s.getID() cause an error? The reason is that s is of type Student, and the Student class doesn’t have a getID method. At compile time, only nonprivate methods of the Student class can appear to the right of the dot operator when applied to s. Don’t confuse this with polymor phism: getID is not a polymorphic method. It occurs in just the GradStudent class and can therefore be called only by a GradStudent object.
+The error shown above can be fixed by casting s to the correct type:
+int x = ((GradStudent) s).getID();
+Since s (of type Student) is actually representing a GradStudent object, such a cast can be carried out. Casting a superclass to a subclass type is called a downcast.
+
+NOTE
+1. The outer parentheses are necessary:
+int x = (GradStudent) s.getID();
+will still cause an error, despite the cast. This is because the dot operator has
+higher precedence than casting, so s.getID() is invoked before s is cast to
+GradStudent.
+2. The statement
+int y = g.getID();
+compiles without problem because g is declared to be of type GradStudent, and this is the class that contains getID. No cast is required.
+
+Type Rules for Polymorphic Method Calls
+a.method(b)
+
+Method selected by type of a at run time
+Parameter b must be of correct type at compile time
+
+• For a declaration like Superclass a = new Subclass(); the type of a at compile time is Superclass; at run time it is Subclass.
+• At compile time, method must be found in the class of a, that is, in Superclass. (This is true whether the method is polymorphic or not.) If method cannot be found in the class of a, you need to do an explicit cast on a to its actual type.
+• For a polymorphic method, at run time the actual type of a is determined—Subclass in this example—and method is selected from Subclass. This could be an inherited method if there is no overriding method.
+• The type of parameter b is checked at compile time. You may need to do an explicit cast to the subclass type to make this correct.
+
+The ClassCastException is a run-time exception thrown to signal an attempt to cast an object to a class of which it is not an instance.
+Student u = new UnderGrad();
+System.out.println((String) u); //ClassCastException
+//u is not an instance of String
+int x = ((GradStudent) u).getID(); //ClassCastException
+//u is not an instance of GradStudent

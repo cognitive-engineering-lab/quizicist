@@ -1,0 +1,43 @@
+Use the nouns in the specification as a starting point for identifying classes in the program. The nouns are: program, teacher, grade book, class list, class, student, schedule, menu, set of scores, data, record, average, grade, and file. Eliminate each of the following:
+program (Always eliminate “program” when used in this context.)
+teacher (Eliminate, because he or she is the user.)
+schedule (This will be reflected in the name of the external file for each class, e.g., apcs_period3.dat.)
+data, record (These are synonymous with student name, scores, grades, etc., and will be covered by these features.)
+class (This is synonymous with class list.)
+
+The following seem to be excellent candidates for classes: GradeBook, ClassList, Student, and FileHandler. Other possibilities are Menu, ScoreList, and a GUI_Display. On further thought: Basic independent objects are Student, Menu, Score, and FileHandler. Group objects are ClassList (collection of students), ScoreList (collection of scores), and AllClasses (collection of ClassLists). The controlling class is the GradeBook. A Display class is essential for many of the grade book operations, like showing a class list or displaying information for a single student.
+
+There are no inheritance relationships. There are many composition relationships between objects, however. The GradeBook has-a Menu, the ClassList has-a Student (several, in fact!), a Student has-a name, average, grade, list_of_scores, etc. The programmer must decide whether to code these attributes as classes or data fields.
+Use the verbs in the specification to identify required operations in the program. The verbs are: maintain <list>, provide <menu>, allow <user>, create <list>, enter <scores>, correct <data>, display <record>, calculate <average>, calculate <grade>, print <list>, add <student>, delete <student>, transfer <student>, and save <data>.
+You must make some design decisions about which class is responsible for which behavior. For example, will a ClassList display the record of a single Student, or will a Student display his or her own record? Who will enter scores—the GradeBook, a ClassList, or a Student? Is it desirable for a Student to enter scores of other Students? Probably not!
+
+Here are some preliminary decisions. The GradeBook will provideMenu. The menu selection will send execution to the relevant object.
+The ClassList will maintain an updated list of each class. It will have these public methods: addStudent, deleteStudent, transferStudent, createNewClass, printClassList, printScores, and updateList. A good candidate for a helper method in this class is search for a given student.
+Each Student will have complete personal and grade information. Public methods will include setName, getName, enterScore, correctData, findAverage, getAverage, getGrade, and displayRecord.
+Saving and retrieving information is crucial to this program. The FileHandler will take care of openFileForReading, openFileForWriting, closeFiles, loadClass, and saveClass. The FileHandler class should be written and tested right at the beginning, using a small dummy class list.
+Score, ScoreList, and Student are easy classes to implement. When these are working, the programmer can go on to ClassList. Finally the Display GUI class, which will have the GradeBook, can be developed. This is an example of bottom-up development.
+
+Example 3
+A program simulates a game of Battleships, which is a game between two players, each of whom has a grid where ships are placed. Each player has five ships:
+battleship o o o o o
+cruiser o o o o
+submarine o o o
+destroyer o o
+frigate o
+The grids of the players’ fleets may look like this. Any two adjacent squares that are taken must belong to the same ship, i.e., different ships shouldn’t “touch.”
+Each player’s grid is hidden from the other player. Players alternate “shooting” at each other’s ships by calling out a position, a row and column number. A player must make an honest response, “hit” or “miss.” If it’s a hit, a player gets another turn. If the whole ship has been hit, the owner must say something like, “You sank my cruiser.” Each player must keep track of hits and misses. The first player to sink his opponent’s fleet is the winner.
+The nouns in the specification are program, game, players, grid, ship, battleship, cruiser, submarine, destroyer, frigate, square, position, opponent, row, column, turn, hits, misses, fleet, winner.
+
+Eliminate each of the following:
+program Always eliminate.
+row, col These are parts of a given position or square, more suitable as instance variables for a position or square object.
+hits, misses These are simply marked positions and probably don’t need their own class.
+turn Taking a turn is an action and will be described by a method rather than a class.
+opponent This is another word for player.
+
+The following seem to be good candidates for classes: Player, Grid, Position, Ship, Battleship, Cruiser, Submarine, Destroyer, and Frigate. Additionally, it seems there should be a GameManager and Display.
+
+This program provides two examples of inheritance relationships. Each of the five ships is-a Ship, and shares common features, like isHit, isSunk, and array of positions. However, each has a unique name, length, and position in the grid. This means that Ship is a good candidate for an abstract class with abstract methods like getLength, getName, and getPositions, which depend on the kind of ship.
+The second inheritance relationship is between the grids. There are two types of
+grids for each player: his own FleetGrid (the current state of his own ships) and his opponent’s HitGrid, which keeps track of his hits and misses. Each of these grids is-a Grid. A grid is a candidate for an interface, with a list of methods like getAdjacentNeighbors, getRightNeighbor, etc. Each of FleetGrid and HitGrid would implement Grid.
+There are several composition relationships in this program. A Player has-a HitGrid and a FleetGrid and also has five ships. The GameManager has each of the two Player objects and also has-a Display. The Display has each of the grids.

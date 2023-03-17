@@ -1,0 +1,17 @@
+Consider writing a program that simulates a game of Battleships. The program may have a Ship class with subclasses Submarine, Cruiser, Destroyer, and so on. The various ships will be placed in a two-dimensional grid that represents a part of the ocean.
+An abstract class Ship is a good design choice. There will not be any instances of Ship objects because the specific features of the subclasses must be known in order to place these ships in the grid. A Grid interface that manipulates objects in a two dimensional setting suggests itself for the two-dimensional grid.
+Notice that the abstract Ship class is specific to the Battleships application, whereas the Grid interface is not. You could use the Grid interface in any program that has a two-dimensional grid.
+
+Interface vs. Abstract Class
+• Use an abstract class for an object that is application-specific
+but incomplete without its subclasses.
+• Consider using an interface when its methods are suitable
+for your program but could be equally applicable in a vari
+ety of programs.
+• An interface typically doesn’t provide implementations for
+any of its methods, whereas an abstract class does. (In Java 8,
+implementation of default methods is allowed in interfaces.)
+• An interface cannot contain instance variables, whereas an
+abstract class can.
+• It is not possible to create an instance of an interface object
+or an abstract class object.

@@ -1,0 +1,241 @@
+question-section:0
+4 2
+In order to write LawAcademy, a subclass of College, which of the following constructors is valid?
+I. public LawAcademy (String twn, double tuit)
+{
+    super.College(twn, tuit);
+}
+II. public LawAcademy (String twn, double tuit)
+{
+    super(twn, tuit);
+}
+III. public LawAcademy (String twn, double tuit, String st) {
+    super(st, tuit);
+}
+(A) II only
+(B) I and II only
+(C) I and III only
+(D*) II and III only
+(E) I, II, and III
+
+question-section:0
+4 1
+Consider a class Recliner that extends a Chair class. Assuming both classes each have a no-parameter constructor, which of the following statements is NOT valid?
+(A) Object a = new Recliner();
+(B*) Recliner b = new Chair();
+(C) Chair c = new Chair();
+(D) Chair d = new Recliner();
+(E) All of the above choices are valid.
+
+question-section:0
+4 1
+Consider the following two classes:
+public class A
+{
+    public int method1(int x)
+    {
+        return 2;
+    }
+}
+public class B extends A
+{ /* code not shown */ }
+
+Which of the following could be the signature of a method in class B that correctly overloads method1 in class A?
+(A*) public int method1(String x)
+(B) public int method1(int y)
+(C) private int method1(int x)
+(D) public int method2(String x)
+(E) public int method2(int y)
+
+question-section:0
+1 1
+Consider the following two classes:
+public class Parent
+{
+    public void writeMe(String s)
+    {
+        System.out.println("Object");
+    }
+}
+public class Child extends Parent
+{
+    public void writeMe(String s)
+    {
+        System.out.println("Object");
+    }
+}
+
+Which of the following best describes the writeMe method of the Child class?
+(A) An inherited method
+(B*) An overridden method
+(C) An overloaded method
+(D) An interface method
+(E) An abstract method
+
+question-section:1
+2 1
+Consider the following class:
+public class Cat
+{
+    private String name;
+    private int age;
+    public Cat(String name, int age)
+    {
+        this.name = name;
+        this.age = age;
+    }
+    public String toString()
+    {
+        return (name + ": " + age);
+    }
+}
+
+Suppose another class were to include the following code segment:
+Cat c = new Cat("Billi", 5);
+System.out.println(c);
+
+Which of the following will be the output of the code segment?
+(A) c
+(B) 5
+(C) Billi
+(D*) Billi: 5
+(E) There would be no output.
+
+question-section:0
+1 1
+Consider the following two classes:
+public class Parent
+{
+    public void writeMe(String s)
+    {
+        System.out.println("object");
+    }
+}
+public class Child extends Parent
+{
+    public void writeMe(String s)
+    {
+        System.out.println("object");
+    }
+}
+
+Which of the following best describes the writeMe method of the Child class?
+(A) An inherited method
+(B*) An overridden method
+(C) An overloaded method
+(D) An interface method
+(E) An abstract method
+
+question-section:0
+5 1
+How many classes can a given class extend?
+(A) None
+(B*) 1
+(C) 2
+(D) 3
+(E) As many as it needs to
+
+question-section:0
+4 1
+Consider the following classes.
+public class Employee
+{
+    private String name;
+    private String department;
+    Employee ()
+    {
+        name = "";
+        department = "";
+    }
+    Employee (String iName)
+    {
+        name = iName;
+        department = "";
+    }
+    Employee (String iName, String iDepartment)  {
+        name = iName;
+        department = iDepartment;
+    }
+    public String toString()
+    {
+        return name + " " + department;
+    }
+}
+
+public class Manager extends Employee {
+    private double salary;
+    Manager()
+    {
+        salary = 0;
+    }
+    Manager(double iSalary)
+    {
+        salary = iSalary;
+    }
+    Manager(String iName, String iDepartment, double iSalary)
+    {
+        super(iName, iDepartment);
+        salary = iSalary;
+    }
+    public void setSalary(double iSalary)
+    {
+        salary = iSalary;
+    }
+    public String toString()
+    {
+        String str = super.toString();
+        return str += " " + salary;
+    }
+}
+
+Which of the following code combinations will NOT cause a compilation error?
+(A) Employee emp1 = new Employee();
+(B) Employee emp2 = new Employee("Jones", "Sales");
+(C) Employee emp3 = new Manager("Jones", "Sales", 50000.0);
+(D) Employee emp4 = new Manager(50000.0);
+(E*) Manager emp5 = new Employee("Jones", "Sales");
+
+question-section:0
+3 1
+An apartment rental company has asked you to write a program to store information about the apartments that it has available for rent. For each apartment, the company wants to keep track of the following information: number of rooms, whether or not the apartment has a dishwasher, and whether or not pets are allowed. Which of the following is the best design?
+(A) Use four unrelated classes: Apartment, Rooms, Dishwasher, and Pets.
+(B) Use one class, Apartment, which has three subclasses: Room, Dishwasher, and Pet.
+(C*) Use one class, Apartment, which has three data fields: int rooms, boolean hasDishwasher, boolean allowsPets.
+(D) Use three classes—Pets, Rooms, and Dishwasher—each with a subclass Apartment.
+(E) Use four classes: Apartment, Pets, Dishwasher, and Rooms. The class Apartment contains instances of the other classes as attributes.
+
+question-section:1
+4 1
+Consider the following class declarations:
+public class Vehicle
+{
+    private int maxPassengers;
+    public Vehicle( )
+    {
+        maxPassengers = 1;
+    }
+    public Vehicle(int x)
+    {
+        maxPassengers = x;
+    }
+    public int maxPassengers( )
+    {
+        return maxPassengers;
+    }
+}
+
+public class Motorcycle extends Vehicle
+{
+    public Motorcycle( )
+    {
+        super(2);
+    }
+}
+
+Which of the following code segments will NOT cause a compilation error?
+(A) Motorcycle m1 = new Motorcycle(3);
+(B) Vehicle v1 = new Motorcycle(4);
+(C) Motorcycle m2 = new Vehicle( );
+(D*) Vehicle v2 = new Motorcycle( );
+(E) Vehicle v3 = new Vehicle( );
+int max = v3.maxPassengers;

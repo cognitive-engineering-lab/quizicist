@@ -1,0 +1,71 @@
+Example 2
+Consider a recursive solution to the problem of doing a sequential search for a key in an array of strings. If the key is found, the method returns true, otherwise it returns false.
+The solution can be stated recursively as follows:
+• If the key is in a[0], then the key is found.
+• If not, recursively search the array starting at a[1].
+• If you are past the end of the array, then the key wasn’t found. Here is a straightforward (but inefficient) implementation:
+
+public class Searcher {
+    /**
+     * Recursively search array a for key. * @param a the array of String objects
+     * * @param key a String object
+     *
+     * @return true if a[k] equals key for 0 <= k < a.length; * false otherwise
+     */
+    public boolean search(String[] a, String key) {
+        if (a.length == 0) // base case. key not found
+            return false;
+        else if (a[0].compareTo(key) == 0) // base case
+            return true; // key found
+        else {
+            String[] shorter = new String[a.length - 1];
+            for (int i = 0; i < shorter.length; i++)
+                shorter[i] = a[i + 1];
+            return search(shorter, key);
+        }
+    }
+
+    public static void main(String[] args) {
+        String[] list = { "Mary", "Joe", "Lee", "Jake" };
+        Searcher s = new Searcher();
+        System.out.println("Enter key: Mary, Joe, Lee or Jake.");
+        String key = IO.readString(); // read user input
+        boolean result = s.search(list, key);
+        if (!result)
+            System.out.println(key + " was not found.");
+        else
+            System.out.println(key + " was found.");
+    }
+}
+
+Notice how horribly inefficient the search method is: For each recursive call, a new array shorter has to be created! It is much better to use a parameter, startIndex, to keep track of where you are in the array. Replace the search method above with the following one, which calls the private helper method recurSearch:
+/** Driver method. Searches array a for key.
+* Precondition: a contains at least one element.
+* @param a the array of String objects
+* @param key a String object
+* @return true if a[k] equals key for 0 <= k < a.length; * false otherwise
+*/
+public boolean search(String[] a, String key)
+{
+    return recurSearch(a, 0, key);
+}
+/** Recursively search array a for key, starting at startIndex. * Precondition:
+* - a contains at least one element.
+* - 0 <= startIndex <= a.length.
+* @return true if a[k] equals key for 0 <= k < a.length; * false otherwise
+*/
+private boolean recurSearch(String[] a, int startIndex,
+String key)
+{
+    if(startIndex == a.length) //base case. key not found
+        return false;
+    else if(a[startIndex].compareTo(key) == 0) //base case
+        return true; //key found
+    else
+        return recurSearch(a, startIndex+1, key);
+}
+
+NOTE
+1. Using the parameter startIndex avoids having to create a new array object for each recursive call. Making startIndex a parameter of a helper method hides implementation details from the user.
+2. The helper method is private because it is called only by search within the Searcher class.
+3. It’s easy to modify the search method to return the index in the array where the key is found: Make the return type int and return startIndex if the key is found, -1 (say) if it isn’t.

@@ -1,0 +1,41 @@
+An object of type String is a sequence of characters. All string literals, such as "yikes!", are implemented as instances of this class. A string literal consists of zero or more characters, including escape sequences, surrounded by double quotes. (The quotes are not part of the String object.) Thus, each of the following is a valid string literal:
+"" //empty string
+"2468"
+"I must\n go home"
+String objects are immutable, which means that there are no methods to change them after they’ve been constructed. You can, however, always create a new String that is a mutated form of an existing String.
+
+A String object is unusual in that it can be initialized like a primitive type: String s = "abc";
+This is equivalent to
+String s = new String("abc");
+in the sense that in both cases s is a reference to a String object with contents "abc" (see Box on p. 179).
+It is possible to reassign a String reference:
+String s = "John";
+s = "Harry";
+This is equivalent to
+String s = new String("John");
+s = new String("Harry");
+Notice that this is consistent with the immutable feature of String objects. "John" has not been changed; he has merely been discarded! The fickle reference s now refers to a new String, "Harry". It is also OK to reassign s as follows:
+s = s + " Windsor";
+s now refers to the object "Harry Windsor".
+Here are other ways to initialize String objects:
+String s1 = null; //s1 is a null reference
+String s2 = new String(); //s2 is an empty character sequence
+String state = "Alaska";
+String dessert = "baked " + state; //dessert has value "baked Alaska"
+
+The dessert declaration above uses the concatenation operator, +, which operates on String objects. Given two String operands lhs and rhs, lhs + rhs produces a single String consisting of lhs followed by rhs. If either lhs or rhs is an object other than a String, the toString method of the object is invoked, and lhs and rhs are concatenated as before. If one of the operands is a String and the other is a primitive type, then the non-String operand is converted to a String, and concatenation occurs as before. If neither lhs nor rhs is a String object, an error occurs. Here are some examples:
+int five = 5;
+String state = "Hawaii-";
+String tvShow = state + five + "-0"; //tvShow has value
+//"Hawaii-5-0"
+int x = 3, y = 4;
+String sum = x + y; //error: can’t assign int 7 to String
+Suppose a Date class has a toString method that outputs dates that look like this:
+2/17/1948.
+Date d1 = new Date(8, 2, 1947);
+Date d2 = new Date(2, 17, 1948);
+String s = "My birthday is " + d2; //s has value
+//"My birthday is 2/17/1948"
+String s2 = d1 + d2; //error: + not defined for objects
+String s3 = d1.toString() + d2.toString(); //s3 has value
+//8/2/19472/17/1948

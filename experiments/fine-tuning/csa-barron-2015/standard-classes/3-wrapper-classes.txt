@@ -1,0 +1,77 @@
+A wrapper class takes either an existing object or a value of primitive type, “wraps” or “boxes” it in an object, and provides a new set of methods for that type. The point of a wrapper class is to provide extended capabilities for the boxed quantity:
+• It can be used in generic Java methods that require objects as parameters.
+• It can be used in Java container classes that require the items be objects (see p. 242).
+
+In each case, the wrapper class allows
+1. Construction of an object from a single value (wrapping or boxing the primitive in a wrapper object).
+2. Retrieval of the primitive value (unwrapping or unboxing from the wrapper object).
+Java provides a wrapper class for each of its primitive types. The two that you should know for the AP exam are the Integer and Double classes.
+
+The Integer class wraps a value of type int in an object. An object of type Integer contains just one instance variable whose type is int.
+Here are the Integer methods you should know for the AP exam:
+Integer(int value)
+Constructs an Integer object from an int. (Boxing.)
+int compareTo(Integer other)
+Returns 0 if the value of this Integer is equal to the value of other, a negative integer if it is less than the value of other, and a positive integer if it is greater than the value of other.
+int intValue()
+Returns the value of this Integer as an int. (Unboxing.)
+boolean equals(Object obj)
+Returns true if and only if this Integer has the same int value as obj.
+NOTE
+1. This method overrides equals in class Object.
+2. This method throws a ClassCastException if obj is not an Integer.
+String toString()
+Returns a String representing the value of this Integer.
+Here are some examples to illustrate the Integer methods:
+Integer intObj = new Integer(6); //boxes 6 in Integer object
+int j = intObj.intValue(); //unboxes 6 from Integer object
+System.out.println("Integer value is " + intObj);
+//calls toString() for intObj
+//output is
+//Integer value is 6
+Object object = new Integer(5); //Integer is a subclass of Object
+Integer intObj2 = new Integer(3);
+int k = intObj2.intValue();
+if (intObj.equals(intObj2)) //OK, evaluates to false
+...
+if (intObj.intValue() == intObj2.intValue())
+... //OK, since comparing primitive types
+if (k.equals(j)) //error, k and j not objects
+...
+if ((intObj.intValue()).compareTo(intObj2.intValue()) < 0)
+... //error, can’t use compareTo on primitive types
+if (intObj.compareTo(object) < 0) //Error. Parameter needs Integer cast if (intObj.compareTo((Integer) object) < 0) //OK
+...
+if (object.compareTo(intObj) < 0) //error, no compareTo in Object
+...
+if (((Integer) object).compareTo(intObj) < 0) //OK
+...
+
+The Double class wraps a value of type double in an object. An object of type Double contains just one instance variable whose type is double.
+The methods you should know for the AP exam are analogous to those for type
+Integer.
+Double(double value)
+Constructs a Double object from a double. (Boxing.)
+double doubleValue()
+Returns the value of this Double as a double. (Unboxing.)
+int compareTo(Double other)
+Returns 0 if the value of this Double is equal to the value of other, a negative integer if it is less than the value of other, and a positive integer if it is greater than the value of other.
+boolean equals(Object obj)
+This method overrides equals in class Object and throws a ClassCastException if obj is not a Double. Otherwise it returns true if and only if this Double has the same double value as obj.
+String toString()
+Returns a String representing the value of this Double.
+
+Here are some examples:
+Double dObj = new Double(2.5); //boxes 2.5 in Double object
+double d = dObj.doubleValue(); //unboxes 2.5 from Double object
+Object object = new Double(7.3); //Double is a subclass of Object
+Object intObj = new Integer(4);
+if (dObj.compareTo(object) > 0) //Error. Parameter needs cast to Double
+if (dObj.compareTo((Double) object) > 0) //OK
+...
+if (dObj.compareTo(intObj) > 0) //ClassCastException
+... //can’t compare Integer to Double
+
+NOTE
+1. Integer and Double objects are immutable: There are no mutator methods in the classes.
+2. See p. 242 for a discussion of auto-boxing and -unboxing. This useful feature will not be tested on the AP exam.

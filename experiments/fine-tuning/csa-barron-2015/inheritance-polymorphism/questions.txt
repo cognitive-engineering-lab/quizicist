@@ -1,0 +1,1179 @@
+question-section:2
+1 1
+Consider the BankAccount, SavingsAccount, and CheckingAccount classes defined below:
+
+public class BankAccount {
+    private double balance;
+
+    public BankAccount() { balance = 0; }
+
+    public BankAccount(double acctBalance) { balance = acctBalance; }
+
+    public void deposit(double amount) { balance += amount; }
+
+    public void withdraw(double amount) { balance -= amount; }
+
+    public double getBalance() { return balance; }
+}
+
+public class SavingsAccount extends BankAccount {
+    private double interestRate;
+
+    public SavingsAccount() { /* implementation not shown */ }
+
+    public SavingsAccount(double acctBalance, double rate) { /* implementation not shown */ }
+
+    public void addInterest() // Add interest to balance
+    { /* implementation not shown */ }
+}
+
+public class CheckingAccount extends BankAccount {
+    private static final double FEE = 2.0;
+    private static final double MIN_BALANCE = 50.0;
+
+    public CheckingAccount(double acctBalance) { /* implementation not shown */ }
+
+    /**
+     * FEE of $2 deducted if withdrawal leaves balance less
+     * than MIN_BALANCE. Allows for negative balance.
+     */
+    public void withdraw(double amount) { /* implementation not shown */ }
+}
+
+Of the methods shown, how many different nonconstructor methods can be invoked by a SavingsAccount object? 
+(A) 1 
+(B) 2 
+(C) 3 
+(D*) 4 
+(E) 5 
+
+question-section:2
+4 2
+Consider the BankAccount, SavingsAccount, and CheckingAccount classes defined below:
+
+public class BankAccount {
+    private double balance;
+
+    public BankAccount() { balance = 0; }
+
+    public BankAccount(double acctBalance) { balance = acctBalance; }
+
+    public void deposit(double amount) { balance += amount; }
+
+    public void withdraw(double amount) { balance -= amount; }
+
+    public double getBalance() { return balance; }
+}
+
+public class SavingsAccount extends BankAccount {
+    private double interestRate;
+
+    public SavingsAccount() { /* implementation not shown */ }
+
+    public SavingsAccount(double acctBalance, double rate) { /* implementation not shown */ }
+
+    public void addInterest() // Add interest to balance
+    { /* implementation not shown */ }
+}
+
+public class CheckingAccount extends BankAccount {
+    private static final double FEE = 2.0;
+    private static final double MIN_BALANCE = 50.0;
+
+    public CheckingAccount(double acctBalance) { /* implementation not shown */ }
+
+    /**
+     * FEE of $2 deducted if withdrawal leaves balance less
+     * than MIN_BALANCE. Allows for negative balance.
+     */
+    public void withdraw(double amount) { /* implementation not shown */ }
+}
+
+Which of the following correctly implements the default constructor of the SavingsAccount class? 
+I interestRate = 0; 
+super(); 
+II super(); 
+interestRate = 0; 
+III super(); 
+(A) II only 
+(B) I and II only 
+(C*) II and III only 
+(D) III only 
+(E) I, II, and III 
+
+question-section:2
+4 1
+Consider the BankAccount, SavingsAccount, and CheckingAccount classes defined below:
+
+public class BankAccount {
+    private double balance;
+
+    public BankAccount() { balance = 0; }
+
+    public BankAccount(double acctBalance) { balance = acctBalance; }
+
+    public void deposit(double amount) { balance += amount; }
+
+    public void withdraw(double amount) { balance -= amount; }
+
+    public double getBalance() { return balance; }
+}
+
+public class SavingsAccount extends BankAccount {
+    private double interestRate;
+
+    public SavingsAccount() { /* implementation not shown */ }
+
+    public SavingsAccount(double acctBalance, double rate) { /* implementation not shown */ }
+
+    public void addInterest() // Add interest to balance
+    { /* implementation not shown */ }
+}
+
+public class CheckingAccount extends BankAccount {
+    private static final double FEE = 2.0;
+    private static final double MIN_BALANCE = 50.0;
+
+    public CheckingAccount(double acctBalance) { /* implementation not shown */ }
+
+    /**
+     * FEE of $2 deducted if withdrawal leaves balance less
+     * than MIN_BALANCE. Allows for negative balance.
+     */
+    public void withdraw(double amount) { /* implementation not shown */ }
+}
+
+Which is a correct implementation of the constructor with parameters in the SavingsAccount class? 
+(A) balance = acctBalance; 
+interestRate = rate; 
+(B) getBalance() = acctBalance; 
+interestRate = rate; 
+(C) super(); 
+interestRate = rate; 
+(D*) super(acctBalance); 
+interestRate = rate; 
+(E) super(acctBalance, rate); 
+
+question-section:2
+4 2
+Consider the BankAccount, SavingsAccount, and CheckingAccount classes defined below:
+
+public class BankAccount {
+    private double balance;
+
+    public BankAccount() { balance = 0; }
+
+    public BankAccount(double acctBalance) { balance = acctBalance; }
+
+    public void deposit(double amount) { balance += amount; }
+
+    public void withdraw(double amount) { balance -= amount; }
+
+    public double getBalance() { return balance; }
+}
+
+public class SavingsAccount extends BankAccount {
+    private double interestRate;
+
+    public SavingsAccount() { /* implementation not shown */ }
+
+    public SavingsAccount(double acctBalance, double rate) { /* implementation not shown */ }
+
+    public void addInterest() // Add interest to balance
+    { /* implementation not shown */ }
+}
+
+public class CheckingAccount extends BankAccount {
+    private static final double FEE = 2.0;
+    private static final double MIN_BALANCE = 50.0;
+
+    public CheckingAccount(double acctBalance) { /* implementation not shown */ }
+
+    /**
+     * FEE of $2 deducted if withdrawal leaves balance less
+     * than MIN_BALANCE. Allows for negative balance.
+     */
+    public void withdraw(double amount) { /* implementation not shown */ }
+}
+
+Which is a correct implementation of the CheckingAccount constructor? 
+I super(acctBalance); 
+II super(); 
+deposit(acctBalance); 
+III deposit(acctBalance); 
+(A) I only 
+(B) II only 
+(C) III only 
+(D) II and III only 
+(E*) I, II, and III
+
+question-section:2
+4 1
+Consider the BankAccount, SavingsAccount, and CheckingAccount classes defined below:
+
+public class BankAccount {
+    private double balance;
+
+    public BankAccount() { balance = 0; }
+
+    public BankAccount(double acctBalance) { balance = acctBalance; }
+
+    public void deposit(double amount) { balance += amount; }
+
+    public void withdraw(double amount) { balance -= amount; }
+
+    public double getBalance() { return balance; }
+}
+
+public class SavingsAccount extends BankAccount {
+    private double interestRate;
+
+    public SavingsAccount() { /* implementation not shown */ }
+
+    public SavingsAccount(double acctBalance, double rate) { /* implementation not shown */ }
+
+    public void addInterest() // Add interest to balance
+    { /* implementation not shown */ }
+}
+
+public class CheckingAccount extends BankAccount {
+    private static final double FEE = 2.0;
+    private static final double MIN_BALANCE = 50.0;
+
+    public CheckingAccount(double acctBalance) { /* implementation not shown */ }
+
+    /**
+     * FEE of $2 deducted if withdrawal leaves balance less
+     * than MIN_BALANCE. Allows for negative balance.
+     */
+    public void withdraw(double amount) { /* implementation not shown */ }
+}
+
+Which is correct implementation code for the withdraw method in the CheckingAccount class? 
+(A) super.withdraw(amount); 
+if (balance < MIN_BALANCE) 
+    super.withdraw(FEE); 
+(B) withdraw(amount); 
+if (balance < MIN_BALANCE) 
+    withdraw(FEE); 
+(C*) super.withdraw(amount); 
+if (getBalance() < MIN_BALANCE) 
+    super.withdraw(FEE); 
+(D) withdraw(amount); 
+if (getBalance() < MIN_BALANCE) 
+    withdraw(FEE); 
+(E) balance -= amount; 
+if (balance < MIN_BALANCE) 
+    balance -= FEE; 
+
+question-section:2
+1 1
+Consider the BankAccount, SavingsAccount, and CheckingAccount classes defined below:
+
+public class BankAccount {
+    private double balance;
+
+    public BankAccount() { balance = 0; }
+
+    public BankAccount(double acctBalance) { balance = acctBalance; }
+
+    public void deposit(double amount) { balance += amount; }
+
+    public void withdraw(double amount) { balance -= amount; }
+
+    public double getBalance() { return balance; }
+}
+
+public class SavingsAccount extends BankAccount {
+    private double interestRate;
+
+    public SavingsAccount() { /* implementation not shown */ }
+
+    public SavingsAccount(double acctBalance, double rate) { /* implementation not shown */ }
+
+    public void addInterest() // Add interest to balance
+    { /* implementation not shown */ }
+}
+
+public class CheckingAccount extends BankAccount {
+    private static final double FEE = 2.0;
+    private static final double MIN_BALANCE = 50.0;
+
+    public CheckingAccount(double acctBalance) { /* implementation not shown */ }
+
+    /**
+     * FEE of $2 deducted if withdrawal leaves balance less
+     * than MIN_BALANCE. Allows for negative balance.
+     */
+    public void withdraw(double amount) { /* implementation not shown */ }
+}
+
+Redefining the withdraw method in the CheckingAccount class is an example of 
+(A) method overloading. 
+(B*) method overriding. 
+(C) downcasting. 
+(D) dynamic binding (late binding). 
+(E) static binding (early binding). 
+
+question-section:4
+4 1
+Consider the BankAccount, SavingsAccount, and CheckingAccount classes defined below:
+
+public class BankAccount {
+    private double balance;
+
+    public BankAccount() { balance = 0; }
+
+    public BankAccount(double acctBalance) { balance = acctBalance; }
+
+    public void deposit(double amount) { balance += amount; }
+
+    public void withdraw(double amount) { balance -= amount; }
+
+    public double getBalance() { return balance; }
+}
+
+public class SavingsAccount extends BankAccount {
+    private double interestRate;
+
+    public SavingsAccount() { /* implementation not shown */ }
+
+    public SavingsAccount(double acctBalance, double rate) { /* implementation not shown */ }
+
+    public void addInterest() // Add interest to balance
+    { /* implementation not shown */ }
+}
+
+public class CheckingAccount extends BankAccount {
+    private static final double FEE = 2.0;
+    private static final double MIN_BALANCE = 50.0;
+
+    public CheckingAccount(double acctBalance) { /* implementation not shown */ }
+
+    /**
+     * FEE of $2 deducted if withdrawal leaves balance less
+     * than MIN_BALANCE. Allows for negative balance.
+     */
+    public void withdraw(double amount) { /* implementation not shown */ }
+}
+
+A program to test the BankAccount, SavingsAccount, and CheckingAccount classes has these declarations: 
+BankAccount b = new BankAccount(1400); 
+BankAccount s = new SavingsAccount(1000, 0.04); 
+BankAccount c = new CheckingAccount(500); 
+
+Which method call will cause an error? 
+(A) b.deposit(200); 
+(B) s.withdraw(500); 
+(C) c.withdraw(500); 
+(D) s.deposit(10000); 
+(E*) s.addInterest();
+
+question-section:2
+1 1
+Consider the BankAccount, SavingsAccount, and CheckingAccount classes defined below:
+
+public class BankAccount {
+    private double balance;
+
+    public BankAccount() { balance = 0; }
+
+    public BankAccount(double acctBalance) { balance = acctBalance; }
+
+    public void deposit(double amount) { balance += amount; }
+
+    public void withdraw(double amount) { balance -= amount; }
+
+    public double getBalance() { return balance; }
+}
+
+public class SavingsAccount extends BankAccount {
+    private double interestRate;
+
+    public SavingsAccount() { /* implementation not shown */ }
+
+    public SavingsAccount(double acctBalance, double rate) { /* implementation not shown */ }
+
+    public void addInterest() // Add interest to balance
+    { /* implementation not shown */ }
+}
+
+public class CheckingAccount extends BankAccount {
+    private static final double FEE = 2.0;
+    private static final double MIN_BALANCE = 50.0;
+
+    public CheckingAccount(double acctBalance) { /* implementation not shown */ }
+
+    /**
+     * FEE of $2 deducted if withdrawal leaves balance less
+     * than MIN_BALANCE. Allows for negative balance.
+     */
+    public void withdraw(double amount) { /* implementation not shown */ }
+}
+
+A program to test the BankAccount, SavingsAccount, and CheckingAccount classes has these declarations: 
+BankAccount b = new BankAccount(1400); 
+BankAccount s = new SavingsAccount(1000, 0.04); 
+BankAccount c = new CheckingAccount(500); 
+
+In order to test polymorphism, which method must be used in the program? 
+(A) Either a SavingsAccount constructor or a CheckingAccount constructor 
+(B) addInterest 
+(C) deposit 
+(D*) withdraw 
+(E) getBalance
+
+question-section:4
+4 1
+Consider the BankAccount, SavingsAccount, and CheckingAccount classes defined below:
+
+public class BankAccount {
+    private double balance;
+
+    public BankAccount() { balance = 0; }
+
+    public BankAccount(double acctBalance) { balance = acctBalance; }
+
+    public void deposit(double amount) { balance += amount; }
+
+    public void withdraw(double amount) { balance -= amount; }
+
+    public double getBalance() { return balance; }
+}
+
+public class SavingsAccount extends BankAccount {
+    private double interestRate;
+
+    public SavingsAccount() { /* implementation not shown */ }
+
+    public SavingsAccount(double acctBalance, double rate) { /* implementation not shown */ }
+
+    public void addInterest() // Add interest to balance
+    { /* implementation not shown */ }
+}
+
+public class CheckingAccount extends BankAccount {
+    private static final double FEE = 2.0;
+    private static final double MIN_BALANCE = 50.0;
+
+    public CheckingAccount(double acctBalance) { /* implementation not shown */ }
+
+    /**
+     * FEE of $2 deducted if withdrawal leaves balance less
+     * than MIN_BALANCE. Allows for negative balance.
+     */
+    public void withdraw(double amount) { /* implementation not shown */ }
+}
+
+A program to test the BankAccount, SavingsAccount, and CheckingAccount classes has these declarations: 
+BankAccount b = new BankAccount(1400); 
+BankAccount s = new SavingsAccount(1000, 0.04); 
+BankAccount c = new CheckingAccount(500); 
+
+Which of the following will not cause a ClassCastException to be thrown? 
+(A) ((SavingsAccount) b).addInterest(); 
+(B) ((CheckingAccount) b).withdraw(200); 
+(C*) ((CheckingAccount) c).deposit(800); 
+(D) ((CheckingAccount) s).withdraw(150); 
+(E) ((SavingsAccount) c).addInterest(); 
+
+question-section:4
+4 2
+Consider the BankAccount, SavingsAccount, and CheckingAccount classes defined below:
+
+public class BankAccount {
+    private double balance;
+
+    public BankAccount() { balance = 0; }
+
+    public BankAccount(double acctBalance) { balance = acctBalance; }
+
+    public void deposit(double amount) { balance += amount; }
+
+    public void withdraw(double amount) { balance -= amount; }
+
+    public double getBalance() { return balance; }
+}
+
+public class SavingsAccount extends BankAccount {
+    private double interestRate;
+
+    public SavingsAccount() { /* implementation not shown */ }
+
+    public SavingsAccount(double acctBalance, double rate) { /* implementation not shown */ }
+
+    public void addInterest() // Add interest to balance
+    { /* implementation not shown */ }
+}
+
+public class CheckingAccount extends BankAccount {
+    private static final double FEE = 2.0;
+    private static final double MIN_BALANCE = 50.0;
+
+    public CheckingAccount(double acctBalance) { /* implementation not shown */ }
+
+    /**
+     * FEE of $2 deducted if withdrawal leaves balance less
+     * than MIN_BALANCE. Allows for negative balance.
+     */
+    public void withdraw(double amount) { /* implementation not shown */ }
+}
+
+A new method is added to the BankAccount class. 
+
+/** Transfer amount from this BankAccount to another BankAccount. 
+* Precondition: balance > amount 
+* @param another a different BankAccount object 
+* @param amount the amount to be transferred 
+*/ 
+public void transfer(BankAccount another, double amount) 
+{ 
+    withdraw(amount); 
+    another.deposit(amount); 
+} 
+
+A program has these declarations: 
+BankAccount b = new BankAccount(650); 
+SavingsAccount timsSavings = new SavingsAccount(1500, 0.03); 
+CheckingAccount daynasChecking = new CheckingAccount(2000); 
+
+Which of the following will transfer money from one account to another without error? 
+I b.transfer(timsSavings, 50); 
+II timsSavings.transfer(daynasChecking, 30); 
+III daynasChecking.transfer(b, 55); 
+(A) I only 
+(B) II only 
+(C) III only 
+(D*) I, II, and III 
+(E) None
+
+question-section:2
+1 2
+Consider these class declarations: 
+
+public class Person 
+{ 
+    ... 
+} 
+public class Teacher extends Person 
+{ 
+    ... 
+} 
+
+Which is a true statement? 
+I Teacher inherits the constructors of Person. 
+II Teacher can add new methods and private instance variables. 
+III Teacher can override existing private methods of Person. 
+(A) I only 
+(B*) II only 
+(C) III only 
+(D) I and II only 
+(E) II and III only 
+
+question-section:8
+5 1
+Which statement about abstract classes and interfaces is false? 
+(A) An interface cannot implement any non-default instance methods, whereas 
+an abstract class can. 
+(B) A class can implement many interfaces but can have only one superclass. 
+(C) An unlimited number of unrelated classes can implement the same inter 
+face. 
+(D) It is not possible to construct either an abstract class object or an interface 
+object. 
+(E*) All of the methods in both an abstract class and an interface are public.
+
+question-section:2
+1 1
+Consider the classes defined below:
+
+public class ClassA 
+{ 
+    //default constructor not shown ... 
+    public void method1() 
+    { /* implementation of method1 */ } 
+} 
+
+public class ClassB extends ClassA 
+{ 
+    //default constructor not shown ... 
+    public void method1() 
+    { /* different implementation from method1 in ClassA*/ } 
+
+    public void method2() 
+    { /* implementation of method2 */ } 
+} 
+
+The method1 method in ClassB is an example of 
+(A) method overloading. 
+(B*) method overriding. 
+(C) polymorphism. 
+(D) information hiding. 
+(E) procedural abstraction.
+
+question-section:4
+4 2
+Consider the classes defined below:
+
+public class ClassA 
+{ 
+    //default constructor not shown ... 
+    public void method1() 
+    { /* implementation of method1 */ } 
+} 
+
+public class ClassB extends ClassA 
+{ 
+    //default constructor not shown ... 
+    public void method1() 
+    { /* different implementation from method1 in ClassA*/ } 
+
+    public void method2() 
+    { /* implementation of method2 */ } 
+} 
+
+Consider the following declarations in a client class. 
+
+ClassA ob1 = new ClassA(); 
+ClassA ob2 = new ClassB(); 
+
+Which of the following method calls will cause an error? 
+I ob1.method2(); 
+II ob2.method2(); 
+III ((ClassB) ob1).method2(); 
+(A) I only 
+(B) II only 
+(C) III only 
+(D) I and III only 
+(E*) I, II, and III
+
+question-section:5
+1 1
+Consider the classes defined below:
+
+public abstract class Solid {
+    private String name;
+
+    // constructor
+    public Solid(String solidName) {
+        name = solidName;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public abstract double volume();
+}
+
+public class Sphere extends Solid {
+    private double radius;
+
+    // constructor
+    public Sphere(String sphereName, double sphereRadius) {
+        super(sphereName);
+        radius = sphereRadius;
+    }
+
+    public double volume() {
+        return (4.0 / 3.0) * Math.PI * radius * radius * radius;
+    }
+}
+
+public class RectangularPrism extends Solid {
+    private double length;
+    private double width;
+    private double height;
+
+    // constructor
+    public RectangularPrism(String prismName, double l, double w, double h) {
+        super(prismName);
+        length = l;
+        width = w;
+        height = h;
+    }
+
+    public double volume() {
+        return length * width * height;
+    }
+}
+
+A program that tests these classes has the following declarations and assignments: 
+Solid s1, s2, s3, s4; 
+s1 = new Solid("blob"); 
+s2 = new Sphere("sphere", 3.8); 
+s3 = new RectangularPrism("box", 2, 4, 6.5); 
+s4 = null; 
+
+How many of the above lines of code are incorrect? 
+(A) 0 
+(B*) 1 
+(C) 2 
+(D) 3 
+(E) 4 
+
+question-section:5
+1 1
+Consider the classes defined below:
+
+public abstract class Solid {
+    private String name;
+
+    // constructor
+    public Solid(String solidName) {
+        name = solidName;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public abstract double volume();
+}
+
+public class Sphere extends Solid {
+    private double radius;
+
+    // constructor
+    public Sphere(String sphereName, double sphereRadius) {
+        super(sphereName);
+        radius = sphereRadius;
+    }
+
+    public double volume() {
+        return (4.0 / 3.0) * Math.PI * radius * radius * radius;
+    }
+}
+
+public class RectangularPrism extends Solid {
+    private double length;
+    private double width;
+    private double height;
+
+    // constructor
+    public RectangularPrism(String prismName, double l, double w, double h) {
+        super(prismName);
+        length = l;
+        width = w;
+        height = h;
+    }
+
+    public double volume() {
+        return length * width * height;
+    }
+}
+
+Which is false? 
+(A) If a program has several objects declared as type Solid, the decision about which volume method to call will be resolved at run time. 
+(B) If the Solid class were modified to provide a default implementation for the volume method, it would no longer need to be an abstract class. 
+(C) If the Sphere and RectangularPrism classes failed to provide an implementation for the volume method, they would need to be declared as abstract classes. 
+(D) The fact that there is no reasonable default implementation for the volume method in the Solid class suggests that it should be an abstract method. 
+(E*) Since Solid is abstract and its subclasses are nonabstract, polymorphism no longer applies when these classes are used in a program.
+
+question-section:2
+1 1
+Consider the classes defined below:
+
+public abstract class Solid {
+    private String name;
+
+    // constructor
+    public Solid(String solidName) {
+        name = solidName;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public abstract double volume();
+}
+
+public class Sphere extends Solid {
+    private double radius;
+
+    // constructor
+    public Sphere(String sphereName, double sphereRadius) {
+        super(sphereName);
+        radius = sphereRadius;
+    }
+
+    public double volume() {
+        return (4.0 / 3.0) * Math.PI * radius * radius * radius;
+    }
+}
+
+public class RectangularPrism extends Solid {
+    private double length;
+    private double width;
+    private double height;
+
+    // constructor
+    public RectangularPrism(String prismName, double l, double w, double h) {
+        super(prismName);
+        length = l;
+        width = w;
+        height = h;
+    }
+
+    public double volume() {
+        return length * width * height;
+    }
+}
+
+Here is a program that prints the volume of a solid: 
+public class SolidMain {
+    /** Output volume of Solid s. */
+    public static void printVolume(Solid s) {
+        System.out.println("Volume = " + s.volume() + " cubic units");
+    }
+
+    public static void main(String[] args) {
+        Solid sol;
+        Solid sph = new Sphere("sphere", 4);
+        Solid rec = new RectangularPrism("box", 3, 6, 9);
+        int flipCoin = (int) (Math.random() * 2); // 0 or 1
+        if (flipCoin == 0)
+            sol = sph;
+        else
+            sol = rec;
+        printVolume(sol);
+    }
+}
+
+Which is a true statement about this program? 
+(A*) It will output the volume of the sphere or box, as intended. 
+(B) It will output the volume of the default Solid s, which is neither a sphere nor a box. 
+(C) A ClassCastException will be thrown. 
+(D) A compile-time error will occur because there is no implementation code for volume in the Solid class. 
+(E) A run-time error will occur because of parameter type mismatch in the method call printVolume(sol).
+
+question-section:6
+1 1
+Consider the Computable interface below for performing simple calculator operations: 
+public interface Computable 
+{ 
+    /** Return this Object + y. */ 
+    Object add(Object y); 
+
+    /** Return this Object - y. */ 
+    Object subtract(Object y); 
+
+    /** Return this Object * y. */ 
+    Object multiply(Object y); 
+} 
+
+Which of the following is the least suitable class for implementing Computable? 
+(A) LargeInteger //integers with 100 digits or more 
+(B) Fraction //implemented with numerator and 
+//denominator of type int 
+(C) IrrationalNumber //nonrepeating, nonterminating decimal 
+(D) Length //implemented with different units, such 
+//as inches, centimeters, etc. 
+(E*) BankAccount //implemented with balance 
+
+question-section:6
+1 1
+Consider the Player interface defined below:
+
+public interface Player 
+{ 
+    /** Return an integer that represents a move in a game. */ 
+    int getMove();
+
+    /** Display the status of the game for this Player after 
+    * implementing the next move. */ 
+    void updateDisplay(); 
+} 
+
+HumanPlayer is a class that implements the Player interface. Another class, SmartPlayer, is a subclass of HumanPlayer. Which statement is false? 
+(A) SmartPlayer automatically implements the Player interface. 
+(B) HumanPlayermust contain implementations of both the updateDisplay and getMove methods, or be declared as abstract. 
+(C*) It is not possible to declare a reference of type Player. 
+(D) The SmartPlayer class can override the methods updateDisplay and getMove of the HumanPlayer class. 
+(E) A method in a client program can have Player as a parameter type.
+
+question-section:6
+1 1
+Consider the Player interface defined below:
+
+public interface Player 
+{ 
+    /** Return an integer that represents a move in a game. */ 
+    int getMove();
+
+    /** Display the status of the game for this Player after 
+    * implementing the next move. */ 
+    void updateDisplay(); 
+} 
+
+A programmer plans to write programs that simulate various games. In each case he will have several classes, each representing a different kind of competitor in the game, such as ExpertPlayer, ComputerPlayer, RecklessPlayer, CheatingPlayer, Beginner, IntermediatePlayer, and so on. It may or may not be suitable for these classes to implement the Player interface, depending on the particular game being simulated. In the games described below, which is the least suitable for having the competitor classes implement the given Player interface? 
+(A) High-Low Guessing Game: The computer thinks of a number and the competitor who guesses it with the least number of guesses wins. After each guess, the computer tells whether its number is higher or lower than the guess. 
+(B) Chips: Start with a pile of chips. Each player in turn removes some number of chips. The winner is the one who removes the final chip. The first player may remove any number of chips, but not all of them. Each subsequent player must remove at least one chip and at most twice the number removed by the preceding player. 
+(C*) Chess: Played on a square board of 64 squares of alternating colors. There are just two players, called White and Black, the colors of their respective pieces. The players each have a set of pieces on the board that can move according to a set of rules. The players alternate moves, where a move consists of moving any one piece to another square. If that square is occupied by an opponent’s piece, the piece is captured and removed from the board. 
+(D) Tic-Tac-Toe: Two players alternate placing “X” or “O” on a 3 × 3 grid. The first player to get three in a row, where a row can be vertical, horizontal, or diagonal, wins. 
+(E) Battleships: There are two players, each with a 10 × 10 grid hidden from his opponent. Various “ships” are placed on the grid. A move consists of calling out a grid location, trying to “hit” an opponent’s ship. Players alternate moves. The first player to sink his opponent’s fleet wins.
+
+question-section:7
+4 2
+Consider the interface and classes defined below:
+
+public interface Player 
+{ 
+    /** Return an integer that represents a move in a game. */ 
+    int getMove();
+
+    /** Display the status of the game for this Player after 
+    * implementing the next move. */ 
+    void updateDisplay(); 
+} 
+
+public class HumanPlayer implements Player {
+    private String name;
+
+    // Constructors not shown ...
+    // Code to implement getMove and updateDisplay not shown ...
+    public String getName() { /* implementation not shown */ }
+}
+
+public class ExpertPlayer extends HumanPlayer {
+    private int rating;
+
+    // Constructors not shown ...
+    public int compareTo(ExpertPlayer expert) { /* implementation not shown */ }
+}
+
+Which code segment in a client program will cause an error? 
+I Player p1 = new HumanPlayer(); 
+Player p2 = new ExpertPlayer(); 
+int x1 = p1.getMove(); 
+int x2 = p2.getMove(); 
+II int x; 
+Player c1 = new ExpertPlayer(/* correct parameter list */); 
+Player c2 = new ExpertPlayer(/* correct parameter list */); 
+if (c1.compareTo(c2) < 0) 
+    x = c1.getMove(); 
+else 
+    x = c2.getMove(); 
+III int x; 
+HumanPlayer h1 = new HumanPlayer(/* correct parameter list */); 
+HumanPlayer h2 = new HumanPlayer(/* correct parameter list */); 
+if (h1.compareTo(h2) < 0) 
+    x = h1.getMove(); 
+else 
+    x = h2.getMove(); 
+(A) II only 
+(B) III only 
+(C*) II and III only 
+(D) I, II, and III 
+(E) None
+
+question-section:7
+4 2
+Consider the interface and classes defined below:
+
+public interface Player 
+{ 
+    /** Return an integer that represents a move in a game. */ 
+    int getMove();
+
+    /** Display the status of the game for this Player after 
+    * implementing the next move. */ 
+    void updateDisplay(); 
+} 
+
+public class HumanPlayer implements Player {
+    private String name;
+
+    // Constructors not shown ...
+    // Code to implement getMove and updateDisplay not shown ...
+    public String getName() { /* implementation not shown */ }
+}
+
+public class ExpertPlayer extends HumanPlayer {
+    private int rating;
+
+    // Constructors not shown ...
+    public int compareTo(ExpertPlayer expert) { /* implementation not shown */ }
+}
+
+Which of the following is correct implementation code for the compareTo method in the ExpertPlayer class? 
+I if (rating == expert.rating) 
+    return 0; 
+else if (rating < expert.rating) 
+    return -1; 
+else 
+    return 1; 
+II return rating - expert.rating; 
+III if (getName().equals(expert.getName())) 
+    return 0; 
+else if (getName().compareTo(expert.getName()) < 0) 
+    return -1; 
+else 
+    return 1; 
+(A) I only 
+(B) II only 
+(C) III only 
+(D) I and II only 
+(E*) I, II, and III
+
+question-section:7
+4 1
+Which of the following classes is the least suitable candidate for containing a compareTo method? 
+(A*) public class Point 
+{ 
+    private double x; 
+    private double y; 
+    //various methods follow 
+    ... 
+} 
+(B) public class Name 
+{ 
+    private String firstName; 
+    private String lastName; 
+    //various methods follow 
+    ... 
+} 
+(C) public class Car 
+{ 
+    private int modelNumber; 
+    private int year; 
+    private double price; 
+    //various methods follow 
+    ... 
+} 
+(D) public class Student 
+{ 
+    private String name; 
+    private double gpa; 
+    //various methods follow 
+    ... 
+} 
+(E) public class Employee 
+{ 
+    private String name; 
+    private int hireDate; 
+    private double salary; 
+    //various methods follow 
+    ... 
+}
+
+question-section:8
+3 1
+A programmer has the task of maintaining a database of students of a large university. There are two types of students, undergraduates and graduate students. About a third of the graduate students are doctoral candidates. All of the students have the same personal information stored, like name, address, and phone number, and also student information like courses taken and grades. Each student’s GPA is computed, but differently for undergraduates and graduates. The doctoral candidates have information about their dissertations and faculty advisors. 
+The programmer will write a Java program to handle all the student information. Which of the following is the best design, in terms of programmer efficiency and code reusability? Note: { ... } denotes class code. 
+(A) public interface Student { ...} 
+public class Undergraduate implements Student { ... } 
+public class Graduate implements Student { ... } 
+public class DocStudent extends Graduate { ... } 
+(B*) public abstract class Student { ...} 
+public class Undergraduate extends Student { ... } 
+public class Graduate extends Student { ... } 
+public class DocStudent extends Graduate { ... } 
+(C) public class Student { ...} 
+public class Undergraduate extends Student { ... } 
+public class Graduate extends Student { ... } 
+public class DocStudent extends Graduate { ... } 
+(D) public abstract class Student { ...} 
+public class Undergraduate extends Student { ... } 
+public class Graduate extends Student { ... } 
+public class DocStudent extends Student { ... } 
+(E) public interface PersonalInformation { ... } 
+public class Student implements PersonalInformation { ...} 
+public class Undergraduate extends Student { ... } 
+public abstract class Graduate extends Student { ... } 
+public class DocStudent extends Graduate { ... }
+
+question-section:7
+4 2
+Consider the Orderable interface and the partial implementation of the Temperature class defined below:
+
+public interface Orderable {
+    /**
+     * Returns -1, 0, or 1 depending on whether the implicit
+     * object is less than, equal to, or greater than other.
+     */
+    int compareTo(Object other);
+}
+
+public class Temperature implements Orderable {
+    private String scale;
+    private double degrees;
+
+    // default constructor
+    public Temperature() { /* implementation not shown */ }
+
+    // constructor
+    public Temperature(String tempScale, double tempDegrees) { /* implementation not shown */ }
+
+    public int compareTo(Object obj) { /* implementation not shown */ }
+
+    public String toString() { /* implementation not shown */ }
+    // Other methods are not shown.
+}
+
+Here is a program that finds the lowest of three temperatures:
+
+public class TemperatureMain {
+    /** Find smaller of objects a and b. */
+    public static Orderable min(Orderable a, Orderable b) {
+        if (a.compareTo(b) < 0)
+            return a;
+        else
+            return b;
+    }
+
+    /** Find smallest of objects a, b, and c. */
+    public static Orderable minThree(Orderable a, Orderable b, Orderable c) {
+        return min(min(a, b), c);
+    }
+
+    public static void main(String[] args) { /* code to test minThree method */ }
+}
+
+Which are correct replacements for /* code to test minThree method */? 
+I Temperature t1 = new Temperature("C", 85); 
+Temperature t2 = new Temperature("F", 45); 
+Temperature t3 = new Temperature("F", 120); 
+System.out.println("The lowest temperature is " + 
+minThree(t1, t2, t3)); 
+II Orderable c1 = new Temperature("C", 85); 
+Orderable c2 = new Temperature("F", 45); 
+Orderable c3 = new Temperature("F", 120); 
+System.out.println("The lowest temperature is " + 
+minThree(c1, c2, c3)); 
+III Orderable c1 = new Orderable("C", 85); 
+Orderable c2 = new Orderable("F", 45); 
+Orderable c3 = new Orderable("F", 120); 
+System.out.println("The lowest temperature is " + 
+minThree(c1, c2, c3)); 
+(A) II only 
+(B*) I and II only 
+(C) II and III only 
+(D) I and III only 
+(E) I, II, and III
+
+question-section:6
+1 1
+A certain interface provided by a Java package contains just a single method: 
+
+public interface SomeName 
+{ 
+    int method1(Object o); 
+} 
+
+A programmer adds some functionality to this interface by adding another abstract method to it, method2: 
+
+public interface SomeName 
+{ 
+    int method1(Object ob1); 
+    void method2(Object ob2); 
+} 
+
+As a result of this addition, which of the following is true? 
+(A) A ClassCastException will occur if ob1 and ob2 are not compatible. 
+(B*) All classes that implement the original SomeName interface will need to be rewritten because they no longer implement SomeName. 
+(C) A class that implements the original SomeName interface will need to modify its declaration as follows: 
+public class ClassName implements SomeName extends method2 
+{ ... 
+(D) SomeName will need to be changed to an abstract class and provide implementation code for method2, so that the original and upgraded versions of SomeName are compatible. 
+(E) Any new class that implements the upgraded version of SomeName will not compile.

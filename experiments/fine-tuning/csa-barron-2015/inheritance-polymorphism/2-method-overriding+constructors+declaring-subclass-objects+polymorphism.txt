@@ -1,0 +1,80 @@
+Any public method in a superclass can be overridden in a subclass by defining a method with the same return type and signature (name and parameter types). For example, the computeGrade method in the UnderGrad subclass overrides the computeGrade method in the Student superclass.
+Sometimes the code for overriding a method includes a call to the superclass method. This is called partial overriding. Typically this occurs when the subclass method wants to do what the superclass does, plus something extra. This is achieved by using the keyword super in the implementation. The computeGrademethod in the GradStudent subclass partially overrides the matching method in the Student class. The statement
+super.computeGrade();
+signals that the computeGrade method in the superclass should be invoked here. The additional test
+if (getTestAverage() >= 90)
+    ...
+allows a GradStudent to have a grade Pass with distinction. Note that this option is open to GradStudents only.
+
+NOTE
+Private methods cannot be overridden.
+Constructors are never inherited! If no constructor is written for a subclass, the superclass default constructor with no parameters is generated. If the superclass does not have a default (zero-parameter) constructor, but only a constructor with parameters, a compiler error will occur. If there is a default constructor in the superclass, inherited data members will be initialized as for the superclass. Additional instance variables in the subclass will get a default initialization—0 for primitive types and null for reference types.
+
+A subclass constructor can be implemented with a call to the super method, which invokes the superclass constructor. For example, the default constructor in the UnderGrad class is identical to that of the Student class. This is implemented with the statement
+super();
+
+The second constructor in the UnderGrad class is called with parameters that match those in the constructor of the Student superclass.
+public UnderGrad(String studName, int[] studTests, String studGrade) { super(studName, studTests, studGrade); }
+For each constructor, the call to super has the effect of initializing the instance vari ables name, tests, and grade exactly as they are initialized in the Student class. Contrast this with the constructors in GradStudent. In each case, the instance vari ables name, tests, and grade are initialized as for the Student class. Then the new instance variable, gradID, must be explicitly initialized.
+public GradStudent()
+{
+    super();
+    gradID = 0;
+}
+public GradStudent(String studName, int[] studTests,
+String studGrade, int gradStudID)
+{
+    super(studName, studTests, studGrade);
+    gradID = gradStudID;
+}
+
+NOTE
+1. If super is used in the implementation of a subclass constructor, it must be used in the first line of the constructor body.
+2. If no constructor is provided in a subclass, the compiler provides the following default constructor:
+public SubClass()
+{
+super(); //calls default constructor of superclass
+}
+
+Rules for Subclasses
+• A subclass can add new private instance variables.
+• A subclass can add new public, private, or static methods.
+• A subclass can override inherited methods.
+• A subclass may not redefine a public method as private.
+• A subclass may not override static methods of the superclass.
+• A subclass should define its own constructors.
+• A subclass cannot directly access the private members of its superclass. It must use accessor or mutator methods.
+When a superclass object is declared in a client program, that reference can refer not only to an object of the superclass, but also to objects of any of its subclasses. Thus, each of the following is legal:
+Student s = new Student();
+Student g = new GradStudent();
+Student u = new UnderGrad();
+This works because a GradStudent is-a Student, and an UnderGrad is-a Student.
+Note that since a Student is not necessarily a GradStudent nor an UnderGrad, the following declarations are not valid:
+GradStudent g = new Student();
+UnderGrad u = new Student();
+Consider these valid declarations:
+Student s = new Student("Brian Lorenzen", new int[] {90,94,99},
+"none");
+Student u = new UnderGrad("Tim Broder", new int[] {90,90,100},
+"none");
+Student g = new GradStudent("Kevin Cristella",
+new int[] {85,70,90}, "none", 1234);
+Suppose you make the method call
+s.setGrade("Pass");
+The appropriate method in Student is found and the new grade assigned. The method calls
+g.setGrade("Pass");
+and
+u.setGrade("Pass");
+achieve the same effect on g and u since GradStudent and UnderGrad both inherit the setGrade method from Student. The following method calls, however, won’t work:
+int studentNum = s.getID();
+int underGradNum = u.getID();
+Neither Student s nor UnderGrad u inherit the getID method from the GradStudent class: A superclass does not inherit from a subclass.
+Now consider the following valid method calls:
+s.computeGrade();
+g.computeGrade();
+u.computeGrade();
+Since s, g, and u have all been declared to be of type Student, will the appropriate method be executed in each case? That is the topic of the next section, polymorphism.
+
+NOTE
+The initializer list syntax used in constructing the array parameters—for example, new int[] {90,90,100}— will not be tested on the AP exam.
+A method that has been overridden in at least one subclass is said to be polymorphic. An example is computeGrade, which is redefined for both GradStudent and UnderGrad. Polymorphism is the mechanism of selecting the appropriate method for a particu lar object in a class hierarchy. The correct method is chosen because, in Java, method calls are always determined by the type of the actual object, not the type of the ob ject reference. For example, even though s, g, and u are all declared as type Student, s.computeGrade(), g.computeGrade(), and u.computeGrade() will all perform the correct operations for their particular instances. In Java, the selection of the correct method occurs during the run of the program.

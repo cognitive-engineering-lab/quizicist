@@ -1,0 +1,21 @@
+When a group of statements, including control structures, is assembled into a single unit, the unit is called a class. Similar to a word processing document or a picture file stored on your computer, a class is stored on your computer in a file. Unlike a word processing document, however, a class must follow specific rules in order to conform to Java and, as a result, to be understood by the compiler. Remember that your brilliantly constructed program is useless unless the compiler can successfully translate it into machine code.
+The structure of a class, at this level anyway, is straightforward. Take all of the statements you’ve written before this chapter, put curly brackets around them, kind of like a huge block, name it, and save it. The naming conventions for a class are similar to those of a variable, except that they should begin with a capital letter. The name of the class should reference the purpose or function of the class. For example, a class that calculates a GPA might be called GPA or GradePointAvg. The way we declare a class in Java is using the header:
+public class GradePointAvg
+{
+	// statements not shown
+}
+
+Well, Actually… This is a convention but not a rule. You can have all of the code on a single line if your heart so desires, but that would be very bad form.
+Note that the statements in the class reside at least one tab stop across the page. If the programmer would like to use more white space within the structures of the class, they will be tabbed further into the page:
+public class GradePointAvg
+{
+	// other code and variable declarations not shown
+	while (/* condition not shown */)
+	{
+		// looped statements not shown
+	}
+}
+
+Typically, variable declarations are placed into the code first, right after the class header, as a sort of “setup” for the rest of the class. Of course, this is not a rule, but it is a good guideline in order to keep your code readable.
+This class would be saved to the computer as GradePointAvg.java; the .java extension helps the compiler to recognize the file as containing Java code. If the code compiles (there are no syntax errors), the compiler will create another file in the same folder called GradePointAvg.class; this file is unreadable to the programmer because it is encoded in machine language. The computer, however, uses this file to execute the program. The .java file is called the source code of the program, since it defines the program’s actions and functions.
+Remember that classes are executed top-down—i.e., line 1 followed by line 2, etc. If programmers want to alter top-down execution, they must use a flow control structure, as we studied before.

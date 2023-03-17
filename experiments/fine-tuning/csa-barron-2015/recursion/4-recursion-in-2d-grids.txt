@@ -1,0 +1,64 @@
+Here is a commonly used technique: using recursion to traverse a two-dimensional array. The problem comes in several different guises, for example,
+1. A game board from which you must remove pieces.
+2. A maze with walls and paths from which you must try to escape. 3. White “containers” enclosed by black “walls” into which you must “pour paint.”
+In each case, you will be given a starting position (row, col) and instructions on what to do. The recursive solution typically involves these steps:
+
+Check that the starting position is not out of range:
+    If (starting position satisfies some requirement)
+        Perform some action to solve problem
+        RecursiveCall(row+ 1, col)
+        RecursiveCall(row− 1, col)
+        RecursiveCall(row, col+ 1)
+        RecursiveCall(row, col− 1)
+
+Example
+On the right is an image represented as a square grid of black and white cells. Two cells in an image are part of the same “blob” if each is black and there is a sequence of moves from one cell to the other, where each move is either horizontal or vertical to an adjacent black cell. For example, the diagram represents an image that contains two blobs, one of them consisting of a single cell.
+Assuming the following Image class declaration, you are to write the body of the eraseBlob method, using a recursive algorithm.
+public class Image {
+    private final int BLACK = 1;
+    private final int WHITE = 0;
+    private int[][] image; // square grid
+    private int size; // number of rows and columns
+
+    public Image() // constructor
+    { /* implementation not shown */ }
+
+    public void display() // displays Image
+    { /* implementation not shown */ }
+
+    /**
+     * Precondition: Image is defined with either BLACK or WHITE cells. *
+     * Postcondition: If 0 <= row < size, 0 <= col < size, and * image[row][col] is
+     * BLACK, set all cells in the * same blob to WHITE. Otherwise image is
+     * unchanged. * @param row the given row
+     *
+     * @param col the given column
+     */
+    public void eraseBlob(int row, int col)
+    { /* your code goes here */ }
+}
+
+Solution:
+public void eraseBlob(int row, int col) {
+    if (row >= 0 && row < size && col >= 0 && col < size)
+        if (image[row][col] == BLACK) {
+            image[row][col] = WHITE;
+            eraseBlob(row - 1, col);
+            eraseBlob(row + 1, col);
+            eraseBlob(row, col - 1);
+            eraseBlob(row, col + 1);
+        }
+}
+
+NOTE
+1. The ordering of the four recursive calls is irrelevant.
+2. The test
+if (image[row][col] == BLACK)
+can be included as the last piece of the test in the first line:
+if (row >= 0 && ...
+If row or col is out of range, the test will short-circuit, avoiding the dreaded ArrayIndexOutOfBoundsException.
+3. If you put the statement
+image[row][col] = WHITE;
+after the four recursive calls, you get infinite recursion if your blob has more than one cell. This is because, when you visit an adjacent cell, one of its recursive calls visits the original cell. If this cell is still BLACK, yet more recursive calls are generated, ad infinitum.
+
+A final thought: Recursive algorithms can be tricky. Try to state the solution recursively in words before you launch into code. Oh, and don’t forget the base case!

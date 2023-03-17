@@ -1,0 +1,149 @@
+question-section:0
+2 1
+Consider the following method:
+// precondition: x >= 0
+public int mystery (int x)
+{
+    if (x == 0)
+    {
+        return 0;
+    }
+    else
+    {
+        return ((x % 10) + mystery(x / 10));
+    }
+}
+
+Which of the following is returned as a result of the call mystery(3543)?
+(A) 10
+(B*) 15
+(C) 22
+(D) 180
+(E) Nothing is returned due to infinite recursion.
+
+question-section:0
+2 1
+Consider the following recursive method:
+public int mystery(int x)
+{
+    if (x == 1)
+        return 2;
+    else
+        return 2 * mystery(x – 1);
+}
+
+What value is returned as a result of the call mystery(6)?
+(A) 2
+(B) 12
+(C) 32
+(D*) 64
+(E) 128
+
+question-section:0
+2 1
+Consider the following recursive method:
+public static int mystery(int x)
+{
+    if (x == 0)
+    {
+        return 0;
+    }
+    else
+    {
+        return (x + mystery(x / 2) + mystery(x / 4));
+    }
+}
+
+What value is returned as a result of a call to mystery(10)?
+(A) 10
+(B) 12
+(C) 20
+(D*) 22
+(E) 35
+
+question-section:0
+4 2
+Consider the following nonrecursive method:
+//precondition: x >= 0
+public static int mystery(int x)
+{
+    int sum = 0;
+    while(x >= 0)
+    {
+        sum += x;
+        x--;
+    }
+    return sum;
+}
+
+Which of the following recursive methods are equivalent to the method above?
+I. public static int mystery2(int x)
+{
+    if (x == 0)
+    {
+        return 0;
+    }
+    return (x + mystery2(x – 1));
+}
+II. public static int mystery3 (int x)
+{
+    if (x == 0)
+        return 0;
+    else
+        return mystery3(x – 1);
+}
+III. public static int mystery4 (int x) {
+    if (x == 1)
+    {
+        return 1:
+    }
+    return (x + mystery 4(x – 1));
+}
+(A*) I only
+(B) II only
+(C) III only
+(D) I and II only
+(E) II and III only
+
+question-section:0
+2 1
+Consider the following method:
+public int mystery(int x, int y)
+{
+    if (x >= 100 || y <= 0)
+    {
+        return 1;
+    }
+    else
+    {
+        return mystery(x + 10, y – 3);
+    }
+}
+What value is returned by the call mystery (30, 18)?
+(A) 0
+(B*) 1
+(C) 6
+(D) 7
+(E) Nothing will be returned due to infinite recursion.
+
+question-section:0
+4 1
+Consider the following incomplete method:
+public int mystery(int x)
+{
+    if (x <= 1)
+    {
+        return 1;
+    }
+    else
+    {
+        return (/ * missing code * /);
+    }
+}
+
+Which of the following could be used to replace / * missing code * / so that the value of mystery(10) is 32?
+(A) mystery(x – 1) + mystery(x – 2)
+(B*) 2 * mystery(x – 2)
+(C) 2 * mystery(x – 1)
+(D) 4 * mystery(x – 4)
+(E) 4 + mystery(x – 1)

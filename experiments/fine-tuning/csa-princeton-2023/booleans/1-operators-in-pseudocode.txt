@@ -1,0 +1,67 @@
+Consider a situation in which you need a study break and decide to visit your local bakery for a snack. Your favorite dessert is typically Italian cannoli but you will also accept an apple turnover. But apple turnovers are somewhat dry, so you will buy one only if they are selling coffee that day.
+Since this example is relatively complicated, let’s break it into chunks. We will use pseudocode for this example.
+Let’s outline the conditions presented in this example, in order:
+    The bakery has cannoli.
+    The bakery has apple turnovers.
+    The bakery has coffee.
+
+The complication here is that some of these decisions depend on others. For example, if the bakery DOES have cannoli, then it doesn’t matter whether it has apple turnovers. Again, step by step: start with condition (1)
+if (bakery has cannoli) buy dessert;
+
+Now, another decision must be made, based on this decision; if the bakery DOES have cannoli, we get our desired dessert. If it does NOT have cannoli, we must try the apple turnover.
+if (bakery has cannoli)
+    buy dessert; // occurs only if bakery has cannoli
+else if (bakery has apple turnovers) // occurs only if bakery has no cannoli
+    buy dessert; // occurs only if bakery has apple turnovers
+
+Note the else keyword used here. else is used if the programmer wants a statement to execute if the condition is false.
+It’s not that easy, though…we must consider the coffee. Since you will buy an apple turnover only if there is ALSO coffee for sale, the && operator is appropriate here:
+1 if (bakery has cannoli)
+2 buy dessert; // bakery has cannoli
+3 else if (bakery has apple turnovers && bakery has coffee) // no cannoli
+4 buy dessert; // bakery has apple turnovers AND coffee
+
+This pseudocode seems to work, but we must check for logical errors.
+Using the numbered lines of pseudocode, let’s trace the possibilities using a trace table.
+has cannoli: line 1, condition is true -> line 2, buy dessert
+no cannoli, no turnovers, no coffee: line 1, false -> line 3, false -> no dessert
+no cannoli, yes turnovers, no coffee: line 1, false -> line 3, false -> no dessert
+no cannoli, no turnovers, yes coffee: line 1, false -> line 3, false -> no dessert
+no cannoli, yes turnovers, yes coffee: line 1, false -> line 3, true -> line 4, buy dessert
+
+Moral of the story: This bakery had better get itself together.
+
+There is a lot of pseudocode here! Controlling the flow of a program can be difficult and confusing, which is why it is a popular topic on the AP Exam. But it is also important because most programs, like most things we do in life, rely on conditions and react accordingly.
+If we look at the bakery example one more time, the line
+buy dessert;
+
+occurs twice. Good programming style attempts to repeat the same lines of code as little as possible, if ever. Therefore, we can rearrange the boolean operators in the following way, creating the same result:
+if (bakery has cannoli OR (bakery has apple turnovers AND bakery has coffee))
+    buy dessert;
+
+That is a hefty boolean condition; however, it (1) eliminates the repetition of code and (2) provides a more “elegant” programming solution. “Elegant” is a relative term, of course, but the AP Exam often uses this subjective term to write code and to confuse you. Either way, you should be familiar with both ways.
+The AP Exam free-response questions do not require you to write code with “elegance”; in the free-response questions they will accept any code solution as long as it fulfills the specifications of the question.
+To make things more complicated (or more life-like), consider a further idea. What if we want to execute several commands when a condition is true (or false) instead of just one? For example, using the bakery case, let’s say that buying cannoli is so exciting that we must devour it right away. In other words, if the conditions are met for the bakery having cannoli, we want to buy it AND eat it. The pseudocode would look something like:
+1 if (bakery has cannoli)
+2 {
+3   buy dessert; // bakery has cannoli
+4   eat dessert;
+5 }
+6 else if (bakery has apple turnovers && bakery has coffee) // no cannoli
+7   buy dessert; // bakery has apple turnovers AND coffee
+
+The { and } symbols in lines 2 and 5 indicate blocking, a technique used in flow control statements that allows the programmer to execute a series of commands (instead of just one) when a given condition is satisfied.
+
+Here is a summary for evaluating boolean expressions:
+An && (and) expression is true if BOTH A and B are true. An || (or) expression is true if EITHER A or B is true, or if they are both true.
+The ! (not) operator simply reverses the truth value of the variable.
+The truth value of an expression is often abbreviated to a single letter. Thus, A may represent an expression such as x >= 0. The expression will either be true or false depending on the value of x, but for simplicity’s sake we just refer to the whole expression as A.
+Consider the following three expressions:
+To evaluate A && B
+First evaluate A. If A is false then stop: the whole expression is false. Since false && anything is false, there is no need to continue after the first false has been evaluated. This idea is called short-circuit evaluation. This idea is used (and tested) frequently. However, if A is true, then you must evaluate B to determine the truth value of the whole expression.
+
+To evaluate A || B
+First evaluate A. If A is true then stop: the whole expression is true. Since true || anything is true, there is no need to continue after the first true has been evaluated. This is short-circuit evaluation again. However, if A is false, then you must evaluate B to determine the truth value of the whole expression.
+
+To evaluate !A
+First evaluate A. If A is true, the whole expression is false. If A is false, the whole expression is true.

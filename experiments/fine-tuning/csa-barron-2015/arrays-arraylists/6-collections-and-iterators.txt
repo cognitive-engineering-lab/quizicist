@@ -1,0 +1,99 @@
+Definition of an Iterator
+An iterator is an object whose sole purpose is to traverse a collection, one element at a time. During iteration, the iterator object maintains a current position in the collection, and is the controlling object in manipulating the elements of the collection.
+The Iterator<E> Interface
+The package java.util provides a generic interface, Iterator<E>, whose methods are hasNext, next, and remove. The Java Collections API allows iteration over each of its collections classes.
+THE METHODS OF Iterator<E>
+boolean hasNext()
+Returns true if there’s at least one more element to be examined, false otherwise.
+E next()
+Returns the next element in the iteration. If no elements remain, the method throws a NoSuchElementException.
+void remove()
+Deletes from the collection the last element that was returned by next. This method can be called only once per call to next. It throws an IllegalStateException if the next method has not yet been called, or if the remove method has already been called after the last call to next.
+
+Using a Generic Iterator
+To iterate over a parameterized collection, you must use a parameterized iterator whose parameter is the same type.
+
+Example 1
+List<String> list = new ArrayList<String>();
+< code to initialize list with strings>
+//Print strings in list, one per line.
+Iterator<String> itr = list.iterator();
+while (itr.hasNext())
+    System.out.println(itr.next());
+
+NOTE
+1. Only classes that allow iteration can use the for-each loop. This is because the loop operates by using an iterator. Thus, the loop in the above example is equivalent to
+for (String str : list) //no iterator in sight!
+    System.out.println(str);
+2. Recall, however, that a for-each loop cannot be used to remove elements from the list. The easiest way to “remove all occurrences of . . . ” from an ArrayList is to use an iterator.
+
+Example 2
+/** Remove all 2-character strings from strList.
+* Precondition: strList initialized with String objects. */
+public static void removeTwos(List<String> strList)
+{
+    Iterator<String> itr = strList.iterator();
+    while (itr.hasNext())
+        if (itr.next().length() == 2)
+            itr.remove();
+}
+
+Example 3
+/** Assume a list of integer strings.
+* Remove all occurrences of "6" from the list.
+*/
+Iterator<String> itr = list.iterator();
+while (itr.hasNext())
+{
+    String num = itr.next();
+    if (num.equals("6"))
+    {
+        itr.remove();
+        System.out.println(list);
+    }
+}
+
+If the original list is 2 6 6 3 5 6 the output will be
+[2, 6, 3, 5, 6]
+[2, 3, 5, 6]
+[2, 3, 5]
+
+Example 4
+/** Illustrate NoSuchElementException. */
+Iterator<SomeType> itr = list.iterator();
+while (true)
+    System.out.println(itr.next());
+The list elements will be printed, one per line. Then an attempt will be made to move past the end of the list, causing a NoSuchElementException to be thrown. The loop can be corrected by replacing true with itr.hasNext().
+
+Example 5
+/** Illustrate IllegalStateException. */
+Iterator<SomeType> itr = list.iterator();
+SomeType ob = itr.next();
+itr.remove();
+itr.remove();
+
+Every remove call must be preceded by a next. The second itr.remove() statement will therefore cause an IllegalStateException to be thrown.
+
+NOTE
+In a given program, the declaration
+Iterator<SomeType> itr = list.iterator();
+must be made every time you need to initialize the iterator to the beginning of the list.
+
+Example 6
+/** Remove all negatives from intList.
+* Precondition: intList contains Integer objects.
+*/
+public static void removeNegs(List<Integer> intList)
+{
+    Iterator<Integer> itr = intList.iterator();
+    while (itr.hasNext())
+        if (itr.next().intValue() < 0)
+            itr.remove();
+}
+
+NOTE
+1. In Example 6 on p. 246 a for-each loop is used because each element is accessed without changing the list. An iterator operates unseen in the background. Contrast this with Example 6 above, where the list is changed by removing elements. Here you cannot use a for-each loop.
+2. To test for a negative value, you could use
+if (itr.next() < 0)
+because of auto-unboxing.
+3. Use a for-each loop for accessing and modifying objects in a list. Use an iterator for removal of objects.

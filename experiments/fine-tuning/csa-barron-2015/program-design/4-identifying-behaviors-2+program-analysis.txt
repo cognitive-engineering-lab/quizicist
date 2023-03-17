@@ -1,0 +1,28 @@
+Use the verbs to identify key methods in the program: simulate<game>, place <ships>, shoot<at position>, call out<position>, respond<hit or miss>, sink <ship>, inform that<ship was sunk>, keep track of<hits or misses>, sink <opponent’s fleet>, win<game>.
+You need to decide who will do what. There’s no definitive way of implementingthe program, but it seems clear that the GameManager should run the game and declare the winner. Should the GameManager also be in charge of announcing if a ship is sunk? It makes sense because the game manager can see both players’ grids. Each player should keep track of his calls, so that he can make an intelligent next call and also respond “hit” or “miss.” Will each player have a display? Or will the Display have both players? You have to set it up so that a player can’t see his opponent’s FleetGrid, but he can see his own and also a grid showing the state of the calls he has made. Should each player have a list of his ships, so he can keep track of the state of his fleet? And what about each ship in the fleet? Should a ship have a list of its positions, and should it keep track of if it’s hit or sunk?
+Saving and retrieving updated information is crucial to this program. It seems a bit overwhelming. Where should you start? The Ship classes are low-level classes, independent of the players and grids. Start with these and test that you can get accurate information about each ship. In your driver program create an ArrayList<Ship>. Have a loop that prints information about each ship. Polymorphism will take care of getting the correct information about each ship.
+Now try the Grid classes. This is a complicated program where each small piece should be coded and tested with simple output. For example, a Grid can be displayed with a two-dimensional array of 0’s and 1’s to show the positions of ships. Other symbols can be used to show what’s been hit and what’s been sunk.
+When everything is working with the grids, you could add a Display class that has Grid variables and a display method.
+Try a Player. Give him a list of ships, two grids and a Display.
+Then create a GameManager. Give her two Player variables and be sure she has a playGame method.
+The program development shown above is an example of bottom-up development.
+Program Correctness
+Testing that a program works does not prove that the program is correct. After all, you can hardly expect to test programs for every conceivable set of input data. Computer scientists have developed mathematical techniques to prove correctness in certain cases, but these are beyond the scope of the APCS course. Nevertheless, you are expected to be able to make assertions about the state of a program at various points during its execution.
+
+Assertions
+An assertion is a precise statement about a program at any given point. The idea is that if an assertion is proved to be true, then the program is working correctly at that point.
+An informal step on the way to writing correct algorithms is to be able to make different kinds of assertions about your code.
+
+PRECONDITION
+The precondition for any piece of code, whether it is a method, loop, or block, is a statement of what is true immediately before execution of that code.
+POSTCONDITION
+The postcondition for a piece of code is a statement of what is true immediately after execution of that code.
+
+Efficiency
+An efficient algorithm is one that is economical in the use of
+• CPU time. This refers to the number of machine operations required to carry out the algorithm (arithmetic operations, comparisons, data movements, etc.).
+• Memory. This refers to the number and complexity of the variables used.
+
+Some factors that affect run-time efficiency include unnecessary tests, excessive movement of data elements, and redundant computations, especially in loops.
+Always aim for early detection of output conditions: Your sorting algorithm should halt when the list is sorted; your search should stop if the key element has been found. In discussing efficiency of an algorithm, we refer to the best case, worst case, and average case. The best case is a configuration of the data that causes the algorithm to run in the least possible amount of time. The worst case is a configuration that leads to the greatest possible run time. Typical configurations (i.e., not specially chosen data) give the average case. It is possible that best, worst, and average cases don’t differ much in their run times.
+For example, suppose that a list of distinct random numbers must be searched for a given key value. The algorithm used is a sequential search starting at the beginning of the list. In the best case, the key will be found in the first position examined. In the worst case, it will be in the last position or not in the list at all. On average, the key will be somewhere in the middle of the list.

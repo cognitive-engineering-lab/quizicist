@@ -1,0 +1,382 @@
+question-section:0
+4 1
+Which of the following class declarations would cause a compile-time error? Assume the rest of the code compiles as intended.
+(A) public class Calculus
+(B) public class apCalculus
+(C) public class APCalculus
+(D*) public class 4APCalculus
+(E) public class APCalculus extends Calculus
+
+question-section:1
+3 1
+Which of the following statements would best describe an efficient design to represent a pair of sunglasses?
+(A) Three classes: UnfoldGlasses, CleanGlasses, and WearGlasses
+(B) An UnfoldGlasses class with methods CleanGlasses and WearGlasses
+(C) A PairOfSunglasses class with boolean variables unfolded, cleaned, and worn
+(D*) A PairOfSunglasses class with methods that unfold, clean, and wear the objects in the class
+(E) A UseSunglasses class with statements that unfold, clean, and wear the sunglasses
+
+question-section:4
+4 2
+Use class Chair and method sitOnChair to answer the following question.
+public class Chair
+{
+    private int numberOfLegs = 4;
+    private boolean padded;
+    public Chair(boolean soft)
+    {
+        if (soft) padded = true;
+        else padded = false;
+    }
+}
+public void sitOnChair( )
+{
+    <implementation not shown>
+}
+
+The method sitOnChair belongs to another class and is supposed to allow the user to “sit” on a Chair if the chair is padded. Which of the following code segments could be used to replace <implementation not shown> so that sitOnChair will work as intended?
+I. Chair c = new Chair(true);
+c.sit();
+II. Chair c = new Chair(true);
+III. Chair c = new Chair(true);
+if (c.padded) System.out.print("You are sitting.");
+(A) I only
+(B) II only
+(C) III only
+(D) I, II, and III
+(E*) None
+
+question-section:1
+1 1
+Use class Chair and method sitOnChair to answer the following question.
+public class Chair
+{
+    private int numberOfLegs = 4;
+    private boolean padded;
+    public Chair(boolean soft)
+    {
+        if (soft) padded = true;
+        else padded = false;
+    }
+}
+public void sitOnChair( )
+{
+    <implementation not shown>
+}
+
+Which of the following modifications, if any, would help to make the Chair class MOST useful to the sitOnChair method, based on the task attempted in Question 3?
+(A) Adding an accessor method that returns the value of numberOfLegs
+(B*) Adding an accessor method that returns the value of padded
+(C) Adding a mutator method that changes the value of numberOfLegs
+(D) Adding a mutator method that changes the value of padded
+(E) Adding an accessor method that returns the values of both numberOfLegs and padded
+
+question-section:2
+4 1
+Consider the following method:
+public int halfRoot(int n)
+{
+    return Math.sqrt(n) / 2;
+}
+
+Which of the following method calls would cause a run-time error?
+(A) halfRoot(–2)
+(B) halfRoot(3)
+(C) halfRoot((int)2.0)
+(D) halfRoot(3.0)
+(E*) None will cause a run-time error.
+
+question-section:5
+4 1
+Use the incomplete class declarations to answer the following question.
+public class Number
+{
+    private int value;
+    public Number(int someNum)
+    {
+        if (someNum >= 0)
+            value = someNum;
+    }
+    public int changeVal(int newVal)
+    {
+        / * missing code * /
+    }
+    public int getValue()
+    {
+        return value;
+    }
+}
+
+public class NumChanger
+{
+    public void change()
+    {
+        Number n1 = new Number(5);
+        Number n2 = new Number(5);
+        int sum1 = n1.getValue() + n2.getValue();
+        int oldn1Val = n1.changeValue(10);
+        n2 = n1;
+        int sum2 = n1.getValue() + n2.getValue();
+        System.out.print(sum1 + " " + sum2);
+    }
+    //other methods not shown
+}
+
+The changeVal method in Number should reassign value to be the value taken as the parameter and return the original value. Which of the following code segments should be used to replace / * missing code * / so that changeVal will work as intended?
+(A) value = newVal;
+return value;
+(B) value = newVal;
+return 5;
+(C) int oldVal = value
+value = newVal;
+(D) int oldVal = value;
+value = newVal;
+return value;
+(E*) int oldVal = value;
+value = newVal;
+return oldVal;
+
+question-section:5
+2 1
+Use the incomplete class declarations to answer the following question.
+public class Number
+{
+    private int value;
+    public Number(int someNum)
+    {
+        if (someNum >= 0)
+            value = someNum;
+    }
+    public int changeVal(int newVal)
+    {
+        / * missing code * /
+    }
+    public int getValue()
+    {
+        return value;
+    }
+}
+
+public class NumChanger
+{
+    public void change()
+    {
+        Number n1 = new Number(5);
+        Number n2 = new Number(5);
+        int sum1 = n1.getValue() + n2.getValue();
+        int oldn1Val = n1.changeValue(10);
+        n2 = n1;
+        int sum2 = n1.getValue() + n2.getValue();
+        System.out.print(sum1 + " " + sum2);
+    }
+    //other methods not shown
+}
+
+What will be printed as a result of executing the change method? Assume changeVal in the Number class works as intended.
+(A) 5 5
+(B) 5 10
+(C) 10 5
+(D) 10 10
+(E*) None of these
+
+question-section:5
+4 2
+The following method is intended to output "Strings match." if the two strings contain identical data and otherwise print "Strings do not match."
+public void match(String s, String t)
+{
+if (/ * missing code * /)
+    System.out.println("Strings match.");
+else
+    System.out.println("Strings do not match.");
+}
+
+Which of the following statements could replace / * missing code * / to allow the method to work as intended?
+I. s.compareTo(t) == 0
+II. compareTo(s, t) == 0
+III. s == t
+(A*) I only
+(B) III only
+(C) I and III only
+(D) II and III only
+(E) I, II, and III
+
+question-section:6
+1 1
+A class called ComputerMouse has a static variable connector and a static method getConnector. Which of the following statements is true based on this information?
+(A*) In order to invoke getConnector, a new ComputerMouse object does not need to be instantiated; getConnector must be called directly through the object class.
+(B) In order to invoke getConnector, a new ComputerMouse object must be instantiated and then getConnector must be called through that object.
+(C) Since connector is declared static, getConnector is shared among all objects in the program.
+(D) Since connector is declared static, ComputerMouse objects cannot be mutated during execution.
+(E) Since connector is declared static, all of the methods in ComputerMouse must also be declared static.
+
+question-section:0
+3 2
+A development team is building an online bookstore that customers can use to order books. Information about inventory and customer orders is kept in a database. Code must be developed that will store and retrieve data from the database. The development team decides to put the database code in separate classes from the rest of the program. Which of the following would be an advantage of this plan?
+I. The database access code could be reused in other applications that also need to access the database.
+II. The database access code can be tested independently. It will be possible to test the database access code before the interface is developed.
+III. A team of programmers can be assigned to work just on the code that is used to access the database. The programmers can work independently from other programmers, such as those who develop the user interface.
+(A) I only
+(B) II only
+(C) III only
+(D) I and II only
+(E*) I, II, and III
+
+question-section:2
+5 1
+In Java, instance fields (also known as instance variables) and methods can be designated public or private. Which of the following best characterizes the designation that should be used?
+(A) Instance fields and methods should always be public. This makes it easier for client programs to access data fields and use the methods of the class.
+(B) Instance fields should be either public or private, depending on whether or not it is beneficial for client programs to access them directly. All methods should be public. A private method is useless because a client program can’t access it.
+(C) Keep all methods and instance fields private. This enforces encapsulation.
+(D*) Instance fields should always be private so that clients can’t directly access them. Methods can be either public or private.
+(E) All instance fields should be public so client programs can access them, and all methods should be private.
+
+question-section:0
+5 1
+Which of the following are signs of a well-designed program?
+I. Clients know how data is stored in the class.
+II. Classes and methods can be tested independently.
+III. The implementation of a method can be changed without changing the programs that use the method.
+(A) I only
+(B) II only
+(C*) II and III
+(D) I and II
+(E) I, II, and III
+
+question-section:2
+2 1
+Consider the following class:
+public class Sample
+{
+    public void writeMe(Object obj)
+    {
+        System.out.println("object");
+    }
+    public void writeMe(String s)
+    {
+        System.out.println("string");
+    }
+}
+
+What will be the result of executing the following?
+Sample s = new Sample( );
+String tmp = new String("hi");
+s.writeMe(tmp);
+(A) Compile-time error
+(B) "hi"
+(C) "object"
+(D*) "string"
+(E) Run-time error
+
+question-section:2
+2 1
+Consider the following class:
+public class Sample
+{
+    public void writeMe(Object obj)
+    {
+        System.out.println("object");
+    }
+    public void writeMe(String s)
+    {
+        System.out.println("string");
+    }
+}
+
+What will be the result of executing the following?
+Sample s = new Sample( );
+Object tmp = new Object( );
+s.writeMe(tmp);
+(A) Compile-time error
+(B) "string"
+(C*) "object"
+(D) "tmp"
+(E) Run-time error
+
+question-section:2
+2 1
+Consider the following class:
+public class Sample
+{
+    public void writeMe(Object obj)
+    {
+        System.out.println("object");
+    }
+    public void writeMe(String s)
+    {
+        System.out.println("string");
+    }
+}
+
+What will be the result of executing the following?
+Sample s = new Sample( );
+Object tmp = new String("hi");
+s.writeMe(tmp);
+(A) Compile-time error
+(B) "hi"
+(C*) "object"
+(D) "string"
+(E) Run-time error
+
+question-section:2
+2 1
+Consider the following class:
+public class Sample
+{
+    public void writeMe(Object obj)
+    {
+        System.out.println("object");
+    }
+    public void writeMe(String s)
+    {
+        System.out.println("string");
+    }
+}
+
+What will be the result of executing the following?
+Sample s = new Sample( );
+String tmp = new Object( );
+s.writeMe(tmp);
+(A*) Compile-time error
+(B) "hi"
+(C) "object"
+(D) "string"
+(E) Run-time error
+
+question-section:4
+1 1
+Consider the following class:
+public class Sample
+{
+    int val = 0;
+}
+Is val an attribute or a method?
+(A) Neither: a compile-time error occurs when we try to execute this code.
+(B*) val is an attribute.
+(C) val is a method.
+(D) val is both an attribute and a method.
+(E) Neither: val is a primitive.
+
+question-section:2
+2 1
+Consider the following class:
+public class Sample
+{
+    public String writeMe(String s)
+    {
+        System.out.println("object");
+    }
+    public void writeMe(String s)
+    {
+        System.out.println("string");
+    }
+}
+
+What will be the result of executing the following?
+Sample s = new Sample( );
+Object tmp = new Object( );
+s.writeMe(tmp);
+(A*) Compile-time error
+(B) "hi"
+(C) "object"
+(D) "string"
+(E) Run-time error

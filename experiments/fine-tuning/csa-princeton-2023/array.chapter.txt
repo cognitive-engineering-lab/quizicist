@@ -1,0 +1,362 @@
+=====introduction=====
+An array is a data structure that makes handling like (as in similar) data easier. An array may store primitive data values or object references. Each piece of data is called an element, and an index is used to specify the location of the element we wish to access. Imagine an airline that sells more than a thousand tickets a day. If we want to process that data to accumulate statistics on origin cities or prices of tickets, each ticket could be instantiated separately, using a unique object reference variable for each ticket. Imagine then invoking a method on each of those object reference variables. By putting the data into an array, and then using a loop to access each element of the array, the code becomes much more efficient.
+
+=====primitives=====
+In order to instantiate an array, you must first decide what type of data will be contained in the array. Suppose you are creating a program that will keep track of your test grades in your APCS class. Since grades are usually represented by integer numbers, you will create an array of integers. The syntax for instantiating an array of integers is
+int [] <identifier> = new int [<array size>];
+
+This format is used if you do not yet know the values that will be stored in the array. Alternatively, if you already know the data values, you can instantiate the array using an initializer list:
+int [] <identifier> = {<data1>, <data2>, ..., <data n>};
+
+Notice the square brackets—these are standard symbols in Java that signify an array is present. The braces (curly brackets) indicate an initializer list. In the beginning of the semester, you do not yet know your grades. In order to create an array called testGrades that will eventually store your first 5 test grades, you could write a statement like this:
+int [] testGrades = new int[5];
+
+This array object will store your test grades and keep them organized using index numbers (or locations). Just as your tests might be organized as Chapter 1 Test, Chapter 2 Test, etc., your data will be accessed through the identifier of the array and index number. The tricky part is that array indices start with the number 0 instead of 1. Therefore, if your Chapter 1 Test is the first test score in the array, it will be stored at index 0. If the first test you have in APCS reviews a previous course, then it’s Chapter 0 instead of Chapter 1. If you did not instantiate the array using an initializer list, then you will assign data values using the index numbers; you will do the same process to access the data regardless of how you created the array. For example, if you scored a 95 on the first test, you could write the line:
+testGrades[0] = 95;
+
+Creating an array with five scores at once might look like this, int [ ] testScores = {90, 80, 100, 85, 92};
+Let’s say that, after looking over your test, you realize that your teacher made a grading error and you actually scored a 98. You can either increment the data value or reassign it:
+testGrades[0] += 3;
+or
+testGrades[0] = 98;
+
+You can also perform any integer operation, and also display the value to the user, with that same format.
+Let’s step it up a notch. Suppose, after all 5 tests are complete, your teacher feels that the scores are too high and decides to deflate the grades. (You didn’t think this book would discuss only nice teachers, did you?) The programmer can use a simple loop in order to traverse the array and change every value accordingly, rather than writing 5 separate lines. Since an array’s length is well-defined, a for loop is usually appropriate for arrays. Provided that the array is full, meaning all 5 values are assigned, the following loop will traverse the array and subtract 2 points from every grade:
+for (int index = 0; index < 5; index++)
+	testGrades[index] -= 2;
+
+Note the values of index will be 0, 1, 2, 3, and 4, even though it stores 5 elements. Since the index numbers start at 0, you must stop traversing the array before index 5, or your will receive an ArrayIndexOutOfBoundsException and the program execution will be interrupted. Free Response Questions on the AP Exam often test your ability to write code that does not go out of bounds.
+An array also has a constant value returned by < arrayName >, length that will return the number of elements in the array. The above loop could be written:
+for (int index = 0; index < testgrades.length; index++)
+	testGrades(index) -= 2;
+
+Much better than writing multiple lines, right? The loop systematically changes every value in the array. We are just scratching the surface of the usefulness of arrays, and we have already improved our coding efficiency.
+The AP Exam will require you to create, traverse, and modify arrays; freeresponse questions are loaded with arrays and will specifically state that an array must be created. The Course and Exam Description states, specifically, that free response questions 3 and 4 have to do with arrays (3 is Array/ArrayList and 4 is 2D Array).
+The programmer needs to ensure that every element of the array contains a meaningful value, or undesired results may occur. In an array of integers, the value of an unassigned element will default to 0. Consider the following code segment that will calculate the average of your 5 test grades:
+int total = 0, len = testGrades.length;
+double average;
+for (int index = 0; index < len; index++)
+	total += testGrades[index];
+average = (double) total / len;
+
+If all 5 of your test grades are stored in the array, this code segment will calculate the average correctly. If you did not input one of your scores, however, it will remain stored as 0 and incorrectly drag down your average, which is (definitely) an undesired result.
+There is an alternative way to execute the previous code segment. This involves using an enhanced-for loop. An enhanced-for loop can be used to automatically go through each element of an array.
+int total = 0, len = testGrades.length;
+double average;
+for (int grade : testGrades)
+	total += grade;
+average = (double)total / len;
+
+In the enhanced-for statement, a previously declared array or an ArrayList (more on ArrayLists later) must be referenced after the colon. The loop will iterate for each element in the list, from index 0 to index length - 1. However, no variable is used to refer to the current index. Instead, the element located at the current index is stored as the variable declared before the colon. (The variable must be of the same type stored in the array.) Therefore, the enhanced-for loop above stores each element, one at a time in increasing order by index, of the array testGrades as grade. It then adds grade to total. Thus, the enhanced-for loop has the same functionality as the for loop in the previous example. The benefits of the enhanced-for loop are that it will not cause an ArrayIndexOutOfBoundsException when traversing an array and that it shortens the notation of the element considerably.
+
+=====objects=====
+Since objects are typically used to represent real-world phenomena, arrays are also commonly used to organize and manipulate objects. Suppose you have an object class that represents a pair of sneakers. The following code segment would instantiate an array that would store five of these objects:
+PairOfSneakers collection[] = new PairOfSneakers[5];
+
+Since each element is an object, however, the default value for each object is null. Since null is not a valid object, operations performed on null will result in a NullPointerException, another error that will halt the execution of the program. Without getting into the specifics of the PairOfSneakers class, a statement that could assign an instantiated pair of sneakers called jordans is
+collection[0] = jordans;
+
+Now, suppose PairOfSneakers has a tie() method that will tie the laces of the corresponding pair of sneakers; i.e., jordans.tie() will tie that pair. At this point, index 0 references the jordans object—remember that objects are referenced, not copied—but elements at indices 1–4 are null. To avoid a NullPointerException, check that each object is not equal to null.
+for (int i = 0; i < collection.length; i++)
+	if (collection[i]! = null)
+		collection[i].tie();
+
+When using a loop to traverse an array of objects, be sure the array is full to avoid undesired results.
+
+=====searches=====
+Once data is stored in an array, a common task is to methodically search the array for given data. Consider a line of parked cars in the “Curbside To Go” section of your local chain restaurant. When the server is taking the food to a particular car, she must use a given attribute—say, a license plate number —to find the correct car. Once the correct car is found, the server can deliver the food and then go back inside for the next order, beginning the process all over again…and again…and again.
+This same technique is used for searching an array. In APCS, we have two methods of searching arrays, the sequential search and the binary search. Since each of these search methods uses a distinct formula to search through the arrays, they are commonly referred to as search algorithms.
+The chain restaurant example given above is an example of a sequential search. All of the cars are “lined up” and the server begins with the first car, checking its license plate number against the one she is looking for. If it’s correct, the server delivers the food and returns. If not, she moves on to the next car and repeats the process; this all ends when either (1) the correct car is found or (2) the correct car is not in the line at all. This sequential process works just fine, although it can be very tedious. The server would have to do much more work if the desired car were at the end of the line, as opposed to at the beginning. Remember, we are programming a computer; the server cannot simply “look” at all of the plates at once, as we might in real life. The computer does not know how to “look,” unless we know how to write the program that enables it!
+A code segment that performs a linear search for a number target in an array of integers nums might look like this:
+for (int i = 0; i < nums.length; i++)
+	if (nums[i] == target)
+		System.out.print(“Found at " + i);
+
+This segment will correctly traverse the array, searching for target, starting with index 0 and continuing to index length - 1, as desired. Remember that nums.length is the size of the array and therefore nums[length] would be out of bounds. When target is found, the print statement displays its index number. This process will continue until the end of the array is reached. Note that, if target is never found, there will be no output.
+When writing algorithms that traverse arrays, programmers often implement the enhanced-for loop, which is designed specifically for traversing entire arrays. In cases which traversing the entire array is not the intent or would cause a run-time error, the enhanced-for loop should not be used. Assuming nums from the previous example would not cause such a problem, the same code segment can be written as an enhanced-for loop structure like this:
+int loc = 0;
+for (int num : nums)
+{
+	if (num == target)
+		System.out.print(“found at ” + loc);
+	i++;
+}
+
+Each time the loop iterates, num will be assigned the value of the next element in the array. This structure automatically ensures that the loop does not go out of bounds. In this case, loc is the location or index in which the target is found.
+It is important to note that the enhanced-for loop provides a variable that will hold each element of the array. It will NOT automatically provide the index of that element. You will have to add code to keep track of the index if you want to use it.
+A binary search is much more efficient; think of it as a “divide-and conquer” mechanism. Instead of our restaurant server starting with the beginning of the line of cars, she will start with the middle car. Depending on whether the license plate is “greater” or “less” than the car she is looking for, the server will move in the appropriate direction.
+There is a huge obstacle with binary searches, however, or at least, for us with our current level of Java knowledge: these searches work only when there is an inherent order in the data. Suppose the top 21 students in the senior class are lined up in a row. You are looking for a student within that top 21 named Kathy, whom you have never met, but you are not sure where she is in the line. If the students are not lined up in a particular order, a sequential search is your only option, and you might need all 21 tries to find her if she is the last person in the lineup. If they are sorted in alphabetical order by first name, though, you can divide and conquer. Go to the middle person and find out her name…if her name is Sara, you would move toward the front of the line and ignore the back. You then perform the same process, asking the name of the person halfway between the front of the line and Sara, and then ignore the appropriate side. Within a few tries, you will have Kathy.
+Here is a code example of how a binary search might look for array nums when searching for target, assuming nums is sorted:
+int front = 0, back = nums.length - 1, middle = 0; boolean isFound = false;
+while((front <= back) && (!isFound))
+{
+	middle = (front + back) / 2;
+	if (nums[middle] < target)
+	{
+		front = middle + 1;
+	}
+	else if(nums[middle] > target)
+	{
+		back = middle - 1;
+	}
+	else
+	{
+		isFound = true;
+	}
+}
+if (isFound)
+{
+ System.out.println("Found at" + middle);
+}
+else
+{
+ System.out.println("Target Not Found");
+}
+On the AP Exam, you will not be required to write a search algorithm; however, you will be required to recognize a search algorithm and trace it, which can be done the easy way if you understand the algorithm, or the hard way by actually tracing the code, step by step. Try to identify the key characteristics of each search; for example, the “sum divided by 2” line is a good indicator of a binary search. The enhanced-for loop will traverse the entire array, which may indicate a sequential search.
+
+=====sorts-selection=====
+Probably the most useful algorithms you will learn in AP Computer Science A are sorting algorithms—but they are also probably the most difficult to understand. If you’ve been keeping up within this book so far, then you have a good start. 
+As the name implies, sorting algorithms will take data in an array and rearrange it into a particular order. We already know that this technique is useful if we want to search for data using the binary search algorithm. But imagine this automated process in real life: a process that automatically sorts the cups in your cabinet in height order, a process that automatically takes your homework assignments and arranges them in time order, and a process that sorts your to-do list in priority order. Needless to say: sorting algorithms are extremely powerful. 
+The selection sort is the first sorting algorithm we will discuss, and one of the three sorting algorithms you need to know for the AP Exam. This is a search-and-swap algorithm, so you should remember that the selection sort searches and swaps. Similar to a sequential search, the sort will first traverse the array for the lowest value. Once it finds the lowest value, it will swap its position in the array with the data at index 0. Now the first element is sorted. The process then repeats for index 1. The rest of the array will be searched for the lowest value and swapped with the data at index 1. Note that if the lowest value is already in position, it will stay there. 
+Consider the array below. We would like to sort this array from least to greatest.
+8 6 10 2 4
+
+Our strategy will be to first find the smallest element in the array and put it in the first position. We will then find the smallest of the remaining elements and put that in the second position. We will continue to do this until the array is ordered. 
+We can start by looking at every element in the array (starting with the first element) and finding the smallest element. It’s easy for a person to quickly glance through the array and see which element is smallest, but the sorting algorithm that we will implement can compare only two elements at once. So here’s how we can find the smallest element: take the number in the first cell in the array and assign it to a variable called smallestSoFar. We’ll also assign the position of that value to a variable called position. In this case, smallestSoFar will equal 8 and position will be 0. Note that even though we are assigning 8 to smallestSoFar, the first cell of the array will contain 8; we didn’t actually remove it. 
+smallestSoFar = 8; 
+position = 0; 
+
+8 6 10 2 4
+
+Next we’ll walk through the array and compare the next value to smallestSoFar. The next value is 6, which is less than 8, so smallestSoFar becomes 6 and position becomes 1. 
+smallestSoFar = 6; 
+position = 1; 
+
+8 6 10 2 4
+
+Now let’s look at the next value in the array. 10 is larger than 6, so smallestSoFar remains 6.
+smallestSoFar = 6; 
+position = 1; 
+
+8 6 10 2 4
+
+The next value in the array is 2: 2 is smaller than 6. 
+smallestSoFar = 2; 
+position = 3; 
+
+8 6 10 2 4
+
+And finally, we look at the last element, 4. Because 4 is greater than 2, and we are at the end of the array, we know that 2 is the smallest element. 
+smallestSoFar = 2; 
+position = 3; 
+
+8 6 10 2 4
+
+Now we know that 2 is the smallest element in the array. Because we want to order the array from least to greatest, we need to put 2 in the first cell in the array. We don’t simply want to overwrite the 8 that is in the first cell, though. What we’ll do is swap the 2 with the 8 to get 
+
+2 6 10 8 4
+
+We now have the smallest element in place. Next we’ll need to find the second smallest element in the array. We can do this using the same approach we employed to find the smallest element. Because we know that 2 is the smallest element, we have to look at the elements only in positions 1 to 4 for the second smallest element. 
+Start by assigning 6 to smallestSoFar and 1 to position and then compare 6 to 10. Six is the smaller element. Next, compare 6 to 8; 6 is still the smaller element. Finally, compare 6 to 4; 4 is smaller, and because we have no more elements in the array, 4 must be the second smallest element in the array. 
+Swap 4 with the second element in the array to get 
+
+2 4 10 8 6
+
+Make another pass through the array to find the third smallest element, and swap it into the third cell. The third smallest element is 6. 
+
+2 4 6 8 10
+
+Finally, we look at the last two elements. Eight is smaller than 10, so we don’t need to do anything. Our array is now sorted from least to greatest. 
+
+Here is how a selection sort can be implemented in Java. The following implementation will sort the elements from least to greatest and will begin by sorting the smallest elements first. 
+//precondition: numbers is an array of ints 
+//postcondition: numbers is sorted in ascending order 
+1 public static void selectionSort1(int[] numbers) 2 { 
+3 for (int i = 0; i < numbers.length – 1; i++) 4 { 
+5 int position = i; 
+6 for (int k = i + 1; k < numbers.length; k++) 7 { 
+8 if (numbers[k] < numbers[position]) 
+9 { 
+10 position = k; 
+11 } 
+12 } 
+13 int temp = numbers[i];
+14 numbers[i] = numbers[position]; 
+15 numbers[position] = temp; 
+16 } 
+17 } 
+How could this be useful? Consider a case in which you have an unsorted array of 1,000 Student objects, and each Student object has a method that returns a grade point average for that Student. What if you would like to find the five students with the highest grade point average? In this case, it would be a waste of time to sort the entire array. Instead, we can just run through five cycles of the second implementation of the selection sort shown above, and the top five students will be sorted. 
+
+=====insertion-sort=====
+The insertion sort is a little less intuitive. Rather than traversing the entire array, it compares the first two elements and, depending on the comparison, inserts the second value “in front” of the first value into index 0, moving the first value to index 1. The first two elements are now sorted. Then the third element is checked, and the inserting continues. Note that here, also, an already sorted element will remain in its position. 
+Below is an array with 9 elements. This array is sorted from least to greatest except for the last element. 
+
+2 3 5 8 11 14 17 22 15
+
+We would like to move 15 so that the entire array is in order. First, we’ll temporarily assign 15 to a variable. This will give us room to shift the other elements to the right if needed. 
+temp = 15 
+
+2 3 5 8 11 14 17 22
+
+We then compare 15 to the first element to its left: 22. Because 22 is larger than 15, we shift 22 to the right.
+temp = 15 
+
+2 3 5 8 11 14 17 -> 22
+
+We then compare 15 to the next element: 17. Because 17 is larger, we shift that to the right also. 
+temp = 15 
+
+2 3 5 8 11 14 -> 17 22
+
+Next we compare 15 to 14. Because 15 is larger, we don’t want to shift 14 to the right. Instead, we insert 15 into the empty cell in the array. Now the array is correctly sorted. 
+Insert 15:
+
+2 3 5 8 11 14 15 17 22
+
+Now we’ll look at how we can use the idea illustrated above to sort an entire array. This example will start at the beginning of the sorting process. 
+Here is the array that we are going to sort. 
+8 6 7 10
+
+First, we’ll look at just the first two elements of the array to make sure that they are sorted relative to each other. 
+8 6 7 10
+
+To do this, we’ll pull 6 (the number that is farthest to the right in our subarray) out of the array and temporarily assign it to a variable. We’ll then compare 6 to 8. Because 8 is larger, shift 8 to the right and then put 6 in the cell where 8 was. 
+temp = 6 
+
+8 -> 7 10
+
+Here’s what the array looks like. 
+6 8 7 10
+
+Now we need to put 7 in the proper place relative to 6 and 8. We start by assigning 7 temporarily to a variable. 
+temp = 7 
+
+6 8 _ 10
+
+We then compare 7 to the first number to its left: 8. Because 7 is less than 8, we shift 8 one place to the right. 
+temp = 7 
+
+6 -> 8 10
+
+Next, we’ll compare 7 to the next number in the array: 6. Because 6 is less than 7, we don’t want to shift 6 to the right. Instead, we will put 7 in the second cell. Our array now looks like the following: 
+6 7 8 10
+
+Now we need to put 10 in its place relative to the first 3 elements in the array.
+6 7 8 10
+
+temp = 10 
+
+6 7 8 _
+
+First we compare 10 to 8; because 8 is smaller than 10, we don’t need to shift 8 to the right. In fact, we can put 10 right back into the cell from which it came. 
+6 7 8 10
+
+Here is how an insertion sort can be implemented in Java. 
+//precondition: x is an array of integers; x.length >= 0 
+//postcondition: x is sorted from least to greatest 
+1 public static void insertionSort(int[] x) 
+2 { 
+3 for (int i = 1; i < x.length; i++) 
+4 { 
+5 int temp = x[i]; 
+6 int j = i – 1; 
+7 while (j >= 0 && x[j] > temp) 
+8 { 
+9 x[j + 1] = x[j]; 
+10 j--; 
+11 } 
+12 x[j + 1] = temp; 
+13 } 
+14 } 
+Note that like the selection sort, the insertion sort contains nested loops. In this case, we have a while loop nested within a for loop.
+The for loop, beginning on line 3, proceeds from index 1 to the end of the array. The while loop goes through the array from i to 0 and shifts elements that are larger than temp to the right on line 9. On line 12, we put the value of temp into its proper place in the array. 
+
+=====merge-sort=====
+Another type of sort used on the AP Exam is the merge sort. This is a more complex type of sort that uses recursion, which is the technique that uses a method to call itself. (Recursion will be further discussed in Chapter 12.) A merge sort is like a divide-and-conquer. An array is split into two pieces. Each piece is sorted. The two sorted pieces are then merged together into one sorted list. In order to sort each of the two pieces, the same divide-and conquer method is used. 
+Below is an array with 8 elements: 
+14 8 9 3 5 4 21 12
+
+The merge sort will divide this array into two pieces: 
+14 8 9 3 and 5 4 21 12
+
+Let’s look at just the left half of the array. This array is divided into two pieces:
+14 8 and 9 3
+
+Each of these pieces is similarly divided into two pieces: 
+14 and 8
+9 and 3
+
+Since each remaining piece contains only one element, simply order the two from left to right:
+8 14 and 3 9
+
+Now merge the two sorted segments. Compare the first element in each piece. The smaller is 3, so this is the first element of the merged array. Now compare the first element in each piece that hasn’t already been copied. These are 8 and 9. The smaller is 8, so this is the second element of the merged array. Again, compare the first element in each piece that hasn’t already been copied. These are 14 and 9. The smaller is 9, so this is the third element of the merged array. Since the second array has no remaining elements that haven’t already been copied, add the remaining element(s) from the first array into the merged array. The only remaining element is 14, so this is the fourth element: 
+3 8 9 14
+
+Follow a similar process for the right half of the first array. Divide into two pieces: 
+5 4 and 21 12
+
+Each of these pieces is similarly divided into two pieces:
+5 and 4
+21 and 12
+
+Since each remaining piece contains only one element, simply order the two from left to right: 
+4 5 and 12 21
+
+Now merge the two sorted segments. Compare the first element in each piece. The smaller is 4, so this is the first element of the merged array. Now compare the first element in each piece that hasn’t already been copied. These are 5 and 12. The smaller is 5, so this is the second element of the merged array. Since the first array has no remaining elements that haven’t already been copied, add the remaining elements from the second array into the merged array. The remaining elements, 12 and 21, become the third and fourth elements of the merged array: 
+4 5 12 21
+
+Thus, the two sorted pieces of the original array look like this: 
+3 8 9 14 and 4 5 12 21
+
+Merge the two sorted arrays. Compare 3 and 4 to get that the first element is 3. Compare 8 and 4 to get that the second element is 4. Compare 8 and 5 to get that the third element is 5. Compare 8 and 12 to get that the fourth element is 8. Compare 9 and 12 to get that the fifth element is 9. Compare 14 and 12 to get that the sixth element is 12. Compare 14 and 21 to get that the seventh element is 14. Since the first array has no uncopied elements, 21, which is the only remaining uncopied element in the second array, becomes the eighth element of the merged array. Below is the final array:
+3 4 5 8 9 12 14 21
+
+Here’s how a merge sort can be implemented in Java. 
+//precondition: x is an array in integers; x.length >= 0 //postcondition: x is sorted from least to greatest 
+1 public static void mergeSort (int[] x) 
+2 { 
+3 int[] temp = new int[x.length]; 
+4 mergeSortHelper(x, 0, x.length – 1, temp); 5 } 
+6 public static void mergeSortHelper (int[] x, int lowIndex, int highIndex, int temp) 
+7 { 
+8 if (lowIndex < highIndex) 
+9 { 
+10 int mid = (lowIndex + highIndex) / 2; 11 mergeSortHelper(x, lowIndex, mid, temp); 12 mergeSortHelper(x, mid + 1, highIndex, temp); 13 merge(x, lowIndex, mid, highIndex, temp); 14 } 
+15 } 
+16 public static void merge(int[] x, int lowIndex, int mid, int highIndex, temp) 
+17 { 
+18 int l = lowIndex; 
+19 int m = mid + 1; 
+20 int n = highIndex; 
+21 while (l <= mid && m <= highIndex) 
+22 { 
+23 if (x[l] < x[m]) 
+24 { 
+25 temp[n] = x[l] 
+26 l++; 
+27 } 
+28 else 
+29 { 
+30 temp[n] = x[m];
+31 m++; 
+32 } 
+33 n++; 
+34 } 
+35 while (l <= mid) 
+36 { 
+37 temp[n] = x[l]; 
+38 l++; 
+39 n++; 
+40 } 
+41 while (m <= highIndex) 
+42 { 
+43 temp[n] = x[m]; 
+44 m++; 
+45 n++; 
+46 } 
+47 for (n = lowIndex; n <= highIndex; n++) 
+48 { 
+49 x[n] = temp[k]; 
+50 } 
+51 } 
+This is clearly a more complex sort than the other two and it involves the use of multiple methods. The first method splits the array into two pieces, the second sorts the individual pieces, and the third merges the two pieces into one sorted array.

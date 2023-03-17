@@ -1,0 +1,34 @@
+An interface is a collection of related methods, either abstract (headers only) or default (implementation provided in the interface). Default methods are new in Java 8, and will not be tested on the AP exam. Non-default (i.e., abstract) methods will be tested on the exam and are discussed below.
+Students may be required to design, create, or modify classes that implement inter faces with abstract methods.
+The non-default methods are both public and abstract—no need to explicitly include these keywords. As such, they provide a framework of behavior for any class.
+The classes that implement a given interface may represent objects that are vastly different. They all, however, have in common a capability or feature expressed in the methods of the interface. An interface called FlyingObject, for example, may have the methods fly and isFlying. Some classes that implement FlyingObject could be Bird, Airplane, Missile, Butterfly, and Witch. A class called Turtle would be unlikely to implement FlyingObject because turtles don’t fly.
+An interface called Computable may have just three methods: add, subtract, and multiply. Classes that implement Computable could be Fraction, Matrix, LongInteger, and ComplexNumber. It would not be meaningful, however, for a TelevisionSet to implement Computable—what does it mean, for example, to mul tiply two TelevisionSet objects?
+A class that implements an interface can define any number of methods. In par
+
+ticular, it contracts to provide implementations for all the non-default (i.e., abstract) methods declared in the interface. If it fails to implement any of the methods, the class must be declared abstract.
+A nonabstract class that implements an interface must
+implement every abstract method of the interface.
+
+An interface is declared with the interface keyword. For example,
+public interface FlyingObject
+{
+    void fly(); //method that simulates flight of object
+    boolean isFlying(); //true if object is in flight,
+    //false otherwise
+}
+
+Interfaces are implemented using the implements keyword. For example,
+public class Bird implements FlyingObject
+{
+...
+This declaration means that two of the methods in the Bird class must be fly and isFlying. Note that any subclass of Bird will automatically implement the interface FlyingObject, since fly and isFlying will be inherited by the subclass.
+A class that extends a superclass can also directly implement an interface. For exam ple,
+public class Mosquito extends Insect implements FlyingObject
+{
+...
+
+NOTE
+1. The extends clause must precede the implements clause.
+2. A class can have just one superclass, but it can implement any number of interfaces:
+public class SubClass extends SuperClass
+implements Interface1, Interface2, ...

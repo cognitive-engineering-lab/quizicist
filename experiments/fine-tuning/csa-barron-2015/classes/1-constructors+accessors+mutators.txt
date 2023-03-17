@@ -1,0 +1,71 @@
+A constructor creates an object of the class. You can recognize a constructor by its name—always the same as the class. Also, a constructor has no return type. Having several constructors provides different ways of initializing class objects. For example, there are two constructors in the BankAccount class.
+1. The default constructor has no arguments. It provides reasonable initial values for an object. Here is its implementation:
+/** Default constructor.
+* Constructs a bank account with default values. */
+public BankAccount()
+{
+    password = "";
+    balance = 0.0;
+}
+In a client method, the declaration
+BankAccount b = new BankAccount();
+constructs a BankAccount object with a balance of zero and a password equal to the empty string. The new operator returns the address of this newly con structed object. The variable b is assigned the value of this address—we say “b is a reference to the object.”
+
+2. The constructor with parameters sets the instance variables of a BankAccount object to the values of those parameters.
+Here is the implementation:
+/** Constructor. Constructs a bank account with
+* specified password and balance. */
+public BankAccount(String acctPassword, double acctBalance) {
+    password = acctPassword;
+    balance = acctBalance;
+}
+In a client program a declaration that uses this constructor needs matching parameters:
+BankAccount c = new BankAccount("KevinC", 800.00);
+
+b and c are object variables that store the addresses of their respective BankAccount objects. They do not store the objects themselves (see References on p. 101).
+An accessor method accesses a class object without altering the object. An accessor returns some information about the object.
+The BankAccount class has a single accessor method, getBalance(). Here is its implementation:
+/** @return the balance of this account */
+public double getBalance()
+{ return balance; }
+
+A client program may use this method as follows:
+BankAccount b1 = new BankAccount("MattW", 500.00);
+BankAccount b2 = new BankAccount("DannyB", 650.50);
+if (b1.getBalance() > b2.getBalance())
+...
+
+The . operator (dot operator) indicates that getBalance() is a method of the class to which b1 and b2 belong, namely the BankAccount class.
+A mutator method changes the state of an object by modifying at least one of its in stance variables.
+Here are the implementations of the deposit and withdraw methods, each of which alters the value of balance in the BankAccount class:
+/** Deposits amount in a bank account with the given password.
+* @param acctPassword the password of this bank account
+* @param amount the amount to be deposited
+*/
+public void deposit(String acctPassword, double amount)
+{
+    if (!acctPassword.equals(password))
+        /* throw an exception */
+    else
+        balance += amount;
+}
+/** Withdraws amount from bank account with given password.
+* Assesses penalty if balance is less than amount.
+* @param acctPassword the password of this bank account
+* @param amount the amount to be withdrawn
+*/
+public void withdraw(String acctPassword, double amount)
+{
+    if (!acctPassword.equals(password))
+        /* throw an exception */
+    else
+    {
+        balance -= amount; //allows negative balance
+        if (balance < 0)
+        balance -= OVERDRAWN_PENALTY;
+    }
+}
+
+A mutator method in a client program is invoked in the same way as an accessor: us ing an object variable with the dot operator. For example, assuming valid BankAccount declarations for b1 and b2:
+b1.withdraw("MattW", 200.00);
+b2.deposit("DannyB", 35.68);

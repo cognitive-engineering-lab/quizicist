@@ -1,0 +1,326 @@
+=====design-and-structure=====
+When a group of statements, including control structures, is assembled into a single unit, the unit is called a class. Similar to a word processing document or a picture file stored on your computer, a class is stored on your computer in a file. Unlike a word processing document, however, a class must follow specific rules in order to conform to Java and, as a result, to be understood by the compiler. Remember that your brilliantly constructed program is useless unless the compiler can successfully translate it into machine code.
+The structure of a class, at this level anyway, is straightforward. Take all of the statements you’ve written before this chapter, put curly brackets around them, kind of like a huge block, name it, and save it. The naming conventions for a class are similar to those of a variable, except that they should begin with a capital letter. The name of the class should reference the purpose or function of the class. For example, a class that calculates a GPA might be called GPA or GradePointAvg. The way we declare a class in Java is using the header:
+public class GradePointAvg
+{
+	// statements not shown
+}
+
+Well, Actually… This is a convention but not a rule. You can have all of the code on a single line if your heart so desires, but that would be very bad form.
+Note that the statements in the class reside at least one tab stop across the page. If the programmer would like to use more white space within the structures of the class, they will be tabbed further into the page:
+public class GradePointAvg
+{
+	// other code and variable declarations not shown
+	while (/* condition not shown */)
+	{
+		// looped statements not shown
+	}
+}
+
+Typically, variable declarations are placed into the code first, right after the class header, as a sort of “setup” for the rest of the class. Of course, this is not a rule, but it is a good guideline in order to keep your code readable.
+This class would be saved to the computer as GradePointAvg.java; the .java extension helps the compiler to recognize the file as containing Java code. If the code compiles (there are no syntax errors), the compiler will create another file in the same folder called GradePointAvg.class; this file is unreadable to the programmer because it is encoded in machine language. The computer, however, uses this file to execute the program. The .java file is called the source code of the program, since it defines the program’s actions and functions.
+Remember that classes are executed top-down—i.e., line 1 followed by line 2, etc. If programmers want to alter top-down execution, they must use a flow control structure, as we studied before.
+
+=====methods=====
+Picture a Java class as a closet, with essentially limitless possibilities. If you were to declare a single shelf to hold, say, board game boxes…that would be a great way to organize your collection of games, toys, and other sophisticated possessions.
+A class is organized in this way using methods.
+A method is a group of code that performs a specific task.
+
+Although a class can simply contain a list of commands, any program that accomplishes a task could easily balloon to 100 lines of code, or more. Instead of writing a class that contains a giant list of disorganized code, writing separate methods for each small task (within the overarching task) is an excellent way to make your code more readable. In addition, method based classes enable easier flow control.
+To understand this concept, let’s break down a bright, sunny Saturday in the middle of the summer (don’t worry—you will make it). Perhaps some of the activities you would do might include getting out of bed (obviously), eating breakfast, taking a shower, getting ready for the beach, driving to the beach, enjoying the beach, and eating lunch. Each of these activities has its own specific components; for example, part of eating breakfast includes drinking orange juice and taking a daily vitamin supplement. The pseudocode of a program that simulates this Saturday’s activities might look like this:
+public class Saturday1
+{
+	hear alarm;
+	turn off alarm;
+	get out of bed;
+	make breakfast;
+	eat breakfast;…
+
+You get the idea…. A long list of commands that occur top-down. Now, consider each of these general activities as a separate grouping of smaller activities, called a method. Each small activity will be defined later, but your Saturday class would look much cleaner:
+public class Saturday2
+{
+	wake up method; // includes alarm
+	eat breakfast method; // includes preparation, OJ, vitamin, etc.
+	take a shower method; // includes preparing for the shower, etc.
+	beach method; // includes prep for the beach, driving to the beach, etc.
+	eat lunch method;
+}
+
+The result is a cleaner, more structured class that is easier to read. A class that is created to control a larger program, such as Saturday2, is called a driver class because it drives the program through its general structure which will, in turn, execute the smaller commands. Note also that if, for some reason, the programmer wanted the simulation to take a shower before eating breakfast, the two lines would be switched in Saturday2 and the job would be done. Performing the same change in Saturday1 would involve switching multiple lines of code. Even more poignant would be a simulation that repeats method calls, such as one that represents your extra hungry older brother, who eats breakfast twice. The driver would simply call the breakfast method twice (or use a loop to call it more than twice) and the job would be completed.
+An object class is a different kind of class which houses the “guts” of the methods that the driver class calls. As you understand this setup, you will see that your driver classes begin to shorten, while your object classes expand. For example, the driver of a car truly performs a relatively small set of actions in order to drive the car: start the engine, buckle the seatbelt, check the mirrors, accelerate, brake, steer. The driver does not actually understand (nor does he need to) exactly how these operations work: he just does them. How does the accelerator pedal actually make the car move more quickly? Doesn’t matter. The “driver” just operates the pedal and the rest happens under the hood. The object class is the “under the hood” class. It defines all of the aspects of an object; more specifically, it defines what the object has and what the object does.
+The object class referred to in this section should not be confused with the Object class in the Java language which is the Parent class of all classes. The Object class is part of the Java.lang package. Every class in Java is a descendent of this class. Every class in Java inherits the methods of the Object class.
+For the AP Exam, you must be able to write, troubleshoot, and understand object AND driver classes, as well as understand how they interact. These skills are HUGE in the free-response questions!
+Back to the breakfast example… pseudocode for the object class might look something like this:
+public class Saturday3
+{
+	wake up(…)
+	{
+		hear alarm;
+		turn off alarm;
+		get out of bed;
+	}
+	breakfast(…)
+	{
+		make breakfast;
+		eat breakfast;
+	}
+
+Since our object class could be used for any day of the week, not just Saturday, BeachDay might be a more appropriate name for this class. The driver class from before, which executes a series of actions for this particular day, might be called Saturday.
+
+=====header=====
+One more item that needs to be mentioned… do you see how each method in the object class has a “title,” or header? The header is used to indicate the overall function of a method.
+This is a Java book, right? So let’s look at some Java. These two classes are designed to simulate a phone downloading and opening a new app.
+1 import Phone;
+2 public class UsePhoneApp
+3 {
+4   public UsePhoneApp() // just do it, we’ll explain later
+5   {
+6       Phone myPhone = new Phone();
+7       myPhone.downloadApp();
+8       myPhone.openApp();
+9       myPhone.closeApp();
+10  }
+11 }
+
+1 public class Phone
+2 {
+3   private boolean hasApp;
+4   public Phone()
+5   {
+6       hasApp = false;
+7   }
+8   public void downloadApp()
+9   {
+10      hasApp = true;
+11  }
+12
+13  public void closeApp() // closes the app
+14  {
+15      if (hasApp)
+16          System.out.println ("App is closed.");
+17  }
+18
+19  public void openApp() // opens the app
+20  {
+21      if (hasApp)
+22          System.out.println ("App is running…"); 23 }
+24  }
+
+OUTPUT:
+App is running…
+App is closed.
+
+There are many components in this program; first, note that we now have two classes that make up a single program. In isolation, neither of these classes would produce a useful result. The UsePhoneApp class would not compile because the compiler does not understand the methods if they are not present (compiler: what does openApp mean?); the Phone class would compile but would not actually perform any actions without UsePhoneApp (compiler: when do I openApp, and on which phone?). In order to allow the UsePhoneApp class to access the Phone class, the line
+import Phone;
+
+must be used at the top of the file above the class declaration.
+Lines 4–7 in Phone make up a special kind of method called a constructor. An object must be constructed before it can perform any actions, just as a car must be built before it can be driven. Line 6 in UsePhoneApp calls this constructor method, which “builds” the Phone object; this command must occur before the non-constructor methods are called; otherwise, the compiler will return an error. Imagine someone pressing an imaginary accelerator pedal and trying to drive somewhere, without a car. Interesting, but not possible.
+Line 3 of Phone defines whether the Phone has an app (true) or does not (false). This is the sole attribute of a Phone object in our program; more complex programs may have dozens or even hundreds of attributes (a phone, in reality, has many more attributes, such as a screen, volume buttons, etc.). The programmer should write these attributes, called instance variables or fields. Following the data fields is the constructor, as we stated before, and then a series of methods that control what the Phone can do.
+An object class defines what an object HAS and DOES. A method has several components. The method header is built in a very specific way; its syntax is as follows:
+visibility returnType methodName (param1, param2,…)
+
+The visibility of a method can be public or private, depending on the situation (more on this later). The return type identifies what type of data, if any, will be returned from the method after its commands are executed. The name of a method, similar to the name of a variable, should be an intuitive name that summarizes the function of the method; it should conform to the same specifications as a variable name (begin with a lowercase letter, etc.). The parameters, which are optional, are the data that the method needs in order to perform its job.
+In our previous example, the method header for closeApp was: public void closeApp()
+
+This is functional, but it is also relatively simple for the example. Its visibility is public, its return type is void (there is no information returned), and it does not have parameters. A more realistic method to close an app on a phone might require information regarding when it should be closed, and might return data, such as whether or not it was closed successfully. Thus, the revised method header might look like
+public boolean closeApp (int minutes)
+
+Note that the single parameter, minutes, is defined with its type. Since minutes will be a temporary variable that exists only during the execution of this method, it must be defined as new, right in the header. A method can have any number of parameters, depending on the programmer’s design decisions for the program.
+A method must begin with a header containing a visibility modifier (private or public), a return type or void if no information will be returned, and a method name. Parameter(s) are optional, depending on the method’s requirements to perform its task.
+The ultimate purpose of a method is to perform some sort of task with respect to the object. Note that openApp() and closeApp() simply access the data field hasApp and react accordingly; i.e., the message is displayed only if the value hasApp is true. downloadApp() is more profound, in a way; rather than simply accessing data, it actually changes the value of a data field—in this case, updates hasApp to true once the “app” is “downloaded.” As a result, it is common in Java to label methods like openApp() and closeApp() as accessor methods and to label methods like downloadApp() as mutator methods.
+We have used an analogy to a car several times already in this chapter, but it’s a great way to understand these concepts. When you want to start a car, you have to go through a series of steps. Since all of those steps perform, ultimately, a single action—the car starting—a method would be a great way to keep the “car starting” commands in a single, convenient unit. As a programmer, you would have to decide what data the method would need in order to work (parameter(s)) and what data, if any, the method would return. Does the car need a key to start? A password code? Does the brake pedal have to be depressed? This information would all be accepted through parameters. Should the method return whether the car has started? How long it took to start? A code that represents whether it needs an oil change? These are all examples of possible return data.
+In some cases, there may be a situation in which the car can be started multiple ways—for example, the owner has a push-button starter and a remote starter. The designer could write two startCar methods (or three, or four…), each one performing the same task but requiring different information (parameters) to do the task. This process is called overloading and can be accomplished by writing two or more methods with identical names but different types and/or numbers of parameters.
+
+=====precondition-postcondition=====
+A precondition is a comment that is intended to inform the user more about the condition of the method and guarantees it to be true.
+On the AP Exam, the precondition shows up as a comment immediately above the method. It is the responsibility of the program that calls the method not to pass parameters that violate the precondition.
+/*** preconditon — a and b are positive integers
+*/
+public int sum(int a, int b)
+{ }
+
+A postcondition is a condition that must always be true just after the execution of some section of code or after an operation in a formal specification.
+On the AP Exam, the postcondition is written as a comment either before or within the method as shown in the example below. The method designer is responsible for making sure that these conditions are met.
+public int sum100(int a, int b)
+{
+	<code>
+	// postcondition—returns 100, if sum is greater than 100, or the value of sum
+	if (sum < 100)
+		return sum;
+	else
+		return 100;
+}
+
+A method may accept any number of parameters, but may return only one data value or object.
+As a final example for this section, consider a programmer who is trying to write an object class that represents a book (like this book, only arbitrarily more interesting). Some of the data the programmer may consider are:
+What does a book have? A cover, pages, words,… What can a book do? It can be read, be skimmed, be put away,…
+From this information, the programmer can begin to write the object class. The programmer must first determine which item(s) are relevant to the situation, so as to keep the object class as efficient as possible. For example, if the programmer is designing a book to be used as a paperweight, it is probably not important to discuss how many words are in the book, so that data field would not be incorporated into the program. Likewise, if the programmer is not a student studying a ridiculous number of books in a short amount of time (sound familiar?), then it may not be relevant to have a method that skims the book, rather than reading it closely. The class will then be built based on these decisions.
+As you can see, the planning of the program is just as important as, if not more important than, the actual writing of the program. In some classes, your teacher may remind you to “write an outline” or “write a first draft” before you compose the final product, and you might skip that step and go right to the end unit, and still be successful. For programming at any profound level, which is required in this course to some extent, planning is essential in order for your program to work well and in order to increase your efficiency. Remember, the AP Exam is strictly timed.
+The AP Exam tests the planning of a class by presenting a lengthy description of the requirements, along with other interacting classes in the project.
+
+=====composition=====
+Now that we have written classes to run a program, we must get these classes to interact correctly in order to create a functioning program. We have the driver, we have the car, now we need to put the driver into the car to eagerly drive to the AP Computer Science A Exam on exam day.
+The driver and object classes must reside in the same folder on the computer. If you are using an interactive development environment (as opposed to command line programming), you often have to create a “Project” or some similar structure in the software that will hold all of the program’s files in one place. Remember that the driver depends on the object class in order to compile, and the object class depends on the driver to make it actually do anything.
+
+Consider a program that will take “flower” objects and “plant” them into a garden. The flower objects might be outlined in an object class called Flower. One class will perform the planting, so we can call it MakeGarden.
+Suppose the Flower constructor method has the following header: public Flower(int xPosition, int yPosition) where xPosition and yPosition are the horizontal and vertical coordinates in the garden, respectively, where the flower object will be planted. Our driver would have to first “create” the flowers, and then plant them accordingly.
+In order to create an object, we must instantiate the object using its corresponding class. Each time we instantiate a flower object, we must assign it an object reference variable; as the fancy name implies, this is just a variable name. Some lines in MakeGarden might look like this:
+Flower f1 = new Flower(2, 1);
+Flower f2 = new Flower(2, 2);
+Flower f3 = new Flower(2, 3);
+
+These lines will instantiate three different flower objects, each containing its own instance data. f1, f2, and f3 are used to distinguish between the objects. We can then use these objects to perform methods. Consider a plant method in the Flower class; this method would “plant” the flower and might have the following header:
+public void plant()
+
+In MakeGarden, we must invoke this method through the objects. Let’s say we want to plant only f1 and f3, but not f2. We would add the following lines:
+f1.plant();
+f3.plant();
+
+Now let’s say the plant method, instead, returns whether or not the plant was successfully planted. This altered plant method might have the header:
+public boolean plant()
+
+Now we can use the returned data to output an appropriate message in the driver:
+if (f1.plant())
+	System.out.print("Planted successfully.");
+else
+	System.out.print("There was a problem.");
+
+Because we are invoking f1.plant, f1 should be planted as requested. Since the plant method returns a boolean value, we can place f1.plant in the context of an if statement (it produces a truth value so it is considered a condition) and now it also functions as part of a control structure. Awesome!
+Let’s add to our garden situation. As you know, other items can appear in a garden besides flowers. Plants, bushes, and weeds can appear in gardens. Each of these items would probably have its own object class, since their instance data and methods would be different from those of flowers. For example, a flower has flower petals, while a plant does not; weeds often grow on their own without water, whereas most flowers and plants do not. Regardless, separate object classes can be created for each of these object types, and the driver can hold them all together, as long as they are all stored in the same folder on the computer.
+Assuming each of these object classes has been created and each corresponding object class has a plant method as outlined above, MakeGarden might include these lines:
+Flower f1 = new Flower();
+Flower f2 = new Flower();
+Plant p1 = new Plant();
+Plant p2 = new Plant();
+Weed w1 = new Weed();
+if (f1.plant())
+	System.out.println("Planted successfully");
+if (f2.plant())
+	System.out.println("Planted successfully");
+if (p1.plant())
+	System.out.println("Planted successfully");
+if (w1.plant())
+	System.out.println("You have a weed.");
+
+Note that MakeGarden does not instantiate any Bush objects, and does not attempt to plant the p2 object. Note also that we cannot see the entire class!
+The programmer has the task of deciding which objects to instantiate of which type, when and whether to use them, and how to use them appropriately, based on their class specifications. Still think you can go directly to the final draft?
+Let’s add another layer. Programmers often recognize that an object is actually composed of many smaller, or more basic, objects. If you think about a flower, it actually has several parts, each of which has data and does particular actions. As a result, we could write object classes for, say, the stalk and the root system. The Stalk class and the RootSystem class, then, would reside as attributes of each flower. Their classes, again, must be placed in the same folder as the rest of the program’s classes. The programmer can then set up the Flower class as follows:
+public class Flower
+{
+	// other data not shown
+	private Stalk st;
+	private RootSystem rootSys;
+	public Flower()
+	{
+		st = new Stalk();
+		rootSys = new RootSystem();
+		// other commands not shown
+	}
+	// other methods not shown
+}
+This means that every Flower object has a stalk and a root system. The Flower class, then, is called an aggregate class because it is made up of, among other data, instances of other classes. This setup is more realistic; think of any object in your room, and you can probably see pretty quickly that it is made of smaller objects, each with its own data and methods. A laptop computer has keys, ports, and a screen, which can all be considered objects because they have stuff and do stuff. A dresser has drawers, but we can go even deeper…a drawer has walls and a floor and can be opened or closed…the floor of a drawer has a shape and is made of a certain material and can be broken if the drawer is overstuffed…you get the idea. Luckily, as programmers, we get to decide the detail of the object classes, and the answer typically lies in the desired function of the program, as we stated before. Do you really need to know what material the floor of the drawer is made of? Most people do not, although a furniture retailer might. Again, it all depends on the application.
+The free-response questions on the AP Exam will present some sort of context and will often tell you exactly what class(es) and/or method(s) to write, so they don’t get a wild variety of solutions from test takers around the world.
+Otherwise, they could literally be forced to read thousands of completely different approaches to a given task. This fact is not good for our creativity, but it’s great for scoring a 5; save your creative juices for those extra college classes you can take when you AP out of CS!
+
+=====references=====
+All of this data that is passed from driver classes to object classes and vice versa creates a complicated operation that’s occurring behind the scenes. Consider this example: the programmer decides to write a class that represents a vinyl record player (for music), or “turntable.” The driver class will then operate the turntable, turning it on and off, controlling it, and putting on/taking off the desired record. For this program, we will have three classes: Turntable and Record, which represent each of these objects, and PlayRecord, which will be the driver that relates them.
+In theory, we would have to perform the following steps in the driver:
+create (instantiate) a turntable object
+create one or more record objects
+place the record onto the turntable
+switch on the turntable
+
+Some code from these classes might look like this:
+public class Record
+{
+	// data not shown
+	public Record()
+	// constructor code and other methods not shown
+}
+
+public class Turntable
+{
+ private Record r;
+ // other data not shown
+ public Turntable(Record r1)
+ {
+	r = r1;
+	// other statements not shown
+ }
+ // other methods not shown
+}
+
+public class PlayRecord
+{
+	public static void play()
+	{
+		Record rec = new Record();
+		Turntable tt = new Turntable(rec);
+		// other statements not shown
+	}
+	// other methods not shown
+}
+
+In this example, note that Turntable is an aggregate class, since part of its instance data involves another object. More importantly for this section, note the instantiation of the Record object in the driver, the “passing” of that object to the Turntable class, and the assignment r = r1. When an object is passed to another class and, as a result, received through a parameter, a reference is created to the object. Think of it this way: if you just picked up your favorite Taylor Swift record (you know you love her) and wanted to play it, you wouldn’t need two copies of the album. In the same way, we don’t have to create a copy of the Record object; we just need to create another reference to it in order for it to be used in the Turntable class. This is the only way the Turntable class can use this record, since it was instantiated in the driver. The record can then be used in context (in this case, assigned to the data field r) and then the reference will disappear once the constructor is over. Since the reference is not an actual copy of the object, its life is not affected.
+Another way to think of references is to think of superheroes and their secret identities. Clark Kent was just another name for the person; he was still Superman the whole time. They were the same guy with the same superpowers, the same attributes, and the same ability to perform cool superhero actions. Therefore, “Clark Kent” was simply a reference created to refer to the same guy.
+It is extremely important to know that primitive data is not copied by reference; it is copied by value itself.
+When received as a parameter, primitive data is actually copied, while object data will simply receive a new reference to the object itself. Primitives are copied by value; objects are copied by reference.
+Here’s the really confusing part—or maybe not really. If a copy of a primitive data value is made, then the two copies (the original and the new one) exist exclusively. Therefore, if you change the value of one copy, the other is not affected. On the other hand, if a new reference to an object is made, then a modification of the object through the reference will be reflected by all references. Again, the superhero example: if Superman dyed his hair blond because it was all the rage, then both Clark Kent and Superman will have blond hair. They are two names that reference the same guy, so any changes will be reflected in all the references. If we suddenly decided that Superman/Clark Kent should be called “Blue Guy” instead of either of these two names, we are still referring to the same guy; he now has three aliases instead of two.
+This is important for understanding object equality. Two objects are considered equivalent only if they are, in fact, the same object. In the superhero example above, Clark Kent is equal to Superman, since they are the exact same person.
+Now imagine that Superman has an identical twin brother named Duperman with alter ego Klarc Tenk. Since Duperman and Klarc Tenk are the same person, Duperman is equal to Klarc Tenk. Therefore, in Java Duperman == Klarc Tenk is true. However, even though they are identical twins, Superman and Duperman are different people. Therefore, Superman is not equal to Duperman. In Java, Superman and Duperman could be identified as identical twins using the equals method of the Object class. The equals method takes an Object parameter and returns true if and only if the two object have identical data, regardless of whether they are the same object. While the boolean statement Superman == Duperman is false, the statement Superman.equals(Duperman) is true.
+
+=====this-keyword=====
+Sometimes to call a method it may be necessary for the calling object to be able to refer to itself. When an object calls a method, an implicit reference is assigned to the calling object. The name of this implicit reference is this. The keyword this is a reference to the current calling object and may be used as an object variable. For example:
+this.mySize
+
+=====static-modifier=====
+The static keyword can appear in two contexts at this level. A static variable is an attribute that is shared among all instances of a class. When the value of this variable is changed, the alteration is reflected by all of the objects instantiated through that class. A classic example of a static variable is the high score list on a video game. Consider the video game Tetris. After you launch the game, you start a new game and play until you lose… then, since you are obsessed with Tetris, you start over. If each game of that you play is considered an object of the same class, a static variable might be the high score. Every time you start (or instantiate) a new game, the high score remains the same as it was when it was initially set. Once a new high score is set, every new game will reflect the new high score, rendering the old high score non-existent (or second best, etc.).
+In an object class, a static variable is declared with the rest of the instance data at the top of the class, preceded by the keyword static. Static variables are often used for identification numbers or for counters. Consider this short program:
+public class Box
+{
+	private static int boxNumber = 0;
+	// other data fields not shown
+	public Box()
+	{
+		boxNumber++;
+		// other statements not shown
+	}
+}
+
+public class BoxCreator
+{
+	public BoxCreator()
+	{
+		Box box1 = new Box();
+		Box box2 = new Box();
+	}
+}
+
+As each Box object is instantiated in BoxCreator, the static variable in the Box class will be updated. That way, the next time a box is created, the box number value is incremented for all box objects. The static variable is not an attribute of each individual box; rather, it is a shared value among all boxes. Contrast this setup with a non-static declaration of boxNumber; every time a box is instantiated, its boxNumber would start as 0 and then be incremented, making every box have the same boxNumber value of 1.
+In order to show that this structure is actually working, let’s create an accessor method to let the driver “see,” or access, the value of boxNumber. This method is necessary for this result since boxNumber has been declared private. A non-constructor method that is designed to access and/or modify a static variable is a static method and must be declared as such. To add this functionality and test it, here are our new object and driver classes:
+public class Box
+{
+	private static int boxNumber = 0;
+	// other data fields not shown
+	public Box()
+	{
+		boxNumber++;
+		// other statements not shown
+	}
+	static public int getBoxNum()
+	{
+		return boxNumber;
+	}
+}
+
+public class BoxCreator
+{
+	public BoxCreator()
+	{
+		Box box1 = new Box();
+		Box box2 = new Box();
+		System.out.print (Box.getBoxNum() + " boxes created so far.");
+	}
+}
+
+Notice the method call from BoxCreator does not use an object reference variable; rather, the class is used directly. Since static variables are shared among all instances, the programmer needs to access static methods (and therefore, static variables) through the class itself.

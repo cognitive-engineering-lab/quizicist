@@ -1,0 +1,12 @@
+Since objects are typically used to represent real-world phenomena, arrays are also commonly used to organize and manipulate objects. Suppose you have an object class that represents a pair of sneakers. The following code segment would instantiate an array that would store five of these objects:
+PairOfSneakers collection[] = new PairOfSneakers[5];
+
+Since each element is an object, however, the default value for each object is null. Since null is not a valid object, operations performed on null will result in a NullPointerException, another error that will halt the execution of the program. Without getting into the specifics of the PairOfSneakers class, a statement that could assign an instantiated pair of sneakers called jordans is
+collection[0] = jordans;
+
+Now, suppose PairOfSneakers has a tie() method that will tie the laces of the corresponding pair of sneakers; i.e., jordans.tie() will tie that pair. At this point, index 0 references the jordans object—remember that objects are referenced, not copied—but elements at indices 1–4 are null. To avoid a NullPointerException, check that each object is not equal to null.
+for (int i = 0; i < collection.length; i++)
+	if (collection[i]! = null)
+		collection[i].tie();
+
+When using a loop to traverse an array of objects, be sure the array is full to avoid undesired results.

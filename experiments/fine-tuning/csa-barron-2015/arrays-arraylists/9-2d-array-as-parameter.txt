@@ -1,0 +1,43 @@
+Example 1
+Here is a method that counts the number of negative values in a matrix.
+/** Precondition: mat is initialized with integers.
+* @return count of negative values in mat
+*/
+public static int countNegs (int[][] mat)
+{
+    int count = 0;
+    for (int[] row : mat)
+        for (int num : row)
+            if (num < 0)
+                count++;
+    return count;
+}
+A method in the same class can invoke this method with a statement such as int negs = countNegs(mat);
+
+Example 2
+Reading elements into a matrix:
+/** Precondition: Number of rows and columns known.
+* @return matrix containing rows × cols integers
+* read from the keyboard
+*/
+public static int[][] getMatrix(int rows, int cols)
+{
+    int[][] mat = new int[rows][cols]; //initialize slots
+    System.out.println("Enter matrix, one row per line:");
+    System.out.println();
+    //read user input and fill slots
+    for (int r = 0; r < rows; r++)
+        for (int c = 0; c < cols; c++)
+            mat[r][c] = IO.readInt(); //read user input
+    return mat;
+}
+
+To call this method:
+//prompt for number of rows and columns
+int rows = IO.readInt(); //read user input
+int cols = IO.readInt(); //read user input
+int[][] mat = getMatrix(rows, cols);
+
+NOTE
+You cannot use a for-each loop in getMatrix because elements in mat are being re placed. (Their current value is the initialized value of 0. The new value is the input value from the keyboard.)
+There is further discussion of arrays and matrices, plus additional questions, in Chapter 9 (The AP Computer Science Labs).

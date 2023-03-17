@@ -1,0 +1,69 @@
+This class implements standard mathematical functions such as absolute value, square root, trigonometric functions, the log function, the power function, and so on. It also contains mathematical constants such as π and e.
+
+Here are the functions you should know for the AP exam:
+static int abs(int x)
+Returns the absolute value of integer x.
+static double abs(double x)
+Returns the absolute value of real number x.
+static double pow(double base, double exp)
+Returns base^exp. Assumes base > 0, or base = 0 and exp > 0, or base < 0 and exp is an integer.
+static double sqrt(double x)
+Returns sqrt(x), x ≥ 0.
+static double random()
+Returns a random number r, where 0.0 ≤ r < 1.0. (See the next section, Random Numbers.)
+All of the functions and constants are implemented as static methods and variables, which means that there are no instances of Math objects. The methods are invoked using the class name, Math, followed by the dot operator.
+
+Here are some examples of mathematical formulas and the equivalent Java statements.
+1. The relationship between the radius and area of a circle:
+radius = Math.sqrt(area / Math.PI);
+2. The amount of money A in an account after ten years, given an original deposit of P and an interest rate of 5% compounded annually, is
+A= P(1.05)10
+In code:
+a = p * Math.pow(1.05, 10);
+3. The distance D between two points P(xP, y) and Q(xQ, y) on the same hori zontal line is
+D = |xP − xQ|
+In code:
+d = Math.abs(xp - xq);
+
+NOTE
+The static import construct allows you to use the static members of a class without the class name prefix. For example, the statement
+import static java.lang.Math.*;
+allows use of all Math methods and constants without the Math prefix. Thus, the statement in formula 1 above could be written
+radius = sqrt(area / PI);
+Static imports are not part of the AP subset.
+
+The statement
+double r = Math.random();
+produces a random real number in the range 0.0 to 1.0, where 0.0 is included and 1.0 is not.
+This range can be scaled and shifted. On the AP exam you will be expected to write algebraic expressions involving Math.random() that represent linear transformations of the original interval 0.0 ≤ x < 1.0.
+
+Example 1
+Produce a random real value x in the range 0.0 ≤ x < 6.0.
+double x = 6 * Math.random();
+Example 2
+Produce a random real value x in the range 2.0 ≤ x < 3.0.
+double x = Math.random() + 2;
+Example 3
+Produce a random real value x in the range 4.0 ≤ x < 6.0.
+double x = 2 * Math.random() + 4;
+In general, to produce a random real value in the range lowValue ≤ x < highValue: double x = (highValue - lowValue) * Math.random() + lowValue;
+
+Using a cast to int, a scaling factor, and a shifting value, Math.random() can be used to produce random integers in any range.
+Example 1
+Produce a random integer, from 0 to 99.
+int num = (int) (Math.random() * 100);
+In general, the expression
+(int) (Math.random() * k)
+produces a random int in the range 0,1,..., k − 1, where k is called the scaling factor. Note that the cast to int truncates the real number Math.random() * k.
+Example 2
+Produce a random integer, from 1 to 100.
+int num = (int) (Math.random() * 100) + 1;
+In general, if k is a scaling factor, and p is a shifting value, the statement
+int n = (int) (Math.random() * k) + p;
+produces a random integer n in the range p, p + 1,..., p + (k − 1).
+Example 3
+Produce a random integer from 5 to 24.
+int num = (int) (Math.random() * 20) + 5;
+Note that there are 20 possible integers from 5 to 24, inclusive.
+NOTE
+There is further discussion of strings and random numbers, plus additional questions, in Chapter 9 (The AP Computer Science Labs).

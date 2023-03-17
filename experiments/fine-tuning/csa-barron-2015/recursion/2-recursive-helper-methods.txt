@@ -1,0 +1,44 @@
+A common technique in designing recursive algorithms is to have a public nonrecursive driver method that calls a private recursive helper method to carry out the task. The main reasons for doing this are
+• To hide the implementation details of the recursion from the user.
+• To enhance the efficiency of the program.
+
+Example 1
+Consider the simple example of recursively finding the sum of the first n positive integers.
+/** @param n a positive integer
+* @return 1 + 2 + 3 + ... + n
+*/
+public static int sum(int n)
+{
+    if (n == 1)
+        return 1;
+    else
+        return n + sum(n - 1);
+}
+
+Notice that you get infinite recursion if n ≤ 0. Suppose you want to include a test for n > 0 before you execute the algorithm. Placing this test in the recursive method is inefficient because if n is initially positive, it will remain positive in subsequent recursive calls. You can avoid this problem by using a driver method called getSum, which does the test on n just once. The recursive method sum becomes a private helper method.
+public class FindSum {
+    /**
+     * Private recursive helper method.
+     *
+     * @param n a positive integer
+     * @return 1 + 2 + 3 + ... + n
+     */
+    private static int sum(int n) {
+        if (n == 1)
+            return 1;
+        else
+            return n + sum(n - 1);
+    }
+
+    /* Driver method */
+    public static int getSum(int n) {
+        if (n > 0)
+            return sum(n);
+        else {
+            throw new IllegalArgumentException("Error: n must be positive");
+        }
+    }
+}
+
+NOTE
+This is a trivial method used to illustrate a private recursive helper method. In practice, you would never use recursion to find a simple sum!

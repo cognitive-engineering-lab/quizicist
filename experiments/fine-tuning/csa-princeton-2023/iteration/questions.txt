@@ -1,0 +1,312 @@
+question-section:0
+2 1
+Consider the following code segment.
+int val1 = 2, val2 = 22, val3 = 78;
+while (val2 % val1 == 0 || val2 % 3 == 0)
+{
+    val3++;
+    val2--;
+}
+
+What will val3 contain after the code segment is executed?
+(A) 77
+(B) 78
+(C) 79
+(D) 80
+(E*) None of the above
+
+question-section:0
+2 1
+What will be the output when the following code is evaluated?
+for (int k = 0; k < 3; k++)
+{
+    for (int j = 1; j < 4; j++)
+    {
+        System.out.print(j + " ");
+    }
+    System.out.println();
+}
+
+(A) 1 2 3 4
+1 2 3 4
+1 2 3 4
+(B) 0 1 2
+0 1 2
+0 1 2
+0 1 2
+(C*) 1 2 3
+1 2 3
+1 2 3
+(D) 1 2 3
+1 2 3
+1 2 3
+1 2 3
+(E) 1 2 3 4
+1 2 3 4
+1 2 3 4
+1 2 3 4
+
+question-section:0
+1 2
+Consider the following code fragments. Assume someNum has been correctly defined and initialized as a positive integer.
+I. for (int i; i = 0; i < someNum; i++)
+{
+    someNum--;
+}
+II. for (int i; i = 1; i < someNum - 1; i++)
+{
+    someNum -=1;
+}
+III. int i = 0;
+while (i < someNum)
+{
+    i++;
+    someNum--;
+}
+
+All of the following statements are true about these code fragments EXCEPT
+(A) The for loops in I and II have the same number of iterations.
+(B*) The value of someNum after the execution of I and II is the same.
+(C) The value of i after execution of II and III is the same.
+(D) The loops in I and III have the same number of iterations.
+(E) I, II, and III do not produce identical results.
+
+question-section:0
+2 1
+Consider the following code segment:
+for (int i = 1; i < 100; i = i * 2)
+{
+    if (i / 50 == 0)
+        System.out.print(i + " ");
+}
+
+What is printed as a result of executing the code segment?
+(A) 1 2 4 8 16 32 64
+(B*) 1 2 4 8 16 32
+(C) 2 4 8 16 32 64
+(D) 2 4 8 16 32
+(E) 4 8 16 32 64
+
+question-section:0
+4 1
+Consider the following output:
+0 1
+0 2 4
+0 3 6 9
+0 4 8 12 16
+Which of the following code segments will produce this output?
+(A*) for (int x = 1; x < 5; x++)
+{
+    for (int z = 0; z <= x; z++)
+    {
+        System.out.print(x * z + " ");
+    }
+    System.out.println(" ");
+}
+(B) for (int x = 1; x <= 5; x++)
+{
+    for (int z = 0; z < x; z++)
+    {
+        System.out.print(x * z + " ");
+    }
+    System.out.println(" ");
+}
+(C) for (int x = 1; x < 5; x++)
+{
+    for (int z = 0; z <= 4; z++)
+    {
+        System.out.print(x * z + " ");
+    }
+    System.out.println(" ");
+}
+(D) for (int x = 1; x < 5; x++)
+{
+    for (int z = 0; z <= 4; z += 2)
+    {
+        System.out.print(x * z + " ");
+    }
+    System.out.println(" ");
+}
+(E) for (int x = 1; x <= 5; x++)
+{
+    for (int z = 0; z <= x; z++)
+    {
+        System.out.print(x * z + " ");
+    }
+    System.out.println(" ");
+}
+
+question-section:0
+4 2
+The speed limit of a stretch of highway is 55 miles per hour (mph). The highway patrol issues speeding tickets to anyone caught going faster than 55 miles per hour. The fine for speeding is based on the following scale:
+Speed Fine:
+greater than 55 mph but less than 65 mph $100
+greater than or equal to 65 mph but less than 75 mph $150
+greater than or equal to 75 mph $300
+
+If the value of the int variable speed is the speed of a driver who was pulled over for going faster than 55 mph, which of the following code segments will assign the correct value to the int variable fine?
+I. if (speed >= 75)
+    fine = 300;
+if (speed >= 65 && speed < 75)
+    fine = 150;
+if (speed > 55 && speed < 65)
+    fine = 100;
+II. if (speed >= 75)
+    fine = 300;
+if (65 <= speed < 75)
+    fine = 150;
+if (55 < speed < 65)
+    fine = 100;
+III. if (speed >= 75)
+    fine = 300;
+if (speed >= 65)
+    fine = 150;
+if (speed > 55)
+    fine = 100;
+(A*) I only
+(B) II only
+(C) III only
+(D) I and II
+(E) I and III
+
+question-section:0
+2 1
+Consider the following code segment:
+int x = 10;
+int y = 3;
+boolean b = true;
+for (int i = 0, i < 15; i += 5)
+{
+    x = x + y;
+    b = (x % y == 2);
+    if (!b)
+    {
+        y++;
+        i += 5;
+    }
+}
+
+What is the value of x after the code segment executes?
+(A) 10
+(B) 15
+(C*) 17
+(D) 22
+(E) 25
+
+question-section:0
+1 1
+In the following statement, a and b are boolean variables: boolean c = (a && b) || !(a || b);
+Under what conditions will the value of c be true?
+(A) Only when the value of a is different than the value of b
+(B*) Only when the value of a is the same as the value of b
+(C) Only when a and b are both true
+(D) Only when a and b are both false
+(E) The value of c will be true for all values of a and b.
+
+question-section:0
+1 1
+Consider the following code segment:
+while ((x > y) || y >= z)
+{
+    System.out.print(“*”);
+}
+
+In the code segment above, x, y, and z are the variables of type int. Which of the following must be true after the code segment has executed?
+(A) x > y || y >= z
+(B) x <= y || y > z
+(C) x > y && y >= z
+(D) x < y && y <= z
+(E*) x <= y && y < z
+
+question-section:0
+2 1
+Consider the following code segment:
+int a = 0;
+for (int i = 0; i < 10; i++)
+{
+    for (int k = 0; k <= 5; k++)
+    {
+        for (int z = 1; z <= 16; z = z * 2)
+        {
+            a++;
+        }
+    }
+}
+
+What is the value of a after the code segment executes?
+(A) 31
+(B) 180
+(C) 200
+(D*) 300
+(E) 400
+
+question-section:0
+2 1
+Consider the following code segment:
+int x = 10;
+int y = x / 3;
+int z = x % 2;
+x++;
+System.out.println(x)
+
+What is printed as a result of executing the code segment above?
+(A) 2
+(B) 4
+(C) 10
+(D*) 11
+(E) 15
+
+question-section:0
+2 1
+Consider the following code segment:
+int a = 10;
+double b = 3.7;
+int c = 4;
+int x = (int) (a + b);
+double y = (double) a / c;
+double z = (double) (a / c);
+double w = x + y + z;
+System.out.println(w);
+
+What is printed as a result of evaluating the code above?
+(A) 10
+(B) 15
+(C) 15.5
+(D) 17
+(E*) 17.5
+
+question-section:0
+1 2
+Consider the following code segments:
+I. int x = 10;
+int y = 20;
+int z = 0;
+if (x < y && 10 < y/z)
+{
+    System.out.println("Homer");
+}
+else
+{
+    System.out.println("Bart");
+}
+II. int x = 10;
+int y = 20;
+int z = 0;
+if (x > y && 10 < y/z)
+    System.out.println("Homer");
+else
+    System.out.println("Bart");
+III. int x = 10;
+int y = 20;
+int z = 0;
+if (x < y || 10 < y/z)
+    System.out.println("Homer");
+else
+    System.out.println("Bart");
+
+Which of the code segments above will run without error?
+(A) I only
+(B) II only
+(C) III only
+(D*) II and III
+(E) I, II, and III

@@ -1,0 +1,29 @@
+In each of the following sorting algorithms, assume that an array of n elements, a[0], a[1], . . . , a[n-1], is to be sorted in ascending order.
+
+Selection Sort
+This is a “search-and-swap” algorithm. Here’s how it works.
+Find the smallest element in the array and exchange it with a[0], the first element. Now find the smallest element in the subarray a[1] . . . a[n-1] and swap it with a[1], the second element in the array. Continue this process until just the last two elements remain to be sorted, a[n-2] and a[n-1]. The smaller of these two elements is placed in a[n-2]; the larger, in a[n-1]; and the sort is complete.
+Trace these steps with a small array of four elements. The unshaded part is the subarray still to be searched.
+
+8 1 4 6
+1 8 4 6 after first pass
+1 4 8 6 after second pass
+1 4 6 8 after third pass
+
+NOTE
+1. For an array of n elements, the array is sorted after n − 1 passes.
+2. After the kth pass, the first k elements are in their final sorted position.
+
+Insertion Sort
+Think of the first element in the array, a[0], as being sorted with respect to itself. The array can now be thought of as consisting of two parts, a sorted list followed by an unsorted list. The idea of insertion sort is to move elements from the unsorted list to the sorted list one at a time; as each item is moved, it is inserted into its correct position in the sorted list. In order to place the new item, some elements may need to be moved down to create a slot.
+Here is the array of four elements. In each case, the boxed element is “it,” the next element to be inserted into the sorted part of the list. The shaded area is the part of the list sorted so far.
+8 1 4 6
+1 8 4 6 after first pass
+1 4 8 6 after second pass
+1 4 6 8 after third pass
+
+NOTE
+1. For an array of n elements, the array is sorted after n − 1 passes.
+2. After the kth pass, a[0], a[1], . . . , a[k] are sorted with respect to each other but not necessarily in their final sorted positions.
+3. The worst case for insertion sort occurs if the array is initially sorted in reverse order, since this will lead to the maximum possible number of comparisons and moves.
+4. The best case for insertion sort occurs if the array is already sorted in increasing order. In this case, each pass through the array will involve just one comparison, which will indicate that “it” is in its correct position with respect to the sorted list. Therefore, no elements will need to be moved.

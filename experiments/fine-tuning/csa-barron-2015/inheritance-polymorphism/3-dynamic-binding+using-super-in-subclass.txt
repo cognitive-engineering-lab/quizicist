@@ -1,0 +1,78 @@
+Making a run-time decision about which instance method to call is known as dynamic binding or late binding. Contrast this with selecting the correct method when methods are overloaded (see p. 99) rather than overridden. The compiler selects the correct overloaded method at compile time by comparing the methods’ signatures. This is known as static binding, or early binding. In polymorphism, the actual method that will be called is not determined by the compiler. Think of it this way: The compiler determines if a method can be called (i.e., is it legal?), while the run-time environment determines how it will be called (i.e., which overridden form should be used?).
+Example 1
+Student s = null;
+Student u = new UnderGrad("Tim Broder", new int[] {90,90,100},
+"none");
+Student g = new GradStudent("Kevin Cristella",
+new int[] {85,70,90}, "none", 1234);
+System.out.print("Enter student status: ");
+System.out.println("Grad (G), Undergrad (U), Neither (N)");
+String str = IO.readString(); //read user input
+if (str.equals("G"))
+    s = g;
+else if (str.equals("U"))
+    s = u;
+else
+    s = new Student();
+s.computeGrade();
+
+When this code fragment is run, the computeGrade method used will depend on the type of the actual object s refers to, which in turn depends on the user input.
+
+Example 2
+public class StudentTest {
+    public static void computeAllGrades(Student[] studentList) {
+        for (Student s : studentList)
+            if (s != null)
+                s.computeGrade();
+    }
+
+    public static void main(String[] args) {
+        Student[] stu = new Student[5];
+        stu[0] = new Student("Brian Lorenzen",
+                new int[] { 90, 94, 99 }, "none");
+        stu[1] = new UnderGrad("Tim Broder",
+                new int[] { 90, 90, 100 }, "none");
+        stu[2] = new GradStudent("Kevin Cristella",
+                new int[] { 85, 70, 90 }, "none", 1234);
+        computeAllGrades(stu);
+    }
+}
+
+Here an array of five Student references is created, all of them initially null. Three of these references, stu[0], stu[1], and stu[2], are then assigned to actual objects. The computeAllGradesmethod steps through the array invoking for each of the objects the appropriate computeGrade method, using dynamic binding in each case. The null test in computeAllGrades is necessary because some of the array references could be null.
+A subclass can call a method in its superclass by using super. Suppose that the super class method then calls another method that has been overridden in the subclass. By polymorphism, the method that is executed is the one in the subclass. The computer keeps track and executes any pending statements in either method.
+
+Example
+public class Dancer {
+    public void act() {
+        System.out.print(" spin");
+        doTrick();
+    }
+
+    public void doTrick() {
+        System.out.print(" float");
+    }
+}
+
+public class Acrobat extends Dancer {
+    public void act() {
+        super.act();
+        System.out.print(" flip");
+    }
+
+    public void doTrick() {
+        System.out.print(" somersault");
+    }
+}
+
+Suppose the following declaration appears in a class other than Dancer or Acrobat:
+Dancer a = new Acrobat();
+What is printed as a result of the call a.act()?
+When a.act() is called, the act method of Acrobat is executed. This is an example
+of polymorphism. The first line, super.act(), goes to the act method of Dancer, the superclass. This prints spin, then calls doTrick(). Again, using polymorphism, the doTrick method in Acrobat is called, printing somersault. Now, completing the act method of Acrobat, flip is printed. So what all got printed?
+spin somersault flip
+
+NOTE
+Even though there are no constructors in either the Dancer or Acrobat classes, the declaration
+Dancer a = new Acrobat();
+compiles without error. This is because Dancer, while not having an explicit super class, has an implicit superclass, Object, and gets its default (no-argument) constructor slotted into its code. Similarly the Acrobat class gets this constructor slotted into its code.
+The statement Dancer a = new Acrobat(); will not compile, however, if the Dancer class has at least one constructor with parameters but no default constructor.

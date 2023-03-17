@@ -1,0 +1,83 @@
+Unlike the container classes like ArrayList, whose elements must be objects, arrays can hold either objects or primitive types like int or double.
+A common way of organizing code for sorting arrays is to create a sorter class with an array private instance variable. The class holds all the methods for a given type of sorting algorithm, and the constructor assigns the user’s array to the private array variable.
+
+Example
+Selection sort for an array of int.
+
+/* A class that sorts an array of ints from
+* largest to smallest using selection sort. */
+public class SelectionSort {
+    private int[] a;
+
+    public SelectionSort(int[] arr) {
+        a = arr;
+    }
+
+    /**
+     * Swap a[i] and a[j] in array a.
+     *
+     * @param i an index for array a
+     * @param j an index for array a
+     */
+    private void swap(int i, int j) {
+        int temp = a[i];
+        a[i] = a[j];
+        a[j] = temp;
+    }
+
+    /**
+     * Sort array a from largest to smallest using selection sort.
+     * Precondition: a is an array of ints.
+     */
+    public void selectionSort() {
+        int maxPos, max;
+        for (int i = 0; i < a.length - 1; i++) {
+            // find max element in a[i+1] to a[a.length-1]
+            max = a[i];
+            maxPos = i;
+            for (int j = i + 1; j < a.length; j++)
+                if (max < a[j]) {
+                    max = a[j];
+                    maxPos = j;
+                }
+            swap(i, maxPos); // swap a[i] and a[maxPos]
+        }
+    }
+}
+
+Note that in order to sort objects, there must be a compareTo method in the class, since you need to be able to compare elements.
+Assume that you are searching for a key in a list of n elements. A sequential search starts at the first element and compares the key to each element in turn until the key is found or there are no more elements to examine in the list. If the list is sorted, in ascending order, say, stop searching as soon as the key is less than the current list element.
+
+Analysis:
+1. The best case has key in the first slot.
+2. The worst case occurs if the key is in the last slot or not in the list. In the worst case, all n elements must be examined.
+3. On average, there will be n/2 comparisons.
+If the elements are in a sorted array, a divide-and-conquer approach provides a much more efficient searching algorithm. The following recursive pseudo-code algorithm shows how the binary search works. Assume that a[low] . . . a[high] is sorted in ascending order and that a method binSearch returns the index of key. If key is not in the array, it returns −1.
+
+if (low > high) //Base case. No elements left in array.
+    return -1;
+else
+{
+    mid = (low + high)/2;
+    if (key is equal to a[mid]) //found the key
+        return mid;
+    else if (key is less than a[mid]) //key in left half of array
+        < binSearch for key in a[low] to a[mid-1] >
+    else //key in right half of array
+        < binSearch for key in a[mid+1] to a[high] >
+}
+
+NOTE
+When low and high cross, there are no more elements to examine, and key is not in the array.
+Example: suppose 5 is the key to be found in the following array:
+
+a[0] a[1] a[2] a[3] a[4] a[5] a[6] a[7] a[8]
+1 4 5 7 9 12 15 20 21
+
+First pass: mid = (8+0)/2 = 4. Check a[4].
+Second pass: mid = (0+3)/2 = 1. Check a[1].
+Third pass: mid = (2+3)/2 = 2. Check a[2]. Yes! Key is found.
+
+Analysis of Binary Search:
+1. In the best case, the key is found on the first try (i.e., (low + high)/2 is the index of key).
+2. In the worst case, the key is not in the list or is at either end of a sublist. Here the n elements must be divided by 2 until there is just one element, and then that last element must be tested. An easy way to find the number of comparisons in the worst case is to round n up to the next power of 2 and take the exponent. For example, in the array above, n = 9. Suppose 21 were the key. Round 9 up to 16, which equals 24. Thus you would need four comparisons to find it. Try it!

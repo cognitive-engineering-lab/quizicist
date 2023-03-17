@@ -1,0 +1,49 @@
+Once data is stored in an array, a common task is to methodically search the array for given data. Consider a line of parked cars in the “Curbside To Go” section of your local chain restaurant. When the server is taking the food to a particular car, she must use a given attribute—say, a license plate number —to find the correct car. Once the correct car is found, the server can deliver the food and then go back inside for the next order, beginning the process all over again…and again…and again.
+This same technique is used for searching an array. In APCS, we have two methods of searching arrays, the sequential search and the binary search. Since each of these search methods uses a distinct formula to search through the arrays, they are commonly referred to as search algorithms.
+The chain restaurant example given above is an example of a sequential search. All of the cars are “lined up” and the server begins with the first car, checking its license plate number against the one she is looking for. If it’s correct, the server delivers the food and returns. If not, she moves on to the next car and repeats the process; this all ends when either (1) the correct car is found or (2) the correct car is not in the line at all. This sequential process works just fine, although it can be very tedious. The server would have to do much more work if the desired car were at the end of the line, as opposed to at the beginning. Remember, we are programming a computer; the server cannot simply “look” at all of the plates at once, as we might in real life. The computer does not know how to “look,” unless we know how to write the program that enables it!
+A code segment that performs a linear search for a number target in an array of integers nums might look like this:
+for (int i = 0; i < nums.length; i++)
+	if (nums[i] == target)
+		System.out.print(“Found at " + i);
+
+This segment will correctly traverse the array, searching for target, starting with index 0 and continuing to index length - 1, as desired. Remember that nums.length is the size of the array and therefore nums[length] would be out of bounds. When target is found, the print statement displays its index number. This process will continue until the end of the array is reached. Note that, if target is never found, there will be no output.
+When writing algorithms that traverse arrays, programmers often implement the enhanced-for loop, which is designed specifically for traversing entire arrays. In cases which traversing the entire array is not the intent or would cause a run-time error, the enhanced-for loop should not be used. Assuming nums from the previous example would not cause such a problem, the same code segment can be written as an enhanced-for loop structure like this:
+int loc = 0;
+for (int num : nums)
+{
+	if (num == target)
+		System.out.print(“found at ” + loc);
+	i++;
+}
+
+Each time the loop iterates, num will be assigned the value of the next element in the array. This structure automatically ensures that the loop does not go out of bounds. In this case, loc is the location or index in which the target is found.
+It is important to note that the enhanced-for loop provides a variable that will hold each element of the array. It will NOT automatically provide the index of that element. You will have to add code to keep track of the index if you want to use it.
+A binary search is much more efficient; think of it as a “divide-and conquer” mechanism. Instead of our restaurant server starting with the beginning of the line of cars, she will start with the middle car. Depending on whether the license plate is “greater” or “less” than the car she is looking for, the server will move in the appropriate direction.
+There is a huge obstacle with binary searches, however, or at least, for us with our current level of Java knowledge: these searches work only when there is an inherent order in the data. Suppose the top 21 students in the senior class are lined up in a row. You are looking for a student within that top 21 named Kathy, whom you have never met, but you are not sure where she is in the line. If the students are not lined up in a particular order, a sequential search is your only option, and you might need all 21 tries to find her if she is the last person in the lineup. If they are sorted in alphabetical order by first name, though, you can divide and conquer. Go to the middle person and find out her name…if her name is Sara, you would move toward the front of the line and ignore the back. You then perform the same process, asking the name of the person halfway between the front of the line and Sara, and then ignore the appropriate side. Within a few tries, you will have Kathy.
+Here is a code example of how a binary search might look for array nums when searching for target, assuming nums is sorted:
+int front = 0, back = nums.length - 1, middle = 0; boolean isFound = false;
+while((front <= back) && (!isFound))
+{
+	middle = (front + back) / 2;
+	if (nums[middle] < target)
+	{
+		front = middle + 1;
+	}
+	else if(nums[middle] > target)
+	{
+		back = middle - 1;
+	}
+	else
+	{
+		isFound = true;
+	}
+}
+if (isFound)
+{
+ System.out.println("Found at" + middle);
+}
+else
+{
+ System.out.println("Target Not Found");
+}
+On the AP Exam, you will not be required to write a search algorithm; however, you will be required to recognize a search algorithm and trace it, which can be done the easy way if you understand the algorithm, or the hard way by actually tracing the code, step by step. Try to identify the key characteristics of each search; for example, the “sum divided by 2” line is a good indicator of a binary search. The enhanced-for loop will traverse the entire array, which may indicate a sequential search.

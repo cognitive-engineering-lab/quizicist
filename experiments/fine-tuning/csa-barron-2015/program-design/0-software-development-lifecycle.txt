@@ -1,0 +1,35 @@
+Students of introductory computer science typically see themselves as programmers. They no sooner have a new programming project in their heads than they’re at the computer, typing madly to get some code up and running. (Is this you?) To succeed as a programmer, however, you have to combine the practical skills of a software engineer with the analytical mindset of a computer scientist. A software engineer oversees the life cycle of software development: initiation of the project, analysis of the specification, and design of the program, as well as implementation, testing, and maintenance of the final product. A computer scientist (among other things!) analyzes the implementation, correctness, and efficiency of algorithms. All these topics are tested on the APCS exam.
+The Waterfall Model
+The waterfall model of software development came about in the 1960s in order to bring structure and efficiency into the process of creating large programs.
+The specification is a written description of the project. Typically it is based on a customer's requirements. The first step in writing a program is to analyze the specification, make sure you understand it, and clarify with the customer anything that is unclear.
+Even for a small-scale program a good design can save programming time and enhance the reliability of the final program. The design is a fairly detailed plan for solving the problem outlined in the specification. It should include all objects that will be used in the solution, the data structures that will implement them, plus a detailed list of the tasks to be performed by the program.
+A good design provides a fairly detailed overall plan at a glance, without including the minutiae of Java code.
+Program implementation is the coding phase. Design and implementation are discussed in more detail on p. 210.
+TEST DATA
+Not every possible input value can be tested, so a programmer should be diligent in selecting a representative set of test data. Typical values in each part of a domain of the program should be selected, as well as endpoint values and out-of-range values. If only positive input is required, your test data should include a negative value just to check that your program handles it appropriately.
+
+Example
+A program must be written to insert a value into its correct position in this sorted list:
+2 5 9
+Test data should include
+• A value less than 2
+• A value between 2 and 5
+• A value between 5 and 9
+• A value greater than 9
+• 2, 5, and 9
+• A negative value
+
+TYPES OF ERRORS (BUGS)
+• A compile-time error occurs during compilation of the program. The compiler is unable to translate the program into bytecode and prints an appropriate error message. A syntax error is a compile-time error caused by violating the rules of the programming language. Some examples are omitting semicolons or braces, using undeclared identifiers, using keywords inappropriately, having parameters that don’t match in type and number, and invoking a method for an object whose class definition doesn’t contain that method.
+• A run-time error occurs during execution of the program. The Java run-time environment throws an exception, which means that it stops execution and prints an error message. Typical causes of run-time errors include attempting to divide an integer by zero, using an array index that is out of bounds, attempting to open a file that cannot be found, and so on. An error that causes a program to run forever (“infinite loop”) can also be regarded as a run-time error. (See also Errors and Exceptions, p. 74.)
+• An intent or logic error is one that fails to carry out the specification of the program. The program compiles and runs but does not do the job. These are sometimes the hardest types of errors to fix.
+
+ROBUSTNESS
+Always assume that any user of your program is not as smart as you are. You must therefore aim to write a robust program, namely one that
+• Won’t give inaccurate answers for some input data.
+• Won’t crash if the input data are invalid.
+• Won’t allow execution to proceed if invalid data are entered.
+Examples of bad input data include out-of-range numbers, characters instead of numerical data, and a response of “maybe” when “yes” or “no” was asked for.
+Note that bad input data that invalidates a computation won’t be detected by Java. Your program should include code that catches the error, allows the error to be fixed, and allows program execution to resume.
+
+Program maintenance involves upgrading the code as circumstances change. New features may be added. New programmers may come on board. To make their task easier, the original program must have clear and precise documentation.

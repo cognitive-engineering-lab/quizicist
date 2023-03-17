@@ -1,0 +1,50 @@
+Selection and insertion sorts are inefficient for large n, requiring approximately n passes through a list of n elements. More efficient algorithms can be devised using a “divide-and-conquer” approach, which is used in both the sorting algorithms that follow.
+
+Mergesort
+Here is a recursive description of how mergesort works:
+
+If there is more than one element in the array
+    Break the array into two halves.
+    Mergesort the left half.
+    Mergesort the right half.
+    Merge the two subarrays into a sorted array.
+
+Mergesort uses a merge method to merge two sorted pieces of an array into a single sorted array. For example, suppose array a[0] . . . a[n-1] is such that a[0] . . . a[k] is sorted and a[k+1] . . . a[n-1] is sorted, both parts in increasing order. Example:
+a[0] a[1] a[2] a[3] a[4] a[5]
+2 5 8 9 1 6
+
+In this case, a[0] . . . a[3] and a[4] . . . a[5] are the two sorted pieces. The method call merge(a,0,3,5) should produce the “merged” array:
+a[0] a[1] a[2] a[3] a[4] a[5]
+1 2 5 6 8 9
+
+The middle numerical parameter in merge (the 3 in this case) represents the index of the last element in the first “piece” of the array. The first and third numerical parameters are the lowest and highest index, respectively, of array a.
+Here’s what happens in mergesort:
+1. Start with an unsorted list of n elements.
+2. The recursive calls break the list into n sublists, each of length 1. Note that these n arrays, each containing just one element, are sorted!
+3. Recursively merge adjacent pairs of lists. There are then approximately n/2 lists of length 2; then, approximately n/4 lists of approximate length 4, and so on, until there is just one list of length n.
+
+Analysis of Mergesort:
+1. The major disadvantage of mergesort is that it needs a temporary array that is as large as the original array to be sorted. This could be a problem if space is a factor.
+2. Mergesort is not affected by the initial ordering of the elements. Thus, best, worst, and average cases have similar run times.
+
+For large n, quicksort is, on average, the fastest known sorting algorithm. Here is a recursive description of how quicksort works:
+
+If there are at least two elements in the array
+    Partition the array.
+    Quicksort the left subarray.
+    Quicksort the right subarray.
+
+The partition method splits the array into two subarrays as follows: a pivot element is chosen at random from the array (often just the first element) and placed so that all items to the left of the pivot are less than or equal to the pivot, whereas those to the right are greater than or equal to it.
+For example, if the array is 4, 1, 2, 7, 5, −1, 8, 0, 6, and a[0] = 4 is the pivot, the partition method produces
+−1 1 2 0 4 5 8 7 6
+
+Here’s how the partitioning works: Let a[0], 4 in this case, be the pivot. Markers up and down are initialized to index values 0 and n − 1, as shown. Move the up marker until a value less than the pivot is found, or down equals up. Move the down marker until a value greater than the pivot is found, or down equals up. Swap a[up] and a[down]. Continue the process until down equals up. This is the pivot position. Swap a[0] and a[pivotPosition].
+Notice that the pivot element, 4, is in its final sorted position.
+
+Analysis of Quicksort:
+1. For the fastest run time, the array should be partitioned into two parts of roughly the same size.
+2. If the pivot happens to be the smallest or largest element in the array, the split is not much of a split—one of the subarrays is empty! If this happens repeatedly, quicksort degenerates into a slow, recursive version of selection sort and is very inefficient.
+3. The worst case for quicksort occurs when the partitioning algorithm repeatedly divides the array into pieces of size 1 and n − 1. An example is when the array is initially sorted in either order and the first or last element is chosen as the pivot. Some algorithms avoid this situation by initially shuffling up the given array (!) or selecting the pivot by examining several elements of the array (such as first, middle, and last) and then taking the median.
+
+NOTE
+For both quicksort and mergesort, when a subarray gets down to some small size m, it becomes faster to sort by straight insertion. The optimal value of m is machine dependent, but it’s approximately equal to 7.

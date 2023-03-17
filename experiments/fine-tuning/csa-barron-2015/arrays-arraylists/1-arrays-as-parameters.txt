@@ -1,0 +1,100 @@
+Since arrays are treated as objects, passing an array as a parameter means passing its object reference. No copy is made of the array. Thus, the elements of the actual array can be accessed—and modified.
+
+Example 1
+Array elements accessed but not modified:
+/** @return index of smallest element in array arr of integers */ public static int findMin (int[] arr)
+{
+    int min = arr[0];
+    int minIndex = 0;
+    for (int i = 1; i < arr.length; i++)
+        if (arr[i] < min) //found a smaller element
+        {
+            min = arr[i];
+            minIndex = i;
+        }
+    return minIndex;
+}
+
+To call this method (in the same class that it’s defined):
+int[] array;
+< code to initialize array >
+int min = findMin(array);
+
+Example 2
+Array elements modified:
+/** Add 3 to each element of array b. */
+public static void changeArray(int[] b)
+{
+    for (int i = 0; i < b.length; i++)
+        b[i] += 3;
+}
+
+To call this method (in the same class):
+int[] list = {1, 2, 3, 4};
+changeArray(list);
+System.out.print("The changed list is ");
+for (int num : list)
+    System.out.print(num + " ");
+
+The output produced is
+The changed list is 4 5 6 7
+
+Example 3
+Contrast the changeArray method with the following attempt to modify one array element:
+/** Add 3 to an element. */
+public static void changeElement(int n)
+{ n += 3; }
+
+Here is some code that invokes this method:
+int[] list = {1, 2, 3, 4};
+System.out.print("Original array: ");
+for (int num : list)
+    System.out.print(num + " ");
+changeElement(list[0]);
+System.out.print("\nModified array: ");
+for (int num : list)
+    System.out.print(num + " ");
+
+Contrary to the programmer’s expectation, the output is
+Original array: 1 2 3 4
+Modified array: 1 2 3 4
+
+The point of this is that primitive types — including single array elements of type int or double — are passed by value. A copy is made of the actual parameter, and the copy is erased on exiting the method.
+
+Example 4
+/** Swap arr[i] and arr[j] in array arr. */
+public static void swap(int[] arr, int i, int j)
+{
+    int temp = arr[i];
+    arr[i] = arr[j];
+    arr[j] = temp;
+}
+
+To call the swap method:
+int[] list = {1, 2, 3, 4};
+swap(list, 0, 3);
+System.out.print("The changed list is: ");
+for (int num : list)
+    System.out.print(num + " ");
+
+The output shows that the program worked as intended:
+The changed list is: 4 2 3 1
+
+Example 5
+/** @return array containing NUM_ELEMENTS integers read from the keyboard * Precondition: Array undefined.
+* Postcondition: Array contains NUM_ELEMENTS integers read from
+* the keyboard.
+*/
+public int[] getIntegers()
+{
+    int[] arr = new int[NUM_ELEMENTS];
+    for (int i = 0; i < arr.length; i++)
+    {
+        System.out.println("Enter integer: ");
+        arr[i] = IO.readInt(); //read user input
+    }
+    return arr;
+}
+
+To call this method:
+int[] list = getIntegers();

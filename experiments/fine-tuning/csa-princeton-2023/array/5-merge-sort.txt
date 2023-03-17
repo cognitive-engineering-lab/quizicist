@@ -1,0 +1,88 @@
+Another type of sort used on the AP Exam is the merge sort. This is a more complex type of sort that uses recursion, which is the technique that uses a method to call itself. (Recursion will be further discussed in Chapter 12.) A merge sort is like a divide-and-conquer. An array is split into two pieces. Each piece is sorted. The two sorted pieces are then merged together into one sorted list. In order to sort each of the two pieces, the same divide-and conquer method is used. 
+Below is an array with 8 elements: 
+14 8 9 3 5 4 21 12
+
+The merge sort will divide this array into two pieces: 
+14 8 9 3 and 5 4 21 12
+
+Let’s look at just the left half of the array. This array is divided into two pieces:
+14 8 and 9 3
+
+Each of these pieces is similarly divided into two pieces: 
+14 and 8
+9 and 3
+
+Since each remaining piece contains only one element, simply order the two from left to right:
+8 14 and 3 9
+
+Now merge the two sorted segments. Compare the first element in each piece. The smaller is 3, so this is the first element of the merged array. Now compare the first element in each piece that hasn’t already been copied. These are 8 and 9. The smaller is 8, so this is the second element of the merged array. Again, compare the first element in each piece that hasn’t already been copied. These are 14 and 9. The smaller is 9, so this is the third element of the merged array. Since the second array has no remaining elements that haven’t already been copied, add the remaining element(s) from the first array into the merged array. The only remaining element is 14, so this is the fourth element: 
+3 8 9 14
+
+Follow a similar process for the right half of the first array. Divide into two pieces: 
+5 4 and 21 12
+
+Each of these pieces is similarly divided into two pieces:
+5 and 4
+21 and 12
+
+Since each remaining piece contains only one element, simply order the two from left to right: 
+4 5 and 12 21
+
+Now merge the two sorted segments. Compare the first element in each piece. The smaller is 4, so this is the first element of the merged array. Now compare the first element in each piece that hasn’t already been copied. These are 5 and 12. The smaller is 5, so this is the second element of the merged array. Since the first array has no remaining elements that haven’t already been copied, add the remaining elements from the second array into the merged array. The remaining elements, 12 and 21, become the third and fourth elements of the merged array: 
+4 5 12 21
+
+Thus, the two sorted pieces of the original array look like this: 
+3 8 9 14 and 4 5 12 21
+
+Merge the two sorted arrays. Compare 3 and 4 to get that the first element is 3. Compare 8 and 4 to get that the second element is 4. Compare 8 and 5 to get that the third element is 5. Compare 8 and 12 to get that the fourth element is 8. Compare 9 and 12 to get that the fifth element is 9. Compare 14 and 12 to get that the sixth element is 12. Compare 14 and 21 to get that the seventh element is 14. Since the first array has no uncopied elements, 21, which is the only remaining uncopied element in the second array, becomes the eighth element of the merged array. Below is the final array:
+3 4 5 8 9 12 14 21
+
+Here’s how a merge sort can be implemented in Java. 
+//precondition: x is an array in integers; x.length >= 0 //postcondition: x is sorted from least to greatest 
+1 public static void mergeSort (int[] x) 
+2 { 
+3 int[] temp = new int[x.length]; 
+4 mergeSortHelper(x, 0, x.length – 1, temp); 5 } 
+6 public static void mergeSortHelper (int[] x, int lowIndex, int highIndex, int temp) 
+7 { 
+8 if (lowIndex < highIndex) 
+9 { 
+10 int mid = (lowIndex + highIndex) / 2; 11 mergeSortHelper(x, lowIndex, mid, temp); 12 mergeSortHelper(x, mid + 1, highIndex, temp); 13 merge(x, lowIndex, mid, highIndex, temp); 14 } 
+15 } 
+16 public static void merge(int[] x, int lowIndex, int mid, int highIndex, temp) 
+17 { 
+18 int l = lowIndex; 
+19 int m = mid + 1; 
+20 int n = highIndex; 
+21 while (l <= mid && m <= highIndex) 
+22 { 
+23 if (x[l] < x[m]) 
+24 { 
+25 temp[n] = x[l] 
+26 l++; 
+27 } 
+28 else 
+29 { 
+30 temp[n] = x[m];
+31 m++; 
+32 } 
+33 n++; 
+34 } 
+35 while (l <= mid) 
+36 { 
+37 temp[n] = x[l]; 
+38 l++; 
+39 n++; 
+40 } 
+41 while (m <= highIndex) 
+42 { 
+43 temp[n] = x[m]; 
+44 m++; 
+45 n++; 
+46 } 
+47 for (n = lowIndex; n <= highIndex; n++) 
+48 { 
+49 x[n] = temp[k]; 
+50 } 
+51 } 
+This is clearly a more complex sort than the other two and it involves the use of multiple methods. The first method splits the array into two pieces, the second sorts the individual pieces, and the third merges the two pieces into one sorted array.

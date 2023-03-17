@@ -1,0 +1,73 @@
+In order for your program to “do anything” from the user’s perspective (at this level, anyway!), it must produce output to the screen. A program may produce output to many devices, including storage drives and printers, but APCS requires us to produce output only to the screen. 
+
+There are two similar statements that we use to produce output to the screen in this course: 
+System.out.print(…); 
+System.out.println(…); 
+
+The ellipses in these statements stand for the data and/or identifiers that will be displayed on the screen. We will see the difference between these statements in a minute. 
+For example, if a triangle has a side length of 2 stored in the memory using the identifier side1 and we wanted to output that information to the screen, we could use one of the following two commands: 
+System.out.print(2); 
+System.out.print(side1); 
+
+Since both 2 and side1 represent numerical values, they can be outputted to the screen in this way. If we wanted to display non-numerical data, however, we would use a string literal (or simply a string) to accomplish this task. A string literal is simply one or more characters combined into a single unit. The previous sentence, and this sentence, can be considered string literals. In a Java program, string literals must be surrounded by double quotes (“”) to avoid a compile error. In our triangle example, we can use a string literal to make the output more user-friendly: 
+System.out.println("The length of side 1 is:"); 
+System.out.print(side1); 
+// side1 may be simply substituted with 2, in this case 
+
+Note the usage of the println statement rather than the print statement. While print will display the next output on the same line, println will output the string literal and then put the cursor at the beginning of the next line for further output. Note, also, that the statement 
+System.out.print(side1); 
+
+will display the value stored using the side1 identifier, 2. In contrast, the statement 
+System.out.print("side1"); 
+
+will literally display 
+side1 
+because the double quotes create a string literal here. The College Board loves to ask multiple-choice questions that determine whether you understand these differences. 
+
+If quotation marks are how programmers signal the beginning and end of a string literal, how would they display quotation marks? For example, what if an instructional program was intended to display 
+Be sure to display the value of side1, not "side 1".
+
+The command below might seem like an appropriate solution but would actually cause a compile-time error. 
+System.out.print("Be sure to display the value of side1, not "side 1"."); 
+
+The complier will interpret the quotation mark in front of side1 as the close of the string and will not know what to do with the rest of it. To display a quotation mark, the programmer must use an escape sequence, a small piece of coding beginning with a backslash (\) used to indicate specific characters. To successfully display the above live, use the command 
+System.out.print(“Be sure to print the value of side1, not \"side1\"."); 
+
+Similarly, the escape sequence \n can be used to create a line break in the middle of a string. For example the command 
+System.out.print("The first line\nThe second line");
+
+will display 
+The first line 
+The second line 
+
+So if a backslash indicates an escape sequence, how does a programmer print a backslash? This is done using another escape sequence, \\. The following command 
+System.out.println("Use \\n to indicate a new line."); will display 
+
+Use \n to indicate a new line.
+There are other escape sequences in Java, but only these three appear on the AP Computer Science A Exam. 
+
+As you might imagine, input is also important in programming. Although you may learn some techniques for getting user input (the Scanner class, for example), the AP Exam will not test any input methods or classes. Instead, the input will be assumed and given as a comment in the coding. It may be similar to this. 
+int k = ..., //read user input 
+You will not be asked to prompt the user for input, unless there is pre-existing code in the task that does it for you. Nice.
+Let’s put those identifiers to work. 
+In order to actually “create” an identifier, we need to assign a data value to that identifier. This task is done by writing an assignment statement. 
+The syntax of an assignment statement is 
+type identifier = data; 
+
+Continuing with our triangle example, if we wanted to actually assign the data value of 2 to a new identifier called side1, we could use this statement: 
+int side1 = 2; 
+
+This statement tells the compiler that (1) our identifier is called side1, (2) the data assigned to that identifier should be 2, and (3) our data is an integer (more on this in the next section). The equals sign (“=”) is called an assignment operator and is required by Java. The semicolon, which we also saw in the output statements above, denotes that the statement is finished. Note that an assignment statement does NOT produce any output to the screen. 
+When data is associated with an identifier, the identifier is called a variable. The reason we use this term is that, as in math, the value of the variable can be changed; it can vary! Look at the following code: 
+
+int myFavoriteNumber = 22; 
+myFavoriteNumber = 78; 
+System.out.print("My favorite number is " + myFavoriteNumber); 
+
+Can you predict the output? The variable myFavoriteNumber is first assigned the value of 22, but it is then reassigned to the value 78. Therefore, the original value is no longer stored in the computer’s memory and the 78 remains. The output would be
+My favorite number is 78 
+
+A few items to note in this example: 
+Once a variable is given a type (again, more on this later), its type should not be restated. This fact explains why the second assignment statement is missing int. 
+The string literal is outputted as written, but the variable’s value, not its name, is outputted. 
+In order to output a string literal and a numerical value using the same output statement, use the concatenation operator between the two items. Although this operator looks like a typical + sign, it does not “add” the values in the traditional sense; instead, it simply outputs the two values next to each other. For example, two plus two equals four in the mathematical sense, but 2 concatenated with 2 produces 22. 

@@ -1,0 +1,40 @@
+The header of a method defines the parameters of that method. For example, consider the withdraw method of the BankAccount class:
+public class BankAccount
+{ ...
+    public void withdraw(String acctPassword, double amount) ...
+
+This method has two explicit parameters, acctPassword and amount. These are dummy or formal parameters. Think of them as placeholders for the pair of actual parameters or arguments that will be supplied by a particular method call in a client program. For example,
+Do not make a method call with an object whose value is null.
+
+BankAccount b = new BankAccount("TimB", 1000);
+b.withdraw("TimB", 250);
+
+Here "TimB" and 250 are the actual parameters that match up with acctPassword and amount for the withdraw method.
+
+1. The number of arguments in the method call must equal the number of param eters in the method header, and the type of each argument must be compatible with the type of each corresponding parameter.
+2. In addition to its explicit parameters, the withdraw method has an implicit parameter, this, the BankAccount from which money will be withdrawn. In the method call
+b.withdraw("TimB", 250);
+the actual parameter that matches up with this is the object reference b.
+
+Parameters are passed by value. For primitive types this means that when a method is called, a new memory slot is allocated for each parameter. The value of each argument is copied into the newly created memory slot corresponding to each parameter.
+During execution of the method, the parameters are local to that method. Any changes made to the parameters will not affect the values of the arguments in the calling program. When the method is exited, the local memory slots for the parameters are erased.
+Here’s an example: What will the output be?
+
+public class ParamTest {
+    public static void foo(int x, double y) {
+        x = 3;
+        y = 2.5;
+    }
+
+    public static void main(String[] args) {
+        int a = 7;
+        double b = 6.5;
+        foo(a, b);
+        System.out.println(a + " " + b);
+    }
+}
+
+The output will be
+7 6.5
+The arguments a and b remain unchanged, despite the method call!
+This can be understood by picturing the state of the memory slots during execution of the program.

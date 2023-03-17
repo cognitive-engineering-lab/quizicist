@@ -1,0 +1,50 @@
+The static keyword can appear in two contexts at this level. A static variable is an attribute that is shared among all instances of a class. When the value of this variable is changed, the alteration is reflected by all of the objects instantiated through that class. A classic example of a static variable is the high score list on a video game. Consider the video game Tetris. After you launch the game, you start a new game and play until you lose… then, since you are obsessed with Tetris, you start over. If each game of that you play is considered an object of the same class, a static variable might be the high score. Every time you start (or instantiate) a new game, the high score remains the same as it was when it was initially set. Once a new high score is set, every new game will reflect the new high score, rendering the old high score non-existent (or second best, etc.).
+In an object class, a static variable is declared with the rest of the instance data at the top of the class, preceded by the keyword static. Static variables are often used for identification numbers or for counters. Consider this short program:
+public class Box
+{
+	private static int boxNumber = 0;
+	// other data fields not shown
+	public Box()
+	{
+		boxNumber++;
+		// other statements not shown
+	}
+}
+
+public class BoxCreator
+{
+	public BoxCreator()
+	{
+		Box box1 = new Box();
+		Box box2 = new Box();
+	}
+}
+
+As each Box object is instantiated in BoxCreator, the static variable in the Box class will be updated. That way, the next time a box is created, the box number value is incremented for all box objects. The static variable is not an attribute of each individual box; rather, it is a shared value among all boxes. Contrast this setup with a non-static declaration of boxNumber; every time a box is instantiated, its boxNumber would start as 0 and then be incremented, making every box have the same boxNumber value of 1.
+In order to show that this structure is actually working, let’s create an accessor method to let the driver “see,” or access, the value of boxNumber. This method is necessary for this result since boxNumber has been declared private. A non-constructor method that is designed to access and/or modify a static variable is a static method and must be declared as such. To add this functionality and test it, here are our new object and driver classes:
+public class Box
+{
+	private static int boxNumber = 0;
+	// other data fields not shown
+	public Box()
+	{
+		boxNumber++;
+		// other statements not shown
+	}
+	static public int getBoxNum()
+	{
+		return boxNumber;
+	}
+}
+
+public class BoxCreator
+{
+	public BoxCreator()
+	{
+		Box box1 = new Box();
+		Box box2 = new Box();
+		System.out.print (Box.getBoxNum() + " boxes created so far.");
+	}
+}
+
+Notice the method call from BoxCreator does not use an object reference variable; rather, the class is used directly. Since static variables are shared among all instances, the programmer needs to access static methods (and therefore, static variables) through the class itself.
