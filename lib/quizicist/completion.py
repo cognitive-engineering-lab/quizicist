@@ -53,7 +53,7 @@ def run_gpt3(shard, num_questions, prompt_type):
         print(f"Running completion on shard...")
         completion = openai.ChatCompletion.create(
             model=GPT_MODEL,
-            messages=prompt.messages,            
+            messages=prompt.messages, 
             max_tokens=NUM_QUESTIONS * ESTIMATED_QUESTION_SIZE,
             temperature=0.8,
         )
@@ -110,28 +110,29 @@ def add_answer_choices(file_content, parser, question):
     components = parser(file_content)
     shard = shard_chapter(components)[question.shard]
 
-    # partial prompt starting at "Correct answer:"
-    question_prompt = Prompt().add_question(question.question)
+    incomplete_question = f"""
+Question: {question.question}
+Correct answer: 
+"""
 
-    # full prompt, appending partial prompt
-    prompt = Prompt(num_questions=1)\
-        .add_text(shard, newlines=0)\
-        .add_introduction()\
-        .add_template()\
-        .add_instructions()\
-        .join(question_prompt)
+    prompt = Prompt(prompt_type=PromptType.ADD_ANSWERS, num_questions=1)\
+        .add_system_prompt()\
+        .add_message(role="user", content=shard)\
+        .add_message(role="user", content=incomplete_question)
 
     # TODO: clean up this loop or consolidate parsing into a single function
     while True:
         print("Running completion for custom question...")
-        completion = question_prompt.prompt + openai.Completion.create(
-            engine=GPT_MODEL,
-            prompt=prompt.prompt,
+        completion = openai.ChatCompletion.create(
+            model=GPT_MODEL,
+            messages=prompt.messages,
             max_tokens=NUM_QUESTIONS * ESTIMATED_QUESTION_SIZE,
             temperature=0.8,
-        )["choices"][0]["text"]
+        )
+                
+        content = incomplete_question + completion["choices"][0]["message"]["content"]
 
-        processed = postprocess_manual(completion, question.shard)
+        processed = postprocess_manual(content, question.shard)
         if processed:
             return processed
 
