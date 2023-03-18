@@ -2,7 +2,7 @@ import enum
 
 
 # gpt model to use
-GPT_MODEL = "text-davinci-003"
+GPT_MODEL = "gpt-4"
 
 # markdown element types valid at the top level
 TOP_LEVEL_COMPONENTS = [

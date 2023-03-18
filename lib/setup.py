@@ -5,7 +5,7 @@ setup(
     version="0.1",
     packages=["quizicist"],
     install_requires=[
-        "openai==0.23.0", 
+        "openai==0.27.2", 
         "python-dotenv==0.21.0", 
         "mistletoe==0.9.0",
         "transformers==4.22.1",
