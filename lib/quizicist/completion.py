@@ -45,8 +45,7 @@ def shard_chapter(components):
 def run_gpt3(shard, num_questions, prompt_type):
     prompt = Prompt(prompt_type=prompt_type, num_questions=num_questions)\
         .add_system_prompt()\
-        .add_message(role="user", content=shard)\
-
+        .add_message(role="user", content=shard)
 
     # process question until 5 well-formatted questions have been generated
     # TODO: add tally for failed generations and quit after n
