@@ -12,4 +12,9 @@ setup(
         "beautifulsoup4==4.11.1",
         "lxml==4.9.1",
     ],
+    extras_require={
+        "dev": [
+            "pytest==7.2.2"
+        ]
+    }
 )

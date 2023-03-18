@@ -47,18 +47,12 @@ class Prompt:
         self.prompt_type = prompt_type
         self.num_questions = num_questions
 
-
-    def join(self, other: Prompt) -> Prompt:
-        return Prompt(self.prompt + other.prompt, self.num_questions)
-
-
     def add_message(self, role: str, content: str) -> Prompt:
         self.messages.append({
             "role": role,
             "content": content
         })        
         return self
-
 
     def add_system_prompt(self) -> Prompt:
         intro = PROMPTS[self.prompt_type].format(num_questions=self.num_questions)

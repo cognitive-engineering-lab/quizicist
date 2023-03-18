@@ -1,12 +1,19 @@
 name: Deploy App
 
-on:
-  push:
-    branches: [ master ]
+on: [push]
 
 jobs:
-  frontend:
+  test:
     runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - run: cd lib && pip3 install -e .[dev] && pytest
+
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    needs: test
 
     strategy:
       matrix:
