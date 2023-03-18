@@ -5,7 +5,7 @@ import os
 from dotenv import load_dotenv
 from .consts import GPT_MODEL, MAX_CONTEXT_SIZE, ESTIMATED_QUESTION_SIZE, NUM_QUESTIONS
 from .errors import QuizicistError
-from .prompt import Prompt
+from .prompt import Prompt, PromptType
 from .postprocess import postprocess_edit_mode, postprocess_manual
 
 # set up openai
@@ -42,25 +42,26 @@ def shard_chapter(components):
     return shards
 
 
-def run_gpt3(shard, num_questions):
-    prompt = Prompt(num_questions=num_questions)\
-        .add_text(shard, newlines=0)\
-        .add_introduction()\
-        .add_template()\
-        .add_instructions()
+def run_gpt3(shard, num_questions, prompt_type):
+    prompt = Prompt(prompt_type=prompt_type, num_questions=num_questions)\
+        .add_system_prompt()\
+        .add_message(role="user", content=shard)
 
     # process question until 5 well-formatted questions have been generated
     # TODO: add tally for failed generations and quit after n
     while True:
         print(f"Running completion on shard...")
-        completion = "Question:" + openai.Completion.create(
-            engine=GPT_MODEL,
-            prompt=prompt.prompt,
+        completion = openai.ChatCompletion.create(
+            model=GPT_MODEL,
+            messages=prompt.messages, 
             max_tokens=NUM_QUESTIONS * ESTIMATED_QUESTION_SIZE,
             temperature=0.8,
-        )["choices"][0]["text"]
-
-        processed = postprocess_edit_mode(completion, num_questions)
+        )
+                
+        content = completion["choices"][0]["message"]["content"]
+        
+        print("Post processing shard...")
+        processed = postprocess_edit_mode(content, prompt_type, num_questions)
 
         if processed:
             return processed
@@ -68,7 +69,7 @@ def run_gpt3(shard, num_questions):
 
 # divide quiz questions evenly by shard
 # don't allow more than five questions per shard
-def divide_questions(shards, num_questions):
+def divide_questions(shards, num_questions, prompt_type):
     # find questions per shard and remainder after division
     remainder = num_questions % len(shards)
     questions_per_shard = num_questions // len(shards)
@@ -85,16 +86,16 @@ def divide_questions(shards, num_questions):
     else:
         for index, shard in enumerate(shards):
             if index < remainder:
-                jobs.append((shard, questions_per_shard + 1))
+                jobs.append((shard, questions_per_shard + 1, prompt_type))
             elif questions_per_shard > 0:
-                jobs.append((shard, questions_per_shard))
+                jobs.append((shard, questions_per_shard, prompt_type))
 
     return jobs
 
-def complete(file_content, parser, num_questions):
+def complete(file_content, parser, num_questions, prompt_type=PromptType.MCQ):
     components = parser(file_content)
     shards = shard_chapter(components)
-    jobs = divide_questions(shards, num_questions)
+    jobs = divide_questions(shards, num_questions, prompt_type)
 
     # limit content size to three shards
     if len(shards) > 3:
@@ -109,28 +110,29 @@ def add_answer_choices(file_content, parser, question):
     components = parser(file_content)
     shard = shard_chapter(components)[question.shard]
 
-    # partial prompt starting at "Correct answer:"
-    question_prompt = Prompt().add_question(question.question)
+    incomplete_question = f"""
+Question: {question.question}
+Correct answer: 
+"""
 
-    # full prompt, appending partial prompt
-    prompt = Prompt(num_questions=1)\
-        .add_text(shard, newlines=0)\
-        .add_introduction()\
-        .add_template()\
-        .add_instructions()\
-        .join(question_prompt)
+    prompt = Prompt(prompt_type=PromptType.ADD_ANSWERS, num_questions=1)\
+        .add_system_prompt()\
+        .add_message(role="user", content=shard)\
+        .add_message(role="user", content=incomplete_question)
 
     # TODO: clean up this loop or consolidate parsing into a single function
     while True:
         print("Running completion for custom question...")
-        completion = question_prompt.prompt + openai.Completion.create(
-            engine=GPT_MODEL,
-            prompt=prompt.prompt,
+        completion = openai.ChatCompletion.create(
+            model=GPT_MODEL,
+            messages=prompt.messages,
             max_tokens=NUM_QUESTIONS * ESTIMATED_QUESTION_SIZE,
             temperature=0.8,
-        )["choices"][0]["text"]
+        )
+                
+        content = incomplete_question + completion["choices"][0]["message"]["content"]
 
-        processed = postprocess_manual(completion, question.shard)
+        processed = postprocess_manual(content, question.shard)
         if processed:
             return processed
 

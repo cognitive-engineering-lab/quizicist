@@ -3,19 +3,31 @@ import openai
 import os
 from dotenv import load_dotenv
 from .consts import NUM_QUESTIONS, FeedbackTypes
+from .prompt import PromptType
 
 # set up openai
 load_dotenv()
 openai.api_key = os.getenv("OPENAI_SECRET_KEY")
 
 
-EDIT_MODE_INSTRUCTION = 'Convert the list of questions into an array of JSON objects parseable by Python. Do not assign the JSON to a variable. Each object should contain keys for "question", "correct", and "incorrect".'
+EDIT_MODE_INSTRUCTION = {
+    PromptType.MCQ: """
+Convert the list of questions into an array of JSON objects parseable by Python. 
+Do not assign the JSON to a variable. 
+Each object should contain keys for "question", "correct", and "incorrect".'
+""",
+    PromptType.OPEN_ENDED: """
+Convert the list of questions into an array of JSON objects parseable by Python. 
+Do not assign the JSON to a variable. 
+Each object should contain keys for "question" and "follow-up".
+""",
+}
 
-def postprocess_edit_mode(output: str, num_questions=NUM_QUESTIONS):
+def postprocess_edit_mode(output: str, prompt_type: PromptType, num_questions=NUM_QUESTIONS):
     edited = openai.Edit.create(
         model="code-davinci-edit-001",
         input=output,
-        instruction=EDIT_MODE_INSTRUCTION,
+        instruction=EDIT_MODE_INSTRUCTION[prompt_type],
         n=1,
         temperature=0,
     )["choices"][0]["text"]
