@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_login import current_user
 from quizicist.errors import QuizicistError
-from ..lib.consts import ExportTypes
+from ..lib.consts import ExportTypes, ModelTypes
 from ..lib.export import GoogleFormExport
 from ..lib.files import create_file_from_json
 from ..lib.mdbook import questions_to_toml
@@ -48,7 +48,8 @@ def upload():
         user_id=current_user.id,
         filename=filename,
         unique_filename=unique_filename,
-        content_type=content_type
+        content_type=content_type,
+        model=ModelTypes.gpt4
     )
     db.session.add(generation)
 
@@ -331,19 +332,19 @@ def handle_quizicist_error(e):
     return { "message": str(e) }, 500
 
 @api.errorhandler(OpenAIError.ServiceUnavailableError)
-def handle_service_unavailable():
+def handle_service_unavailable(_):
     return {
         "message": "OpenAI is experiencing server issues. Please wait a few minutes and try again."
     }, 500
 
 @api.errorhandler(OpenAIError.RateLimitError)
-def handle_rate_limit():
+def handle_rate_limit(_):
     return {
         "message": "We're currently experiencing high demand. Please wait a few minutes and try again."
     }, 500
 
 @api.errorhandler(OpenAIError.Timeout)
-def handle_timeout():
+def handle_timeout(_):
     return {
         "message": "OpenAI took too long to respond. Please try again. If the error is not resolved, please submit feedback detailing your error."
     }, 500

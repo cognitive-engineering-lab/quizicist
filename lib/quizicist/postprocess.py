@@ -2,8 +2,8 @@ import json
 import openai
 import os
 from dotenv import load_dotenv
-from .consts import NUM_QUESTIONS, FeedbackTypes
-from .prompt import PromptType
+from .consts import ESTIMATED_QUESTION_SIZE, GPT_MODEL, NUM_QUESTIONS, FeedbackTypes
+from .prompt import Prompt, PromptType
 
 # set up openai
 load_dotenv()
@@ -12,9 +12,15 @@ openai.api_key = os.getenv("OPENAI_SECRET_KEY")
 
 EDIT_MODE_INSTRUCTION = {
     PromptType.MCQ: """
-Convert the list of questions into an array of JSON objects parseable by Python. 
-Do not assign the JSON to a variable. 
-Each object should contain keys for "question", "correct", and "incorrect".'
+Convert the generated questions to a JSON array parseable by Python. Each object should use the following schema:
+
+{
+    "question": "",
+    "correct": "", 
+    "incorrect": ["", "", ""]
+}
+
+Use the text of each answer choice. Do not include answer choice letters. Include code snippets in the "question" field.
 """,
     PromptType.OPEN_ENDED: """
 Convert the list of questions into an array of JSON objects parseable by Python. 
@@ -23,14 +29,24 @@ Each object should contain keys for "question" and "follow-up".
 """,
 }
 
-def postprocess_edit_mode(output: str, prompt_type: PromptType, num_questions=NUM_QUESTIONS):
-    edited = openai.Edit.create(
-        model="code-davinci-edit-001",
-        input=output,
-        instruction=EDIT_MODE_INSTRUCTION[prompt_type],
-        n=1,
-        temperature=0,
-    )["choices"][0]["text"]
+def postprocess_with_gpt(prompt: Prompt, num_questions=NUM_QUESTIONS):
+    # add instruction to convert to JSON
+    prompt.add_message(
+        role="user",
+        content=EDIT_MODE_INSTRUCTION[prompt.prompt_type]
+    )
+
+    completion = openai.ChatCompletion.create(
+        model=GPT_MODEL,
+        messages=prompt.messages, 
+        max_tokens=num_questions * ESTIMATED_QUESTION_SIZE,
+        temperature=0.8,
+    )
+
+    edited = completion["choices"][0]["message"]["content"]
+
+    with open("testing.txt", "a+") as f:
+        f.write(edited)
 
     # decode generated JSON
     try:

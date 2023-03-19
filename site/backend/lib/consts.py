@@ -11,3 +11,8 @@ class ExportTypes(enum.IntEnum):
     google_forms = 0
     mdbook = 1
     plain_text = 2
+
+# LLMs used to generate questions
+class ModelTypes(str, enum.Enum):
+    gpt3 = 0
+    gpt4 = 1

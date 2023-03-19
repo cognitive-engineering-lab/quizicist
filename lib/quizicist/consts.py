@@ -18,7 +18,7 @@ NUM_QUESTIONS = 5
 MAX_MODEL_PROMPT_SIZE = 4000
 
 # estimated number of tokens generated from a single MCQ
-ESTIMATED_QUESTION_SIZE = 90
+ESTIMATED_QUESTION_SIZE = 175
 
 # assuming generating 5 questions per shard, largest context possible
 MAX_CONTEXT_SIZE = MAX_MODEL_PROMPT_SIZE - NUM_QUESTIONS * ESTIMATED_QUESTION_SIZE

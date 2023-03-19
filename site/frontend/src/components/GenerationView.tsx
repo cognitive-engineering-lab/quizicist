@@ -83,7 +83,7 @@ const GenerationView: React.FC<GenerationProps> = ({ generation_id }) => {
                     <AccordionItem>
                         <h2>
                             <AccordionButton>
-                                <Box flex='1' textAlign='left'>
+                                <Box flex='1' textAlign='left' className={styles["accordion-question"]}>
                                     <b>Question {i + 1}:</b> {q.question}
                                 </Box>
                                 <AccordionIcon />

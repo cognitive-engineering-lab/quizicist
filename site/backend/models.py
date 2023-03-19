@@ -10,7 +10,7 @@ from quizicist.completion import complete, add_answer_choices, chapter_tokens
 from quizicist.parsers.md import md_parser
 from quizicist.parsers.text import parse_text
 from quizicist.consts import FeedbackTypes
-from .lib.consts import ExportTypes, MessageTypes
+from .lib.consts import ExportTypes, MessageTypes, ModelTypes
 import os
 from sqlalchemy.ext.hybrid import hybrid_property, hybrid_method
 from sqlalchemy.ext.orderinglist import OrderingList
@@ -107,6 +107,7 @@ class Generation(db.Model, UpdateMixin):
     id: int = db.Column(db.Integer, primary_key=True)
     user_id: int = db.Column(db.Integer, db.ForeignKey("user.id"))
     created_at = db.Column(db.DateTime, server_default=db.func.now())
+    model: ModelTypes = db.Column(db.Enum(ModelTypes), server_default=ModelTypes.gpt3.name)
 
     query_class = QueryWithSoftDelete
     deleted: bool = db.Column(db.Boolean(), default=False, nullable=False)

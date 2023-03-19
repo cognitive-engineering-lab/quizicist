@@ -2,7 +2,7 @@ import { FormControl, FormErrorMessage, FormLabel, FormLabelProps, Hide, Input, 
 import { FieldHookConfig, useField, useFormikContext } from "formik";
 import styles from "./Shared.module.css";
 
-type TextFieldProps = {
+export type TextFieldProps = {
     submitOnBlur?: boolean;
     labelProps?: FormLabelProps;
 }

@@ -8,13 +8,13 @@ import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
 import styles from "./QuestionView.module.css";
 import api from "@shared/api";
 import TextField from "@components/fields/TextField";
+import TextareaField from "@components/fields/TextareaField";
 import LoadingButton from "@components/buttons/LoadingButton";
 import { FeedbackTypes } from "@shared/feedback.type";
 import _ from "lodash";
 import { useAnswerChoiceAdd, useFeedbackAdd, useQuestionDelete, useQuestionUpdate } from "@hooks/mutation/mutationHooks";
 import { deleteAnswerOptimistic } from "@hooks/mutation/optimisticData";
 import Generation from "@shared/generation.type";
-import { useEffect } from "react";
 
 type QuestionProps = {
     question: Question;
@@ -62,7 +62,7 @@ const QuestionView: React.FC<QuestionProps> = ({ question, generation }) => {
             {form => (
                 <Form>
                     <VStack spacing={8}>
-                        <TextField
+                        <TextareaField
                             name="question"
                             title="Question"
                             placeholder="Your question"
@@ -86,7 +86,7 @@ const QuestionView: React.FC<QuestionProps> = ({ question, generation }) => {
                                     Delete
                                 </Button>
                             </div>
-                        </TextField>
+                        </TextareaField>
 
                         {form.values.answers?.map((answer, index) => (
                             <TextField

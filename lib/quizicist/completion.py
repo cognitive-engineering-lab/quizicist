@@ -1,3 +1,4 @@
+import copy
 from math import ceil
 from multiprocessing.dummy import Pool
 import openai
@@ -6,7 +7,7 @@ from dotenv import load_dotenv
 from .consts import GPT_MODEL, MAX_CONTEXT_SIZE, ESTIMATED_QUESTION_SIZE, NUM_QUESTIONS
 from .errors import QuizicistError
 from .prompt import Prompt, PromptType
-from .postprocess import postprocess_edit_mode, postprocess_manual
+from .postprocess import postprocess_with_gpt, postprocess_manual
 
 # set up openai
 load_dotenv()
@@ -57,11 +58,19 @@ def run_gpt3(shard, num_questions, prompt_type):
             max_tokens=NUM_QUESTIONS * ESTIMATED_QUESTION_SIZE,
             temperature=0.8,
         )
-                
-        content = completion["choices"][0]["message"]["content"]
+
+        # create copy of prompt for converting output to JSON
+        edit_prompt = copy.deepcopy(prompt) 
+        edit_prompt.add_message(
+            role="system",
+            content=completion["choices"][0]["message"]["content"]
+        )
+
+        with open("testing.txt", "a+") as f:
+            f.write(completion["choices"][0]["message"]["content"])
         
         print("Post processing shard...")
-        processed = postprocess_edit_mode(content, prompt_type, num_questions)
+        processed = postprocess_with_gpt(edit_prompt, num_questions)
 
         if processed:
             return processed
@@ -126,7 +135,7 @@ Correct answer:
         completion = openai.ChatCompletion.create(
             model=GPT_MODEL,
             messages=prompt.messages,
-            max_tokens=NUM_QUESTIONS * ESTIMATED_QUESTION_SIZE,
+            max_tokens=ESTIMATED_QUESTION_SIZE,
             temperature=0.8,
         )
                 
