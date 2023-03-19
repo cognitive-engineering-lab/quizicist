@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name="quizicist",
-    version="0.1",
+    version="0.1.0",
     packages=["quizicist"],
     install_requires=[
         "openai==0.27.2", 
