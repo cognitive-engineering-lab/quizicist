@@ -11,7 +11,7 @@ jobs:
       - run: cd lib && pip3 install -e .[dev] && pytest
 
   deploy:
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     needs: test
 
