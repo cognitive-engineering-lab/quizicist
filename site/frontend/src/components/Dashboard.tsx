@@ -25,7 +25,11 @@ const Dashboard: React.FC = () => {
               Providing lengthy content gives the model more context about what you're teaching and often results in better quizzes.
             </Text>
             <Text>
-              <b>Data privacy:</b> when you use Quizicist, we save all data from your interactions: the prompt, the content, and the generated quiz. If you use the Google Form export, we also save all form responses to evaluate the efficacy of Quizicist questions.
+              <b>Data privacy:</b>
+              <UnorderedList mt="5px">
+                <ListItem>When you use Quizicist, we save all data from your interactions: the prompt, the content, and the generated quiz.</ListItem>
+                <ListItem>There are many options for exporting your generated quizzes to other platforms. Most of these provide no information at all to us. Only if you use our Google Form export do we also save form responses to evaluate the efficacy of Quizicist at generating questions.</ListItem>
+              </UnorderedList>
             </Text>
             <Text>
               <b>Disclaimer:</b> the generated content may be offensive or harmful. We do not endorse any output of the model, and you should carefully review ALL generated content before sharing with others.
