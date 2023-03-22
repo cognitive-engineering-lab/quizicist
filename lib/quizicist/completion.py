@@ -1,4 +1,3 @@
-import copy
 from math import ceil
 from multiprocessing.dummy import Pool
 import openai
@@ -58,19 +57,13 @@ def run_gpt3(shard, num_questions, prompt_type):
             max_tokens=NUM_QUESTIONS * ESTIMATED_QUESTION_SIZE,
             temperature=0.8,
         )
-
-        # create copy of prompt for converting output to JSON
-        edit_prompt = copy.deepcopy(prompt) 
-        edit_prompt.add_message(
-            role="system",
-            content=completion["choices"][0]["message"]["content"]
-        )
-
-        with open("testing.txt", "a+") as f:
-            f.write(completion["choices"][0]["message"]["content"])
         
         print("Post processing shard...")
-        processed = postprocess_with_gpt(edit_prompt, num_questions)
+        processed = postprocess_with_gpt(
+            completion["choices"][0]["message"]["content"],
+            prompt.prompt_type,
+            num_questions
+        )
 
         if processed:
             return processed

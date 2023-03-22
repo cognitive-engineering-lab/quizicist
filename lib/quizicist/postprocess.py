@@ -2,7 +2,7 @@ import json
 import openai
 import os
 from dotenv import load_dotenv
-from .consts import ESTIMATED_QUESTION_SIZE, GPT_MODEL, NUM_QUESTIONS, FeedbackTypes
+from .consts import ESTIMATED_QUESTION_SIZE, JSON_MODEL, NUM_QUESTIONS, FeedbackTypes
 from .prompt import Prompt, PromptType
 
 # set up openai
@@ -12,7 +12,7 @@ openai.api_key = os.getenv("OPENAI_SECRET_KEY")
 
 EDIT_MODE_INSTRUCTION = {
     PromptType.MCQ: """
-Convert the generated questions to a JSON array parseable by Python. Each object should use the following schema:
+Convert the provided multiple-choice questions to a JSON array parseable by Python. Each object should use the following schema:
 
 {
     "question": "",
@@ -20,7 +20,7 @@ Convert the generated questions to a JSON array parseable by Python. Each object
     "incorrect": ["", "", ""]
 }
 
-Use the text of each answer choice. Do not include answer choice letters. Include code snippets in the "question" field.
+Use only the text of each answer choice. Do not include answer choice letters. Include code snippets in the "question" field.
 """,
     PromptType.OPEN_ENDED: """
 Convert the list of questions into an array of JSON objects parseable by Python. 
@@ -29,24 +29,29 @@ Each object should contain keys for "question" and "follow-up".
 """,
 }
 
-def postprocess_with_gpt(prompt: Prompt, num_questions=NUM_QUESTIONS):
+def postprocess_with_gpt(output: str, prompt_type: PromptType, num_questions=NUM_QUESTIONS):
+    prompt = Prompt(prompt_type=prompt_type)
+
     # add instruction to convert to JSON
     prompt.add_message(
+        role="system",
+        content=EDIT_MODE_INSTRUCTION[prompt_type]
+    )
+
+    # add generated questions
+    prompt.add_message(
         role="user",
-        content=EDIT_MODE_INSTRUCTION[prompt.prompt_type]
+        content=output
     )
 
     completion = openai.ChatCompletion.create(
-        model=GPT_MODEL,
+        model=JSON_MODEL,
         messages=prompt.messages, 
         max_tokens=num_questions * ESTIMATED_QUESTION_SIZE,
         temperature=0.8,
     )
 
     edited = completion["choices"][0]["message"]["content"]
-
-    with open("testing.txt", "a+") as f:
-        f.write(edited)
 
     # decode generated JSON
     try:

@@ -1,8 +1,11 @@
 import enum
 
 
-# gpt model to use
+# gpt model to use for generating questions
 GPT_MODEL = "gpt-4"
+
+# gpt model to use for converting questions to JSON
+JSON_MODEL = "gpt-3.5-turbo"
 
 # markdown element types valid at the top level
 TOP_LEVEL_COMPONENTS = [
