@@ -20,7 +20,7 @@ Convert the provided multiple-choice questions to a JSON array parseable by Pyth
     "incorrect": ["", "", ""]
 }
 
-Use only the text of each answer choice. Do not include answer choice letters. Include code snippets in the "question" field.
+"correct" and "incorrect" should NOT be a letter (a, b, c, or d). Instead, they should be the complete text of the answer choice. Include code snippets in the "question" and answer fields.
 """,
     PromptType.OPEN_ENDED: """
 Convert the list of questions into an array of JSON objects parseable by Python. 

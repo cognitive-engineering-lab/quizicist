@@ -82,8 +82,8 @@ def divide_questions(shards, num_questions, prompt_type):
     if questions_per_shard > NUM_QUESTIONS or (questions_per_shard == NUM_QUESTIONS and remainder > 0):
         remaining_questions = num_questions - NUM_QUESTIONS * len(shards)
 
-        jobs.extend(divide_questions(shards, remaining_questions))
-        jobs.extend(divide_questions(shards, num_questions - remaining_questions))
+        jobs.extend(divide_questions(shards, remaining_questions, prompt_type))
+        jobs.extend(divide_questions(shards, num_questions - remaining_questions, prompt_type))
     # handle normal case (max questions per shard <= 5)
     else:
         for index, shard in enumerate(shards):
