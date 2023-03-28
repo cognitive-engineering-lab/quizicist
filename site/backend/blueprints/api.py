@@ -53,8 +53,11 @@ def upload():
     )
     db.session.add(generation)
 
+    # conditionally retrieve custom prompt from request
+    custom_prompt = None if not request.json["is_custom_prompt"] else request.json["custom_prompt"]
+
     # run completion, add generated questions to database
-    generation.add_questions(num_questions)
+    generation.add_questions(num_questions, custom_prompt)
 
     db.session.commit()
 

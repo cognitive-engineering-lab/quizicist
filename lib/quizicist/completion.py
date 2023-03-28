@@ -42,8 +42,8 @@ def shard_chapter(components):
     return shards
 
 
-def run_gpt3(shard, num_questions, prompt_type):
-    prompt = Prompt(prompt_type=prompt_type, num_questions=num_questions)\
+def run_gpt3(shard, num_questions, custom_prompt, prompt_type):
+    prompt = Prompt(custom_prompt=custom_prompt, prompt_type=prompt_type, num_questions=num_questions)\
         .add_system_prompt()\
         .add_message(role="user", content=shard)
 
@@ -71,7 +71,7 @@ def run_gpt3(shard, num_questions, prompt_type):
 
 # divide quiz questions evenly by shard
 # don't allow more than five questions per shard
-def divide_questions(shards, num_questions, prompt_type):
+def divide_questions(shards, num_questions, custom_prompt, prompt_type):
     # find questions per shard and remainder after division
     remainder = num_questions % len(shards)
     questions_per_shard = num_questions // len(shards)
@@ -82,22 +82,22 @@ def divide_questions(shards, num_questions, prompt_type):
     if questions_per_shard > NUM_QUESTIONS or (questions_per_shard == NUM_QUESTIONS and remainder > 0):
         remaining_questions = num_questions - NUM_QUESTIONS * len(shards)
 
-        jobs.extend(divide_questions(shards, remaining_questions, prompt_type))
-        jobs.extend(divide_questions(shards, num_questions - remaining_questions, prompt_type))
+        jobs.extend(divide_questions(shards, remaining_questions, custom_prompt, prompt_type))
+        jobs.extend(divide_questions(shards, num_questions - remaining_questions, custom_prompt, prompt_type))
     # handle normal case (max questions per shard <= 5)
     else:
         for index, shard in enumerate(shards):
             if index < remainder:
-                jobs.append((shard, questions_per_shard + 1, prompt_type))
+                jobs.append((shard, questions_per_shard + 1, custom_prompt, prompt_type))
             elif questions_per_shard > 0:
-                jobs.append((shard, questions_per_shard, prompt_type))
+                jobs.append((shard, questions_per_shard, custom_prompt, prompt_type))
 
     return jobs
 
-def complete(file_content, parser, num_questions, prompt_type=PromptType.MCQ):
+def complete(file_content, parser, num_questions, custom_prompt=None, prompt_type=PromptType.MCQ):
     components = parser(file_content)
     shards = shard_chapter(components)
-    jobs = divide_questions(shards, num_questions, prompt_type)
+    jobs = divide_questions(shards, num_questions, custom_prompt, prompt_type)
 
     # limit content size to three shards
     if len(shards) > 3:

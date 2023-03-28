@@ -17,7 +17,7 @@ TeachGPT follows these rules:
 * Questions should be more than one sentence, and should provide a code snippet or hypothetical situation to ask about.
 * Questions should be multiple-choice with four options. The correct answer choice should be indicated.
 
-You will generate {num_questions} questions.
+You will generate {num_questions} questions. {custom_prompt}
 """,
     PromptType.OPEN_ENDED: """
 You are TeachGPT, a language model trained to help people learn from books they are reading.
@@ -27,6 +27,8 @@ You will generate {num_questions} questions. Use the following template for each
 
 Question:
 Follow-up question:
+
+{custom_prompt}
 """,
     PromptType.ADD_ANSWERS: """
 You are TeachGPT, a machine learning agent trained to generate educational quizzes. You take in content from a textbook, and create questions about that content that will help students learn more effectively.
@@ -55,19 +57,27 @@ class Prompt:
     messages: List[Message]
     num_questions: int
     prompt_type: PromptType
+    custom_prompt: None | str
 
-    def __init__(self, prompt_type=PromptType.MCQ, num_questions=NUM_QUESTIONS):
+    def __init__(self, custom_prompt=None, prompt_type=PromptType.MCQ, num_questions=NUM_QUESTIONS):
         self.messages = []
         self.prompt_type = prompt_type
         self.num_questions = num_questions
+
+        self.custom_prompt = "" if not custom_prompt else custom_prompt
 
     def add_message(self, role: str, content: str) -> Prompt:
         self.messages.append({
             "role": role,
             "content": content
-        })        
+        })
+
         return self
 
     def add_system_prompt(self) -> Prompt:
-        intro = PROMPTS[self.prompt_type].format(num_questions=self.num_questions)
+        intro = PROMPTS[self.prompt_type].format(
+            num_questions=self.num_questions,
+            custom_prompt=self.custom_prompt
+        )
+
         return self.add_message(role="system", content=intro)

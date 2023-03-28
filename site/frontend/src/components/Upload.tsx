@@ -1,6 +1,7 @@
 import { Button, FormControl, FormHelperText, Text } from "@chakra-ui/react";
 import uploadSchema, { CONTENT_TYPES } from "@schemas/upload.schema";
 import { Formik, Form, FormikHelpers } from "formik";
+import CheckboxField from "@components/fields/CheckboxField";
 import SelectField from "@components/fields/SelectField";
 import TextareaField from "@components/fields/TextareaField";
 import TextField from "@components/fields/TextField";
@@ -38,6 +39,16 @@ const Upload: React.FC = () => {
                     <SelectField name="content_type" title="Content format" values={CONTENT_TYPES} />
 
                     <TextField name="count" title="Number of Questions" />
+
+                    <CheckboxField name="is_custom_prompt" title="Use custom instructions" />
+
+                    {props.values.is_custom_prompt && (
+                        <TextareaField
+                        name="custom_prompt"
+                        title="Custom instructions"
+                        placeholder="Include only questions about function parameters."
+                        />
+                    )}
                     
                     <Button type="submit" isLoading={props.isSubmitting}>Create quiz</Button>
 

@@ -18,6 +18,11 @@ const uploadSchema = yup.object({
         .oneOf(CONTENT_TYPES)
         .default(CONTENT_TYPES[0])
         .label("Content type"),
+    is_custom_prompt: yup.boolean().default(false),
+    custom_prompt: yup.string().when("is_custom_prompt", {
+        is: true,
+        then: yup.string().required().default("").label("Custom prompt")
+    })     
 });
 
 export default uploadSchema;
