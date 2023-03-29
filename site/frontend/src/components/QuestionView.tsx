@@ -7,7 +7,6 @@ import { Button, Divider, VStack } from "@chakra-ui/react";
 import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
 import styles from "./QuestionView.module.css";
 import api from "@shared/api";
-import TextField from "@components/fields/TextField";
 import TextareaField from "@components/fields/TextareaField";
 import LoadingButton from "@components/buttons/LoadingButton";
 import { FeedbackTypes } from "@shared/feedback.type";
@@ -89,7 +88,7 @@ const QuestionView: React.FC<QuestionProps> = ({ question, generation }) => {
                         </TextareaField>
 
                         {form.values.answers?.map((answer, index) => (
-                            <TextField
+                            <TextareaField
                                 name={`answers.[${index}].text`}
                                 title={`Answer ${index + 1}`}
                                 placeholder="Answer choice"
@@ -131,7 +130,7 @@ const QuestionView: React.FC<QuestionProps> = ({ question, generation }) => {
                                         Delete
                                     </Button>
                                 </div>
-                            </TextField>
+                            </TextareaField>
                         ))}
                     </VStack>
 

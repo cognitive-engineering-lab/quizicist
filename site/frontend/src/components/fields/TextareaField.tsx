@@ -1,5 +1,6 @@
 import { FormControl, FormErrorMessage, FormLabel, Textarea, TextareaProps, Show, Hide } from "@chakra-ui/react";
 import { FieldHookConfig, useField } from "formik";
+import ResizeTextarea from "react-textarea-autosize";
 import styles from "./Shared.module.css";
 import { TextFieldProps } from "./TextField";
 
@@ -20,7 +21,7 @@ const TextareaField: React.FC<FieldHookConfig<string> & TextFieldProps & Textare
                 {children}
             </Hide>
 
-            <Textarea {...field} placeholder={placeholder} />
+            <Textarea {...field} as={ResizeTextarea} minH="0" placeholder={placeholder} />
             <FormErrorMessage className={styles.error}>{meta.error}</FormErrorMessage>
         </FormControl>
     )
