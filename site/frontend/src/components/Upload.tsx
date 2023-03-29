@@ -50,6 +50,7 @@ const Upload: React.FC = () => {
                         name="content"
                         title="Content to quiz over"
                         placeholder="Functions reduce duplicate code."
+                        preventResize
                     />
 
                     <SelectField name="content_type" title="Content format" values={CONTENT_TYPES} />

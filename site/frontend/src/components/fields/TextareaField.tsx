@@ -4,7 +4,11 @@ import ResizeTextarea from "react-textarea-autosize";
 import styles from "./Shared.module.css";
 import { TextFieldProps } from "./TextField";
 
-const TextareaField: React.FC<FieldHookConfig<string> & TextFieldProps & TextareaProps> = ({ title, placeholder, labelProps, children, ...props}) => {
+type TextareaFieldProps = {
+    preventResize?: boolean;
+};
+
+const TextareaField: React.FC<FieldHookConfig<string> & TextFieldProps & TextareaProps & TextareaFieldProps> = ({ title, placeholder, labelProps, children, preventResize, ...props}) => {
     const [field, meta] = useField(props);
     
     return (
@@ -21,7 +25,7 @@ const TextareaField: React.FC<FieldHookConfig<string> & TextFieldProps & Textare
                 {children}
             </Hide>
 
-            <Textarea {...field} as={ResizeTextarea} minH="0" placeholder={placeholder} />
+            <Textarea {...field} as={preventResize ? undefined : ResizeTextarea} minH="0" placeholder={placeholder} />
             <FormErrorMessage className={styles.error}>{meta.error}</FormErrorMessage>
         </FormControl>
     )
