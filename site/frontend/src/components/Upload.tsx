@@ -1,4 +1,4 @@
-import { Button, FormControl, FormHelperText, Text } from "@chakra-ui/react";
+import { Button, FormControl, FormHelperText, Text, useToast } from "@chakra-ui/react";
 import uploadSchema, { CONTENT_TYPES } from "@schemas/upload.schema";
 import { Formik, Form, FormikHelpers } from "formik";
 import CheckboxField from "@components/fields/CheckboxField";
@@ -9,10 +9,26 @@ import { useGenerationCreate } from "@hooks/mutation/mutationHooks";
 
 const Upload: React.FC = () => {
     const createGeneration = useGenerationCreate();
+    const toast = useToast();
 
     const upload = async (data: any, { resetForm }: FormikHelpers<any>) => {
+        // request notification permission
+        if (Notification.permission === "default") {
+            toast({
+                title: "Be notified when your quiz finishes generating",
+                description: "If you allow notifications, we'll send you a message when your quiz is complete.",
+                status: "info",
+                duration: 9000,
+                isClosable: true,
+            });
+
+            await Notification.requestPermission();
+        }
+
         await createGeneration(data);
         resetForm();
+
+        new Notification("Your quiz has finished generating.");
     }
 
     return (
